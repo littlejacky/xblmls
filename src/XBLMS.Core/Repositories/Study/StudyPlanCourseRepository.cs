@@ -74,5 +74,21 @@ namespace XBLMS.Core.Repositories
         }
 
 
+        public async Task<int> CountAsync(int planId,bool isSelect)
+        {
+            var query = Q.Where(nameof(StudyPlanCourse.PlanId), planId);
+
+            if (isSelect)
+            {
+                query.WhereTrue(nameof(StudyPlanCourse.IsSelectCourse));
+            }
+            else
+            {
+                query.WhereNullOrFalse(nameof(StudyPlanCourse.IsSelectCourse));
+            }
+
+            return await _repository.CountAsync(query);
+        }
+
     }
 }

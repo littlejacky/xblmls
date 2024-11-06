@@ -1,31 +1,53 @@
 ﻿using Datory;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Threading.Tasks;
 using XBLMS.Dto;
 using XBLMS.Enums;
 using XBLMS.Models;
+using XBLMS.Utils;
 
 namespace XBLMS.Core.Services
 {
     public partial class StudyManager
     {
-        public async Task User_GetCourseInfo(int userId, int planId, int courseId)
+        public async Task User_GetCourseInfoByCourseList(int planId,StudyCourse course, StudyCourseUser courseUser)
         {
-            var courseInfo = await _studyCourseRepository.GetAsync(courseId);
-            var userCourse = await _studyCourseUserRepository.GetAsync(userId, planId, courseId);
-            if(userCourse != null)
+            var courseType = "";
+            if (courseUser != null)
             {
 
+                course.Set("State", courseUser.State);
+                course.Set("StateStr", courseUser.State.GetDisplayName());
+                if (planId > 0)
+                {
+                    var planCourse = await _studyPlanCourseRepository.GetAsync(planId, course.Id);
+                    if (planCourse.IsSelectCourse)
+                    {
+                        courseType = "选修课";
+                    }
+                    else
+                    {
+                        courseType = "必修课";
+                    }
+                }
+                else
+                {
+                    courseType = "公共课";
+                }
             }
             else
             {
-                await _studyCourseUserRepository.InsertAsync(new StudyCourseUser { UserId = userId, PlanId = planId, CourseId = courseId });
+                course.Set("State", "");
+                course.Set("StateStr", "未学");
+                courseType = "公共课";
             }
-        }
-        public async Task User_GetCourseInfo(int userId, StudyCourse course)
-        {
-            var userCourse = await _studyCourseUserRepository.GetAsync(userId);
+
+            course.Set("CourseType", courseType);
+            course.Set("EvaluationAvg", TranslateUtils.ToAvg(Convert.ToDouble(course.TotalAvgEvaluation), course.TotaEvaluationlUser));
+            course.Set("PlanId", planId);
         }
     }
 }

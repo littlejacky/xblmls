@@ -93,11 +93,17 @@ var methods = {
     this.apiGet();
   },
   btnViewClick: function (row) {
+
+    var curl = utils.getStudyUrl('studyCourseInfo', { id: row.id, planId: row.planId });
+    if (row.offLine) {
+      curl = utils.getStudyUrl('studyCourseOfflineInfo', { id: row.id, planId: row.planId });
+    }
+
     var $this = this;
     top.utils.openLayer({
       title: false,
       closebtn: 0,
-      url: utils.getStudyUrl('studyCourseInfo', { id: row.id, planId: row.planId }),
+      url: curl,
       width: "88%",
       height: "98%",
       end: function () {

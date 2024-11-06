@@ -50,7 +50,12 @@ namespace XBLMS.Core.Repositories
         {
             return await _repository.GetAsync(id);
         }
-
+        public async Task<StudyPlanUser> GetAsync(int planId,int userId)
+        {
+            return await _repository.GetAsync(Q.
+                Where(nameof(StudyPlanUser.UserId), userId).
+                Where(nameof(StudyPlanUser.PlanId), planId));
+        }
 
         public async Task<(int total, List<StudyPlanUser> list)> GetListAsync(string keyWords,int pageIndex, int pageSize)
         {

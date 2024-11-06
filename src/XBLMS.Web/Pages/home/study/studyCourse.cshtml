@@ -10,15 +10,15 @@
                 <div class="pe-3" v-if="total>0">
                     <div class="row g-4">
                         <div class="col-xl-4 col-lg-4 col-md-4 col-4" v-for="course in list">
-                            <div class="card card-lift card-hover border" v-on:click="btnViewClick(course)" style="cursor:pointer;">
+                            <div class="card card-lift card-hover border bg-white p-2" v-on:click="btnViewClick(course)" style="cursor:pointer;">
                                 <div class="position-relative">
-                                    <img :src="course.coverImg" class="img-fluid card-img-top">
+                                    <img :src="course.coverImg" class="img-fluid card-img">
                                     <span class="px-2 rounded-3 bg-dark text-white position-absolute bottom-0 end-0 m-2 fs-6">{{ utils.formatDuration(course.duration) }}</span>
                                     <el-tag size="mini" type="success" effect="dark" class="position-absolute top-0 end-0 m-2" v-if="course.state==='Yiwancheng'">{{ course.stateStr }}</el-tag>
                                     <el-tag size="mini" type="warning" effect="dark" class="position-absolute top-0 end-0 m-2" v-else>{{ course.stateStr }}</el-tag>
                                     <span class="position-absolute bottom-0 start-0 m-2">
                                         <el-tag size="mini" type="primary" effect="dark" class="me-1">{{ course.courseType}}</el-tag>
-                                        <el-tag size="mini" type="primary" v-if="course.offLine">线下课</el-tag>
+                                        <el-tag size="mini" type="primary" effect="plain" v-if="course.offLine">面授课</el-tag>
                                     </span>
                                 </div>
                                 <div class="card-body">

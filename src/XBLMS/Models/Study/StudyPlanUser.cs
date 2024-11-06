@@ -15,6 +15,8 @@ namespace XBLMS.Models
         [DataColumn]
         public int UserId { get; set; }
         [DataColumn]
+        public decimal TotalCredit { get; set; }
+        [DataColumn]
         public bool Locked { get; set; }
         [DataColumn]
         public DateTime? BeginStudyDateTime { get; set; }

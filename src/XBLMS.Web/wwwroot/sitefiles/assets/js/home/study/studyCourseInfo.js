@@ -16,7 +16,7 @@ var data = utils.init({
   playing: false,
   setProgressInterval: null,
   ePageIndex: 1,
-  ePageSize: 1,
+  ePageSize: 10,
   eTotal: 0,
   eList: [],
   eLoadMoreLoading: false,
@@ -184,6 +184,7 @@ var methods = {
       height: "98%",
       end: function () {
         $this.apiGet();
+        $this.ePageIndex = 1;
         $this.apiGetEvaluation();
       }
     });

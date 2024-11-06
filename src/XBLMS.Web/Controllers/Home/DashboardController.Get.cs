@@ -2,6 +2,8 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using XBLMS.Configuration;
+using XBLMS.Core.Utils;
+using XBLMS.Enums;
 using XBLMS.Models;
 using XBLMS.Utils;
 
@@ -100,9 +102,19 @@ namespace XBLMS.Web.Controllers.Home
             {
                 foreach (var course in courseList)
                 {
-                    await _studyManager.User_GetCourseInfo(user.Id, course);
+                    var courseUser = await _studyCourseUserRepository.GetAsync(user.Id, 0, course.Id);
+                    await _studyManager.User_GetCourseInfoByCourseList(0, course, courseUser);
                 }
             }
+
+            var (planTotal, planList) = await _studyPlanUserRepository.GetListAsync("", 1, 1);
+            var planUser = new StudyPlanUser();
+            if (planTotal > 0)
+            {
+                planUser = planList[0];
+                await _studyManager.User_GetPlanInfo(planUser);
+            }
+
 
             return new GetResult
             {
@@ -129,6 +141,7 @@ namespace XBLMS.Web.Controllers.Home
                 TaskQTotal = qPaperTotal,
 
                 CourseList = courseList,
+                StudyPlan = planUser
             };
         }
     }

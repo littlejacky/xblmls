@@ -38,6 +38,7 @@ namespace XBLMS.Web.Controllers.Home.Study
         private readonly IStudyCourseEvaluationUserRepository _studyCourseEvaluationUserRepository;
         private readonly IStudyCourseEvaluationItemUserRepository _studyCourseEvaluationItemUserRepository;
         private readonly IStudyCourseEvaluationRepository _studyCourseEvaluationRepository;
+        private readonly IStudyPlanUserRepository _studyPlanUserRepository;
 
         public StudyCourseInfoController(IConfigRepository configRepository,
             IAuthManager authManager,
@@ -54,7 +55,8 @@ namespace XBLMS.Web.Controllers.Home.Study
             IExamQuestionnaireUserRepository examQuestionnaireUserRepository,
             IStudyCourseEvaluationUserRepository studyCourseEvaluationUserRepository,
             IStudyCourseEvaluationItemUserRepository studyCourseEvaluationItemUserRepository,
-            IStudyCourseEvaluationRepository studyCourseEvaluationRepository)
+            IStudyCourseEvaluationRepository studyCourseEvaluationRepository,
+            IStudyPlanUserRepository studyPlanUserRepository)
         {
             _configRepository = configRepository;
             _authManager = authManager;
@@ -72,6 +74,7 @@ namespace XBLMS.Web.Controllers.Home.Study
             _studyCourseEvaluationUserRepository = studyCourseEvaluationUserRepository;
             _studyCourseEvaluationItemUserRepository = studyCourseEvaluationItemUserRepository;
             _studyCourseEvaluationRepository = studyCourseEvaluationRepository;
+            _studyPlanUserRepository = studyPlanUserRepository;
         }
         public class GetRequest
         {

@@ -172,33 +172,36 @@
                         <div class="card card-hover-with-icon border-top border-3">
                             <div class="card-body">
                                 <h5 class="card-title d-flex justify-content-between align-items-center">
-                                    <span><i class="bi bi-box-fill me-2 card-icon text-warning p-1"></i>最新学习计划</span>
-                                    <el-link :underline="false" v-on:click="btnMoreMenuClick('examPractice')">更多<i class="el-icon-more ms-2"></i></el-link>
+                                    <span><i class="bi bi-box-fill me-2 card-icon text-warning p-1"></i>最新学习任务</span>
+                                    <el-link :underline="false" v-on:click="btnMoreMenuClick('studyPlan')">更多<i class="el-icon-more ms-2"></i></el-link>
                                 </h5>
                                 <div class="mt-5">
-                                    <div class="card card-hover position-relative">
+                                    <div class="card card-hover position-relative" v-if="studyPlan && studyPlan.id>0">
                                         <div class="position-absolute top-50 end-0 translate-middle-y pe-3">
-                                            <img width="88" src="/sitefiles/assets/images/status/xuexizhong.png" />
+                                            <img width="88" src="/sitefiles/assets/images/status/weikaishi.png" v-if="studyPlan.state==='Weikaishi'" />
+                                            <img width="88" src="/sitefiles/assets/images/status/xuexizhong.png" v-if="studyPlan.state==='Xuexizhong'" />
+                                            <img width="88" src="/sitefiles/assets/images/status/yidabao.png" v-if="studyPlan.state==='Yidabiao'" />
+                                            <img width="88" src="/sitefiles/assets/images/status/yiwancheng.png" v-if="studyPlan.state==='Yiwancheng'" />
                                         </div>
                                         <div class="row ps-2">
-                                            <a class="col-4 col-md-4 col-xl-4 col-lg-4 bg-cover rounded-start" style="background-image: url(https://codescandy.com/geeks-bootstrap-5/assets/images/course/course-bootstrap.jpg)" href="#"></a>
+                                            <a class="col-4 col-md-4 col-xl-4 col-lg-4 bg-cover rounded-start" :style="{'background-image':'url('+studyPlan.plan.coverImg+')'}" href="javascript:;"></a>
                                             <div class="col-8 col-md-8 col-xl-8 col-lg-8">
                                                 <div class="card-body">
-                                                    <h3 class="mb-2"><a href="#" class="text-inherit">Bootstrap 5 Beginner Tutorial</a></h3>
+                                                    <h3 class="mb-2"><a href="javascript:;" class="text-inherit">{{ studyPlan.plan.planName }}</a></h3>
                                                     <ul class="mb-2 list-inline">
                                                         <li class="list-inline-item">
-                                                            <span class="fw-light fs-5">计划年度：</span><span class="fw-bold text-warning">2024</span>
+                                                            <span class="fw-light fs-5">计划年度：</span><span class="fw-bold text-warning">{{ studyPlan.plan.planYear }}</span>
                                                         </li>
                                                         <li class="list-inline-item">
-                                                            <span class="fw-light fs-5">计划学分：</span><span class="fw-bold text-success">100</span>/<span class="fw-light fs-5">200</span>
+                                                            <span class="fw-light fs-5">计划学分：</span><span class="fw-bold text-success">{{ studyPlan.totalCredit }}</span>/<span class="fw-light fs-5">{{ studyPlan.plan.planCredit }}</span>
                                                         </li>
                                                     </ul>
                                                     <ul class="mb-5 list-inline">
                                                         <li class="list-inline-item">
-                                                            <span class="fw-light fs-5">必修课：</span><span class="fw-bold text-success">100</span>/<span class="fw-light fs-5">123</span>
+                                                            <span class="fw-light fs-5">必修课：</span><span class="fw-bold text-success">{{ studyPlan.overCourseTotal }}</span>/<span class="fw-light fs-5">{{ studyPlan.plan.courseTotal }}</span>
                                                         </li>
                                                         <li class="list-inline-item">
-                                                            <span class="fw-light fs-5">选修课：</span><span class="fw-bold text-success">100</span>/<span class="fw-light fs-5">200</span>
+                                                            <span class="fw-light fs-5">选修课：</span><span class="fw-bold text-success">{{ studyPlan.overSelectCourseTotal }}</span>/<span class="fw-light fs-5">{{ studyPlan.plan.selectCourseTotal }}</span>
                                                         </li>
                                                     </ul>
                                                     <div class="row align-items-center g-0">
@@ -206,12 +209,15 @@
                                                             <i class="bi bi-calendar-range text-warning"></i>
                                                         </div>
                                                         <div class="col ms-2">
-                                                            <span>2024年12月11日 -  2024年12月11日</span>
+                                                            <span>{{ studyPlan.plan.planBeginDateTimeStr }} -  {{ studyPlan.plan.planEndDateTimeStr }}</span>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div v-else>
+                                        <el-empty image="/sitefiles/assets/images/nodata.svg" image-size="88" description="暂无学习任务"></el-empty>
                                     </div>
                                 </div>
                             </div>
@@ -227,21 +233,25 @@
                                 <div class="mt-5">
                                     <div class="row" v-if="courseList">
                                         <div class="col-xl-4 col-lg-4 col-md-4 col-4" v-for="course in courseList">
-                                            <div class="card card-lift card-hover border">
+                                            <div class="card card-lift card-hover border bg-white p-2" v-on:click="btnViewCourseClick(course)" style="cursor:pointer;">
                                                 <div class="position-relative">
-                                                    <img :src="course.coverImg"
-                                                         class="img-fluid card-img-top">
-                                                    <el-tag size="mini" type="warning" effect="dark" class="position-absolute top-0 end-0 m-2">未 学</el-tag>
-                                                    <el-tag size="mini" type="primary" effect="dark" class="position-absolute bottom-0 start-0 m-2">必修课</el-tag>
+                                                    <img :src="course.coverImg" class="img-fluid card-img">
+                                                    <span class="px-2 rounded-3 bg-dark text-white position-absolute bottom-0 end-0 m-2 fs-6">{{ utils.formatDuration(course.duration) }}</span>
+                                                    <el-tag size="mini" type="success" effect="dark" class="position-absolute top-0 end-0 m-2" v-if="course.state==='Yiwancheng'">{{ course.stateStr }}</el-tag>
+                                                    <el-tag size="mini" type="warning" effect="dark" class="position-absolute top-0 end-0 m-2" v-else>{{ course.stateStr }}</el-tag>
+                                                    <span class="position-absolute bottom-0 start-0 m-2">
+                                                        <el-tag size="mini" type="primary" effect="dark" class="me-1">{{ course.courseType}}</el-tag>
+                                                        <el-tag size="mini" type="primary" effect="plain" v-if="course.offLine">面授课</el-tag>
+                                                    </span>
                                                 </div>
                                                 <div class="card-body">
                                                     <h4 class="mb-3">
-                                                        <a href="#!" class="text-inherit">{{ course.name }}</a>
+                                                        <a href="javascript:;" class="text-inherit">{{ course.name }}</a>
                                                     </h4>
                                                     <div class="mb-3 lh-1">
                                                         <span>
                                                             <i class="bi bi-star-fill text-warning me-2"></i>
-                                                            <span class="text-inherit fw-semibold">4.9</span>(31)
+                                                            <span class="text-inherit fw-semibold">{{ course.evaluationAvg }}</span>
                                                         </span>
                                                         <span class="mx-1">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -250,15 +260,21 @@
                                                             </svg>
                                                         </span>
                                                         <span>
-                                                            <span class="text-inherit fw-semibold me-1">{{ course.studyHour }}</span> 课时
+                                                            <i class="bi bi-person-video3 me-2"></i>
+                                                            <span class="text-inherit fw-semibold">{{ course.totaEvaluationlUser }}</span>
                                                         </span>
                                                     </div>
                                                     <div class="lh-1">
-                                                        <i class="bi bi-credit-card-2-front-fill text-warning me-2"></i><span class="text-inherit fw-semibold me-2">{{ course.credit }}</span>学分
+                                                        <i class="bi bi-credit-card-2-front-fill me-2"></i><span class="text-inherit fw-semibold">{{ course.studyHour }}</span> 课时
+                                                        <span class="mx-1">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                                 fill="var(--gk-gray-400)" class="bi bi-dot" viewBox="0 0 16 16">
+                                                                <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"></path>
+                                                            </svg>
+                                                        </span>
+                                                        <span class="text-inherit fw-semibold text-success" v-if="course.state==='Yiwancheng'">{{ course.credit }}学分</span>
+                                                        <span class="text-inherit fw-semibold" v-else>{{ course.credit }}学分</span>
                                                     </div>
-                                                </div>
-                                                <div class="card-footer">
-                                                    <el-progress :stroke-width="12" :percentage="100" status="success"></el-progress>
                                                 </div>
                                             </div>
                                         </div>

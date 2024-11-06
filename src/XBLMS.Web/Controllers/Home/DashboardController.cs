@@ -31,6 +31,9 @@ namespace XBLMS.Web.Controllers.Home
         private readonly IStudyManager _studyManager;
         private readonly IStudyCourseUserRepository _studyCourseUserRepository;
         private readonly IStudyCourseRepository _studyCourseRepository;
+        private readonly IStudyPlanRepository _studyPlanRepository;
+        private readonly IStudyPlanUserRepository _studyPlanUserRepository;
+        private readonly IStudyPlanCourseRepository _studyPlanCourseRepository;
 
         public DashboardController(IConfigRepository configRepository,
             IOrganManager organManager,
@@ -43,7 +46,10 @@ namespace XBLMS.Web.Controllers.Home
             IExamQuestionnaireUserRepository examQuestionnaireUserRepository,
             IStudyManager studyManager,
             IStudyCourseUserRepository studyCourseUserRepository,
-            IStudyCourseRepository studyCourseRepository)
+            IStudyCourseRepository studyCourseRepository,
+            IStudyPlanRepository studyPlanRepository,
+            IStudyPlanUserRepository studyPlanUserRepository,
+            IStudyPlanCourseRepository studyPlanCourseRepository)
         {
             _configRepository = configRepository;
             _authManager = authManager;
@@ -57,6 +63,9 @@ namespace XBLMS.Web.Controllers.Home
             _studyManager = studyManager;
             _studyCourseUserRepository = studyCourseUserRepository;
             _studyCourseRepository = studyCourseRepository;
+            _studyPlanRepository = studyPlanRepository;
+            _studyPlanUserRepository = studyPlanUserRepository;
+            _studyPlanCourseRepository = studyPlanCourseRepository;
         }
 
         public class GetResult
@@ -84,6 +93,7 @@ namespace XBLMS.Web.Controllers.Home
             public int TaskQTotal { get; set; }
 
             public List<StudyCourse> CourseList { get; set; }
+            public StudyPlanUser StudyPlan { get; set; }
 
         }
 

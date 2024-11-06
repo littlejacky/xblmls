@@ -91,7 +91,8 @@ var data = utils.init({
   examPaper: null,
   examMoni: null,
 
-  courseList:null
+  courseList: null,
+  studyPlan:null
 
 });
 
@@ -127,6 +128,8 @@ var methods = {
       $this.examMoni = res.examMoni;
 
       $this.courseList = res.courseList;
+
+      $this.studyPlan = res.studyPlan;
 
       setTimeout(function () {
         $this.passSeries = [100];
@@ -215,6 +218,23 @@ var methods = {
       closebtn: 0,
       url: utils.getExamUrl('examPaperInfo', { id: id }),
       width: "78%",
+      height: "98%",
+      end: function () {
+        $this.apiGet();
+      }
+    });
+  },
+  btnViewCourseClick: function (row) {
+    var curl = utils.getStudyUrl('studyCourseInfo', { id: row.id, planId: row.planId });
+    if (row.offLine) {
+      curl = utils.getStudyUrl('studyCourseOfflineInfo', { id: row.id, planId: row.planId });
+    }
+    var $this = this;
+    top.utils.openLayer({
+      title: false,
+      closebtn: 0,
+      url: curl,
+      width: "88%",
       height: "98%",
       end: function () {
         $this.apiGet();

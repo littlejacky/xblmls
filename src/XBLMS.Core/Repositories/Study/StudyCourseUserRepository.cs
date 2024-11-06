@@ -138,5 +138,17 @@ namespace XBLMS.Core.Repositories
                 Where(nameof(StudyCourseUser.AvgEvaluation), ">=", minStar).
                 Where(nameof(StudyCourseUser.CourseId), courseId));
         }
+
+
+
+        public async Task<List<StudyCourseUser>> GetListAsync(int planId,int userId)
+        {
+            var query = Q.
+                Where(nameof(StudyCourseUser.UserId), userId).
+                Where(nameof(StudyCourseUser.PlanId), planId);
+
+            var list = await _repository.GetAllAsync(query);
+            return list;
+        }
     }
 }

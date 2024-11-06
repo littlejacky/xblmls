@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using XBLMS.Core.Utils;
-using XBLMS.Enums;
-using XBLMS.Models;
-using XBLMS.Repositories;
+﻿using XBLMS.Repositories;
 using XBLMS.Services;
-using XBLMS.Utils;
 
 namespace XBLMS.Core.Services
 {
@@ -22,6 +15,8 @@ namespace XBLMS.Core.Services
         private readonly IStudyCourseRepository _studyCourseRepository;
         private readonly IStudyPlanUserRepository _studyPlanUserRepository;
         private readonly IStudyCourseUserRepository _studyCourseUserRepository;
+        private readonly IStudyPlanCourseRepository _studyPlanCourseRepository;
+        private readonly IStudyPlanRepository _studyPlanRepository;
 
 
         public StudyManager(ISettingsManager settingsManager,
@@ -32,7 +27,9 @@ namespace XBLMS.Core.Services
             IStudyCourseTreeRepository studyCourseTreeRepository,
             IStudyCourseRepository studyCourseRepository,
             IStudyPlanUserRepository studyPlanUserRepository,
-            IStudyCourseUserRepository studyCourseUserRepository)
+            IStudyCourseUserRepository studyCourseUserRepository,
+            IStudyPlanCourseRepository studyPlanCourseRepository,
+            IStudyPlanRepository studyPlanRepository)
         {
             _settingsManager = settingsManager;
             _organManager = organManager;
@@ -43,6 +40,8 @@ namespace XBLMS.Core.Services
             _studyCourseRepository = studyCourseRepository;
             _studyPlanUserRepository = studyPlanUserRepository;
             _studyCourseUserRepository = studyCourseUserRepository;
+            _studyPlanCourseRepository = studyPlanCourseRepository;
+            _studyPlanRepository = studyPlanRepository;
         }
     }
 }

@@ -6,7 +6,7 @@ namespace XBLMS.Services
 {
     public partial interface IStudyManager
     {
-        Task User_GetCourseInfo(int userId, StudyCourse course);
+        Task User_GetCourseInfoByCourseList(int planId, StudyCourse course, StudyCourseUser courseUser);
     }
 
 }

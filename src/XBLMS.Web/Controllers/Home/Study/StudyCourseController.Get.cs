@@ -35,7 +35,7 @@ namespace XBLMS.Web.Controllers.Home.Study
                     foreach (var item in list)
                     {
                         var course = await _studyCourseRepository.GetAsync(item.CourseId);
-                        GetCouresInfo(course, item, item.PlanId);
+                        await _studyManager.User_GetCourseInfoByCourseList(item.PlanId, course, item);
                         resultList.Add(course);
                     }
                 }
@@ -53,8 +53,7 @@ namespace XBLMS.Web.Controllers.Home.Study
                     foreach (var item in list)
                     {
                         var courseUser = await _studyCourseUserRepository.GetAsync(user.Id, 0, item.Id);
-                        GetCouresInfo(item, courseUser, 0);
-
+                        await _studyManager.User_GetCourseInfoByCourseList(0, item, courseUser);
                         resultList.Add(item);
                     }
                 }
@@ -79,45 +78,12 @@ namespace XBLMS.Web.Controllers.Home.Study
             var course = await _studyCourseRepository.GetAsync(request.Id);
             var courseUser = await _studyCourseUserRepository.GetAsync(user.Id, request.PlanId, request.Id);
 
-            GetCouresInfo(course, courseUser, request.PlanId);
+            await _studyManager.User_GetCourseInfoByCourseList(request.PlanId, course, courseUser);
 
             return new ItemResult<StudyCourse>
             {
                 Item = course
             };
-        }
-
-        private async void GetCouresInfo(StudyCourse course, StudyCourseUser courseUser, int planId)
-        {
-            if (courseUser != null)
-            {
-                course.Set("State", courseUser.State);
-                course.Set("StateStr", courseUser.State.GetDisplayName());
-                if (planId > 0)
-                {
-                    var planCourse = await _studyPlanCourseRepository.GetAsync(planId, course.Id);
-                    if (planCourse.IsSelectCourse)
-                    {
-                        course.Set("CourseType", "选修课");
-                    }
-                    else
-                    {
-                        course.Set("CourseType", "必修课");
-                    }
-                }
-                else
-                {
-                    course.Set("CourseType", "公共课");
-                }
-            }
-            else
-            {
-                course.Set("State", "");
-                course.Set("StateStr", "未学");
-                course.Set("CourseType", "公共课");
-            }
-            course.Set("EvaluationAvg", TranslateUtils.ToAvg(Convert.ToDouble(course.TotalAvgEvaluation), course.TotaEvaluationlUser));
-            course.Set("PlanId", planId);
         }
     }
 }

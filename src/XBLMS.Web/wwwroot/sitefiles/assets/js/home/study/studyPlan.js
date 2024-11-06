@@ -1,10 +1,9 @@
-var $url = "/exam/examPaper";
+var $url = "/study/studyPlan";
 var $urlItem = $url + "/item";
 
 var data = utils.init({
   form: {
-    keyWords: '',
-    date: '',
+    year: '',
     pageIndex: 1,
     pageSize: PER_PAGE
   },
@@ -25,8 +24,8 @@ var methods = {
       var res = response.data;
 
       if (res.list && res.list.length > 0) {
-        res.list.forEach(paper => {
-          $this.list.push(paper);
+        res.list.forEach(item => {
+          $this.list.push(item);
         });
       }
       $this.total = res.total;
@@ -70,7 +69,7 @@ var methods = {
     top.utils.openLayer({
       title: false,
       closebtn: 0,
-      url: utils.getExamUrl('examPaperInfo', { id: id }),
+      url: utils.getStudyUrl('studyPlanInfo', { id: id }),
       width: "78%",
       height: "98%",
       end: function () {

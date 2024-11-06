@@ -193,6 +193,14 @@ namespace XBLMS.Web.Controllers.Home.Study
                         userCourse.Credit = course.Credit;
                         await _studyCourseUserRepository.UpdateAsync(userCourse);
                         courseStateStr = userCourse.State.GetDisplayName();
+
+
+                        if (request.PlanId > 0)
+                        {
+                            var planUser = await _studyPlanUserRepository.GetAsync(request.PlanId, user.Id);
+                            planUser.TotalCredit += course.Credit;
+                            await _studyPlanUserRepository.UpdateAsync(planUser);
+                        }
                     }
                 }
                 else
