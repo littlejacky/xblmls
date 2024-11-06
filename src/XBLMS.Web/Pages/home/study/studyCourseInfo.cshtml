@@ -249,25 +249,31 @@
                                     </div>
                                     <hr class="my-5">
                                     <div class="mb-3">
-                                        <div class="d-flex align-items-start border-bottom pb-4 mb-4" v-for="eItem in eList">
-                                            <img :src="eItem.avatarUrl || DEFAULT_AVATAR_URL" alt="" class="rounded-circle avatar-lg">
-                                            <div class="ms-3">
-                                                <h4 class="mb-1">
-                                                    {{ eItem.displayName }}
-                                                    <span class="ms-1 fs-6">{{ utils.getFriendlyDateTime(eItem.starDateTime) }}</span>
-                                                </h4>
-                                                <div class="mb-2">
-                                                    <span class="fs-6">
-                                                        <el-rate v-model="eItem.star"
-                                                                 disabled
-                                                                 show-score
-                                                                 :max="eItem.maxStar"
-                                                                 text-color="#ff9900">
-                                                        </el-rate>
-                                                    </span>
+                                        <div class="d-flex justify-content-between align-items-center  border-bottom pb-4 mb-4" v-for="eItem in eList">
+                                            <div class="d-flex align-items-start">
+                                                <img :src="eItem.avatarUrl || DEFAULT_AVATAR_URL" alt="" class="rounded-circle avatar-lg">
+                                                <div class="ms-3">
+                                                    <h4 class="mb-1">
+                                                        {{ eItem.displayName }}
+                                                    </h4>
+                                                    <div class="mb-2">
+                                                        <span class="fs-6">
+                                                            <el-rate v-model="eItem.star"
+                                                                     disabled
+                                                                     show-score
+                                                                     :max="eItem.maxStar"
+                                                                     text-color="#ff9900">
+                                                            </el-rate>
+                                                        </span>
+                                                    </div>
+                                                    <p>{{ eItem.textContent }}</p>
                                                 </div>
-                                                <p>{{ eItem.textContent }}</p>
                                             </div>
+                                            <span class="fs-6">{{ utils.getFriendlyDateTime(eItem.starDateTime) }}</span>
+                                        </div>
+                                        <div class="mt-5 text-center">
+                                            <el-button icon="el-icon-refresh-right" v-if="eList.length>0 && eList.length<eTotal" v-on:click="btnLoadMoreEvaluationClick" :loading="eLoadMoreLoading">加载更多</el-button>
+                                            <small v-else>没有更多了</small>
                                         </div>
                                     </div>
                                 </div>
@@ -341,11 +347,11 @@
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item bg-transparent" v-if="courseInfo.state || courseInfo.boolWare">
                                     <i class="bi bi-star-fill text-success me-2"></i>
-                                    课时：{{ courseInfo.studyHour}}<span class="text-success">（已完成课时 ）</span>
+                                    课时：{{ courseInfo.studyHour}}<span class="text-success">（已完成课时）</span>
                                 </li>
-                                <li class="list-group-item bg-transparent" v-else">
+                                <li class="list-group-item bg-transparent" v-else>
                                     <i class="bi bi-star-fill text-warning me-2"></i>
-                                    课时：{{ courseInfo.studyHour}}（{{ utils.formatDuration(courseUser.totalDuration) }}/{{ utils.formatDuration(courseInfo.duration) }} ）
+                                    课时：{{ courseInfo.studyHour}}（{{ utils.formatDuration(courseUser.totalDuration) }}/{{ utils.formatDuration(courseInfo.duration) }}）
                                 </li>
                                 <li class="list-group-item bg-transparent" v-if="courseInfo.state">
                                     <i class="bi bi-star-fill text-success me-2"></i>
@@ -353,7 +359,7 @@
                                 </li>
                                 <li class="list-group-item bg-transparent" v-else>
                                     <i class="bi bi-star-fill text-warning me-2"></i>
-                                    学分：{{ courseInfo.credit}}
+                                    学分：{{ courseInfo.credit}}（完成课程可以获得）
                                 </li>
                                 <li class="list-group-item bg-transparent" v-if="courseInfo.state">
                                     <span v-if="courseInfo.examId>0">

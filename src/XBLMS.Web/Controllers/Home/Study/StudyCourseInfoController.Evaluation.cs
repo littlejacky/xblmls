@@ -25,7 +25,7 @@ namespace XBLMS.Web.Controllers.Home.Study
                 var course = await _studyCourseRepository.GetAsync(request.CourseId);
 
                 starUser = course.TotaEvaluationlUser;
-                starAvg = course.TotalAvgEvaluation.ToString();
+                starAvg = TranslateUtils.ToAvg(Convert.ToDouble(course.TotalAvgEvaluation), starUser);
             }
 
 
@@ -37,8 +37,11 @@ namespace XBLMS.Web.Controllers.Home.Study
                 foreach (var item in list)
                 {
                     var user = await _organManager.GetUser(item.UserId);
+                    if (user == null) continue;
                     var eInfo = await _studyCourseEvaluationRepository.GetAsync(item.EvaluationId);
+                    if(eInfo==null) continue;
                     var courseUser = await _studyCourseUserRepository.GetAsync(user.Id, request.PlanId, request.CourseId);
+                    if(courseUser == null) continue;
                     var eitems = await _studyCourseEvaluationItemUserRepository.GetTextAsync(request.CourseId, item.UserId);
 
                     resultList.Add(new GetEvaluationResultInfo

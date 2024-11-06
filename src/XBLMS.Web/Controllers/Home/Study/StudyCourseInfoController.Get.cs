@@ -117,7 +117,6 @@ namespace XBLMS.Web.Controllers.Home.Study
             var boolExamQSubmit = false;
             var boolEvaluationSubmit = false;
 
-            var evaluationTotalStarValue = 0;
             decimal maxCj = 0;
             if (course.ExamId > 0)
             {
@@ -211,7 +210,6 @@ namespace XBLMS.Web.Controllers.Home.Study
             course.Set("BoolExam", boolExamPass);
             course.Set("BoolExamQ", boolExamQSubmit);
             course.Set("BoolEvaluation", boolEvaluationSubmit);
-            course.Set("EvaluationTotalStarValue", userCourse.AvgEvaluation);
 
             return new GetResult
             {

@@ -28,7 +28,7 @@
                                     <div class="mb-3 lh-1">
                                         <span>
                                             <i class="bi bi-star-fill text-warning me-2"></i>
-                                            <span class="text-inherit fw-semibold">{{ course.totalAvgEvaluation }}</span>
+                                            <span class="text-inherit fw-semibold">{{ course.evaluationAvg }}</span>
                                         </span>
                                         <span class="mx-1">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -56,7 +56,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="my-5 text-center me-5">
+                    <div class="my-5 text-center">
                         <el-button icon="el-icon-refresh-right" v-if="list.length>0 && list.length<total" v-on:click="btnLoadMoreClick" :loading="loadMoreLoading">加载更多</el-button>
                         <small v-else>没有更多了</small>
                     </div>

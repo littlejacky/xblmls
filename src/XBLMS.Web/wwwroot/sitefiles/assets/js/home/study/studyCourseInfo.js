@@ -16,7 +16,7 @@ var data = utils.init({
   playing: false,
   setProgressInterval: null,
   ePageIndex: 1,
-  ePageSize: 10,
+  ePageSize: 1,
   eTotal: 0,
   eList: [],
   eLoadMoreLoading: false,
@@ -63,7 +63,7 @@ var methods = {
         autoplay: $this.courseInfo.state || $this.courseInfo.boolWare ? false : true,
         videoInit: true,
         closeInactive: true,
-        disableProgress: $this.courseInfo.state ? false : true,
+        disableProgress: $this.courseInfo.state || $this.courseInfo.boolWare ? false : true,
         lastPlayTime: $this.courseWareCurrent.currentDuration,
         //playbackRate: [0.5, 0.75, 1, 1.5, 2],
         fluid: true,
@@ -184,6 +184,7 @@ var methods = {
       height: "98%",
       end: function () {
         $this.apiGet();
+        $this.apiGetEvaluation();
       }
     });
   },
@@ -206,7 +207,7 @@ var methods = {
     }).catch(function (error) {
       utils.error(error);
     }).then(function () {
-      $this.loadMoreLoading = false;
+      $this.eLoadMoreLoading = false;
     });
   },
   btnLoadMoreEvaluationClick: function () {

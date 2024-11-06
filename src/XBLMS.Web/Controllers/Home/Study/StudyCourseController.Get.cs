@@ -1,9 +1,11 @@
 ﻿using Datory;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using XBLMS.Dto;
 using XBLMS.Models;
+using XBLMS.Utils;
 
 namespace XBLMS.Web.Controllers.Home.Study
 {
@@ -114,6 +116,7 @@ namespace XBLMS.Web.Controllers.Home.Study
                 course.Set("StateStr", "未学");
                 course.Set("CourseType", "公共课");
             }
+            course.Set("EvaluationAvg", TranslateUtils.ToAvg(Convert.ToDouble(course.TotalAvgEvaluation), course.TotaEvaluationlUser));
             course.Set("PlanId", planId);
         }
     }
