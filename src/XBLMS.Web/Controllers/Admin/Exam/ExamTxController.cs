@@ -1,0 +1,43 @@
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using NSwag.Annotations;
+using XBLMS.Configuration;
+using XBLMS.Core.Repositories;
+using XBLMS.Dto;
+using XBLMS.Models;
+using XBLMS.Repositories;
+using XBLMS.Services;
+
+namespace XBLMS.Web.Controllers.Admin.Exam
+{
+    [OpenApiIgnore]
+    [Authorize(Roles = Types.Roles.Administrator)]
+    [Route(Constants.ApiAdminPrefix)]
+    public partial class ExamTxController : ControllerBase
+    {
+        private const string Route = "exam/examTx";
+        private const string RouteDelete = "exam/examTx/del";
+
+        private readonly IAuthManager _authManager;
+        private readonly IExamTxRepository _examTxRepository;
+        private readonly IExamTmRepository _examTmRepository;
+        private readonly IAdministratorRepository _administratorRepository;
+
+        public ExamTxController(IAuthManager authManager, IExamTxRepository examTxRepository, IAdministratorRepository administratorRepository, IExamTmRepository examTmRepository)
+        {
+            _authManager = authManager;
+            _administratorRepository = administratorRepository;
+            _examTxRepository = examTxRepository;
+            _examTmRepository = examTmRepository;
+        }
+        public class GetRequest
+        {
+            public string Name { get; set; }
+        }
+        public class GetResult
+        {
+            public List<ExamTx> Items { get; set; }
+        }
+    }
+}

@@ -1,0 +1,44 @@
+﻿@page
+@{ Layout = "_Layout"; }
+<el-card class="box-card">
+    <div slot="header" class="clearfix">
+        <span>切换管理单位</span>
+        <el-button style="float: right;padding:3px 0;" type="text" v-on:click="utils.closeLayerSelf()"><i class="el-icon-close"></i></el-button>
+    </div>
+    <el-form :inline="true" :size="euiSize">
+        <el-form-item label="">
+            <el-input v-model="search"
+                      prefix-icon="el-icon-search" clearable
+                      placeholder="输入关键字进行过滤">
+            </el-input>
+        </el-form-item>
+    </el-form>
+    <el-table :data="treeTable" ref="organsTable"
+              :expand-row-keys="expandRowKeys"
+              v-on:row-click="rowClick"
+              row-key="guid"
+              :size="euiSize"
+              :height="($(window).innerHeight() - 230)"
+              :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
+        <el-table-column prop="name"
+                         label="单位">
+            <template slot-scope="scope">
+                {{ scope.row.name }}
+            </template>
+        </el-table-column>
+        <el-table-column label="" prop="pathName"></el-table-column>
+        <el-table-column align="right" width="100">
+            <template slot-scope="scope">
+                <el-button icon="el-icon-refresh" size="mini" plain type="primary" v-on:click.stop="btnSubmitClick(scope.row)">切 换</el-button>
+            </template>
+        </el-table-column>
+        @await Html.PartialAsync("_PartialTableEmpty")
+    </el-table>
+</el-card>
+<el-row align="center" style="margin-top:18px;">
+    <el-col :span="24" align="center">
+        <el-button icon="el-icon-close" :size="euiSize" v-on:click="utils.closeLayerSelf()">取 消</el-button>
+    </el-col>
+</el-row>
+@section Scripts{
+<script src="/sitefiles/assets/js/admin/common/selectAuthOrgan.js" type="text/javascript"></script> }

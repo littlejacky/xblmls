@@ -1,0 +1,100 @@
+﻿@page
+@{ Layout = "_Layout"; }
+@section Styles{
+  <style>
+    .el-upload, .el-upload-dragger {
+        width: 180px;
+    }
+
+        .cover {
+            height: 180px;
+            display: block;
+        }
+    .el-button-group .el-dropdown {
+      float: left;
+      margin-top: -2.5px;
+      margin-right: -1px;
+    }
+  </style>
+}
+
+<el-card>
+    <div slot="header" class="clearfix">
+        <span>{{ id > 0 ? "修改" : "新增" }}线下课</span>
+        <el-button style="float: right;padding:3px 0;" type="text" v-on:click="utils.closeLayerSelf"><i class="el-icon-close"></i></el-button>
+    </div>
+    <el-scrollbar class="scrollbar" :style="{ height: ($(window).innerHeight()-180) + 'px' }">
+        <div style="margin-right:18px;">
+            <el-form v-on:submit.native.prevent ref="form" :model="form" :size="euiSize" status-icon label-width="140px">
+                <el-form-item label="课程分类" prop="treeId" :rules="{ required: true, message: '请选择课程分类' }">
+                    <el-cascader ref="tree" style="width:100%"
+                                 v-model="form.treeId"
+                                 :options="tree"
+                                 :props="{ emitPath:false,checkStrictly: true,expandTrigger:'hover' }"
+                                 placeholder="请选择课程分类"
+                                 :show-all-levels="false">
+                    </el-cascader>
+                </el-form-item>
+                <el-form-item label="课程名称" prop="name" :rules="[{ required: true, message: '请输入课程名称' }]">
+                    <el-input v-model="form.name"></el-input>
+                </el-form-item>
+                <el-form-item label="课时" prop="studyHour" :rules="[{ required: true, message: '请输入课时' }]">
+                    <el-input-number v-model="form.studyHour" :precision="1" :min="0.1" label="课时"></el-input-number>
+                    <div class="tips">1位小数</div>
+                </el-form-item>
+                <el-form-item label="学分" prop="credit" :rules="[{ required: true, message: '请输入学分' }]">
+                    <el-input-number v-model="form.credit" :precision="1" :min="0.1" label="学分"></el-input-number>
+                    <div class="tips">1位小数</div>
+                </el-form-item>
+                <el-form-item label="培训时间" prop="offlineBeginDateTime" :rules="{ required: true, message: '请选择开始时间' }">
+                    <el-date-picker v-model="form.offlineBeginDateTime"
+                                    type="datetime"
+                                    placeholder="开始时间"
+                                    value-format="yyyy-MM-dd HH:mm:ss">
+                    </el-date-picker>
+                </el-form-item>
+                <el-form-item prop="offlineEndDateTime" :rules="{ required: true, message: '请选择截止时间' }">
+                    <el-date-picker v-model="form.offlineEndDateTime"
+                                    type="datetime"
+                                    placeholder="截止时间"
+                                    value-format="yyyy-MM-dd HH:mm:ss">
+                    </el-date-picker>
+                </el-form-item>
+                <el-form-item label="培训场地" prop="offlineAddress" :rules="{ required: true, message: '请输入培训场地' }">
+                    <el-input ref="offlineAddress" type="textarea" :autosize="{ minRows: 3}" v-model="form.offlineAddress"></el-input>
+                </el-form-item>
+                <el-form-item label="培训老师" prop="offlineTeacher" :rules="{ required: true, message: '请输入培训老师' }">
+                    <el-input v-model="form.offlineTeacher"></el-input>
+                </el-form-item>
+                <el-form-item label="课程描述" prop="description">
+                    <el-input ref="description" type="textarea" :autosize="{ minRows: 3}" v-model="form.description"></el-input>
+                    <el-link type="primary" icon="el-icon-document" v-on:click="btnOpenEditClick('description','form')">富文本编辑</el-link>
+                </el-form-item>
+                <el-form-item label="课程封面">
+                    <el-upload :action="uploadUrl"
+                               :show-file-list="false"
+                               :headers="{Authorization: 'Bearer ' + $token}"
+                               list-type="picture-card"
+                               :before-upload="uploadBefore"
+                               :on-progress="uploadProgress"
+                               :on-success="uploadSuccess"
+                               :on-error="uploadError"
+                               :on-remove="uploadRemove"
+                               :multiple="false">
+                        <img v-if="form.coverImg" :src="form.coverImg" class="cover">
+                        <i v-else class="el-icon-plus"></i>
+                    </el-upload>
+                </el-form-item>
+            </el-form>
+        </div>
+    </el-scrollbar>
+</el-card>
+<el-row align="center" style="margin-top:18px;">
+    <el-col :span="24" align="center">
+        <el-button type="primary" v-on:click="btnSubmitClick" :size="euiSize">确 定</el-button>
+        <el-button icon="el-icon-close" :size="euiSize" v-on:click="utils.closeLayerSelf">关 闭</el-button>
+    </el-col>
+</el-row>
+
+@section Scripts{
+<script src="/sitefiles/assets/js/admin/study/studyCourseEdit.js" type="text/javascript"></script> }

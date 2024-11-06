@@ -1,0 +1,43 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+	<PackageId>XBLMS.Core</PackageId> 
+    <Version>8.0</Version>
+    <Authors>xblms</Authors>
+    <Company>xblms</Company>
+	<Description></Description>
+	<PackageLicenseExpression>AGPL-3.0-or-later</PackageLicenseExpression>
+	<RepositoryUrl></RepositoryUrl>
+    <PackageIcon>logo.ico</PackageIcon>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <ApplicationIcon>logo.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Fonts\*.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CacheManager.Core" Version="1.2.0" />
+    <PackageReference Include="CacheManager.Microsoft.Extensions.Configuration" Version="1.2.0" />
+    <PackageReference Include="FluentScheduler" Version="5.5.1" />
+    <PackageReference Include="Markdig" Version="0.27.0" />
+    <PackageReference Include="MaxMind.GeoIP2" Version="5.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.2" />
+    <PackageReference Include="Open-Xml-PowerTools" Version="4.4.0" />
+    <PackageReference Include="Semver" Version="2.0.6" />
+    <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
+    <PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
+    <PackageReference Include="SixLabors.Fonts" Version="2.0.4" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="3.1.5" />
+    <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="2.1.4" />
+    <PackageReference Include="SharpZipLib" Version="1.4.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\XBLMS\XBLMS.csproj" />
+  </ItemGroup>
+
+</Project>
