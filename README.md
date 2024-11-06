@@ -3,6 +3,13 @@
 <img src="https://gitee.com/xblms/xblms/raw/master/src/XBLMS.Web/wwwroot/sitefiles/assets/images/logo.png" height="180" align="center">
 
 <br /><br />
+> 凡我所失，皆非我所有
+> 凡我所求，皆受其所因
+> 万物皆为我所用，而非我所属
+> 君子使物，不为物使
+> 大道至简，无欲则刚
+> 无为则无所不为
+<br /><br />
 
 ## 介绍
 
