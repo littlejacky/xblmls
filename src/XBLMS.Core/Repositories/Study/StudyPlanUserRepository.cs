@@ -57,9 +57,9 @@ namespace XBLMS.Core.Repositories
                 Where(nameof(StudyPlanUser.PlanId), planId));
         }
 
-        public async Task<(int total, List<StudyPlanUser> list)> GetListAsync(string keyWords,int pageIndex, int pageSize)
+        public async Task<(int total, List<StudyPlanUser> list)> GetListAsync(string keyWords,int userId,int pageIndex, int pageSize)
         {
-            var query = Q.NewQuery();
+            var query = Q.Where(nameof(StudyPlanUser.UserId), userId);
 
             query.OrderByDesc(nameof(StudyPlanUser.Id));
             var total = await _repository.CountAsync(query);

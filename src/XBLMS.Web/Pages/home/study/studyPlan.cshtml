@@ -4,60 +4,87 @@
 }
 
 <el-card>
-    <div v-if="total>0">
-        <div v-for="(studyPlan,index) in list" class="row">
-            <div v-if="index===0" class="col-xl-12 col-lg-12 col-md-12 col-12">
-                <div class="card card-hover position-relative">
-                    <div class="position-absolute top-50 end-0 translate-middle-y pe-3">
-                        <img width="88" src="/sitefiles/assets/images/status/weikaishi.png" v-if="studyPlan.state==='Weikaishi'" />
-                        <img width="88" src="/sitefiles/assets/images/status/xuexizhong.png" v-if="studyPlan.state==='Xuexizhong'" />
-                        <img width="88" src="/sitefiles/assets/images/status/yidabao.png" v-if="studyPlan.state==='Yidabiao'" />
-                        <img width="88" src="/sitefiles/assets/images/status/yiwancheng.png" v-if="studyPlan.state==='Yiwancheng'" />
+    <el-scrollbar class="scrollbar" :style="{ height: ($(window).height()-60) + 'px' }">
+        <div class="row g-3 pe-3">
+            <div class="col-xl-3 col-lg-3 col-md-3 col-3">
+                <div class="card border mb-6 mb-md-0 shadow-none">
+                    <div class="card-header">
+                        <h4 class="mb-0 fs-5">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-filter me-2" viewBox="0 0 16 16">
+                                <path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"></path>
+                            </svg>
+                            All Filters
+                        </h4>
                     </div>
-                    <div class="row ps-2">
-                        <a class="col-4 col-md-4 col-xl-4 col-lg-4 bg-cover rounded-start" :style="{'background-image':'url('+studyPlan.plan.coverImg+')'}" href="javascript:;"></a>
-                        <div class="col-8 col-md-8 col-xl-8 col-lg-8">
-                            <div class="card-body">
-                                <h3 class="mb-2"><a href="javascript:;" class="text-inherit">{{ studyPlan.plan.planName }}</a></h3>
-                                <ul class="mb-2 list-inline">
-                                    <li class="list-inline-item">
-                                        <span class="fw-light fs-5">计划年度：</span><span class="fw-bold text-warning">{{ studyPlan.plan.planYear }}</span>
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <span class="fw-light fs-5">计划学分：</span><span class="fw-bold text-success">{{ studyPlan.totalCredit }}</span>/<span class="fw-light fs-5">{{ studyPlan.plan.planCredit }}</span>
-                                    </li>
-                                </ul>
-                                <ul class="mb-5 list-inline">
-                                    <li class="list-inline-item">
-                                        <span class="fw-light fs-5">必修课：</span><span class="fw-bold text-success">{{ studyPlan.overCourseTotal }}</span>/<span class="fw-light fs-5">{{ studyPlan.plan.courseTotal }}</span>
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <span class="fw-light fs-5">选修课：</span><span class="fw-bold text-success">{{ studyPlan.overSelectCourseTotal }}</span>/<span class="fw-light fs-5">{{ studyPlan.plan.selectCourseTotal }}</span>
-                                    </li>
-                                </ul>
-                                <div class="row align-items-center g-0">
-                                    <div class="col-auto">
-                                        <i class="bi bi-calendar-range text-warning"></i>
-                                    </div>
-                                    <div class="col ms-2">
-                                        <span>{{ studyPlan.plan.planBeginDateTimeStr }} -  {{ studyPlan.plan.planEndDateTimeStr }}</span>
-                                    </div>
-                                </div>
-                            </div>
+                    <div class="card-body border-top py-3">
+                        <h4 class="mb-4 fs-5">Experience</h4>
+                        <div class="d-flex justify-content-between mt-2 text-dark">
+                            <span>4 yrs</span>
+                            <span>30 yrs</span>
                         </div>
                     </div>
                 </div>
             </div>
-            <div v-else class="col-xl-6 col-lg-6 col-md-6 col-6">
-                <div class="row">
-                    <div class="col-xl-4 col-lg-4 col-md-4 col-4"></div>
+            <div class="col-xl-9 col-lg-9 col-md-9 col-9">
+                <div v-if="total>0">
+                    <div class="row g-0">
+                        <template v-for="(studyPlan,planIndex) in list">
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-12 py-4 pe-4 bg-light mb-4 rounded-4">
+                                <div class="card card-hover position-relative card-lift ms-4 p-4 px-5" style="cursor:pointer;" v-on:click="btnViewClick(studyPlan.id)">
+                                    <div class="position-absolute top-50 end-0 translate-middle-y pe-5">
+                                        <img width="99" src="/sitefiles/assets/images/status/weikaishi.png" v-if="studyPlan.state==='Weikaishi'" />
+                                        <img width="99" src="/sitefiles/assets/images/status/xuexizhong.png" v-if="studyPlan.state==='Xuexizhong'" />
+                                        <img width="99" src="/sitefiles/assets/images/status/yidabiao.png" v-if="studyPlan.state==='Yidabiao'" />
+                                        <img width="99" src="/sitefiles/assets/images/status/yiwancheng.png" v-if="studyPlan.state==='Yiwancheng'" />
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-4 col-md-4 col-xl-4 col-lg-4 bg-cover rounded" :style="{'background-image':'url('+studyPlan.plan.coverImg+')'}">
+                                        </div>
+                                        <div class="col-8 col-md-8 col-xl-8 col-lg-8">
+                                            <div class="card-body">
+                                                <h3 class="mb-4"><a href="javascript:;" class="text-primary">{{ studyPlan.plan.planName }}</a></h3>
+                                                <ul class="mb-2 list-inline">
+                                                    <li class="list-inline-item">
+                                                        <span class="fw-light fs-5">计划年度：</span><span class="fw-bold text-warning">{{ studyPlan.plan.planYear }}</span>
+                                                    </li>
+                                                    <li class="list-inline-item">
+                                                        <span class="fw-light fs-5">计划学分：</span><span class="fw-bold text-success">{{ studyPlan.totalCredit }}</span>/<span class="fw-light fs-5">{{ studyPlan.plan.planCredit }}</span>
+                                                    </li>
+                                                </ul>
+                                                <ul class="mb-5 list-inline">
+                                                    <li class="list-inline-item">
+                                                        <span class="fw-light fs-5">必修课：</span><span class="fw-bold text-success">{{ studyPlan.overCourseTotal }}</span>/<span class="fw-light fs-5">{{ studyPlan.plan.courseTotal }}</span>
+                                                    </li>
+                                                    <li class="list-inline-item">
+                                                        <span class="fw-light fs-5">选修课：</span><span class="fw-bold text-success">{{ studyPlan.overSelectCourseTotal }}</span>/<span class="fw-light fs-5">{{ studyPlan.plan.selectCourseTotal }}</span>
+                                                    </li>
+                                                </ul>
+                                                <div class="row align-items-center g-0">
+                                                    <div class="col-auto">
+                                                        <i class="bi bi-calendar-range text-warning"></i>
+                                                    </div>
+                                                    <div class="col ms-2">
+                                                        <span>{{ studyPlan.plan.planBeginDateTimeStr }} -  {{ studyPlan.plan.planEndDateTimeStr }}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                    <div class="my-5 text-center">
+                        <el-button icon="el-icon-refresh-right" v-if="list.length>0 && list.length<total" v-on:click="btnLoadMoreClick" :loading="loadMoreLoading">加载更多</el-button>
+                        <span v-else-if="total>form.pageSize" class="fw-light">没有更多了</span>
+                    </div>
+                </div>
+                <div class="pt-10" v-else>
+                    <el-empty image="/sitefiles/assets/images/nodata.svg" description="暂无学习安排"></el-empty>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="pt-10" v-else>
-        <el-empty></el-empty>
-    </div>
+    </el-scrollbar>
 </el-card>
 
 @section Scripts {

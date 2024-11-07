@@ -107,7 +107,7 @@ namespace XBLMS.Web.Controllers.Home
                 }
             }
 
-            var (planTotal, planList) = await _studyPlanUserRepository.GetListAsync("", 1, 1);
+            var (planTotal, planList) = await _studyPlanUserRepository.GetListAsync("", user.Id, 1, 1);
             var planUser = new StudyPlanUser();
             if (planTotal > 0)
             {

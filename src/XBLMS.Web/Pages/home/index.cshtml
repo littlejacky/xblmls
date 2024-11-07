@@ -94,14 +94,14 @@
                         </el-card>
                     </div>
                 </div>
-                <button type="button" class="btn btn-outline-danger btn-sm me-2 rounded-pill border-0" v-if="taskTotal>0">
-                    <span class="mx-1 fw-bold">{{ taskTotal }}</span> 个待办任务
+                <button type="button" class="btn btn-outline-warning btn-sm me-2 rounded-pill border-0" v-if="taskTotal>0">
+                    <span class="mx-1">{{ taskTotal }}</span> 个待办任务<i class="el-icon-arrow-down el-icon--right"></i>
                 </button>
             </el-tooltip>
         </div>
         <div class="me-2">
             <el-dropdown :show-timeout="0" v-on:command="btnUserMenuClick">
-                <button type="button" class="btn btn-outline-success btn-sm rounded-pill border-0">{{ user.displayName }}<i class="el-icon-arrow-down el-icon--right"></i></button>
+                <button type="button" class="btn btn-outline-primary btn-sm rounded-pill border-0">{{ user.displayName }}<i class="el-icon-arrow-down el-icon--right"></i></button>
                 <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item command="profile"><i class="el-icon-edit-outline me-2"></i>修改资料</el-dropdown-item>
                     <el-dropdown-item command="password"><i class="el-icon-key me-2"></i>更改密码</el-dropdown-item>

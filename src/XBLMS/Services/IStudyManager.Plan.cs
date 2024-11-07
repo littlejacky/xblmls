@@ -6,7 +6,7 @@ namespace XBLMS.Services
 {
     public partial interface IStudyManager
     {
-        Task User_GetPlanInfo(StudyPlanUser planUser);
+        Task User_GetPlanInfo(StudyPlanUser planUser, bool isDetail = false);
     }
 
 }

@@ -176,15 +176,15 @@
                                     <el-link :underline="false" v-on:click="btnMoreMenuClick('studyPlan')">更多<i class="el-icon-more ms-2"></i></el-link>
                                 </h5>
                                 <div class="mt-5">
-                                    <div class="card card-hover position-relative" v-if="studyPlan && studyPlan.id>0">
+                                    <div class="card card-hover position-relative p-3 px-4 bg-light" v-if="studyPlan && studyPlan.id>0" style="cursor:pointer;" v-on:click="btnViewPlanClick(studyPlan.id)">
                                         <div class="position-absolute top-50 end-0 translate-middle-y pe-3">
                                             <img width="88" src="/sitefiles/assets/images/status/weikaishi.png" v-if="studyPlan.state==='Weikaishi'" />
                                             <img width="88" src="/sitefiles/assets/images/status/xuexizhong.png" v-if="studyPlan.state==='Xuexizhong'" />
-                                            <img width="88" src="/sitefiles/assets/images/status/yidabao.png" v-if="studyPlan.state==='Yidabiao'" />
+                                            <img width="88" src="/sitefiles/assets/images/status/yidabiao.png" v-if="studyPlan.state==='Yidabiao'" />
                                             <img width="88" src="/sitefiles/assets/images/status/yiwancheng.png" v-if="studyPlan.state==='Yiwancheng'" />
                                         </div>
                                         <div class="row ps-2">
-                                            <a class="col-4 col-md-4 col-xl-4 col-lg-4 bg-cover rounded-start" :style="{'background-image':'url('+studyPlan.plan.coverImg+')'}" href="javascript:;"></a>
+                                            <div class="col-4 col-md-4 col-xl-4 col-lg-4 bg-cover rounded" :style="{'background-image':'url('+studyPlan.plan.coverImg+')'}"></div>
                                             <div class="col-8 col-md-8 col-xl-8 col-lg-8">
                                                 <div class="card-body">
                                                     <h3 class="mb-2"><a href="javascript:;" class="text-inherit">{{ studyPlan.plan.planName }}</a></h3>
@@ -439,8 +439,8 @@
                                     <span><i class="bi bi-award-fill me-2 card-icon text-warning p-2"></i>获得证书</span>
                                     <el-link :underline="false" v-on:click="btnMoreMenuClick('examPaperCer')">更多<i class="el-icon-more ms-2"></i></el-link>
                                 </h5>
-                                <div class="mt-3">
-                                    <div class="card mb-4 card-hover  ">
+                                <div class="mt-4">
+                                    <div class="card card-hover">
                                         <div class="row g-0">
                                             <a href="blog-single.html" class="col-lg-8 col-md-12 col-12 bg-cover img-left-rounded" style="background-image: url(https://codescandy.com/geeks-bootstrap-5/assets/images/blog/blogpost-2.jpg);">
                                                 <img src="https://codescandy.com/geeks-bootstrap-5/assets/images/blog/blogpost-2.jpg" class="img-fluid d-lg-none invisible" alt="">

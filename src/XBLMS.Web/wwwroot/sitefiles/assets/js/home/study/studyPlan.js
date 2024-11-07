@@ -70,8 +70,8 @@ var methods = {
       title: false,
       closebtn: 0,
       url: utils.getStudyUrl('studyPlanInfo', { id: id }),
-      width: "78%",
-      height: "98%",
+      width: "100%",
+      height: "100%",
       end: function () {
         top.$vue.apiGetTask();
         $this.apiGetItem(id);

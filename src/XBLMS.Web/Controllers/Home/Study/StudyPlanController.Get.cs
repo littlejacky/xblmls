@@ -18,7 +18,7 @@ namespace XBLMS.Web.Controllers.Home.Study
             if (user == null) { return Unauthorized(); }
 
             var resultList = new List<StudyPlanUser>();
-            var (total, list) = await _studyPlanUserRepository.GetListAsync("", request.PageIndex, request.PageSize);
+            var (total, list) = await _studyPlanUserRepository.GetListAsync("", user.Id, request.PageIndex, request.PageSize);
             if (total > 0)
             {
                 foreach (var item in list)
