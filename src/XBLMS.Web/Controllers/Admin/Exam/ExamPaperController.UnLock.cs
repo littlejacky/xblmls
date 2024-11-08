@@ -35,7 +35,7 @@ namespace XBLMS.Web.Controllers.Admin.Exam
             await _examPaperUserRepository.UpdateLockedAsync(paper.Id, paper.Locked);
             await _examPaperStartRepository.UpdateLockedAsync(paper.Id, paper.Locked);
 
-            await _authManager.AddAdminLogAsync("解锁试卷", $"试卷：{paper.Title}");
+            await _authManager.AddAdminLogAsync("解锁试卷", $"{paper.Title}");
 
             return new BoolResult
             {

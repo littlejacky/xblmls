@@ -19,7 +19,9 @@ namespace XBLMS.Web.Controllers.Admin.Study
             if (plan != null)
             {
                 await _studyPlanRepository.DeleteAsync(plan.Id);
-                await _authManager.AddAdminLogAsync("删除计划", $"计划名称：{plan.PlanName}");
+                await _studyPlanUserRepository.DeleteByPlanAsync(plan.Id);
+                await _studyPlanCourseRepository.DeleteByPlanAsync(plan.Id);
+                await _authManager.AddAdminLogAsync("删除培训计划", $"{plan.PlanName}");
             }
             return new BoolResult
             {

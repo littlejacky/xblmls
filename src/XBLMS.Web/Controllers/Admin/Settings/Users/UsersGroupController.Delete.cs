@@ -20,7 +20,7 @@ namespace XBLMS.Web.Controllers.Admin.Settings.Users
 
             await _userGroupRepository.DeleteAsync(group.Id);
 
-            await _authManager.AddAdminLogAsync("删除用户组", $"用户组名称:{group.GroupName}");
+            await _authManager.AddAdminLogAsync("删除用户组", $"{group.GroupName}");
 
             return new BoolResult
             {

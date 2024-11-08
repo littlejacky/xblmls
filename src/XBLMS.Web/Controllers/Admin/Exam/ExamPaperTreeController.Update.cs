@@ -22,7 +22,7 @@ namespace XBLMS.Web.Controllers.Admin.Exam
             var item = await _examPaperTreeRepository.GetAsync(request.Item.Id);
             item.Name = request.Item.Name;
             await _examPaperTreeRepository.UpdateAsync(item);
-            await _authManager.AddAdminLogAsync("修改试卷分类", $"分类名称:{item.Name}");
+            await _authManager.AddAdminLogAsync("修改试卷分类", $"{item.Name}");
 
             return new BoolResult
             {

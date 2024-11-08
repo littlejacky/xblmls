@@ -29,7 +29,7 @@ namespace XBLMS.Web.Controllers.Admin.Exam
             tx.CreatorId = admin.Id;
 
             await _examTxRepository.InsertAsync(tx);
-            await _authManager.AddAdminLogAsync("添加题型", $"题型名称:{tx.Name}");
+            await _authManager.AddAdminLogAsync("添加题型", $"{tx.Name}");
             return new BoolResult
             {
                 Value = true

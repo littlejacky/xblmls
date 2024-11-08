@@ -70,6 +70,12 @@ namespace XBLMS.Core.Services
                         var courseUser = await _studyCourseUserRepository.GetAsync(planUser.UserId, planUser.PlanId, planCourse.CourseId);
                         await User_GetCourseInfoByCourseList(studyPlan.Id, course, courseUser);
                         course.Set("CourseType", "必修课");
+
+                        course.Name = planCourse.CourseName;
+                        course.Credit = planCourse.Credit;
+                        course.Duration = planCourse.Duration;
+                        course.StudyHour = planCourse.StudyHour;
+
                         courseList.Add(course);
                     }
                 }
@@ -82,8 +88,22 @@ namespace XBLMS.Core.Services
                         var courseUser = await _studyCourseUserRepository.GetAsync(planUser.UserId, planUser.PlanId, planCourse.CourseId);
                         await User_GetCourseInfoByCourseList(studyPlan.Id, course, courseUser);
                         course.Set("CourseType", "选修课");
+
+                        course.Name = planCourse.CourseName;
+                        course.Credit = planCourse.Credit;
+                        course.Duration = planCourse.Duration;
+                        course.StudyHour = planCourse.StudyHour;
+
                         courseSelectList.Add(course);
                     }
+                }
+
+
+                if (planUser.State == StudyStatType.Weikaishi)
+                {
+                    planUser.State = StudyStatType.Xuexizhong;
+                    planUser.BeginStudyDateTime = DateTime.Now;
+                    await _studyPlanUserRepository.UpdateAsync(planUser);
                 }
 
             }
@@ -153,14 +173,7 @@ namespace XBLMS.Core.Services
                     await _studyPlanUserRepository.UpdateAsync(planUser);
                 }
             }
-            else
-            {
-                if (planUser.State == StudyStatType.Weikaishi)
-                {
-                    planUser.State = StudyStatType.Xuexizhong;
-                    await _studyPlanUserRepository.UpdateAsync(planUser);
-                }
-            }
+    
             if (DateTime.Now > studyPlan.PlanEndDateTime)
             {
                 if (planUser.State != StudyStatType.Yiwancheng && planUser.State != StudyStatType.Yidabiao && planUser.State != StudyStatType.Weidabiao)

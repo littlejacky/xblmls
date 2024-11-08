@@ -232,7 +232,7 @@
                                     <el-link :underline="false" v-on:click="btnMoreMenuClick('studyCourse')">更多<i class="el-icon-more ms-2"></i></el-link>
                                 </h5>
                                 <div class="mt-5">
-                                    <div class="row" v-if="courseList">
+                                    <div class="row" v-if="courseList && courseList.length>0">
                                         <div class="col-xl-4 col-lg-4 col-md-4 col-4" v-for="course in courseList">
                                             <div class="card card-lift card-hover border bg-white p-2" v-on:click="btnViewCourseClick(course)" style="cursor:pointer;">
                                                 <div class="position-relative">
@@ -281,7 +281,7 @@
                                         </div>
                                     </div>
                                     <div v-else>
-                                        <el-empty image="/sitefiles/assets/images/nodata.svg" image-size="88" description="暂无课程"></el-empty>
+                                        <el-empty image="/sitefiles/assets/images/nodata.svg" image-size="88" description="暂无课程上架"></el-empty>
                                     </div>
                                 </div>
                             </div>
@@ -437,37 +437,17 @@
                         <div class="card card-hover-with-icon border-top border-3">
                             <div class="card-body">
                                 <h5 class="card-title d-flex justify-content-between align-items-center">
-                                    <span><i class="bi bi-award-fill me-2 card-icon text-warning p-2"></i>获得证书</span>
+                                    <span><i class="bi bi-award-fill me-2 card-icon text-warning p-2"></i>最新获得证书</span>
                                     <el-link :underline="false" v-on:click="btnMoreMenuClick('examPaperCer')">更多<i class="el-icon-more ms-2"></i></el-link>
                                 </h5>
                                 <div class="mt-4">
-                                    <div class="card card-hover">
+                                    <div class="card card-hover" v-if="topCer && topCer.id>0" v-on:click="btnViewCer(topCer)" style="cursor:pointer;">
                                         <div class="row g-0">
-                                            <a href="blog-single.html" class="col-lg-8 col-md-12 col-12 bg-cover img-left-rounded" style="background-image: url(https://codescandy.com/geeks-bootstrap-5/assets/images/blog/blogpost-2.jpg);">
-                                                <img src="https://codescandy.com/geeks-bootstrap-5/assets/images/blog/blogpost-2.jpg" class="img-fluid d-lg-none invisible" alt="">
-                                            </a>
-                                            <div class="col-lg-4 col-md-12 col-12">
-                                                <div class="card-body">
-                                                    <a href="#" class="badge bg-warning mb-3">Courses</a>
-                                                    <p>
-                                                        Our features, journey, tips and us being us. Lorem ipsum dolor sit amet, accumsan
-                                                        in, tempor dictum neque.
-                                                    </p>
-                                                    <div class="row align-items-center g-0 mt-7">
-                                                        <div class="col-auto">
-                                                            <img src="https://codescandy.com/geeks-bootstrap-5/assets/images/avatar/avatar-6.jpg" alt="" class="rounded-circle avatar-sm me-2">
-                                                        </div>
-                                                        <div class="col lh-1 ">
-                                                            <h5 class="mb-1">Dustin Warren</h5>
-                                                            <p class="fs-6 mb-0">September 13, 2020</p>
-                                                        </div>
-                                                        <div class="col-auto">
-                                                            <p class="fs-6 mb-0">6 Min Read</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            <img :src="topCer.cerImg" class="w-100">
                                         </div>
+                                    </div>
+                                    <div v-else>
+                                        <el-empty image="/sitefiles/assets/images/nodata.svg" image-size="88" description="暂无证书"></el-empty>
                                     </div>
                                 </div>
                             </div>

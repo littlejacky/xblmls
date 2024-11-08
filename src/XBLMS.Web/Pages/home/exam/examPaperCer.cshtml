@@ -37,7 +37,7 @@
     </div>
     <el-scrollbar class="scrollbar" :style="{ height: ($(window).height()-136) + 'px' }">
         <div class="pe-3" v-if="list && list.length>0">
-            <div class="ms-5 position-relative card-hover-with-icon mb-13 mt-10" v-for="(cer,index) in list" v-on:click="btnViewCer(cer)">
+            <div class="ms-5 position-relative card-hover-with-icon mb-13 mt-8" v-for="(cer,index) in list" v-on:click="btnViewCer(cer)">
                 <div class="position-absolute top-50 start-0 translate-middle">
                     <div class="position-relative">
                         <i class="bi bi-award fs-1 text-warning"></i>
@@ -70,7 +70,7 @@
             </div>
         </div>
         <div class="pt-10" v-else>
-            <el-empty></el-empty>
+            <el-empty image="/sitefiles/assets/images/nodata.svg" description="暂无证书"></el-empty>
         </div>
     </el-scrollbar>
 </el-card>

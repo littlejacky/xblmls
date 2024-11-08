@@ -25,7 +25,7 @@ namespace XBLMS.Web.Controllers.Admin.Settings.Administrators
                 adminInfo.UserName
             });
 
-            await _authManager.AddAdminLogAsync("解锁管理员", $"管理员:{adminInfo.UserName}");
+            await _authManager.AddAdminLogAsync("解锁管理员", $"{adminInfo.UserName}");
 
             return new BoolResult
             {

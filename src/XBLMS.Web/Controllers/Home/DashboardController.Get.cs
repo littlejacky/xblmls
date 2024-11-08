@@ -119,6 +119,46 @@ namespace XBLMS.Web.Controllers.Home
             var (totalCourse, totalOverCourse) = await _studyCourseUserRepository.GetTotalAsync(user.Id);
             var totalDuration = await _studyCourseUserRepository.GetTotalDurationAsync(user.Id);
 
+
+            var topCer = new ExamCerUser();
+            var (cerTotal, cerList) = await _examCerUserRepository.GetListAsync(user.Id, 1, 1);
+            if (total > 0)
+            {
+                foreach (var item in cerList)
+                {
+                    var cerInfo = await _examCerRepository.GetAsync(item.CerId);
+                    if (cerInfo != null)
+                    {
+                        item.Set("CerName", cerInfo.Name);
+                        item.Set("CerOrganName", cerInfo.OrganName);
+                    }
+                    else
+                    {
+                        item.Set("CerName", "证书异常");
+                    }
+                    item.Set("AwartDate", item.CerDateTime.Value.ToString(DateUtils.FormatStringDateOnlyCN));
+                    var paper = await _examPaperRepository.GetAsync(item.ExamPaperId);
+                    if (paper != null)
+                    {
+                        item.Set("PaperName", paper.Title);
+                    }
+                    else
+                    {
+                        item.Set("PaperName", "试卷异常");
+                    }
+                    var start = await _examPaperStartRepository.GetAsync(item.ExamStartId);
+                    if (start != null)
+                    {
+                        item.Set("PaperScore", start.Score);
+                    }
+                    else
+                    {
+                        item.Set("PaperScore", "成绩异常");
+                    }
+                    topCer = item;
+                }
+            }
+
             return new GetResult
             {
                 User = user,
@@ -152,6 +192,8 @@ namespace XBLMS.Web.Controllers.Home
                 TotalOverCourse = totalOverCourse,
 
                 TotalDuration = totalDuration,
+
+                TopCer = topCer
             };
         }
     }

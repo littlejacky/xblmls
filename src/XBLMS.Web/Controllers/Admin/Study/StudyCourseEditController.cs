@@ -28,6 +28,7 @@ namespace XBLMS.Web.Controllers.Admin.Study
         private readonly IStudyCourseTreeRepository _studyCourseTreeRepository;
         private readonly IStudyCourseFilesRepository _studyCourseFilesRepository;
         private readonly IStudyCourseWareRepository _studyCourseWareRepository;
+        private readonly IStudyCourseUserRepository _studyCourseUserRepository;
 
         public StudyCourseEditController(IAuthManager authManager,
             IPathManager pathManager,
@@ -36,7 +37,8 @@ namespace XBLMS.Web.Controllers.Admin.Study
             IStudyCourseRepository studyCourseRepository,
             IStudyCourseFilesRepository studyCourseFilesRepository,
             IStudyCourseTreeRepository studyCourseTreeRepository,
-            IStudyCourseWareRepository studyCourseWareRepository)
+            IStudyCourseWareRepository studyCourseWareRepository,
+            IStudyCourseUserRepository studyCourseUserRepository)
         {
             _authManager = authManager;
             _pathManager = pathManager;
@@ -46,6 +48,7 @@ namespace XBLMS.Web.Controllers.Admin.Study
             _studyCourseTreeRepository = studyCourseTreeRepository;
             _studyCourseFilesRepository = studyCourseFilesRepository;
             _studyCourseWareRepository = studyCourseWareRepository;
+            _studyCourseUserRepository = studyCourseUserRepository;
         }
         public class GetRequest
         {

@@ -19,8 +19,9 @@ namespace XBLMS.Web.Controllers.Admin.Study
             if (course != null)
             {
                 await _studyCourseRepository.DeleteAsync(course.Id);
+                await _studyCourseUserRepository.DeleteByCourseAsync(course.Id);
                 await _studyCourseWareRepository.DeleteByCourseIdAsync(course.Id);
-                await _authManager.AddAdminLogAsync("删除课程", $"课程名称：{course.Name}");
+                await _authManager.AddAdminLogAsync("删除课程", $"{course.Name}");
             }
             return new BoolResult
             {

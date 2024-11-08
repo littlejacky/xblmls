@@ -36,7 +36,7 @@ namespace XBLMS.Web.Controllers.Admin.Exam
             {
                 var cerInfo = await _examCerRepository.GetAsync(cer.Id);
                 await _examCerRepository.UpdateAsync(cer);
-                await _authManager.AddAdminLogAsync("修改证书模板", $"名称:{cerInfo.Name}");
+                await _authManager.AddAdminLogAsync("修改证书模板", $"{cerInfo.Name}");
                 return new IntResult
                 {
                     Value = cerInfo.Id
@@ -50,7 +50,7 @@ namespace XBLMS.Web.Controllers.Admin.Exam
                 cer.DepartmentId = auth.DepartmentId;
                 var id = await _examCerRepository.InsertAsync(cer);
                 await _statRepository.AddCountAsync(StatType.ExamCerAdd);
-                await _authManager.AddAdminLogAsync("添加证书模板", $"名称:{cer.Name}");
+                await _authManager.AddAdminLogAsync("添加证书模板", $"{cer.Name}");
                 return new IntResult
                 {
                     Value = id

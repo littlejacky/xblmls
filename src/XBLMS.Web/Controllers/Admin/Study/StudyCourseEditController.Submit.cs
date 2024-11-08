@@ -70,6 +70,7 @@ namespace XBLMS.Web.Controllers.Admin.Study
                 }
 
                 await _studyCourseWareRepository.DeleteByNotIdsAsync(courseWareIds, course.Id);
+                await _studyCourseUserRepository.UpdateByCourseAsync(course);
                 await _authManager.AddAdminLogAsync("修改课程", $"{course.Name}");
             }
             else

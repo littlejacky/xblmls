@@ -21,7 +21,7 @@ namespace XBLMS.Web.Controllers.Admin.Exam
             {
                 await _examQuestionnaireRepository.DeleteAsync(paper.Id);
                 await _examManager.ClearQuestionnaire(paper.Id);
-                await _authManager.AddAdminLogAsync("删除问卷调查", $"名称：{paper.Title}");
+                await _authManager.AddAdminLogAsync("删除问卷调查", $"{paper.Title}");
 
             }
             return new BoolResult

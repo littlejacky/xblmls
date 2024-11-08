@@ -21,7 +21,7 @@ namespace XBLMS.Web.Controllers.Admin.Exam
 
             await _examTmGroupRepository.DeleteAsync(group.Id);
 
-            await _authManager.AddAdminLogAsync("删除题目组", $"题目组名称:{group.GroupName}");
+            await _authManager.AddAdminLogAsync("删除题目组", $"{group.GroupName}");
 
             return new BoolResult
             {

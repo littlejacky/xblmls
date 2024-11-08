@@ -22,7 +22,7 @@ namespace XBLMS.Web.Controllers.Admin.Study
             var item = await _studyCourseTreeRepository.GetAsync(request.Item.Id);
             item.Name = request.Item.Name;
             await _studyCourseTreeRepository.UpdateAsync(item);
-            await _authManager.AddAdminLogAsync("修改课程分类", $"分类名称:{item.Name}");
+            await _authManager.AddAdminLogAsync("修改课程分类", $"{item.Name}");
 
             return new BoolResult
             {

@@ -22,7 +22,7 @@ namespace XBLMS.Web.Controllers.Admin.Study
 
             await _studyCourseEvaluationRepository.UpdateAsync(item);
 
-            await _authManager.AddAdminLogAsync("锁定课程评价", $"课程评价：{ item.Title }");
+            await _authManager.AddAdminLogAsync("锁定课程评价", $"{ item.Title }");
 
             return new BoolResult
             {

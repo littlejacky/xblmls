@@ -47,6 +47,21 @@ namespace XBLMS.Core.Repositories
             return await _repository.DeleteAsync(id);
         }
 
+        public async Task<bool> DeleteByPlanAsync(int planId)
+        {
+            return await _repository.DeleteAsync(Q.Where(nameof(StudyPlanUser.PlanId), planId)) > 0;
+        }
+
+        public async Task<bool> UpdateByPlanAsync(StudyPlan planInfo)
+        {
+            return await _repository.UpdateAsync(Q.
+                Set(nameof(StudyPlanUser.Locked), planInfo.Locked).
+                Set(nameof(StudyPlanUser.Credit), planInfo.PlanCredit).
+                Set(nameof(StudyPlanUser.PlanYear), planInfo.PlanYear).
+                Set(nameof(StudyPlanUser.KeyWords), planInfo.PlanName).
+                Where(nameof(StudyPlanUser.PlanId), planInfo.Id)) > 0;
+        }
+
         public async Task<StudyPlanUser> GetAsync(int id)
         {
             return await _repository.GetAsync(id);

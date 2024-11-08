@@ -26,7 +26,7 @@ namespace XBLMS.Web.Controllers.Admin.Study
             var tmCount =0;
             if (tmCount > 0) return this.Error($"该分类下面包含【{tmCount}】门课程，暂时不允许删除");
             await _studyCourseTreeRepository.DeleteAsync(ids);
-            await _authManager.AddAdminLogAsync("删除课程分类及所有下级", $"分类名称：{item.Name}");
+            await _authManager.AddAdminLogAsync("删除课程分类及所有下级", $"{item.Name}");
             return new BoolResult
             {
                 Value = true

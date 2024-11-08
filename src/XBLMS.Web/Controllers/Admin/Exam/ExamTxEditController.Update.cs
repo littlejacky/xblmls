@@ -29,7 +29,7 @@ namespace XBLMS.Web.Controllers.Admin.Exam
 
             await _examTxRepository.UpdateAsync(tx);
 
-            await _authManager.AddAdminLogAsync("修改题型", $"题型名称:{tx.Name}");
+            await _authManager.AddAdminLogAsync("修改题型", $"{tx.Name}");
 
             return new BoolResult
             {

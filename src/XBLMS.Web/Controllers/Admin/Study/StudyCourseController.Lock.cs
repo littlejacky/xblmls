@@ -32,8 +32,8 @@ namespace XBLMS.Web.Controllers.Admin.Study
             course.Locked = true;
 
             await _studyCourseRepository.UpdateAsync(course);
-
-            await _authManager.AddAdminLogAsync("锁定课程", $"课程名称：{ course.Name }");
+            await _studyCourseUserRepository.UpdateByCourseAsync(course);
+            await _authManager.AddAdminLogAsync("锁定课程", $"{course.Name}");
 
             return new BoolResult
             {

@@ -11,6 +11,7 @@ namespace XBLMS.Repositories
         Task<int> InsertAsync(StudyPlanCourse item);
         Task<bool> UpdateAsync(StudyPlanCourse item);
         Task<bool> DeleteAsync(int id);
+        Task<bool> DeleteByPlanAsync(int planId);
         Task<bool> DeleteByNotIdsAsync(List<int> notIds, int planId);
         Task<StudyPlanCourse> GetAsync(int id);
         Task<StudyPlanCourse> GetAsync(int planId, int courseId);

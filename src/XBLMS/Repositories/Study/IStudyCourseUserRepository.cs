@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Datory;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using Datory;
-using XBLMS.Dto;
 using XBLMS.Models;
 
 namespace XBLMS.Repositories
@@ -10,7 +9,9 @@ namespace XBLMS.Repositories
     {
         Task<int> InsertAsync(StudyCourseUser item);
         Task<bool> UpdateAsync(StudyCourseUser item);
+        Task<bool> UpdateByCourseAsync(StudyCourse courseInfo);
         Task<bool> DeleteAsync(int id);
+        Task<bool> DeleteByCourseAsync(int courseId);
         Task<StudyCourseUser> GetAsync(int id);
         Task<StudyCourseUser> GetAsync(int userId, int planId, int courseId);
         Task<(int total, List<StudyCourseUser> list)> GetListAsync(int userId, bool collection, string keyWords, string mark, string orderby, string state, int pageIndex, int pageSize);

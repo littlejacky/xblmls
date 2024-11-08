@@ -54,7 +54,7 @@ namespace XBLMS.Web.Controllers.Admin.Study
                         CreatorId = auth.AdminId
                     });
 
-                    await _authManager.AddAdminLogAsync("添加课程分类", $"分类名称:{name}");
+                    await _authManager.AddAdminLogAsync("添加课程分类", $"{name}");
 
 
                     insertedTreeIdHashtable[count + 1] = insertedTkId;

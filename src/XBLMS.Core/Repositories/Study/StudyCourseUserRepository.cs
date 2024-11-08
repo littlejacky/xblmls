@@ -1,14 +1,12 @@
 ﻿using Datory;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Principal;
 using System.Threading.Tasks;
 using XBLMS.Enums;
 using XBLMS.Models;
 using XBLMS.Repositories;
 using XBLMS.Services;
 using XBLMS.Utils;
-using YamlDotNet.Core;
 
 namespace XBLMS.Core.Repositories
 {
@@ -37,6 +35,21 @@ namespace XBLMS.Core.Repositories
         public async Task<bool> UpdateAsync(StudyCourseUser item)
         {
             return await _repository.UpdateAsync(item);
+        }
+        public async Task<bool> UpdateByCourseAsync(StudyCourse courseInfo)
+        {
+            return await _repository.UpdateAsync(Q.
+                Set(nameof(StudyCourseUser.Locked), courseInfo.Locked).
+                Set(nameof(StudyCourseUser.Credit), courseInfo.Credit).
+                Set(nameof(StudyCourseUser.Mark), courseInfo.Mark).
+                Set(nameof(StudyCourseUser.KeyWords), courseInfo.Name).
+                Where(nameof(StudyCourseUser.PlanId), 0).
+                Where(nameof(StudyCourseUser.CourseId), courseInfo.Id)) > 0;
+        }
+
+        public async Task<bool> DeleteByCourseAsync(int courseId)
+        {
+            return await _repository.DeleteAsync(Q.Where(nameof(StudyCourseUser.CourseId), courseId)) > 0;
         }
 
         public async Task<bool> DeleteAsync(int id)

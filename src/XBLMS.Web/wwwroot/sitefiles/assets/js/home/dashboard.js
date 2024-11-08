@@ -97,7 +97,9 @@ var data = utils.init({
   studyPlanTotalOverCredit: 0,
   totalCourse: 0,
   totalOverCourse: 0,
-  totalDuration:0
+  totalDuration: 0,
+
+  topCer:null
 });
 
 var methods = {
@@ -142,6 +144,7 @@ var methods = {
 
       $this.totalDuration = res.totalDuration;
 
+      $this.topCer = res.topCer;
       setTimeout(function () {
         $this.passSeries = [100];
       }, 1000);
@@ -266,6 +269,13 @@ var methods = {
       }
     });
   },
+  btnViewCer: function (row) {
+    top.utils.openLayerPhoto({
+      title: row.name,
+      id: row.id,
+      src: row.cerImg + '?r=' + Math.random()
+    })
+  }
 };
 Vue.component("apexchart", {
   extends: VueApexCharts

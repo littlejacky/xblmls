@@ -23,7 +23,7 @@ namespace XBLMS.Web.Controllers.Admin.Settings.Administrators
             var adminInfo = await _administratorRepository.GetByUserIdAsync(request.Id);
             await _administratorRepository.DeleteAsync(adminInfo.Id);
 
-            await _authManager.AddAdminLogAsync("删除管理员", $"管理员:{adminInfo.UserName}");
+            await _authManager.AddAdminLogAsync("删除管理员", $"{adminInfo.UserName}");
 
             return new BoolResult
             {

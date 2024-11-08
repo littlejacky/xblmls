@@ -34,6 +34,8 @@ namespace XBLMS.Web.Controllers.Home
         private readonly IStudyPlanRepository _studyPlanRepository;
         private readonly IStudyPlanUserRepository _studyPlanUserRepository;
         private readonly IStudyPlanCourseRepository _studyPlanCourseRepository;
+        private readonly IExamCerUserRepository _examCerUserRepository;
+        private readonly IExamCerRepository _examCerRepository;
 
         public DashboardController(IConfigRepository configRepository,
             IOrganManager organManager,
@@ -49,7 +51,9 @@ namespace XBLMS.Web.Controllers.Home
             IStudyCourseRepository studyCourseRepository,
             IStudyPlanRepository studyPlanRepository,
             IStudyPlanUserRepository studyPlanUserRepository,
-            IStudyPlanCourseRepository studyPlanCourseRepository)
+            IStudyPlanCourseRepository studyPlanCourseRepository,
+            IExamCerUserRepository examCerUserRepository,
+            IExamCerRepository examCerRepository)
         {
             _configRepository = configRepository;
             _authManager = authManager;
@@ -66,6 +70,8 @@ namespace XBLMS.Web.Controllers.Home
             _studyPlanRepository = studyPlanRepository;
             _studyPlanUserRepository = studyPlanUserRepository;
             _studyPlanCourseRepository = studyPlanCourseRepository;
+            _examCerUserRepository = examCerUserRepository;
+            _examCerRepository = examCerRepository;
         }
 
         public class GetResult
@@ -102,6 +108,8 @@ namespace XBLMS.Web.Controllers.Home
             public int TotalOverCourse { get; set; }
 
             public long TotalDuration { get; set; }
+
+            public ExamCerUser TopCer { get; set; }
 
         }
 

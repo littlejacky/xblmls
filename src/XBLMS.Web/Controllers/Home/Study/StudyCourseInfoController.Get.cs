@@ -95,6 +95,9 @@ namespace XBLMS.Web.Controllers.Home.Study
                 if (planCourse != null)
                 {
                     course.Name = planCourse.CourseName;
+                    course.Credit = planCourse.Credit;
+                    course.Duration = planCourse.Duration;
+                    course.StudyHour = planCourse.StudyHour;
                     course.ExamId = planCourse.ExamId;
                     course.ExamName = planCourse.ExamName;
                     course.ExamQuestionnaireId = planCourse.ExamQuestionnaireId;

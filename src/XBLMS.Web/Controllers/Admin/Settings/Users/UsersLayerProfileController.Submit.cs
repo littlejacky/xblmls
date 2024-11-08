@@ -102,7 +102,7 @@ namespace XBLMS.Web.Controllers.Admin.Settings.Users
                     await _userRepository.UpdateAsync(resultUser);
                 }
 
-                await _authManager.AddAdminLogAsync("添加用户", $"用户:{ request.UserName }");
+                await _authManager.AddAdminLogAsync("添加用户", $"{ request.UserName }");
             }
             else
             {
@@ -124,7 +124,7 @@ namespace XBLMS.Web.Controllers.Admin.Settings.Users
                     return this.Error($"用户修改失败：{errorMessage}");
                 }
 
-                await _authManager.AddAdminLogAsync("修改用户", $"用户:{ request.UserName }");
+                await _authManager.AddAdminLogAsync("修改用户", $"{ request.UserName }");
             }
 
             return new BoolResult

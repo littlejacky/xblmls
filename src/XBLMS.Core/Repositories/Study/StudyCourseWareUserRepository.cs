@@ -38,6 +38,11 @@ namespace XBLMS.Core.Repositories
         {
             return await _repository.DeleteAsync(id);
         }
+        public async Task<bool> DeleteByCourseIdAsync(int courseId)
+        {
+            return await _repository.DeleteAsync(Q.Where(nameof(StudyCourseWareUser.CourseId), courseId)) > 0;
+        }
+
         public async Task<bool> ClearCureentAsync(int userId, int planId, int courseId)
         {
             var query = Q.

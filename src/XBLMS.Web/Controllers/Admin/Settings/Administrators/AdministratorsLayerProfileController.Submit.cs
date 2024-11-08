@@ -106,7 +106,7 @@ namespace XBLMS.Web.Controllers.Admin.Settings.Administrators
                     await _administratorRepository.UpdateAsync(administrator);
                 }
 
-                await _authManager.AddAdminLogAsync("添加管理员", $"管理员:{administrator.DisplayName}");
+                await _authManager.AddAdminLogAsync("添加管理员", $"{administrator.DisplayName}");
             }
             else
             {
@@ -115,7 +115,7 @@ namespace XBLMS.Web.Controllers.Admin.Settings.Administrators
                 {
                     return this.Error($"管理员修改失败：{errorMessage}");
                 }
-                await _authManager.AddAdminLogAsync("修改管理员属性", $"管理员:{administrator.DisplayName}");
+                await _authManager.AddAdminLogAsync("修改管理员属性", $"{administrator.DisplayName}");
             }
 
             return new BoolResult

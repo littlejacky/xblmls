@@ -4,7 +4,7 @@ using Datory.Annotations;
 namespace XBLMS.Models
 {
     [DataTable("xblms_Log")]
-    public class Log: Entity
+    public class Log : Entity
     {
         [DataColumn]
         public int AdminId { get; set; }
@@ -18,7 +18,7 @@ namespace XBLMS.Models
         [DataColumn]
         public string Action { get; set; }
 
-        [DataColumn]
+        [DataColumn(Text = true)]
         public string Summary { get; set; }
     }
 }

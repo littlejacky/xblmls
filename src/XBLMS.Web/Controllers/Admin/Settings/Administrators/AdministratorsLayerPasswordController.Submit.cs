@@ -41,7 +41,7 @@ namespace XBLMS.Web.Controllers.Admin.Settings.Administrators
                 return this.Error($"更改密码失败：{errorMessage}");
             }
 
-            await _authManager.AddAdminLogAsync("重设管理员密码", $"管理员:{adminInfo.UserName}");
+            await _authManager.AddAdminLogAsync("重设管理员密码", $"{adminInfo.UserName}");
 
             return new BoolResult
             {

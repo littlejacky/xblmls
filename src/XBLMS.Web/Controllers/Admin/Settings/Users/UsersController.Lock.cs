@@ -25,7 +25,7 @@ namespace XBLMS.Web.Controllers.Admin.Settings.Users
                 request.Id
             });
 
-            await _authManager.AddAdminLogAsync("锁定用户", $"用户:{user.UserName}");
+            await _authManager.AddAdminLogAsync("锁定用户", $"{user.UserName}");
 
             return new BoolResult
             {

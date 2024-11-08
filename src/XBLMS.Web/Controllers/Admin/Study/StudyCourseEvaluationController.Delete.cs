@@ -20,7 +20,7 @@ namespace XBLMS.Web.Controllers.Admin.Study
             {
                 await _studyCourseEvaluationRepository.DeleteAsync(item.Id);
                 await _studyCourseEvaluationItemRepository.DeleteByEvaluationIdAsync(item.Id);
-                await _authManager.AddAdminLogAsync("删除课程评价", $"课程评价：{item.Title}");
+                await _authManager.AddAdminLogAsync("删除课程评价", $"{item.Title}");
             }
             return new BoolResult
             {

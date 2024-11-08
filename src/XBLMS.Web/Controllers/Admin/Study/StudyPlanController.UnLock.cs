@@ -21,8 +21,9 @@ namespace XBLMS.Web.Controllers.Admin.Study
             plan.Locked = false;
 
             await _studyPlanRepository.UpdateAsync(plan);
+            await _studyPlanUserRepository.UpdateByPlanAsync(plan);
 
-            await _authManager.AddAdminLogAsync("解锁计划", $"计划名称：{plan.PlanName}");
+            await _authManager.AddAdminLogAsync("解锁培训计划", $"{plan.PlanName}");
 
             return new BoolResult
             {

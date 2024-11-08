@@ -72,7 +72,7 @@ namespace XBLMS.Web.Controllers.Admin.Exam
                 var group = await _examTmGroupRepository.GetAsync(request.Group.Id);
 
                 await _examTmGroupRepository.UpdateAsync(request.Group);
-                await _authManager.AddAdminLogAsync("修改题目组", $"题目组名称：{group.GroupName}");
+                await _authManager.AddAdminLogAsync("修改题目组", $"{group.GroupName}");
             }
             else
             {
@@ -81,7 +81,7 @@ namespace XBLMS.Web.Controllers.Admin.Exam
                 request.Group.DepartmentId = auth.DepartmentId;
 
                 await _examTmGroupRepository.InsertAsync(request.Group);
-                await _authManager.AddAdminLogAsync("新增题目组", $"题目组名称：{request.Group.GroupName}");
+                await _authManager.AddAdminLogAsync("新增题目组", $"{request.Group.GroupName}");
             }
 
             return new BoolResult

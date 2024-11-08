@@ -37,7 +37,7 @@ namespace XBLMS.Web.Controllers.Admin.Settings.Database
                     DirectoryUtils.DeleteDirectoryIfExists(directionryPath);
                 }
             }
-            await _authManager.AddAdminLogAsync("删除数据库备份", $"备份时间：{job.EndTime}");
+            await _authManager.AddAdminLogAsync("删除数据库备份", $"{job.EndTime}");
             await _dbBackupRepository.DeleteAsync(request.Id);
             return new BoolResult
             {
@@ -52,7 +52,7 @@ namespace XBLMS.Web.Controllers.Admin.Settings.Database
                 return this.NoAuth();
             }
             var jobTime = await Backup();
-            await _authManager.AddAdminLogAsync("备份数据库", $"备份时间：{jobTime}");
+            await _authManager.AddAdminLogAsync("备份数据库", $"{jobTime}");
             return new BoolResult
             {
                 Value = true

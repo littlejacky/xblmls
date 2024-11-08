@@ -16,7 +16,7 @@ namespace XBLMS.Web.Controllers.Admin.Settings.Administrators
             await _roleRepository.DeleteRoleAsync(roleInfo.Id);
             await _administratorsInRolesRepository.DeleteByRoleIdAsync(roleInfo.Id);
 
-            await _authManager.AddAdminLogAsync("删除管理员角色", $"角色名称:{roleInfo.RoleName}");
+            await _authManager.AddAdminLogAsync("删除管理员角色", $"{roleInfo.RoleName}");
             
 
             return new BoolResult

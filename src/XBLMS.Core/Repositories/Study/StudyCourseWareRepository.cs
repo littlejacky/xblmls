@@ -53,7 +53,6 @@ namespace XBLMS.Core.Repositories
             return await _repository.GetAsync(id);
         }
 
-
         public async Task<List<StudyCourseWare>> GetListAsync(int courseId)
         {
             var query = Q.Where(nameof(StudyCourseWare.CourseId), courseId).OrderBy(nameof(StudyCourseWare.Taxis));

@@ -19,7 +19,7 @@ namespace XBLMS.Web.Controllers.Admin.Settings.Home
             await _userMenuRepository.DeleteAsync(request.Id);
 
             var menu = await _userMenuRepository.GetAsync(request.Id);
-            await _authManager.AddAdminLogAsync("删除用户菜单", $"用户菜单:{ menu.Text }");
+            await _authManager.AddAdminLogAsync("删除用户菜单", $"{ menu.Text }");
             return new UserMenusResult
             {
                 UserMenus = await _userMenuRepository.GetUserMenusAsync()
