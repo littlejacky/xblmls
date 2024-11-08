@@ -108,7 +108,8 @@ namespace XBLMS.Core.Services
 
             }
 
-
+            var maxCj = await _examPaperStartRepository.GetMaxScoreAsync(planUser.UserId, studyPlan.ExamId, studyPlan.Id, 0);
+            var courseOver = false;
             if (planUser.State != StudyStatType.Yiwancheng || planUser.State != StudyStatType.Yidabiao)
             {
                 var overCourse = false;
@@ -163,17 +164,45 @@ namespace XBLMS.Core.Services
 
                 if (overSelectCourse && overCourse)
                 {
-                    planUser.State = StudyStatType.Yiwancheng;
+                    courseOver = true;
 
-                    if (planUser.TotalCredit >= studyPlan.PlanCredit)
+                    var examPass = false;
+
+                    if (studyPlan.ExamId > 0)
                     {
-                        planUser.State = StudyStatType.Yidabiao;
+                        var examPaper = await _examPaperRepository.GetAsync(studyPlan.ExamId);
+                        if (examPaper != null)
+                        {
+                            if (maxCj > examPaper.PassScore)
+                            {
+                                examPass = true;
+                            }
+                        }
+                        else
+                        {
+                            examPass = true;
+                        }
+                    }
+                    else
+                    {
+                        examPass = true;
                     }
 
-                    await _studyPlanUserRepository.UpdateAsync(planUser);
+                    if (examPass)
+                    {
+                        planUser.State = StudyStatType.Yiwancheng;
+
+                        if (planUser.TotalCredit >= studyPlan.PlanCredit)
+                        {
+                            planUser.State = StudyStatType.Yidabiao;
+                        }
+
+                        await _studyPlanUserRepository.UpdateAsync(planUser);
+                    }
+
                 }
             }
-    
+
             if (DateTime.Now > studyPlan.PlanEndDateTime)
             {
                 if (planUser.State != StudyStatType.Yiwancheng && planUser.State != StudyStatType.Yidabiao && planUser.State != StudyStatType.Weidabiao)
@@ -188,6 +217,8 @@ namespace XBLMS.Core.Services
             planUser.Set("OverSelectCourseDurationTotal", overSelectCourseDurationTotal);
             planUser.Set("CourseList", courseList);
             planUser.Set("CourseSelectList", courseSelectList);
+            planUser.Set("CourseOver", courseOver);
+            planUser.Set("MaxScore", maxCj);
 
             var isStudy = true;
             if (studyPlan.PlanBeginDateTime.Value > DateTime.Now || studyPlan.PlanEndDateTime.Value < DateTime.Now)

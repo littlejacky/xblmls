@@ -295,8 +295,10 @@ namespace XBLMS.Core.Services
                 }
             }
 
+            var courseName = "培训计划：xxxxx";
+
             var examUser = await _examPaperUserRepository.GetAsync(paper.Id, user.Id, planId, courseId);
-            if (courseId > 0)
+            if (courseId > 0 || planId > 0)
             {
                 if (examUser == null)
                 {
@@ -319,7 +321,9 @@ namespace XBLMS.Core.Services
                     });
                     examUser = await _examPaperUserRepository.GetAsync(examUserId);
                 }
+
             }
+            paper.Set("CourseName", courseName);
             paper.Set("ExamUserId", examUser.Id);
             paper.Set("PlanId", planId);
             paper.Set("CourseId", courseId);
@@ -490,7 +494,7 @@ namespace XBLMS.Core.Services
 
             return (true, "");
         }
-        public async Task<(bool Success, string msg)> CheckExam(int paperId, int userId,int planId,int courseId)
+        public async Task<(bool Success, string msg)> CheckExam(int paperId, int userId, int planId, int courseId)
         {
             var paper = await _examPaperRepository.GetAsync(paperId);
             var paperUser = await _examPaperUserRepository.GetAsync(paperId, userId, planId, courseId);

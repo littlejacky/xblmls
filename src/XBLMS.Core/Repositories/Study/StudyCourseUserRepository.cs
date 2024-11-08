@@ -43,7 +43,6 @@ namespace XBLMS.Core.Repositories
                 Set(nameof(StudyCourseUser.Credit), courseInfo.Credit).
                 Set(nameof(StudyCourseUser.Mark), courseInfo.Mark).
                 Set(nameof(StudyCourseUser.KeyWords), courseInfo.Name).
-                Where(nameof(StudyCourseUser.PlanId), 0).
                 Where(nameof(StudyCourseUser.CourseId), courseInfo.Id)) > 0;
         }
 

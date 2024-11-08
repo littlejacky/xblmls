@@ -40,6 +40,19 @@ var methods = {
       }
     });
   },
+  btnViewExamClick: function () {
+    var $this = this;
+    top.utils.openLayer({
+      title: false,
+      closebtn: 0,
+      url: utils.getExamUrl('examPaperInfo', { id: this.studyPlan.plan.examId, planId: this.id, courseId: 0 }),
+      width: "78%",
+      height: "98%",
+      end: function () {
+        $this.apiGet();
+      }
+    });
+  },
 };
 
 var $vue = new Vue({

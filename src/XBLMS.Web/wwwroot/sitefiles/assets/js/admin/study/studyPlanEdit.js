@@ -176,12 +176,19 @@ var methods = {
           });
         }
         else {
-          $this.courseList.forEach(item => {
-            if (item.guid === guid) {
-              item.examId = 0;
-              item.examName = '';
-            }
-          });
+          if (guid === "-1") {
+            $this.form.examId = 0;
+            $this.form.examName = "";
+          }
+          else {
+            $this.courseList.forEach(item => {
+              if (item.guid === guid) {
+                item.examId = 0;
+                item.examName = '';
+              }
+            });
+          }
+
         }
       }
     });
@@ -209,12 +216,19 @@ var methods = {
       });
     }
     else {
-      this.courseList.forEach(item => {
-        if (item.guid === this.curGuid) {
-          item.examId = id;
-          item.examName = name;
-        }
-      });
+      if (this.curGuid === "-1") {
+        this.form.examId = id;
+        this.form.examName = name;
+      }
+      else {
+        this.courseList.forEach(item => {
+          if (item.guid === this.curGuid) {
+            item.examId = id;
+            item.examName = name;
+          }
+        });
+      }
+
     }
   },
   btnSelectQClick: function (guid, isSelect) {

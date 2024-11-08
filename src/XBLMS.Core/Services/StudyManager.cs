@@ -17,6 +17,8 @@ namespace XBLMS.Core.Services
         private readonly IStudyCourseUserRepository _studyCourseUserRepository;
         private readonly IStudyPlanCourseRepository _studyPlanCourseRepository;
         private readonly IStudyPlanRepository _studyPlanRepository;
+        private readonly IExamPaperStartRepository _examPaperStartRepository;
+        private readonly IExamPaperRepository _examPaperRepository;
 
 
         public StudyManager(ISettingsManager settingsManager,
@@ -29,7 +31,9 @@ namespace XBLMS.Core.Services
             IStudyPlanUserRepository studyPlanUserRepository,
             IStudyCourseUserRepository studyCourseUserRepository,
             IStudyPlanCourseRepository studyPlanCourseRepository,
-            IStudyPlanRepository studyPlanRepository)
+            IStudyPlanRepository studyPlanRepository,
+            IExamPaperStartRepository examPaperStartRepository,
+            IExamPaperRepository examPaperRepository)
         {
             _settingsManager = settingsManager;
             _organManager = organManager;
@@ -42,6 +46,8 @@ namespace XBLMS.Core.Services
             _studyCourseUserRepository = studyCourseUserRepository;
             _studyPlanCourseRepository = studyPlanCourseRepository;
             _studyPlanRepository = studyPlanRepository;
+            _examPaperStartRepository = examPaperStartRepository;
+            _examPaperRepository = examPaperRepository;
         }
     }
 }

@@ -46,8 +46,10 @@
                                 </el-link>
                             </div>
                             <ul class="list-inline fw-light ms-3">
-                                <li class="list-inline-item fs-5 text-warning fw-bold" v-if="paper.courseId>0">
-                                    课后考试
+                                <li class="list-inline-item fs-5 text-warning fw-bold" v-if="paper.planId>0 || paper.courseId>0">
+                                    <el-tooltip class="item" effect="dark" :content="paper.courseName" placement="right">
+                                        <span>课后考试</span>
+                                    </el-tooltip>
                                 </li>
                                 <li class="list-inline-item fs-5">
                                     总分：{{paper.totalScore}}

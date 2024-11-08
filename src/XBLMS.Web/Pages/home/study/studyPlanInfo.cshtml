@@ -63,7 +63,6 @@
                                 </p>
                                 <footer class="blockquote-footer ms-4">计划周期</footer>
                             </blockquote>
-
                         </div>
                         <div class="d-md-flex align-items-center text-lg-start">
                             <blockquote class="card blockquote-left card-lift pt-3 pe-4 border-warning">
@@ -80,6 +79,24 @@
                                     选修课
                                     <span :class="studyPlan.overSelectCourseTotal>=studyPlan.plan.selectCourseOverCount ? 'text-success' : ' text-danger'" class="ms-2" v-if="studyPlan.plan.selectCourseOverByCount">完成条件：任意完成 {{ studyPlan.overSelectCourseTotal }}/{{ studyPlan.plan.selectCourseOverCount }} 门课程</span>
                                     <span :class="(studyPlan.plan.selectCourseOverByDuration/60)>=studyPlan.plan.selectCourseOverMinute ? 'text-success' : ' text-danger'" class="ms-2 text-warning" v-if="studyPlan.plan.selectCourseOverByDuration">累计学时要求: {{ utils.formatDuration(studyPlan.overSelectCourseDurationTotal) }}/{{ studyPlan.plan.selectCourseOverMinute }}分钟</span>
+                                </footer>
+                            </blockquote>
+                            <blockquote class="card blockquote-left border-warning card-lift pt-3 pe-4 ms-4" v-if="studyPlan.plan.examId>0">
+                                <p class="mb-4 font-italic ms-4">
+                                    <span v-if="studyPlan.state==='Yidabiao' || studyPlan.state==='Yiwancheng'">
+                                        <span class="fw-bold text-success">{{ studyPlan.plan.examName }}（{{studyPlan.maxScore}}）</span>
+                                    </span>
+                                    <span v-else>
+                                        <span v-if="studyPlan.courseOver">
+                                            <span class="fw-bold text-warning" style="cursor:pointer;" v-on:click="btnViewExamClick">{{ studyPlan.plan.examName }}（去考试）</span>
+                                        </span>
+                                        <span v-else>
+                                            <span class="fw-bold text-danger" style="cursor:pointer;" v-on:click="utils.error('请先完成学习',{layer:true})">{{ studyPlan.plan.examName }}（去考试）</span>
+                                        </span>
+                                    </span>
+                                </p>
+                                <footer class="blockquote-footer ms-4">
+                                    计划考试
                                 </footer>
                             </blockquote>
                         </div>

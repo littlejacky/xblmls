@@ -44,6 +44,10 @@ namespace XBLMS.Models
         [DataColumn]
         public SubmitType SubmitType { get; set; } = SubmitType.Save;
         [DataColumn]
+        public int ExamId { get; set; }
+        [DataColumn]
+        public string ExamName { get; set; }
+        [DataColumn]
         public bool Locked { get; set; }
 
     }

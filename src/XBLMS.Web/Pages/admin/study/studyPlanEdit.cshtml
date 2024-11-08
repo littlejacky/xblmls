@@ -67,6 +67,13 @@
                                 </el-select>
                                 <div class="tips">根据选择的用户组匹配需要参加培训的学员，多个组为并集。默认不安排学员。</div>
                             </el-form-item>
+                            <el-form-item label="大考">
+                                <el-tooltip effect="dark" :content="form.examName" placement="right" v-if="form.examId>0">
+                                    <el-button type="success" icon="el-icon-star-on" v-on:click="btnDeleteExamClick('-1',false)">已关联课后考试</el-button>
+                                </el-tooltip>
+                                <el-button plain icon="el-icon-star-off" v-on:click="btnSelectExamClick('-1',false)" v-else>选择课后考试</el-button>
+                                <div class="tips">培训计划考试，学习完成所有内容需要参加考试，考试通过即可完成培训任务</div>
+                            </el-form-item>
                         </el-col>
                         <el-col :span="8">
                             <el-form-item label="封面图">
