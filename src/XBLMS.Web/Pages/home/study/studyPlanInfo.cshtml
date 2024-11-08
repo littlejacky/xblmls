@@ -15,9 +15,9 @@
     </style>
 }
 <main>
-    <section class="py-8 bg-cover" :style="{'background-image':'url('+studyPlan.plan.coverImg+')'}">
-        <div class="py-5 text-center">
-            <button type="button" class="btn btn-primary py-3 px-5 rounded-pill" v-on:click="utils.closeLayerSelf">
+    <section class="py-8 bg-cover opacity-75" :style="{'background-image':'url('+studyPlan.plan.coverImg+')'}">
+        <div class="py-3 text-center">
+            <button type="button" class="btn py-3 px-5 rounded-pill btn-dark" v-on:click="utils.closeLayerSelf">
                 <i class="bi bi-arrow-left me-3"></i>返 回
             </button>
         </div>
@@ -30,6 +30,7 @@
                         <img width="158" src="/sitefiles/assets/images/status/weikaishi.png" v-if="studyPlan.state==='Weikaishi'" />
                         <img width="158" src="/sitefiles/assets/images/status/xuexizhong.png" v-if="studyPlan.state==='Xuexizhong'" />
                         <img width="158" src="/sitefiles/assets/images/status/yidabiao.png" v-if="studyPlan.state==='Yidabiao'" />
+                        <img width="158" src="/sitefiles/assets/images/status/weidabiao.png" v-if="studyPlan.state==='Weidabiao'" />
                         <img width="158" src="/sitefiles/assets/images/status/yiwancheng.png" v-if="studyPlan.state==='Yiwancheng'" />
                     </div>
                     <div class="d-md-flex align-items-center justify-content-between bg-white pt-3 pb-3 pb-lg-5">

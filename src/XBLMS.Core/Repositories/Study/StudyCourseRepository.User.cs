@@ -27,7 +27,7 @@ namespace XBLMS.Core.Repositories
                     var listMark = ListUtils.ToList(marks);
                     foreach (var mark in listMark)
                     {
-                        if (!markList.Contains(mark))
+                        if (!list.Contains(mark))
                         {
                             total++;
                             list.Add(mark);

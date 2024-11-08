@@ -24,7 +24,7 @@ namespace XBLMS.Models
         [DataColumn]
         public bool Locked { get; set; }
         [DataColumn]
-        public long TotalDuration { get; set; }
+        public int TotalDuration { get; set; }
         [DataColumn]
         public decimal Credit { get; set; }
         [DataColumn]

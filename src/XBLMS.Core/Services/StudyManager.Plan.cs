@@ -5,6 +5,7 @@ using XBLMS.Core.Utils;
 using XBLMS.Enums;
 using XBLMS.Models;
 using XBLMS.Services;
+using XBLMS.Utils;
 
 namespace XBLMS.Core.Services
 {
@@ -84,16 +85,89 @@ namespace XBLMS.Core.Services
                         courseSelectList.Add(course);
                     }
                 }
+
             }
 
 
-            if (overCourseTotal == planCourseTotal)
+            if (planUser.State != StudyStatType.Yiwancheng || planUser.State != StudyStatType.Yidabiao)
             {
-                planUser.State = StudyStatType.Yiwancheng;
+                var overCourse = false;
+                var overSelectCourse = false;
+                if (studyPlan.TotalCount > 0)
+                {
+                    if (overCourseTotal >= studyPlan.TotalCount)
+                    {
+                        overCourse = true;
+                    }
+                }
+                else
+                {
+                    overCourse = true;
+                }
+
+                if (studyPlan.SelectTotalCount > 0)
+                {
+                    var byCountOver = false;
+                    var byDurationOver = false;
+                    if (studyPlan.SelectCourseOverByCount)
+                    {
+                        if (overSelectCourseTotal >= studyPlan.SelectTotalCount)
+                        {
+                            byCountOver = true;
+                        }
+                    }
+                    else
+                    {
+                        byCountOver = true;
+                    }
+                    if (studyPlan.SelectCourseOverByDuration)
+                    {
+                        if (overSelectCourseDurationTotal >= studyPlan.SelectTotalDuration)
+                        {
+                            byDurationOver = true;
+                        }
+                    }
+                    else
+                    {
+                        byDurationOver = true;
+                    }
+                    if (byCountOver && byDurationOver)
+                    {
+                        overSelectCourse = true;
+                    }
+                }
+                else
+                {
+                    overSelectCourse = true;
+                }
+
+                if (overSelectCourse && overCourse)
+                {
+                    planUser.State = StudyStatType.Yiwancheng;
+
+                    if (planUser.TotalCredit >= studyPlan.PlanCredit)
+                    {
+                        planUser.State = StudyStatType.Yidabiao;
+                    }
+
+                    await _studyPlanUserRepository.UpdateAsync(planUser);
+                }
             }
-            if (planUser.TotalCredit >= studyPlan.PlanCredit)
+            else
             {
-                planUser.State = StudyStatType.Yidabiao;
+                if (planUser.State == StudyStatType.Weikaishi)
+                {
+                    planUser.State = StudyStatType.Xuexizhong;
+                    await _studyPlanUserRepository.UpdateAsync(planUser);
+                }
+            }
+            if (DateTime.Now > studyPlan.PlanEndDateTime)
+            {
+                if (planUser.State != StudyStatType.Yiwancheng && planUser.State != StudyStatType.Yidabiao && planUser.State != StudyStatType.Weidabiao)
+                {
+                    planUser.State = StudyStatType.Weidabiao;
+                    await _studyPlanUserRepository.UpdateAsync(planUser);
+                }
             }
 
             planUser.Set("OverCourseTotal", overCourseTotal);

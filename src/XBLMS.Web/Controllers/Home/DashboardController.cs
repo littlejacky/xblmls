@@ -95,6 +95,14 @@ namespace XBLMS.Web.Controllers.Home
             public List<StudyCourse> CourseList { get; set; }
             public StudyPlanUser StudyPlan { get; set; }
 
+            public decimal StudyPlanTotalCredit { get; set; }
+            public decimal StudyPlanTotalOverCredit { get; set; }
+
+            public int TotalCourse { get; set; }
+            public int TotalOverCourse { get; set; }
+
+            public long TotalDuration { get; set; }
+
         }
 
     }

@@ -39,7 +39,7 @@ namespace XBLMS.Models
         [DataColumn]
         public decimal Credit { get; set; }
         [DataColumn]
-        public long Duration { get; set; }
+        public int Duration { get; set; }
         [DataColumn]
         public int Taxis { get; set; }
     }

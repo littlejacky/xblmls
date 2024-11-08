@@ -1,6 +1,7 @@
 ﻿using Datory;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Threading.Tasks;
 using XBLMS.Enums;
 using XBLMS.Models;
@@ -149,6 +150,23 @@ namespace XBLMS.Core.Repositories
 
             var list = await _repository.GetAllAsync(query);
             return list;
+        }
+
+        public async Task<(int total,int overTotal)> GetTotalAsync(int userId)
+        {
+            var query = Q.Where(nameof(StudyCourseUser.UserId), userId).WhereNullOrFalse(nameof(StudyCourseUser.Locked));
+
+            var total = await _repository.CountAsync(query);
+            var overTotal = await _repository.CountAsync(query.Where(nameof(StudyCourseUser.State), StudyStatType.Yiwancheng.GetValue()));
+
+            return (total, overTotal);
+        }
+        public async Task<long> GetTotalDurationAsync(int userId)
+        {
+            var query = Q.Where(nameof(StudyCourseUser.UserId), userId).WhereNullOrFalse(nameof(StudyCourseUser.Locked));
+
+            var total = await _repository.SumAsync(nameof(StudyCourseUser.TotalDuration));
+            return total;
         }
     }
 }

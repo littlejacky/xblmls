@@ -115,6 +115,9 @@ namespace XBLMS.Web.Controllers.Home
                 await _studyManager.User_GetPlanInfo(planUser);
             }
 
+            var (planTotalCredit, planTotalOverCredit) = await _studyPlanUserRepository.GetCreditAsync(user.Id);
+            var (totalCourse, totalOverCourse) = await _studyCourseUserRepository.GetTotalAsync(user.Id);
+            var totalDuration = await _studyCourseUserRepository.GetTotalDurationAsync(user.Id);
 
             return new GetResult
             {
@@ -141,7 +144,14 @@ namespace XBLMS.Web.Controllers.Home
                 TaskQTotal = qPaperTotal,
 
                 CourseList = courseList,
-                StudyPlan = planUser
+                StudyPlan = planUser,
+
+                StudyPlanTotalCredit = planTotalCredit,
+                StudyPlanTotalOverCredit = planTotalOverCredit,
+                TotalCourse = totalCourse,
+                TotalOverCourse = totalOverCourse,
+
+                TotalDuration = totalDuration,
             };
         }
     }

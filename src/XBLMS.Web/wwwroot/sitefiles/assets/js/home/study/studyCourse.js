@@ -11,8 +11,11 @@ var data = utils.init({
     pageIndex: 1,
     pageSize: 12
   },
-  list: [],
+  list1: [],
+  list2: [],
+  list3: [],
   total: 0,
+  pushTotal:0,
   markTotal: 0,
   markList: [],
   markShowList: [],
@@ -33,8 +36,22 @@ var methods = {
       var res = response.data;
 
       if (res.list && res.list.length > 0) {
+        var pushIndex = 1;
         res.list.forEach(item => {
-          $this.list.push(item);
+          if (pushIndex === 4) {
+            pushIndex = 1;
+          }
+          if (pushIndex === 1) {
+            $this.list1.push(item);
+          }
+          if (pushIndex === 2) {
+            $this.list2.push(item);
+          }
+          if (pushIndex === 3) {
+            $this.list3.push(item);
+          }
+          pushIndex++;
+          $this.pushTotal++;
         });
       }
       $this.total = res.total;
@@ -66,17 +83,35 @@ var methods = {
       this.markMore = false;
     }
   },
-  apiGetItem: function (id,planId) {
+  apiGetItem: function (id, planId) {
     var $this = this;
 
-    $api.get($urlItem, { params: { id: id,planId:planId } }).then(function (response) {
+    $api.get($urlItem, { params: { id: id, planId: planId } }).then(function (response) {
       var res = response.data;
 
-      let pIndex = $this.list.findIndex(item => {
+      let pIndex = $this.list1.findIndex(item => {
         return item.id === id && item.planId === planId;
       });
 
-      $this.$set($this.list, pIndex, res.item);
+      if (pIndex >= 0) {
+        $this.$set($this.list1, pIndex, res.item);
+      }
+      else {
+        pIndex = $this.list2.findIndex(item => {
+          return item.id === id && item.planId === planId;
+        });
+        if (pIndex >= 0) {
+          $this.$set($this.list2, pIndex, res.item);
+        }
+        else {
+          pIndex = $this.list3.findIndex(item => {
+            return item.id === id && item.planId === planId;
+          });
+          if (pIndex >= 0) {
+            $this.$set($this.list3, pIndex, res.item);
+          }
+        }
+      }
 
     }).catch(function (error) {
     }).then(function () {
@@ -84,7 +119,9 @@ var methods = {
   },
   btnSearchClick: function () {
     this.form.pageIndex = 1;
-    this.list = [];
+    this.list1 = [];
+    this.list2 = [];
+    this.list3 = [];
     this.apiGet();
   },
   btnLoadMoreClick: function () {

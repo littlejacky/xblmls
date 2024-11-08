@@ -78,7 +78,7 @@ namespace XBLMS.Web.Controllers.Home.Study
                 await _studyCourseWareUserRepository.UpdateAsync(userware);
 
                 var userWareList = await _studyCourseWareUserRepository.GetListAsync(user.Id, userware.PlanId, userware.CourseId);
-                long totalDuraiont = 0;
+                int totalDuraiont = 0;
             
 
                 foreach (var item in userWareList)

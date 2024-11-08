@@ -18,9 +18,9 @@ namespace XBLMS.Models
         [DataColumn]
         public StudyStatType State { get; set; }
         [DataColumn]
-        public long TotalDuration { get; set; }
+        public int TotalDuration { get; set; }
         [DataColumn]
-        public long CurrentDuration { get; set; }
+        public int CurrentDuration { get; set; }
         /// <summary>
         /// 上次学习
         /// </summary>

@@ -5,121 +5,124 @@
 
 <el-card>
     <el-scrollbar class="scrollbar" :style="{ height: ($(window).height()-60) + 'px' }">
-        <div class="row g-3 pe-3">
-            <div class="col-xl-3 col-lg-3 col-md-3 col-3">
-                <div class="card border mb-6 mb-md-0 shadow-none fixed-top">
-                    <div class="card-header">
-                        <h4 class="mb-0 fs-5">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-filter me-2" viewBox="0 0 16 16">
-                                <path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"></path>
-                            </svg>
-                            任务查询
-                        </h4>
-                    </div>
-                    <div class="card-body border-top py-3">
-                        <h4 class="mb-4 fs-5">计划年度</h4>
-                        <div class="d-flex justify-content-between mt-2 text-dark">
-                            <el-select v-model="form.year" clearable placeholder="全部年度" class="w-100">
-                                <el-option label="全部年度"
-                                           value="0">
-                                </el-option>
-                                <el-option :label="planYear+'年'" v-for="planYear in yearList"
-                                           :value="planYear">
-                                </el-option>
-                            </el-select>
-                        </div>
-                    </div>
-                    <div class="card-body border-top py-3">
-                        <h4 class="mb-4 fs-5">学习状态</h4>
-                        <div class="d-flex justify-content-between mt-2 text-dark">
-                            <el-select v-model="form.state" clearable placeholder="学习状态" class="w-100">
-                                <el-option label="全部状态"
-                                           value="">
-                                </el-option>
-                                <el-option label="已完成"
-                                           value="Yiwancheng">
-                                </el-option>
-                                <el-option label="已达标"
-                                           value="Yidabiao">
-                                </el-option>
-                                <el-option label="学习中"
-                                           value="Xuexizhong">
-                                </el-option>
-                                <el-option label="未完成"
-                                           value="Weiwancheng">
-                                </el-option>
-                            </el-select>
-                        </div>
-                    </div>
-                    <div class="card-body border-top py-3">
-                        <h4 class="mb-4 fs-5">模糊查询</h4>
-                        <div class="d-flex justify-content-between mt-2 text-dark">
-                            <el-input prefix-icon="el-icon-search" v-model="form.keyWords" placeholder="关键字" class="w-100"></el-input>
-                        </div>
-                    </div>
-                    <div class="card-body border-top py-3">
-                        <div class="p-2 bg-light rounded-pill">
-                            <el-button type="primary" plain icon="el-icon-search" v-on:click="btnSearchClick" class="w-100 rounded-pill">查询</el-button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-9 col-lg-9 col-md-9 col-9">
-                <div v-if="total>0">
-                    <div class="row g-0">
-                        <template v-for="(studyPlan,planIndex) in list">
-                            <div class="col-xl-12 col-lg-12 col-md-12 col-12 py-4 pe-4 bg-light mb-4 rounded-4">
-                                <div class="card card-hover position-relative card-lift ms-4 p-4 px-5" style="cursor:pointer;" v-on:click="btnViewClick(studyPlan.id)">
-                                    <div class="position-absolute top-50 end-0 translate-middle-y pe-5">
-                                        <img width="99" src="/sitefiles/assets/images/status/weikaishi.png" v-if="studyPlan.state==='Weikaishi'" />
-                                        <img width="99" src="/sitefiles/assets/images/status/xuexizhong.png" v-if="studyPlan.state==='Xuexizhong'" />
-                                        <img width="99" src="/sitefiles/assets/images/status/yidabiao.png" v-if="studyPlan.state==='Yidabiao'" />
-                                        <img width="99" src="/sitefiles/assets/images/status/yiwancheng.png" v-if="studyPlan.state==='Yiwancheng'" />
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-4 col-md-4 col-xl-4 col-lg-4 bg-cover rounded" :style="{'background-image':'url('+studyPlan.plan.coverImg+')'}">
+        <div class="pe-3">
+            <div class="row g-3">
+                <div class="col-xl-9 col-lg-9 col-md-9 col-9">
+                    <div v-if="total>0">
+                        <div class="row g-0">
+                            <template v-for="(studyPlan,planIndex) in list">
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-12 py-4 pe-4 bg-light mb-4 rounded-4">
+                                    <div class="card card-hover position-relative card-lift ms-4 p-4 px-5" style="cursor:pointer;" v-on:click="studyPlan.isStudy ? btnViewClick(studyPlan.id) : utils.error('计划不在有效期内')">
+                                        <div class="position-absolute top-50 end-0 translate-middle-y pe-5">
+                                            <img width="99" src="/sitefiles/assets/images/status/weikaishi.png" v-if="studyPlan.state==='Weikaishi'" />
+                                            <img width="99" src="/sitefiles/assets/images/status/xuexizhong.png" v-if="studyPlan.state==='Xuexizhong'" />
+                                            <img width="99" src="/sitefiles/assets/images/status/yidabiao.png" v-if="studyPlan.state==='Yidabiao'" />
+                                            <img width="99" src="/sitefiles/assets/images/status/weidabiao.png" v-if="studyPlan.state==='Weidabiao'" />
+                                            <img width="99" src="/sitefiles/assets/images/status/yiwancheng.png" v-if="studyPlan.state==='Yiwancheng'" />
                                         </div>
-                                        <div class="col-8 col-md-8 col-xl-8 col-lg-8">
-                                            <div class="card-body">
-                                                <h3 class="mb-4"><a href="javascript:;" class="text-primary">{{ studyPlan.plan.planName }}</a></h3>
-                                                <ul class="mb-2 list-inline">
-                                                    <li class="list-inline-item">
-                                                        <span class="fw-light fs-5">计划年度：</span><span class="fw-bold text-warning">{{ studyPlan.plan.planYear }}</span>
-                                                    </li>
-                                                    <li class="list-inline-item">
-                                                        <span class="fw-light fs-5">计划学分：</span><span class="fw-bold text-success">{{ studyPlan.totalCredit }}</span>/<span class="fw-light fs-5">{{ studyPlan.plan.planCredit }}</span>
-                                                    </li>
-                                                </ul>
-                                                <ul class="mb-5 list-inline">
-                                                    <li class="list-inline-item">
-                                                        <span class="fw-light fs-5">必修课：</span><span class="fw-bold text-success">{{ studyPlan.overCourseTotal }}</span>/<span class="fw-light fs-5">{{ studyPlan.plan.courseTotal }}</span>
-                                                    </li>
-                                                    <li class="list-inline-item">
-                                                        <span class="fw-light fs-5">选修课：</span><span class="fw-bold text-success">{{ studyPlan.overSelectCourseTotal }}</span>/<span class="fw-light fs-5">{{ studyPlan.plan.selectCourseTotal }}</span>
-                                                    </li>
-                                                </ul>
-                                                <div class="row align-items-center g-0">
-                                                    <div class="col-auto">
-                                                        <i class="bi bi-calendar-range text-warning"></i>
-                                                    </div>
-                                                    <div class="col ms-2">
-                                                        <span>{{ studyPlan.plan.planBeginDateTimeStr }} -  {{ studyPlan.plan.planEndDateTimeStr }}</span>
+                                        <div class="row">
+                                            <div class="col-4 col-md-4 col-xl-4 col-lg-4 bg-cover rounded" :style="{'background-image':'url('+studyPlan.plan.coverImg+')'}">
+                                            </div>
+                                            <div class="col-8 col-md-8 col-xl-8 col-lg-8">
+                                                <div class="card-body">
+                                                    <h3 class="mb-4"><a href="javascript:;" class="text-primary">{{ studyPlan.plan.planName }}</a></h3>
+                                                    <ul class="mb-2 list-inline">
+                                                        <li class="list-inline-item">
+                                                            <span class="fw-light fs-5">计划年度：</span><span class="fw-bold text-warning">{{ studyPlan.plan.planYear }}</span>
+                                                        </li>
+                                                        <li class="list-inline-item">
+                                                            <span class="fw-light fs-5">计划学分：</span><span class="fw-bold text-success">{{ studyPlan.totalCredit }}</span>/<span class="fw-light fs-5">{{ studyPlan.plan.planCredit }}</span>
+                                                        </li>
+                                                    </ul>
+                                                    <ul class="mb-5 list-inline">
+                                                        <li class="list-inline-item">
+                                                            <span class="fw-light fs-5">必修课：</span><span class="fw-bold text-success">{{ studyPlan.overCourseTotal }}</span>/<span class="fw-light fs-5">{{ studyPlan.plan.courseTotal }}</span>
+                                                        </li>
+                                                        <li class="list-inline-item">
+                                                            <span class="fw-light fs-5">选修课：</span><span class="fw-bold text-success">{{ studyPlan.overSelectCourseTotal }}</span>/<span class="fw-light fs-5">{{ studyPlan.plan.selectCourseTotal }}</span>
+                                                        </li>
+                                                    </ul>
+                                                    <div class="row align-items-center g-0">
+                                                        <div class="col-auto">
+                                                            <i class="bi bi-calendar-range text-warning"></i>
+                                                        </div>
+                                                        <div class="col ms-2">
+                                                            <span>{{ studyPlan.plan.planBeginDateTimeStr }} -  {{ studyPlan.plan.planEndDateTimeStr }}</span>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </template>
+                            </template>
+                        </div>
+                        <div class="my-5 text-center">
+                            <el-button icon="el-icon-refresh-right" v-if="list.length>0 && list.length<total" v-on:click="btnLoadMoreClick" :loading="loadMoreLoading">加载更多</el-button>
+                            <span v-else-if="total>form.pageSize" class="fw-light">没有更多了</span>
+                        </div>
                     </div>
-                    <div class="my-5 text-center">
-                        <el-button icon="el-icon-refresh-right" v-if="list.length>0 && list.length<total" v-on:click="btnLoadMoreClick" :loading="loadMoreLoading">加载更多</el-button>
-                        <span v-else-if="total>form.pageSize" class="fw-light">没有更多了</span>
+                    <div class="pt-10" v-else>
+                        <el-empty image="/sitefiles/assets/images/nodata.svg" description="暂无学习安排"></el-empty>
                     </div>
                 </div>
-                <div class="pt-10" v-else>
-                    <el-empty image="/sitefiles/assets/images/nodata.svg" description="暂无学习安排"></el-empty>
+                <div class="col-xl-3 col-lg-3 col-md-3 col-3">
+                    <div class="card border mb-6 mb-md-0 shadow-none sticky-top">
+                        <div class="card-header">
+                            <h4 class="mb-0 fs-5">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-filter me-2" viewBox="0 0 16 16">
+                                    <path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"></path>
+                                </svg>
+                                任务查询
+                            </h4>
+                        </div>
+                        <div class="card-body border-top py-3">
+                            <div class="d-flex justify-content-between mt-2 text-dark">
+                                <el-select v-model="form.year" clearable placeholder="全部年度" class="w-100">
+                                    <el-option label="全部年度"
+                                               :value="0">
+                                    </el-option>
+                                    <el-option :label="planYear+'年'" v-for="planYear in yearList"
+                                               :value="planYear">
+                                    </el-option>
+                                </el-select>
+                            </div>
+                        </div>
+                        <div class="card-body border-top py-3">
+                            <div class="d-flex justify-content-between mt-2 text-dark">
+                                <el-select v-model="form.state" clearable placeholder="学习状态" class="w-100">
+                                    <el-option label="全部状态"
+                                               value="">
+                                    </el-option>
+                                    <el-option label="已完成"
+                                               value="Yiwancheng">
+                                    </el-option>
+                                    <el-option label="已达标"
+                                               value="Yidabiao">
+                                    </el-option>
+                                    <el-option label="学习中"
+                                               value="Xuexizhong">
+                                    </el-option>
+                                    <el-option label="未完成"
+                                               value="Weiwancheng">
+                                    </el-option>
+                                    <el-option label="未开始"
+                                               value="Weikaishi">
+                                    </el-option>
+                                </el-select>
+                            </div>
+                        </div>
+                        <div class="card-body border-top py-3">
+                            <div class="d-flex justify-content-between mt-2 text-dark">
+                                <el-input prefix-icon="el-icon-search" v-model="form.keyWords" placeholder="关键字" class="w-100"></el-input>
+                            </div>
+                        </div>
+                        <div class="card-body border-top py-3">
+                            <div class="p-2 bg-light rounded-pill">
+                                <el-button type="primary" plain icon="el-icon-search" v-on:click="btnSearchClick" class="w-100 rounded-pill">查询</el-button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

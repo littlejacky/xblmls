@@ -222,10 +222,10 @@ var methods = {
    
     var layerWidth = "68%";
 
-    var url = utils.getStudyUrl('studyCourseFaceEdit', { id: course.id, copyId: course.id });
+    var url = utils.getStudyUrl('studyCourseFaceEdit', { id: course.id, copyId: course.id, face: true });
     if (!course.offLine) {
       layerWidth = "98%";
-      url = utils.getStudyUrl('studyCourseEdit', { id: course.id, copyId: course.id });
+      url = utils.getStudyUrl('studyCourseEdit', { id: course.id, copyId: course.id, face: false });
     }
 
     top.utils.openLayer({

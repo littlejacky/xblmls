@@ -153,6 +153,26 @@ var utils = {
 
     return fen + ":" + miao;
   },
+  formatDurationCN: function (duration) {
+
+    if (duration > 3600) {
+      var shi = Math.trunc(duration / 3600);
+      var fen = Math.trunc(duration / 60);
+      return shi + "小时" + miao + "分钟";
+    }
+    else {
+      if (duration <= 60) {
+        return duration + "秒";
+      }
+      else {
+        fen = Math.trunc(duration / 60);
+        miao = Math.trunc(duration % 60);
+        return fen + "分钟" + miao + "秒";
+      }
+
+    }
+
+  },
   toCamelCase: function (s) {
     if (!s || s[0] !== s[0].toUpperCase()) {
       return s;

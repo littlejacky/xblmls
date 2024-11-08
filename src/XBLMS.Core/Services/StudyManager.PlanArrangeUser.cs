@@ -72,6 +72,7 @@ namespace XBLMS.Core.Services
                             State = StudyStatType.Weikaishi,
                             PlanId = plan.Id,
                             PlanYear = plan.PlanYear,
+                            Credit = plan.PlanCredit,
                             UserId = user.Id,
                             KeyWordsAdmin = await _organManager.GetUserKeyWords(userId),
                             KeyWords = plan.PlanName,

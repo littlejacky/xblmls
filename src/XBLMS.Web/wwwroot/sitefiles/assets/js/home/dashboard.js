@@ -92,8 +92,12 @@ var data = utils.init({
   examMoni: null,
 
   courseList: null,
-  studyPlan:null
-
+  studyPlan: null,
+  studyPlanTotalCredit: 0,
+  studyPlanTotalOverCredit: 0,
+  totalCourse: 0,
+  totalOverCourse: 0,
+  totalDuration:0
 });
 
 var methods = {
@@ -130,6 +134,13 @@ var methods = {
       $this.courseList = res.courseList;
 
       $this.studyPlan = res.studyPlan;
+      $this.studyPlanTotalCredit = res.studyPlanTotalCredit;
+      $this.studyPlanTotalOverCredit = res.studyPlanTotalOverCredit;
+
+      $this.totalCourse = res.totalCourse;
+      $this.totalOverCourse = res.totalOverCourse;
+
+      $this.totalDuration = res.totalDuration;
 
       setTimeout(function () {
         $this.passSeries = [100];
@@ -137,7 +148,7 @@ var methods = {
 
       setTimeout(function () {
         $this.passSeries = [res.allPercent];
-      },2000);
+      }, 2000);
 
     }).catch(function (error) {
       utils.error(error);

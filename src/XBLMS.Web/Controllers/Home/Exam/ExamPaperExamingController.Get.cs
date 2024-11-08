@@ -26,7 +26,7 @@ namespace XBLMS.Web.Controllers.Home.Exam
             var startId = 0;
             var isNewExam = true;
 
-            long useTimeSecond = 0;
+            int useTimeSecond = 0;
             var noSubmitStart = await _examPaperStartRepository.GetNoSubmitAsync(paper.Id, user.Id, request.PlanId, request.CourseId);
             if (noSubmitStart != null)
             {
@@ -44,10 +44,10 @@ namespace XBLMS.Web.Controllers.Home.Exam
                 }
                 else
                 {
-                    useTimeSecond = (long)useTotalSecond;
+                    useTimeSecond = (int)useTotalSecond;
                 }
 
-                noSubmitStart.ExamTimeSeconds = (long)useTotalSecond;
+                noSubmitStart.ExamTimeSeconds = (int)useTotalSecond;
                 await _examPaperStartRepository.UpdateAsync(noSubmitStart);
             }
             else

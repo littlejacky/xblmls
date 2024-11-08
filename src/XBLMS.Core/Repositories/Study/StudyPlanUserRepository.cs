@@ -1,4 +1,5 @@
 ﻿using Datory;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using XBLMS.Models;
@@ -59,7 +60,7 @@ namespace XBLMS.Core.Repositories
 
         public async Task<(int total, List<StudyPlanUser> list)> GetListAsync(int year, string state, string keyWords, int userId, int pageIndex, int pageSize)
         {
-            var query = Q.Where(nameof(StudyPlanUser.UserId), userId);
+            var query = Q.Where(nameof(StudyPlanUser.UserId), userId).WhereNullOrFalse(nameof(StudyPlanUser.Locked));
 
             if (year > 0)
             {
@@ -80,5 +81,24 @@ namespace XBLMS.Core.Repositories
             return (total, list);
         }
 
+
+        public async Task<(decimal totalCredit, decimal totalOverCredit)> GetCreditAsync(int userId)
+        {
+
+            decimal totalCredit = 0;
+            decimal totalOverCredit = 0;
+
+            var query = Q.Where(nameof(StudyPlanUser.UserId), userId).WhereNullOrFalse(nameof(StudyPlanUser.Locked));
+            var list = await _repository.GetAllAsync(query);
+            if(list!=null && list.Count > 0)
+            {
+                foreach (var item in list)
+                {
+                    totalCredit += item.Credit;
+                    totalOverCredit += item.TotalCredit;
+                }
+            }
+            return (Math.Round(totalCredit, 2), Math.Round(totalOverCredit, 2));
+        }
     }
 }

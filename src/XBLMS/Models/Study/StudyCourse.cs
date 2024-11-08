@@ -24,7 +24,7 @@ namespace XBLMS.Models
         [DataColumn]
         public decimal StudyHour { get; set; }
         [DataColumn]
-        public long Duration { get; set; }
+        public int Duration { get; set; }
         /// <summary>
         /// 学分
         /// </summary>

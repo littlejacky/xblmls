@@ -18,7 +18,7 @@ namespace XBLMS.Models
         [DataColumn]
         public string Url { get; set; }
         [DataColumn]
-        public long FileSize { get; set; }
+        public int FileSize { get; set; }
         [DataColumn]
         public int Duration { get; set; }
     }

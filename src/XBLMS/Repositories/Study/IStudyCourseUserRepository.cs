@@ -17,6 +17,8 @@ namespace XBLMS.Repositories
         Task<(int total, List<string>)> GetMarkListAsync(int userId);
         Task<int> GetAvgEvaluationAsync(int courseId, int minStar);
         Task<List<StudyCourseUser>> GetListAsync(int planId, int userId);
+        Task<(int total, int overTotal)> GetTotalAsync(int userId);
+        Task<long> GetTotalDurationAsync(int userId);
 
     }
 }

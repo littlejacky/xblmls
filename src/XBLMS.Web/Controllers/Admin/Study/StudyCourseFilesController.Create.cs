@@ -65,7 +65,7 @@ namespace XBLMS.Web.Controllers.Admin.Study
                     FileName = realFileName,
                     FileType = fileType.ToUpper().Remove(0, 1),
                     Url = url,
-                    FileSize = file.Length,
+                    FileSize = TranslateUtils.ToInt(file.Length.ToString()),
                     Duration = request.Duration,
                     CompanyId = admin.CompanyId,
                     DepartmentId = admin.DepartmentId,

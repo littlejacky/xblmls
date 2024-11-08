@@ -24,7 +24,7 @@ namespace XBLMS.Models
         [DataColumn]
         public string CoverImg { get; set; }
         [DataColumn]
-        public long TotalDuration { get; set; }
+        public int TotalDuration { get; set; }
         [DataColumn]
         public int TotalCount { get; set; }
         [DataColumn]
@@ -36,7 +36,7 @@ namespace XBLMS.Models
         [DataColumn]
         public int SelectCourseOverMinute { get; set; }
         [DataColumn]
-        public long SelectTotalDuration { get; set; }
+        public int SelectTotalDuration { get; set; }
         [DataColumn]
         public int SelectTotalCount { get; set; }
         [DataColumn]
