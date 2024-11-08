@@ -3,10 +3,13 @@ var $urlItem = $url + "/item";
 
 var data = utils.init({
   form: {
-    year: '',
+    year: 0,
+    state: '',
+    keyWords:'',
     pageIndex: 1,
     pageSize: PER_PAGE
   },
+  yearList:null,
   list: [],
   total: 0,
   loadMoreLoading: false
@@ -29,6 +32,7 @@ var methods = {
         });
       }
       $this.total = res.total;
+      $this.yearList = res.yearList;
 
     }).catch(function (error) {
       utils.error(error);

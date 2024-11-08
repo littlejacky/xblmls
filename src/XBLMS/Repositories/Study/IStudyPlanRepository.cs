@@ -14,5 +14,6 @@ namespace XBLMS.Repositories
         Task<StudyPlan> GetAsync(int id);
         Task<(int total, List<StudyPlan> list)> GetListAsync(string keyWords, int pageIndex, int pageSize);
         Task<int> MaxAsync();
+        Task<List<int>> GetYearListAsync();
     }
 }

@@ -24,11 +24,11 @@ namespace XBLMS.Core.Repositories
 
         public List<TableColumn> TableColumns => _repository.TableColumns;
 
-        public async Task<bool> ExistsAsync(int planId,int userId)
+        public async Task<bool> ExistsAsync(int planId, int userId)
         {
             return await _repository.ExistsAsync(Q.
                 Where(nameof(StudyPlanUser.UserId), userId).
-                Where(nameof(StudyPlanUser.PlanId),planId));
+                Where(nameof(StudyPlanUser.PlanId), planId));
         }
 
         public async Task<int> InsertAsync(StudyPlanUser item)
@@ -50,23 +50,35 @@ namespace XBLMS.Core.Repositories
         {
             return await _repository.GetAsync(id);
         }
-        public async Task<StudyPlanUser> GetAsync(int planId,int userId)
+        public async Task<StudyPlanUser> GetAsync(int planId, int userId)
         {
             return await _repository.GetAsync(Q.
                 Where(nameof(StudyPlanUser.UserId), userId).
                 Where(nameof(StudyPlanUser.PlanId), planId));
         }
 
-        public async Task<(int total, List<StudyPlanUser> list)> GetListAsync(string keyWords,int userId,int pageIndex, int pageSize)
+        public async Task<(int total, List<StudyPlanUser> list)> GetListAsync(int year, string state, string keyWords, int userId, int pageIndex, int pageSize)
         {
             var query = Q.Where(nameof(StudyPlanUser.UserId), userId);
+
+            if (year > 0)
+            {
+                query.Where(nameof(StudyPlanUser.PlanYear), year);
+            }
+            if (!string.IsNullOrEmpty(state))
+            {
+                query.Where(nameof(StudyPlanUser.State), state);
+            }
+            if (!string.IsNullOrEmpty(keyWords))
+            {
+                query.WhereLike(nameof(StudyPlanUser.KeyWords), $"%{keyWords}%");
+            }
 
             query.OrderByDesc(nameof(StudyPlanUser.Id));
             var total = await _repository.CountAsync(query);
             var list = await _repository.GetAllAsync(query.ForPage(pageIndex, pageSize));
             return (total, list);
         }
-
 
     }
 }

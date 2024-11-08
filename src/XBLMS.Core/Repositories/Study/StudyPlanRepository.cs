@@ -1,5 +1,6 @@
 ﻿using Datory;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using XBLMS.Models;
 using XBLMS.Repositories;
@@ -45,7 +46,7 @@ namespace XBLMS.Core.Repositories
         }
 
 
-        public async Task<(int total, List<StudyPlan> list)> GetListAsync(string keyWords,int pageIndex, int pageSize)
+        public async Task<(int total, List<StudyPlan> list)> GetListAsync(string keyWords, int pageIndex, int pageSize)
         {
             var query = Q.NewQuery();
             if (!string.IsNullOrEmpty(keyWords))
@@ -69,5 +70,16 @@ namespace XBLMS.Core.Repositories
             return 1;
         }
 
+
+        public async Task<List<int>> GetYearListAsync()
+        {
+            var query = Q.Select(nameof(StudyPlan.PlanYear));
+            var list = await _repository.GetAllAsync<int>(query);
+            if (list != null && list.Count > 0)
+            {
+                return list.Distinct().ToList();
+            }
+            return null;
+        }
     }
 }

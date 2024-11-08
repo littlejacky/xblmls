@@ -1,11 +1,8 @@
-﻿using Datory;
-using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using XBLMS.Dto;
 using XBLMS.Models;
-using XBLMS.Utils;
 
 namespace XBLMS.Web.Controllers.Home.Study
 {
@@ -17,8 +14,10 @@ namespace XBLMS.Web.Controllers.Home.Study
             var user = await _authManager.GetUserAsync();
             if (user == null) { return Unauthorized(); }
 
+            var yearList = await _studyPlanRepository.GetYearListAsync();
+
             var resultList = new List<StudyPlanUser>();
-            var (total, list) = await _studyPlanUserRepository.GetListAsync("", user.Id, request.PageIndex, request.PageSize);
+            var (total, list) = await _studyPlanUserRepository.GetListAsync(request.Year, request.State, request.KeyWords, user.Id, request.PageIndex, request.PageSize);
             if (total > 0)
             {
                 foreach (var item in list)
@@ -30,7 +29,8 @@ namespace XBLMS.Web.Controllers.Home.Study
             return new GetResult
             {
                 Total = total,
-                List = resultList
+                List = resultList,
+                YearList = yearList
             };
         }
 
