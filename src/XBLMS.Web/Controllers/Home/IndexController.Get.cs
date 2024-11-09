@@ -104,12 +104,17 @@ namespace XBLMS.Web.Controllers.Home
 
                 }
             }
+            var planTotal = await _studyPlanUserRepository.GetTaskCountAsync(user.Id);
+            var courseTotal = await _studyCourseUserRepository.GetTaskCountAsync(user.Id);
+
             return new GetResult
             {
                 User = user,
                 Menus = menus,
                 PaperTotal = paperTotal,
                 QPaperTotal = qPaperTotal,
+                PlanTotal = planTotal,
+                CourseTotal = courseTotal,
             };
         }
     }

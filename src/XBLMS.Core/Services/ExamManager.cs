@@ -43,6 +43,10 @@ namespace XBLMS.Core.Services
 
         private readonly IOrganManager _organManager;
 
+        private readonly IStudyPlanRepository _studyPlanRepository;
+        private readonly IStudyPlanCourseRepository _studyPlanCourseRepository;
+        private readonly IStudyCourseRepository _studyCourseRepository;
+
 
         public ExamManager(ISettingsManager settingsManager,
             IOrganManager organManager,
@@ -70,7 +74,10 @@ namespace XBLMS.Core.Services
             IExamQuestionnaireRepository examQuestionnaireRepository,
             IExamQuestionnaireAnswerRepository examQuestionnaireAnswerRepository,
             IExamQuestionnaireTmRepository examQuestionnaireTmRepository,
-            IExamQuestionnaireUserRepository examQuestionnaireUserRepository)
+            IExamQuestionnaireUserRepository examQuestionnaireUserRepository,
+            IStudyPlanCourseRepository studyPlanCourseRepository,
+            IStudyPlanRepository studyPlanRepository,
+            IStudyCourseRepository studyCourseRepository)
         {
             _settingsManager = settingsManager;
             _organManager = organManager;
@@ -99,6 +106,9 @@ namespace XBLMS.Core.Services
             _examQuestionnaireAnswerRepository = examQuestionnaireAnswerRepository;
             _examQuestionnaireTmRepository = examQuestionnaireTmRepository;
             _examQuestionnaireUserRepository = examQuestionnaireUserRepository;
+            _studyCourseRepository = studyCourseRepository;
+            _studyPlanRepository = studyPlanRepository;
+            _studyPlanCourseRepository = studyPlanCourseRepository;
         }
 
 
@@ -320,6 +330,36 @@ namespace XBLMS.Core.Services
                         CreatorId = user.CreatorId
                     });
                     examUser = await _examPaperUserRepository.GetAsync(examUserId);
+                }
+                if (planId > 0)
+                {
+                    if (courseId > 0)
+                    {
+                        var course = await _studyPlanCourseRepository.GetAsync(planId, courseId);
+                        if (course != null)
+                        {
+                            courseName = course.CourseName;
+                        }
+                    }
+                    else
+                    {
+                        var plan = await _studyPlanRepository.GetAsync(planId);
+                        if (plan != null)
+                        {
+                            courseName = plan.PlanName;
+                        }
+                    }
+                }
+                else
+                {
+                    if (courseId > 0)
+                    {
+                        var course = await _studyCourseRepository.GetAsync(courseId);
+                        if (course != null)
+                        {
+                            courseName = course.Name;
+                        }
+                    }
                 }
 
             }

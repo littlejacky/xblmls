@@ -93,7 +93,19 @@ var data = utils.init({
   taskTotal: 0,
   taskPaperTotal: 0,
   taskQTotal: 0,
-  taskDialogVisible:false,
+  taskPlanTotal: 0,
+  taskCourseTotal:0,
+  taskDialogVisible: false,
+
+  courseList: null,
+  studyPlan: null,
+  studyPlanTotalCredit: 0,
+  studyPlanTotalOverCredit: 0,
+  totalCourse: 0,
+  totalOverCourse: 0,
+  totalDuration: 0,
+
+  topCer: null,
 
   appMenuActive:"index"
 
@@ -132,7 +144,22 @@ var methods = {
 
       $this.taskPaperTotal = res.taskPaperTotal;
       $this.taskQTotal = res.taskQTotal;
-      $this.taskTotal = $this.taskPaperTotal + $this.taskQTotal;
+      $this.taskPlanTotal = res.taskPlanTotal;
+      $this.taskCourseTotal = res.taskCourseTotal;
+      $this.taskTotal = $this.taskPaperTotal + $this.taskQTotal + $this.taskPlanTotal + $this.taskCourseTotal;
+
+      $this.courseList = res.courseList;
+
+      $this.studyPlan = res.studyPlan;
+      $this.studyPlanTotalCredit = res.studyPlanTotalCredit;
+      $this.studyPlanTotalOverCredit = res.studyPlanTotalOverCredit;
+
+      $this.totalCourse = res.totalCourse;
+      $this.totalOverCourse = res.totalOverCourse;
+
+      $this.totalDuration = res.totalDuration;
+
+      $this.topCer = res.topCer;
 
       setTimeout(function () {
         $this.passSeries = [100];

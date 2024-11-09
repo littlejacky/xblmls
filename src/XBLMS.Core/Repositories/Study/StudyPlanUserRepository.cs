@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using XBLMS.Enums;
 using XBLMS.Models;
 using XBLMS.Repositories;
 using XBLMS.Services;
@@ -55,6 +56,8 @@ namespace XBLMS.Core.Repositories
         public async Task<bool> UpdateByPlanAsync(StudyPlan planInfo)
         {
             return await _repository.UpdateAsync(Q.
+                Set(nameof(StudyPlanUser.PlanEndDateTime), planInfo.PlanEndDateTime).
+                Set(nameof(StudyPlanUser.PlanBeginDateTime), planInfo.PlanBeginDateTime).
                 Set(nameof(StudyPlanUser.Locked), planInfo.Locked).
                 Set(nameof(StudyPlanUser.Credit), planInfo.PlanCredit).
                 Set(nameof(StudyPlanUser.PlanYear), planInfo.PlanYear).
@@ -105,7 +108,7 @@ namespace XBLMS.Core.Repositories
 
             var query = Q.Where(nameof(StudyPlanUser.UserId), userId).WhereNullOrFalse(nameof(StudyPlanUser.Locked));
             var list = await _repository.GetAllAsync(query);
-            if(list!=null && list.Count > 0)
+            if (list != null && list.Count > 0)
             {
                 foreach (var item in list)
                 {
@@ -114,6 +117,25 @@ namespace XBLMS.Core.Repositories
                 }
             }
             return (Math.Round(totalCredit, 2), Math.Round(totalOverCredit, 2));
+        }
+
+
+        public async Task<int> GetTaskCountAsync(int userId)
+        {
+            var query = Q.
+                Where(q =>
+                {
+                    q.
+                    Where(nameof(StudyPlanUser.State), StudyStatType.Xuexizhong.GetValue()).
+                    OrWhere(nameof(StudyPlanUser.State), StudyStatType.Weikaishi.GetValue());
+                    return q;
+                }).
+                Where(nameof(StudyPlanUser.PlanBeginDateTime), ">", DateTime.Now).
+                Where(nameof(StudyPlanUser.PlanEndDateTime), "<", DateTime.Now).
+                Where(nameof(StudyPlanUser.UserId), userId).
+                WhereNullOrFalse(nameof(StudyPlanUser.Locked));
+
+            return await _repository.CountAsync(query);
         }
     }
 }

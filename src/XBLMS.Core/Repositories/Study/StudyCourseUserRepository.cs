@@ -180,5 +180,14 @@ namespace XBLMS.Core.Repositories
             var total = await _repository.SumAsync(nameof(StudyCourseUser.TotalDuration));
             return total;
         }
+        public async Task<int> GetTaskCountAsync(int userId)
+        {
+            var query = Q.
+                Where(nameof(StudyCourseUser.State), StudyStatType.Xuexizhong.GetValue()).
+                Where(nameof(StudyCourseUser.UserId), userId).
+                WhereNullOrFalse(nameof(StudyCourseUser.Locked));
+
+            return await _repository.CountAsync(query);
+        }
     }
 }

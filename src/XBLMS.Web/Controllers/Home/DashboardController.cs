@@ -97,6 +97,8 @@ namespace XBLMS.Web.Controllers.Home
 
             public int TaskPaperTotal { get; set; }
             public int TaskQTotal { get; set; }
+            public int TaskPlanTotal { get; set; }
+            public int TaskCourseTotal { get; set; }
 
             public List<StudyCourse> CourseList { get; set; }
             public StudyPlanUser StudyPlan { get; set; }

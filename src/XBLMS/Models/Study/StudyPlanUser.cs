@@ -21,6 +21,10 @@ namespace XBLMS.Models
         [DataColumn]
         public bool Locked { get; set; }
         [DataColumn]
+        public DateTime? PlanBeginDateTime { get; set; }
+        [DataColumn]
+        public DateTime? PlanEndDateTime { get; set; }
+        [DataColumn]
         public DateTime? BeginStudyDateTime { get; set; }
         [DataColumn]
         public DateTime? LastStudyDateTime { get; set; }

@@ -25,6 +25,9 @@ namespace XBLMS.Web.Controllers.Home
         private readonly IExamQuestionnaireUserRepository _examQuestionnaireUserRepository;
         private readonly IExamQuestionnaireRepository _examQuestionnaireRepository;
 
+        private readonly IStudyPlanUserRepository _studyPlanUserRepository;
+        private readonly IStudyCourseUserRepository _studyCourseUserRepository;
+
         public IndexController(IAuthManager authManager,
             IConfigRepository configRepository,
             IUserMenuRepository userMenuRepository,
@@ -32,7 +35,9 @@ namespace XBLMS.Web.Controllers.Home
             IExamPaperUserRepository examPaperUserRepository,
             IExamPaperStartRepository examPaperStartRepository,
             IExamQuestionnaireUserRepository examQuestionnaireUserRepository,
-            IExamQuestionnaireRepository examQuestionnaireRepository)
+            IExamQuestionnaireRepository examQuestionnaireRepository,
+            IStudyPlanUserRepository studyPlanUserRepository,
+            IStudyCourseUserRepository studyCourseUserRepository)
         {
             _authManager = authManager;
             _configRepository = configRepository;
@@ -42,6 +47,8 @@ namespace XBLMS.Web.Controllers.Home
             _examPaperStartRepository = examPaperStartRepository;
             _examQuestionnaireUserRepository = examQuestionnaireUserRepository;
             _examQuestionnaireRepository = examQuestionnaireRepository;
+            _studyPlanUserRepository = studyPlanUserRepository;
+            _studyCourseUserRepository = studyCourseUserRepository;
         }
 
         public class GetResult
@@ -50,6 +57,8 @@ namespace XBLMS.Web.Controllers.Home
             public List<Menu> Menus { get; set; }
             public int PaperTotal { get; set; }
             public int QPaperTotal { get; set; }
+            public int PlanTotal { get; set; }
+            public int CourseTotal { get; set; }
         }
     }
 }

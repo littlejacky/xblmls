@@ -76,6 +76,8 @@ namespace XBLMS.Core.Services
                             UserId = user.Id,
                             KeyWordsAdmin = await _organManager.GetUserKeyWords(userId),
                             KeyWords = plan.PlanName,
+                            PlanBeginDateTime = plan.PlanBeginDateTime,
+                            PlanEndDateTime = plan.PlanEndDateTime,
                             Locked = plan.Locked,
                             CompanyId = plan.CompanyId,
                             DepartmentId = plan.DepartmentId,

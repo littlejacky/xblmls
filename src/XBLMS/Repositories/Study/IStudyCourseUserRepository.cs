@@ -20,6 +20,7 @@ namespace XBLMS.Repositories
         Task<List<StudyCourseUser>> GetListAsync(int planId, int userId);
         Task<(int total, int overTotal)> GetTotalAsync(int userId);
         Task<long> GetTotalDurationAsync(int userId);
+        Task<int> GetTaskCountAsync(int userId);
 
     }
 }

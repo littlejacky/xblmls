@@ -159,6 +159,9 @@ namespace XBLMS.Web.Controllers.Home
                 }
             }
 
+            var planTask = await _studyPlanUserRepository.GetTaskCountAsync(user.Id);
+            var courseTask = await _studyCourseUserRepository.GetTaskCountAsync(user.Id);
+
             return new GetResult
             {
                 User = user,
@@ -182,6 +185,8 @@ namespace XBLMS.Web.Controllers.Home
 
                 TaskPaperTotal = taskPaperTotal,
                 TaskQTotal = qPaperTotal,
+                TaskPlanTotal = planTask,
+                TaskCourseTotal = courseTask,
 
                 CourseList = courseList,
                 StudyPlan = planUser,
