@@ -14,9 +14,9 @@
     <div v-for="(cer,index) in list" v-on:click="btnViewCer(cer)">
         <el-card shadow="hover" class="mb-3">
             <div slot="header">
-                <span class="fw-bold">{{ cer.cerName }}【{{ cer.cerNumber }}】</span>
+                <span class="fw-bold text-primary">{{ cer.cerName }}【{{ cer.cerNumber }}】</span>
             </div>
-            <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex justify-content-between align-items-center py-2">
                 <div>
                     <div class="position-relative">
                         <i class="bi bi-award fs-1 text-warning"></i>

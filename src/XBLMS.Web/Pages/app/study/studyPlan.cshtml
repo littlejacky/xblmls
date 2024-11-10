@@ -3,7 +3,7 @@
 <div>
     <div v-if="total>0">
         <div v-for="(studyPlan,planIndex) in list" class="card shadow-lg position-relative mb-3" style="cursor:pointer;" v-on:click="studyPlan.isStudy ? btnViewClick(studyPlan.id) : utils.error('计划不在有效期内')">
-            <div class="bg-cover rounded-top p-8" :style="{'background-image':'url('+studyPlan.plan.coverImg+')'}"></div>
+            <div class="bg-cover rounded-top p-8" :style="{'background-image':'url('+studyPlan.plan.coverImg+')'}"><div class="py-5"></div></div>
             <div class="position-absolute top-50 end-0 translate-middle-y pe-3">
                 <img width="88" src="/sitefiles/assets/images/status/weikaishi.png" v-if="studyPlan.state==='Weikaishi'" />
                 <img width="88" src="/sitefiles/assets/images/status/xuexizhong.png" v-if="studyPlan.state==='Xuexizhong'" />
@@ -45,7 +45,7 @@
         </div>
         <div class="my-5 text-center">
             <el-button icon="el-icon-refresh-right" v-if="list.length>0 && list.length<total" v-on:click="btnLoadMoreClick" :loading="loadMoreLoading">加载更多</el-button>
-            <small v-else-if="total>form.pageSize">没有更多了</small>
+            <small v-else>没有更多了</small>
         </div>
     </div>
     <div class="pt-10" v-else>

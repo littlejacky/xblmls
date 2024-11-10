@@ -1,22 +1,11 @@
 @page
 @{ Layout = "_LayoutApp"; }
-@section Styles{
-    <style>
-        .el-form-item {
-            margin-bottom: 0px;
-        }
-    </style>
-}
-<div class="mb-3">
-    <el-input prefix-icon="el-icon-search" clearable placeholder="关键字查询" v-model="form.keyWords">
-        <el-button slot="append" icon="el-icon-search" v-on:click="btnSearchClick">查 询</el-button>
-    </el-input>
-</div>
+
 <div v-if="total>0">
     <div v-for="(paper,index) in list">
         <el-card shadow="hover" class="mb-3">
             <div slot="header" class="clearfix">
-                <div class="fw-bold">{{ paper.title }}</div>
+                <div class="fw-bold text-primary">{{ paper.title }}</div>
             </div>
             <div class="d-flex justify-content-between align-items-center">
                 <div>
@@ -27,7 +16,7 @@
                 </div>
                 <div>
                     <div class="fs-5">
-                        <div class="mb-1"><i class="el-icon-date me-2"></i>有效期至</div>
+                        <div class="mb-1"><i class="el-icon-date me-2 text-warning"></i>有效期至</div>
                         <div>{{ paper.examEndDateTimeStr }}</div>
                     </div>
                 </div>
@@ -51,7 +40,7 @@
 <div class="py-8"></div>
 <div style="position:fixed;left:0;bottom:0;width:100%;" class="text-center mb-5 animate__animated animate__fadeInUp">
     <div class="btn-group">
-        <button type="button" class="btn btn-primary rounded-pill" v-on:click="utils.closeLayerSelf"><i class="el-icon-back me-2"></i>返 回</button>
+        <button type="button" class="btn btn-primary rounded-pill" v-on:click="location.href=utils.getRootUrl('index')"><i class="el-icon-back me-2"></i>返 回</button>
     </div>
 </div>
 
