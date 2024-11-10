@@ -10,16 +10,16 @@
                 </div>
             </el-link>
             <el-link :underline="false">
-                <div class="text-center" :class="appMenuActive==='exam'?'text-light fw-bold':'text-gray-400 fw-light'" v-on:click="btnAppMenuClick('exam')">
-                    <i class="bi bi-star-fill fs-4"></i>
+                <div class="text-center" :class="appMenuActive==='studyPlan'?'text-light fw-bold':'text-gray-400 fw-light'" v-on:click="btnAppMenuClick('studyPlan')">
+                    <i class="fs-4" :class="appMenuActive==='studyPlan'?'bi bi-star-fill':'bi bi-star'"></i>
                     <div>
                         培 训
                     </div>
                 </div>
             </el-link>
             <el-link :underline="false">
-                <div class="text-center" :class="appMenuActive==='exam'?'text-light fw-bold':'text-gray-400 fw-light'" v-on:click="btnAppMenuClick('exam')">
-                    <i class="bi bi-clipboard-check-fill fs-4"></i>
+                <div class="text-center" :class="appMenuActive==='studyCourse'?'text-light fw-bold':'text-gray-400 fw-light'" v-on:click="btnAppMenuClick('studyCourse')">
+                    <i class="fs-4" :class="appMenuActive==='studyCourse'?'bi bi-clipboard-check-fill':'bi bi-clipboard-check'"></i>
                     <div>
                         课 程
                     </div>
@@ -27,7 +27,7 @@
             </el-link>
             <el-link :underline="false">
                 <div class="text-center" :class="appMenuActive==='exam'?'text-light fw-bold':'text-gray-400 fw-light'" v-on:click="btnAppMenuClick('exam')">
-                    <i class="bi bi-ui-checks fs-4"></i>
+                    <i class="fs-4 bi bi-ui-checks"></i>
                     <div>
                         考 试
                     </div>
@@ -42,22 +42,5 @@
                 </div>
             </el-link>
         </div>
-
-        <!--
-        <div class="btn-group rounded-pill bg-light-primary border-0">
-            <button type="button" class="btn rounded-start-pill border-0" :class="appMenuActive==='index'?'btn-primary fw-bold':'btn-outline-primary fw-light'" v-on:click="btnAppMenuClick('index')">
-                
-            </button>
-            <button type="button" class="btn border-0" :class="appMenuActive==='exam'?'btn-primary fw-bold':'btn-outline-primary fw-light'" v-on:click="btnAppMenuClick('exam')">
-                <i class="bi bi-file-earmark-medical-fill me-1"></i>考试
-            </button>
-            <button type="button" class="btn border-0" :class="appMenuActive==='wenjuan'?'btn-primary fw-bold':'btn-outline-primary fw-light'" v-on:click="btnAppMenuClick('wenjuan')">
-                <i class="bi bi-file-earmark-person me-1"></i>问卷
-            </button>
-            <button type="button" class="btn rounded-end-pill border-0" :class="appMenuActive==='mine'?'btn-primary fw-bold':'btn-outline-primary fw-light'" v-on:click="btnAppMenuClick('mine')">
-                <i class="bi bi-person-fill-check me-1"></i>我的
-            </button>
-        </div>
-        -->
     </div>
 </template>

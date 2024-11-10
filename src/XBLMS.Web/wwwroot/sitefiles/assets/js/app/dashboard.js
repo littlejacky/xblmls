@@ -106,6 +106,7 @@ var data = utils.init({
   totalDuration: 0,
 
   topCer: null,
+  dateStr:null,
 
   appMenuActive:"index"
 
@@ -121,6 +122,8 @@ var methods = {
       var res = response.data;
 
       $this.user = res.user;
+
+      $this.dateStr = res.dateStr;
 
       $this.examTotal = res.examTotal;
       $this.examPercent = res.examPercent;
@@ -184,8 +187,11 @@ var methods = {
   btnShuatiMoreMenuClick: function () {
     location.href = utils.getExamUrl("examPractice");
   },
-  btnMoreMenuClick: function (command) {
-    top.$vue.btnTopMenuClick(command);
+  btnPlanMoreMenuClick: function () {
+    location.href = utils.getStudyUrl("studyPlan");
+  },
+  btnCourseMoreMenuClick: function () {
+    location.href = utils.getStudyUrl("studyCourse");
   },
   btnCreatePracticeClick: function (practiceType) {
     if (practiceType === 'All') {
@@ -263,6 +269,12 @@ var methods = {
   btnAppMenuClick: function (common) {
     if (common === 'index') {
       location.href = utils.getIndexUrl();
+    }
+    if (common === 'studyPlan') {
+      location.href = utils.getStudyUrl("studyPlan");
+    }
+    if (common === 'studyCourse') {
+      location.href = utils.getStudyUrl("studyCourse");
     }
     if (common === 'exam') {
       location.href = utils.getExamUrl("examPaper");

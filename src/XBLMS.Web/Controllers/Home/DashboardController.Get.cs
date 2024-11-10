@@ -162,6 +162,8 @@ namespace XBLMS.Web.Controllers.Home
             var planTask = await _studyPlanUserRepository.GetTaskCountAsync(user.Id);
             var courseTask = await _studyCourseUserRepository.GetTaskCountAsync(user.Id);
 
+            var dateStr = $"{DateTime.Now.ToString(DateUtils.FormatStringDateOnlyCN)} {DateTime.Now.ToString("dddd", new System.Globalization.CultureInfo("zh-CN"))}";
+
             return new GetResult
             {
                 User = user,
@@ -198,7 +200,9 @@ namespace XBLMS.Web.Controllers.Home
 
                 TotalDuration = totalDuration,
 
-                TopCer = topCer
+                TopCer = topCer,
+
+                DateStr = dateStr,
             };
         }
     }

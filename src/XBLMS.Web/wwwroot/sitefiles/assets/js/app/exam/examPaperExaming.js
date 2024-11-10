@@ -6,6 +6,8 @@ var $urlSubmitTiming = $url + "/submitTiming";
 
 var data = utils.init({
   id: utils.getQueryInt('id'),
+  planId: utils.getQueryInt('planId'),
+  courseId: utils.getQueryInt('courseId'),
   startId:0,
   list: null,
   paper: null,
@@ -25,7 +27,7 @@ var methods = {
 
     utils.loading(this, true, "正在加载试卷...");
 
-    $api.get($url, { params: { id: $this.id } }).then(function (response) {
+    $api.get($url, { params: { id: $this.id, planId: this.planId, courseId: this.courseId } }).then(function (response) {
       var res = response.data;
 
       $this.watermark = res.watermark;

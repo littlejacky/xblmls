@@ -33,6 +33,11 @@ namespace XBLMS.Models
         public DateTime? LastStudyDateTime { get; set; }
         [DataColumn]
         public bool Collection { get; set; }
+        /// <summary>
+        /// 面授课是否上课，由老师确认
+        /// </summary>
+        [DataColumn]
+        public bool IsSignin { get; set; }
         [DataColumn]
         public StudyStatType State { get; set; }
     }

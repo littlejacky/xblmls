@@ -4,6 +4,8 @@ var data = utils.init({
   id: utils.getQueryInt('id'),
   pr: utils.getQueryString('pr'),
   ps: utils.getQueryString('ps'),
+  planId: utils.getQueryInt('planId'),
+  courseId: utils.getQueryInt('courseId'),
   paper: null,
   watermark: null,
   answerTotal: 0,
@@ -64,7 +66,7 @@ var methods = {
   apiSubmitPaper: function () {
     var $this = this;
     utils.loading($this, true, "正在提交问卷...");
-    $api.post($urlSubmitPaper, { id: this.id, tmList: this.tmList }).then(function (response) {
+    $api.post($urlSubmitPaper, { id: this.id, tmList: this.tmList, planId: this.planId, courseId: this.courseId }).then(function (response) {
       var res = response.data;
       if (res.value) {
         utils.success("已提交");

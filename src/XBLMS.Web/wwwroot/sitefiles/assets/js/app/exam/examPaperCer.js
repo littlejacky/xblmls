@@ -6,7 +6,8 @@ var data = utils.init({
     dateFrom: '',
     dateTo:''
   },
-  list: []
+  list: [],
+  cerDialogVisible:false
 });
 
 var methods = {
@@ -29,6 +30,7 @@ var methods = {
     });
   },
   btnSearchClick: function () {
+    this.cerDialogVisible = false;
     this.list = [];
     this.apiGet();
   },

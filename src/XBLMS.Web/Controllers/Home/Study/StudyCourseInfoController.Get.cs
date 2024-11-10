@@ -40,6 +40,9 @@ namespace XBLMS.Web.Controllers.Home.Study
                 userCourse = await _studyCourseUserRepository.GetAsync(user.Id, request.PlanId, request.CourseId);
                 await _studyCourseRepository.IncrementTotalUserAsync(course.Id);
             }
+            userCourse.LastStudyDateTime = DateTime.Now;
+            await _studyCourseUserRepository.UpdateAsync(userCourse);
+
             var courseWareList = await _studyCourseWareRepository.GetListAsync(request.CourseId);
             if (courseWareList != null && courseWareList.Count > 0)
             {

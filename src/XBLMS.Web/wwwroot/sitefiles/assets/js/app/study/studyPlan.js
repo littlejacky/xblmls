@@ -1,17 +1,20 @@
-var $url = "/exam/examPaper";
+var $url = "/study/studyPlan";
 var $urlItem = $url + "/item";
 
 var data = utils.init({
   form: {
-    keyWords: '',
-    date: '',
+    year: 0,
+    state: '',
+    keyWords:'',
     pageIndex: 1,
     pageSize: PER_PAGE
   },
+  yearList:null,
   list: [],
   total: 0,
+  appMenuActive: "studyPlan",
   loadMoreLoading: false,
-  appMenuActive: "exam"
+  planDialogVisible:false
 });
 
 var methods = {
@@ -26,11 +29,12 @@ var methods = {
       var res = response.data;
 
       if (res.list && res.list.length > 0) {
-        res.list.forEach(paper => {
-          $this.list.push(paper);
+        res.list.forEach(item => {
+          $this.list.push(item);
         });
       }
       $this.total = res.total;
+      $this.yearList = res.yearList;
 
     }).catch(function (error) {
       utils.error(error);
@@ -51,11 +55,13 @@ var methods = {
 
       $this.$set($this.list, pIndex, res.item);
 
+
     }).catch(function (error) {
     }).then(function () {
     });
   },
   btnSearchClick: function () {
+    this.planDialogVisible = false;
     this.form.pageIndex = 1;
     this.list = [];
     this.apiGet();
@@ -65,16 +71,16 @@ var methods = {
     this.form.pageIndex++;
     this.apiGet();
   },
-  btnViewClick: function (row) {
+  btnViewClick: function (id) {
     var $this = this;
     top.utils.openLayer({
       title: false,
       closebtn: 0,
-      url: utils.getExamUrl('examPaperInfo', { id: row.id, planId: row.planId, courseId: row.courseId }),
+      url: utils.getStudyUrl('studyPlanInfo', { id: id }),
       width: "100%",
       height: "100%",
       end: function () {
-        $this.apiGetItem(row.examUserId);
+        $this.apiGetItem(id);
       }
     });
   },
@@ -105,7 +111,7 @@ var $vue = new Vue({
   data: data,
   methods: methods,
   created: function () {
-    document.title = "考试中心";
+    document.title = "学习中心";
     this.apiGet();
   },
 });

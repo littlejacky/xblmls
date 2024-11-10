@@ -40,7 +40,8 @@ namespace XBLMS.Web.Controllers.Home.Study
                 userCourse = await _studyCourseUserRepository.GetAsync(user.Id, request.PlanId, request.CourseId);
                 await _studyCourseRepository.IncrementTotalUserAsync(course.Id);
             }
-
+            userCourse.LastStudyDateTime = DateTime.Now;
+            await _studyCourseUserRepository.UpdateAsync(userCourse);
 
             if (request.PlanId > 0)
             {
@@ -117,24 +118,32 @@ namespace XBLMS.Web.Controllers.Home.Study
                 {
                     boolEvaluationSubmit = true;
                 }
-                if (!boolExamPass)
+                if (!userCourse.IsSignin)
                 {
-                    courseStateStr = "请完成课后考试并及格";
+                    courseStateStr = "请参加培训";
                 }
                 else
                 {
-                    if (!boolEvaluationSubmit)
+                    if (!boolExamPass)
                     {
-                        courseStateStr = "请完成课程评价";
+                        courseStateStr = "请完成课后考试并及格";
                     }
-                    if (!boolExamQSubmit)
+                    else
                     {
-                        courseStateStr = "请完成课后问卷";
-                    }
+                        if (!boolEvaluationSubmit)
+                        {
+                            courseStateStr = "请完成课程评价";
+                        }
+                        if (!boolExamQSubmit)
+                        {
+                            courseStateStr = "请完成课后问卷";
+                        }
 
+                    }
                 }
 
-                if (boolExamPass && boolExamQSubmit && boolEvaluationSubmit)
+
+                if (userCourse.IsSignin && boolExamPass && boolExamQSubmit && boolEvaluationSubmit)
                 {
                     userCourse.State = StudyStatType.Yiwancheng;
                     userCourse.Credit = course.Credit;

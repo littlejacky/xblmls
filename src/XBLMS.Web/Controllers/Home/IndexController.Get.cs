@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using XBLMS.Configuration;
+using XBLMS.Models;
 using XBLMS.Utils;
 
 namespace XBLMS.Web.Controllers.Home
@@ -107,6 +108,18 @@ namespace XBLMS.Web.Controllers.Home
             var planTotal = await _studyPlanUserRepository.GetTaskCountAsync(user.Id);
             var courseTotal = await _studyCourseUserRepository.GetTaskCountAsync(user.Id);
 
+            var courseList = new List<StudyCourse>();
+            var (total, list) = await _studyCourseUserRepository.GetLastListAsync(user.Id, 1, 5);
+            if (total > 0)
+            {
+                foreach (var item in list)
+                {
+                    var course = await _studyCourseRepository.GetAsync(item.CourseId);
+                    await _studyManager.User_GetCourseInfoByCourseList(item.PlanId, course, item);
+                    courseList.Add(course);
+                }
+            }
+
             return new GetResult
             {
                 User = user,
@@ -115,6 +128,7 @@ namespace XBLMS.Web.Controllers.Home
                 QPaperTotal = qPaperTotal,
                 PlanTotal = planTotal,
                 CourseTotal = courseTotal,
+                CourseList = courseList
             };
         }
     }

@@ -25,8 +25,23 @@
                 </div>
             </div>
             <div class="row gy-3">
-                <div class="col-xl-6 col-lg-6 col-md-6 col-6">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-12" v-if="item.planId>0 || item.courseId>0">
                     <div class="card rounded-0 bg-white border-top border-muted border-5 card-hover-with-icon">
+                        <div class="card-body pt-3 pb-0">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div>
+                                    <div class="mb-2 fw-bold">{{ item.courseName }}</div>
+                                    <p class="text-muted fs-6 text-warning">课后考试</p>
+                                </div>
+                                <div class="icon-shape icon-sm rounded-circle text-muted card-icon">
+                                    <i class="el-icon-star-off fs-3 text-warning"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-6">
+                    <div class="card rounded-0 bg-white border-top border-5 card-hover-with-icon">
                         <div class="card-body pt-3 pb-0">
                             <div class="d-flex align-items-center justify-content-between">
                                 <div>
@@ -37,7 +52,7 @@
                                     <p class="text-muted fs-6">试卷总分</p>
                                 </div>
                                 <div class="icon-shape icon-sm rounded-circle text-muted card-icon">
-                                    <i class="bi bi-check-circle-fill fs-3"></i>
+                                    <i class="bi bi-check-circle-fill fs-3 text-primary"></i>
                                 </div>
                             </div>
                         </div>
@@ -55,7 +70,7 @@
                                     <p class="text-muted fs-6">及格分</p>
                                 </div>
                                 <div class="icon-shape icon-sm rounded-circle text-muted card-icon">
-                                    <i class="bi bi-check-circle fs-3"></i>
+                                    <i class="bi bi-check-circle fs-3 text-primary"></i>
                                 </div>
                             </div>
                         </div>
@@ -74,13 +89,13 @@
                                     <p class="text-muted fs-6">考试通过可获得证书</p>
                                 </div>
                                 <div class="icon-shape icon-sm rounded-circle text-muted card-icon">
-                                    <i class="bi bi-award-fill fs-3"></i>
+                                    <i class="bi bi-award-fill fs-3 text-primary"></i>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-6 col-lg-6 col-md-6 col-6">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-12">
                     <div class="card rounded-0 bg-white border-top border-muted border-5 card-hover-with-icon">
                         <div class="card-body pt-3 pb-0">
                             <div class="d-flex align-items-center justify-content-between">
@@ -90,13 +105,13 @@
                                     <p class="text-muted fs-6">考试限时</p>
                                 </div>
                                 <div class="icon-shape icon-sm rounded-circle text-muted card-icon">
-                                    <i class="bi bi-clock-fill fs-3"></i>
+                                    <i class="bi bi-clock-fill fs-3 text-primary"></i>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-6 col-lg-6 col-md-6 col-6">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-12">
                     <div class="card rounded-0 bg-white border-top border-muted border-5 card-hover-with-icon">
                         <div class="card-body pt-3 pb-0">
                             <div class="d-flex align-items-center justify-content-between">
@@ -113,7 +128,7 @@
                                     <p class="text-muted  fs-6">剩余考试次数</p>
                                 </div>
                                 <div class="icon-shape icon-sm rounded-circle text-muted card-icon">
-                                    <i class="bi bi-circle-half fs-3"></i>
+                                    <i class="bi bi-circle-half fs-3 text-primary"></i>
                                 </div>
                             </div>
                         </div>
@@ -128,7 +143,7 @@
                                     <p class="text-muted fs-6">考试时间</p>
                                 </div>
                                 <div class="icon-shape icon-sm rounded-circle text-muted card-icon">
-                                    <i class="bi bi-calendar-check-fill fs-3"></i>
+                                    <i class="bi bi-calendar-check-fill fs-3 text-primary"></i>
                                 </div>
                             </div>
                         </div>
@@ -140,7 +155,7 @@
                             <el-collapse accordion>
                                 <el-collapse-item v-if="item.cjList && item.cjList.length>0">
                                     <template slot="title">
-                                        <span class="fs-4"><i class="bi bi-clock-history me-2"></i>考试记录（{{ item.cjList.length }}）</span>
+                                        <span class="fs-4"><i class="bi bi-clock-history me-2 text-primary"></i>考试记录（{{ item.cjList.length }}）</span>
                                     </template>
                                     <div>
                                         <div v-for="(paper,index) in item.cjList">
@@ -154,7 +169,7 @@
                                                             <span v-if="item.secrecyScore">
                                                                 <span>{{ paper.score }}</span>
                                                             </span>
-                                                            <span class="text-danger" v-else><i class="bi bi-eye-slash-fill me-2"></i>未公开</span>
+                                                            <span class="text-danger" v-else><i class="bi bi-eye-slash-fill me-2 text-primary"></i>未公开</span>
                                                         </div>
                                                     </div>
                                                     <div>
@@ -168,7 +183,7 @@
                                 </el-collapse-item>
                                 <el-collapse-item v-if="item.subject && item.subject.length>0">
                                     <template slot="title">
-                                        <span class="fw-bold"><i class="el-icon-info me-2"></i>考试须知</span>
+                                        <span class="fw-bold"><i class="el-icon-info me-2 text-primary"></i>考试须知</span>
                                     </template>
                                     <div>
                                         <p v-html="item.subject"></p>
@@ -185,17 +200,17 @@
 </el-card>
 <div class="py-8"></div>
 <div style="position:fixed;left:0;bottom:0;width:100%;" class="text-center mb-5 animate__animated animate__fadeInUp">
-    <el-button-group class="btn-group p-1 bg-gray-300 rounded-pill">
+    <div class="btn-group">
         <template v-if="item.examSubmiting">
-            <el-button icon="el-icon-s-promotion" type="warning" :loading="item.examSubmiting" class="rounded-start-pill">正在交卷...</el-button>
+            <button type="button" :loading="item.examSubmiting" class="rounded-start-pill"><i class="el-icon-s-promotion me-2"></i>正在交卷...</button>
         </template>
         <template v-else>
-            <el-button icon="el-icon-s-promotion" type="warning" v-on:click="btnStartExamClick" v-if="item.startId>0 && isStart" class="rounded-start-pill">准备就绪，恢复考试</el-button>
-            <el-button icon="el-icon-s-promotion" type="success" v-on:click="btnStartExamClick" v-else-if="isStart" class="rounded-start-pill">准备就绪，开始考试</el-button>
+            <button type="button" v-on:click="btnStartExamClick" v-if="item.startId>0 && isStart" class="btn btn-warning rounded-start-pill"><i class="el-icon-s-promotion me-2"></i>准备就绪，恢复考试</button>
+            <button type="button" v-on:click="btnStartExamClick" v-else-if="isStart" class="btn btn-success rounded-start-pill"><i class="el-icon-s-promotion me-2"></i>准备就绪，开始考试</button>
         </template>
-        <el-button v-on:click="utils.closeLayerSelf" icon="el-icon-back" class="rounded-end-pill" v-if="isStart">返 回</el-button>
-        <el-button v-on:click="utils.closeLayerSelf" icon="el-icon-back" class="rounded-pill" v-else type="primary">返 回</el-button>
-    </el-button-group>
+        <button type="button" v-on:click="utils.closeLayerSelf" class="btn btn-primary rounded-end-pill" v-if="isStart"><i class="el-icon-back me-2"></i>返 回</button>
+        <button type="button" v-on:click="utils.closeLayerSelf" class="btn btn-primary rounded-pill" v-else><i class="el-icon-back me-2"></i>返 回</button>
+    </div>
 </div>
 @section Scripts{
 <script src="/sitefiles/assets/js/app/exam/examPaperInfo.js" type="text/javascript"></script> }

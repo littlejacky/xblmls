@@ -1,62 +1,135 @@
 @page
 @{ Layout = "_LayoutApp"; }
-<div class="col-lg-12 col-md-12 col-12">
-    <div class="card mb-3">
-        <!-- Card Body -->
-        <div class="card-body ">
-            <div class="text-center">
-                <img :src="user.avatarUrl || DEFAULT_AVATAR_URL" class="rounded-circle avatar-xl mb-3" alt="">
-                <h4 class="mb-1">{{ user.displayName }}</h4>
-                <p class="mb-0 fs-5">
-                    {{ user.userName }}
-                </p>
-            </div>
-            <div class="mt-4">
-                <div class="d-flex justify-content-between align-items-center" v-on:click="btnTab('info')">
-                    <span><i class="el-icon-user me-2"></i>修改个人信息</span>
-                    <span><i class="el-icon-arrow-right"></i></span>
+@section Styles {
+    <style>
+        html {
+            overflow-x: hidden !important;
+        }
+        body {
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+}
+<div class="bg-cover rounded-0 p-8" :style="{'background-image':'url('+(user.avatarUrl || DEFAULT_AVATAR_URL)+')'}">
+    <div class="py-5"></div>
+    <div class="py-5"></div>
+</div>
+<div class="p-3">
+    <div class="col-lg-12 col-md-12 col-12 mt-n8">
+        <div class="card mb-3">
+            <div class="card-body ">
+                <div class="text-center">
+                    <img :src="user.avatarUrl || DEFAULT_AVATAR_URL" class="rounded-circle avatar-xl mb-3" alt="">
+                    <h4 class="mb-1">{{ user.displayName }}</h4>
                 </div>
-            </div>
-            <div class="mt-4">
-                <div class="d-flex justify-content-between align-items-center" v-on:click="btnTab('pwd')">
-                    <span><i class="el-icon-key me-2"></i>修改密码</span>
-                    <span><i class="el-icon-arrow-right"></i></span>
+                <div class="mt-4">
+                    <div class="d-flex justify-content-between align-items-center" v-on:click="btnTab('info')">
+                        <span><i class="el-icon-user me-2"></i>修改个人信息</span>
+                        <span><i class="el-icon-arrow-right"></i></span>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <div class="d-flex justify-content-between align-items-center" v-on:click="btnTab('pwd')">
+                        <span><i class="el-icon-key me-2"></i>修改密码</span>
+                        <span><i class="el-icon-arrow-right"></i></span>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<div class="mt-3">
-    <div class="card">
+    <div class="card mt-3 shadow-lg">
         <div class="card-body">
-            <div class="mb-4">
-                <div class="d-flex justify-content-between align-items-center" v-on:click="btnTab('score')">
-                    <span><i class="el-icon-document-copy me-2"></i>考试成绩</span>
-                    <span><i class="el-icon-arrow-right"></i></span>
+            <h5 class="card-title d-flex justify-content-between align-items-center">
+                <span><i class="bi bi-box me-2 card-icon text-warning"></i>上次学习</span>
+                <el-link :underline="false" v-on:click="btnTab('courseLog')">更多<i class="el-icon-more ms-2"></i></el-link>
+            </h5>
+            <div class="mt-3">
+                <div class="d-flex flex-row overflow-x-auto" v-if="courseList && courseList.length>0">
+                    <div class="me-3 mb-3" v-for="course in courseList" style="min-width:200px;">
+                        <div class="card border bg-white p-2" v-on:click="btnViewCourseClick(course)" style="cursor:pointer;">
+                            <div class="position-relative p-8 rounded bg-cover" :style="{'background-image':'url('+course.coverImg+')'}">
+                                <el-tag class="position-absolute bottom-0 end-0 m-2" size="mini" type="primary" effect="plain" v-if="course.offLine">面授课</el-tag>
+                                <el-tag size="mini" class="bg-dark text-white position-absolute bottom-0 end-0 m-2 fs-6" v-else>{{ utils.formatDuration(course.duration) }}</el-tag>
+                                <el-tag size="mini" type="success" effect="dark" class="position-absolute top-0 end-0 m-2" v-if="course.state==='Yiwancheng'">{{ course.stateStr }}</el-tag>
+                                <el-tag size="mini" type="warning" effect="dark" class="position-absolute top-0 end-0 m-2" v-else>{{ course.stateStr }}</el-tag>
+                                <span class="position-absolute bottom-0 start-0 m-2">
+                                    <el-tag size="mini" type="primary" effect="dark" class="me-1">{{ course.courseType}}</el-tag>
+                                </span>
+                            </div>
+                            <div class="mt-3 p-2">
+                                <h4 class="mb-3">
+                                    <a href="javascript:;" class="text-inherit">{{ course.name }}</a>
+                                </h4>
+                                <div class="mb-3 lh-1">
+                                    <span>
+                                        <i class="bi bi-star-fill text-warning me-1"></i>
+                                        <span class="text-inherit fw-semibold">{{ course.evaluationAvg }}</span>
+                                    </span>
+                                    <span class="mx-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                             fill="var(--gk-gray-400)" class="bi bi-dot" viewBox="0 0 16 16">
+                                            <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"></path>
+                                        </svg>
+                                    </span>
+                                    <span>
+                                        <i class="bi bi-person-video3 me-1"></i>
+                                        <span class="text-inherit fw-semibold">{{ course.totaEvaluationlUser }}</span>
+                                    </span>
+                                </div>
+                                <div class="lh-1">
+                                    <i class="bi bi-credit-card-2-front-fill me-1"></i><span class="text-inherit fw-semibold">{{ course.studyHour }}</span> 课时
+                                    <span class="mx-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                             fill="var(--gk-gray-400)" class="bi bi-dot" viewBox="0 0 16 16">
+                                            <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"></path>
+                                        </svg>
+                                    </span>
+                                    <span class="text-inherit fw-semibold text-success" v-if="course.state==='Yiwancheng'">{{ course.credit }}学分</span>
+                                    <span class="text-inherit fw-semibold" v-else>{{ course.credit }}学分</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="mb-4">
-                <div class="d-flex justify-content-between align-items-center" v-on:click="btnTab('cer')">
-                    <span><i class="el-icon-medal me-2"></i>我的证书</span>
-                    <span><i class="el-icon-arrow-right"></i></span>
-                </div>
-            </div>
-            <div>
-                <div class="d-flex justify-content-between align-items-center" v-on:click="btnTab('shuati')">
-                    <span><i class="el-icon-document me-2"></i>刷题记录</span>
-                    <span><i class="el-icon-arrow-right"></i></span>
+                <div class="text-center p-5" v-else>
+                    <small><i class="bi bi-clipboard me-2"></i>暂无学习记录</small>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<div class="mt-3">
-    <div class="card">
-        <div class="card-body">
-            <div>
-                <div class="d-flex justify-content-between align-items-center" v-on:click="btnTab('logout')">
-                    <span class="text-warning"><i class="el-icon-switch-button me-2"></i>退出登录</span>
-                    <span><i class="el-icon-arrow-right"></i></span>
+    <div class="mt-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="mb-4">
+                    <div class="d-flex justify-content-between align-items-center" v-on:click="btnTab('score')">
+                        <span><i class="el-icon-document-copy me-2"></i>考试成绩</span>
+                        <span><i class="el-icon-arrow-right"></i></span>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <div class="d-flex justify-content-between align-items-center" v-on:click="btnTab('cer')">
+                        <span><i class="el-icon-medal me-2"></i>我的证书</span>
+                        <span><i class="el-icon-arrow-right"></i></span>
+                    </div>
+                </div>
+                <div>
+                    <div class="d-flex justify-content-between align-items-center" v-on:click="btnTab('shuati')">
+                        <span><i class="el-icon-document me-2"></i>刷题记录</span>
+                        <span><i class="el-icon-arrow-right"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mt-3">
+        <div class="card">
+            <div class="card-body">
+                <div>
+                    <div class="d-flex justify-content-between align-items-center" v-on:click="btnTab('logout')">
+                        <span class="text-warning"><i class="el-icon-switch-button me-2"></i>退出登录</span>
+                        <span><i class="el-icon-arrow-right"></i></span>
+                    </div>
                 </div>
             </div>
         </div>

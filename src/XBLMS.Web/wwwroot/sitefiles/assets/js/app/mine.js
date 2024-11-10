@@ -3,7 +3,8 @@ var $url = '/index';
 
 var data = utils.init({
   user: null,
-  appMenuActive: "mine"
+  appMenuActive: "mine",
+  courseList:null
 });
 
 var methods = {
@@ -12,6 +13,7 @@ var methods = {
 
     $api.get($url).then(function (response) {
       var res = response.data;
+      $this.courseList = res.courseList;
       if (res.user) {
         $this.user = res.user;
       }
@@ -25,6 +27,12 @@ var methods = {
     if (common === 'index') {
       location.href = utils.getIndexUrl();
     }
+    if (common === 'studyPlan') {
+      location.href = utils.getStudyUrl("studyPlan");
+    }
+    if (common === 'studyCourse') {
+      location.href = utils.getStudyUrl("studyCourse");
+    }
     if (common === 'exam') {
       location.href = utils.getExamUrl("examPaper");
     }
@@ -34,6 +42,25 @@ var methods = {
     if (common === 'mine') {
       location.href = utils.getRootUrl('mine');
     }
+  },
+  btnViewCourseClick: function (row) {
+
+    var curl = utils.getStudyUrl('studyCourseInfo', { id: row.id, planId: row.planId });
+    if (row.offLine) {
+      curl = utils.getStudyUrl('studyCourseOfflineInfo', { id: row.id, planId: row.planId });
+    }
+
+    var $this = this;
+    top.utils.openLayer({
+      title: false,
+      closebtn: 0,
+      url: curl,
+      width: "100%",
+      height: "100%",
+      end: function () {
+        $this.apiGet();
+      }
+    });
   },
   btnTab: function (common) {
 
@@ -59,6 +86,9 @@ var methods = {
         width: "100%",
         height: "100%"
       });
+    }
+    if (common === 'courseLog') {
+      location.href = utils.getStudyUrl('studyCourseLog');
     }
     if (common === 'logout') {
       location.href = utils.getRootUrl("logout");

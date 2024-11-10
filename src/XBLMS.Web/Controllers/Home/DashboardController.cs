@@ -113,6 +113,8 @@ namespace XBLMS.Web.Controllers.Home
 
             public ExamCerUser TopCer { get; set; }
 
+            public string DateStr { get; set; }
+
         }
 
     }

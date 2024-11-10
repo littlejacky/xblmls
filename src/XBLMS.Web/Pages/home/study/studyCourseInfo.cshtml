@@ -434,7 +434,7 @@
                                 <li class="list-group-item bg-transparent" v-if="courseInfo.state">
                                     <span v-if="courseInfo.studyCourseEvaluationId>0">
                                         <i class="bi bi-star-fill text-success me-2"></i>
-                                        已提交评价（{{ courseInfo.evaluationTotalStarValue }}）
+                                        已提交评价（{{ courseUser.avgEvaluation }}）
                                     </span>
                                     <span v-else>
                                         <i class="bi bi-star-fill text-success me-2"></i>
@@ -447,7 +447,7 @@
                                             <span v-if="courseInfo.boolExam">
                                                 <span v-if="courseInfo.boolEvaluation">
                                                     <i class="bi bi-star-fill text-success me-2"></i>
-                                                    已提交评价（{{ courseInfo.evaluationTotalStarValue }}）
+                                                    已提交评价（{{ courseUser.avgEvaluation }}）
                                                 </span>
                                                 <span v-else>
                                                     <i class="bi bi-star-fill text-warning me-2"></i>

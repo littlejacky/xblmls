@@ -68,6 +68,17 @@ namespace XBLMS.Core.Repositories
                 Where(nameof(StudyCourseUser.PlanId), planId).
                 Where(nameof(StudyCourseUser.CourseId), courseId));
         }
+        public async Task<(int total, List<StudyCourseUser> list)> GetLastListAsync(int userId, int pageIndex, int pageSize)
+        {
+            var query = Q.
+                Where(nameof(StudyCourseUser.UserId), userId).
+                WhereNullOrFalse(nameof(StudyCourseUser.Locked));
+            query.OrderByDesc(nameof(StudyCourseUser.LastStudyDateTime));
+
+            var total = await _repository.CountAsync(query);
+            var list = await _repository.GetAllAsync(query.ForPage(pageIndex, pageSize));
+            return (total, list);
+        }
         public async Task<(int total, List<StudyCourseUser> list)> GetListAsync(int userId, bool collection, string keyWords, string mark, string orderby, string state, int pageIndex, int pageSize)
         {
             var query = Q.

@@ -10,7 +10,8 @@ var data = utils.init({
   },
   list: [],
   total: 0,
-  loadMoreLoading:false
+  loadMoreLoading: false,
+  scoreDialogVisible:false
 });
 
 var methods = {
@@ -39,6 +40,7 @@ var methods = {
     });
   },
   btnSearchClick: function () {
+    this.scoreDialogVisible = false;
     this.form.pageIndex = 1;
     this.list = [];
     this.apiGet();
