@@ -193,6 +193,13 @@ var methods = {
   btnCourseMoreMenuClick: function () {
     location.href = utils.getStudyUrl("studyCourse");
   },
+  btnViewCer: function (cer) {
+    top.utils.openLayerPhoto({
+      title: cer.name,
+      id: cer.id,
+      src: cer.cerImg + '?r=' + Math.random()
+    })
+  },
   btnCreatePracticeClick: function (practiceType) {
     if (practiceType === 'All') {
       if (this.practiceAllTmTotal > 0) {
@@ -253,12 +260,44 @@ var methods = {
       }
     });
   },
-  btnViewPaperClick: function (id) {
+  btnViewPaperClick: function (row) {
     var $this = this;
     top.utils.openLayer({
       title: false,
       closebtn: 0,
-      url: utils.getExamUrl('examPaperInfo', { id: id }),
+      url: utils.getExamUrl('examPaperInfo', { id: row.id, planId: row.planId, courseId: row.courseId }),
+      width: "100%",
+      height: "100%",
+      end: function () {
+        $this.apiGet();
+      }
+    });
+  },
+  btnViewPlanClick: function (id) {
+    var $this = this;
+    top.utils.openLayer({
+      title: false,
+      closebtn: 0,
+      url: utils.getStudyUrl('studyPlanInfo', { id: id }),
+      width: "100%",
+      height: "100%",
+      end: function () {
+        $this.apiGet();
+      }
+    });
+  },
+  btnViewCourseClick: function (row) {
+
+    var curl = utils.getStudyUrl('studyCourseInfo', { id: row.id, planId: row.planId });
+    if (row.offLine) {
+      curl = utils.getStudyUrl('studyCourseOfflineInfo', { id: row.id, planId: row.planId });
+    }
+
+    var $this = this;
+    top.utils.openLayer({
+      title: false,
+      closebtn: 0,
+      url: curl,
       width: "100%",
       height: "100%",
       end: function () {

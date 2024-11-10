@@ -4,23 +4,24 @@ var $urlItem = $url + "/item";
 var data = utils.init({
   form: {
     keyWords: '',
-    date:'',
+    date: '',
     pageIndex: 1,
     pageSize: PER_PAGE
   },
   list: [],
   total: 0,
-  loadMoreLoading:false
+  examDialogVisible: false,
+  loadMoreLoading: false
 });
 
 var methods = {
-  apiGet: function() {
+  apiGet: function () {
     var $this = this;
 
     if (this.total === 0) {
       utils.loading(this, true);
     }
- 
+
     $api.get($url, { params: this.form }).then(function (response) {
       var res = response.data;
 
@@ -56,6 +57,7 @@ var methods = {
     });
   },
   btnSearchClick: function () {
+    this.examDialogVisible = false;
     this.form.pageIndex = 1;
     this.list = [];
     this.apiGet();

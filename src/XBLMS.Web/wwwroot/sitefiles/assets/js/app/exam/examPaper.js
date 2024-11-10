@@ -11,6 +11,7 @@ var data = utils.init({
   list: [],
   total: 0,
   loadMoreLoading: false,
+  examDialogVisible:false,
   appMenuActive: "exam"
 });
 
@@ -56,6 +57,7 @@ var methods = {
     });
   },
   btnSearchClick: function () {
+    this.examDialogVisible = false;
     this.form.pageIndex = 1;
     this.list = [];
     this.apiGet();

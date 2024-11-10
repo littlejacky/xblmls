@@ -7,11 +7,7 @@
         }
     </style>
 }
-<div style="position:fixed;left:0;top:0;width:100%;" class="text-center py-3 bg-white z-1">
-    练习中心
-</div>
-<div class="pb-8"></div>
-<div class="z-2">
+<div>
     <div v-if="total>0">
         <div v-for="(item,index) in list">
             <el-card shadow="hover" class="mb-3">
@@ -41,19 +37,19 @@
             </el-card>
         </div>
         <div class="my-5 text-center">
-            <span class="fw-light fs-6">没有更多了</span>
+            <small>没有更多了</small>
         </div>
     </div>
     <div class="pt-10" v-else>
-        <el-empty></el-empty>
+        <el-empty image="/sitefiles/assets/images/nodata.svg" description="暂无练习"></el-empty>
     </div>
 </div>
 <div class="py-8"></div>
 <div style="position:fixed;left:0;bottom:0;width:100%;" class="text-center mb-5 animate__animated animate__fadeInUp">
-    <el-button-group class="btn-group p-1 bg-gray-300 rounded-pill">
-        <el-button type="primary" class="rounded-start-pill" v-on:click="btnCreateClick('All')">快速开始</el-button>
-        <el-button v-on:click="location.href=utils.getIndexUrl()" icon="el-icon-back" class="rounded-end-pill">返 回</el-button>
-    </el-button-group>
+    <div class="btn-group">
+        <button type="button" class="btn btn-primary rounded-start-pill" v-on:click="btnCreateClick('All')"><i class="bi bi-fast-forward-circle-fill me-2"></i>快速开始</button>
+        <button type="button" v-on:click="location.href=utils.getIndexUrl()" class="btn btn-outline-primary rounded-end-pill"><i class="el-icon-back"></i>返 回</button>
+    </div>
 </div>
 @section Scripts{
     <script src="/sitefiles/assets/js/app/exam/examPractice.js" type="text/javascript"></script>

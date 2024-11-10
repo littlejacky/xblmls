@@ -208,7 +208,7 @@
             <button type="button" v-on:click="btnStartExamClick" v-if="item.startId>0 && isStart" class="btn btn-warning rounded-start-pill"><i class="el-icon-s-promotion me-2"></i>准备就绪，恢复考试</button>
             <button type="button" v-on:click="btnStartExamClick" v-else-if="isStart" class="btn btn-success rounded-start-pill"><i class="el-icon-s-promotion me-2"></i>准备就绪，开始考试</button>
         </template>
-        <button type="button" v-on:click="utils.closeLayerSelf" class="btn btn-primary rounded-end-pill" v-if="isStart"><i class="el-icon-back me-2"></i>返 回</button>
+        <button type="button" v-on:click="utils.closeLayerSelf" class="btn btn-outline-primary rounded-end-pill" v-if="isStart"><i class="el-icon-back me-2"></i>返 回</button>
         <button type="button" v-on:click="utils.closeLayerSelf" class="btn btn-primary rounded-pill" v-else><i class="el-icon-back me-2"></i>返 回</button>
     </div>
 </div>

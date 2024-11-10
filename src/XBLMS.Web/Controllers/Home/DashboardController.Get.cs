@@ -1,11 +1,8 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using XBLMS.Configuration;
 using XBLMS.Core.Utils;
-using XBLMS.Enums;
 using XBLMS.Models;
-using XBLMS.Utils;
 
 namespace XBLMS.Web.Controllers.Home
 {
@@ -29,14 +26,15 @@ namespace XBLMS.Web.Controllers.Home
             var resultPaper = new ExamPaper();
             var resultMoni = new ExamPaper();
 
-            var paperIds = await _examPaperUserRepository.GetPaperIdsByUser(user.Id, "");
-            var (paperTotal, paperList) = await _examPaperRepository.GetListByUserAsync(paperIds, "", 1, 1);
-            var (moniPaperTotal, moniPaperList) = await _examPaperRepository.GetListByUserAsync(paperIds, "", 1, 1, true);
+            var (paperTotal, paperList) = await _examPaperUserRepository.GetListAsync(user.Id, false, "","", 1,1);
+            var (moniPaperTotal, moniPaperList) = await _examPaperUserRepository.GetListAsync(user.Id, true, "", "", 1, 1);
 
             if (paperTotal > 0)
             {
-                resultPaper = paperList[0];
-                await _examManager.GetPaperInfo(resultPaper, user);
+                var paperUser = paperList[0];
+                var paper = await _examPaperRepository.GetAsync(paperUser.ExamPaperId);
+                await _examManager.GetPaperInfo(paper, user, paperUser.PlanId, paperUser.CourseId);
+                resultPaper = paper;
             }
             else
             {
@@ -44,8 +42,10 @@ namespace XBLMS.Web.Controllers.Home
             }
             if (moniPaperTotal > 0)
             {
-                resultMoni = moniPaperList[0];
-                await _examManager.GetPaperInfo(resultMoni, user);
+                var paperUser = moniPaperList[0];
+                var paper = await _examPaperRepository.GetAsync(paperUser.ExamPaperId);
+                await _examManager.GetPaperInfo(paper, user, paperUser.PlanId, paperUser.CourseId);
+                resultMoni = paper;
             }
             else
             {

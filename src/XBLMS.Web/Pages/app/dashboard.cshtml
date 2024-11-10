@@ -1,7 +1,7 @@
 @page
 @{ Layout = "_LayoutApp"; }
 
-<div class="card smooth-shadow-lg mb-3">
+<div class="card smooth-shadow-lg mb-3" v-on:click="btnAppMenuClick('mine')">
     <div class="rounded-top-3 bg-gradient-mix-shade" style="height: 98px">
     </div>
     <div class="card-body p-5">
@@ -32,7 +32,7 @@
                         </svg>
                     </div>
                     <div class="text-center">
-                        <h4 class="mb-2 text-white">计划学分</h4>
+                        <h4 class="mb-2 text-white">培训学分</h4>
                         <p class="mb-0">
                             <span class="text-success">{{ studyPlanTotalOverCredit }}</span>
                             <span class="vr mx-1 text-gray-200"></span>
@@ -252,7 +252,7 @@
         <div class="row align-items-center g-3 mt-3" v-if="examPaper">
             <div class="col">
                 <div class="mb-3">
-                    <el-link :underline="false" v-on:click="btnViewPaperClick(examPaper.id)">
+                    <el-link :underline="false" v-on:click="btnViewPaperClick(examPaper)">
                         <span class="fw-bold fs-4">{{ examPaper.title }}</span>
                     </el-link>
                 </div>
@@ -275,7 +275,7 @@
             </div>
             <div class="col-auto">
                 <div class="bg-light p-2 rounded-circle">
-                    <el-button type="primary" circle icon="el-icon-s-order" class="p-3" v-on:click="btnViewPaperClick(examPaper.id)"></el-button>
+                    <el-button type="primary" circle icon="el-icon-s-order" class="p-3" v-on:click="btnViewPaperClick(examPaper)"></el-button>
                 </div>
             </div>
         </div>
@@ -336,7 +336,7 @@
         <div class="row align-items-center g-3 mt-3" v-if="examMoni">
             <div class="col">
                 <div class="mb-3">
-                    <el-link :underline="false" v-on:click="btnViewPaperClick(examMoni.id)">
+                    <el-link :underline="false" v-on:click="btnViewPaperClick(examMoni)">
                         <span class="fw-bold fs-4">{{ examMoni.title }}</span>
                     </el-link>
                 </div>
@@ -359,7 +359,7 @@
             </div>
             <div class="col-auto">
                 <div class="bg-light p-2 rounded-circle">
-                    <el-button type="primary" circle icon="el-icon-s-order" class="p-3" v-on:click="btnViewPaperClick(examMoni.id)"></el-button>
+                    <el-button type="primary" circle icon="el-icon-s-order" class="p-3" v-on:click="btnViewPaperClick(examMoni)"></el-button>
                 </div>
             </div>
         </div>
@@ -372,9 +372,8 @@
     <div class="card-body">
         <h5 class="card-title d-flex justify-content-between align-items-center">
             <span><i class="bi bi-award-fill me-2 card-icon text-primary"></i>最近获得证书</span>
-            <el-link :underline="false" v-on:click="btnExamMoniMoreMenuClick">更多<i class="el-icon-more ms-2"></i></el-link>
         </h5>
-        <div class="card card-hover" v-if="topCer && topCer.id>0" v-on:click="btnViewCer(topCer)" style="cursor:pointer;">
+        <div class="card card-hover mt-3" v-if="topCer && topCer.id>0" v-on:click="btnViewCer(topCer)" style="cursor:pointer;">
             <div class="row g-0">
                 <img :src="topCer.cerImg" class="w-100">
             </div>
