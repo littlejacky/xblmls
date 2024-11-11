@@ -25,7 +25,7 @@ namespace XBLMS.Web.Controllers.Admin.Study
             var userPassTotal = await _studyPlanUserRepository.GetCountAsync(plan.Id, StudyStatType.Yiwancheng.GetValue());
             var userPass1Total= await _studyPlanUserRepository.GetCountAsync(plan.Id, StudyStatType.Yidabiao.GetValue());
             var totalCredit = await _studyPlanUserRepository.GetTotalCreditAsync(plan.Id);
-            var avgCredit = TranslateUtils.ToAvg((double)totalCredit, (double)userTotal);
+          
 
             var courseCreditTotal = await _studyPlanCourseRepository.GetTotalCreditAsync(plan.Id, false);
             var courseSelectCreditTotal = await _studyPlanCourseRepository.GetTotalCreditAsync(plan.Id, true);
@@ -35,6 +35,8 @@ namespace XBLMS.Web.Controllers.Admin.Study
 
             var overCourseCreditTotal = await _studyCourseUserRepository.GetOverTotalCreditAsync(plan.Id, false);
             var overSelectCourseCreditTotal = await _studyCourseUserRepository.GetOverTotalCreditAsync(plan.Id, true);
+
+            var avgCredit = TranslateUtils.ToAvg((double)(totalCredit), (double)userTotal);
 
             plan.Set("AvgCredit", avgCredit);
             plan.Set("TotalUser", userTotal);

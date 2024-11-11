@@ -130,6 +130,7 @@ var methods = {
         courseId: item.id,
         courseName: item.name,
         isSelectCourse: isSelect,
+        offLine: item.offLine,
         examId: item.examId,
         examName: item.examName,
         examQuestionnaireId: item.examQuestionnaireId,
@@ -343,7 +344,7 @@ var methods = {
       }
     });
   },
-  btnRemoveCourse: function (row,isSelect) {
+  btnRemoveCourse: function (row, isSelect) {
     var $this = this;
     top.utils.alertWarning({
       title: '提醒',

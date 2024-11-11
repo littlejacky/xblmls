@@ -1,24 +1,19 @@
 ﻿var $url = '/study/studyPlanManager';
 
 var $urlUser = $url + '/user';
-var $urlUserDeleteOne = $urlUser + '/removeone';
-var $urlUserDelete = $urlUser + '/remove';
-var $urlUserExamTimes = $urlUser + '/examtimes';
-var $urlUserDateTime = $urlUser + '/datetime';
 var $urlUserExport = $urlUser + '/export';
 
-var $urlScore = $url + '/score';
-var $urlScoreExport = $urlScore + '/export';
+var $urlCourse = $url + '/course';
+var $urlCourseExport = $urlCourse + '/export';
 
-var $urlMark = $url + '/mark';
-var $urlMarkSelectMarker = $url + '/marker';
 
 var data = utils.init({
   id: 0,
   plan: null,
   form: {
     id: 0,
-    keywords: '',
+    state: '',
+    keyWords: '',
     pageIndex: 1,
     pageSize: PER_PAGE
   },
@@ -32,180 +27,11 @@ var data = utils.init({
   },
   tabPosition: 'left',
 
-  formScore: {
+  formCourse: {
     id: 0,
     keywords: '',
-    dateFrom: '',
-    dateTo: '',
-    pageIndex: 1,
-    pageSize: PER_PAGE
   },
-  scoreList: null,
-  scoreTotal: 0,
-  passSeries: [100],
-  passChartOptions: {
-    chart: {
-      type: 'radialBar',
-      toolbar: {
-        show: false
-      }
-    },
-    plotOptions: {
-      radialBar: {
-        startAngle: -135,
-        endAngle: 225,
-        hollow: {
-          margin: 0,
-          size: '70%',
-          background: '#fff',
-          image: undefined,
-          imageOffsetX: 0,
-          imageOffsetY: 0,
-          position: 'front',
-          dropShadow: {
-            enabled: true,
-            top: 3,
-            left: 0,
-            blur: 4,
-            opacity: 0.24
-          }
-        },
-        track: {
-          background: '#fff',
-          strokeWidth: '88%',
-          margin: 0, // margin is in pixels
-          dropShadow: {
-            enabled: true,
-            top: -3,
-            left: 0,
-            blur: 4,
-            opacity: 0.35
-          }
-        },
-
-        dataLabels: {
-          show: true,
-          name: {
-            offsetY: -20,
-            show: true,
-            color: '#ff6a00',
-            fontSize: '16px'
-          },
-          value: {
-            formatter: function (val) {
-              return val + '%';
-            },
-            color: '#000',
-            fontSize: '36px',
-            show: true,
-          }
-        }
-      }
-    },
-    fill: {
-      colors: ['#67C23A']
-    },
-    stroke: {
-      lineCap: 'round'
-    },
-    labels: ['完成率'],
-  },
-  pass1Series: [0],
-  pass1ChartOptions: {
-    chart: {
-      type: 'radialBar',
-      toolbar: {
-        show: false
-      }
-    },
-    plotOptions: {
-      radialBar: {
-        startAngle: -135,
-        endAngle: 225,
-        hollow: {
-          margin: 0,
-          size: '70%',
-          background: '#fff',
-          image: undefined,
-          imageOffsetX: 0,
-          imageOffsetY: 0,
-          position: 'front',
-          dropShadow: {
-            enabled: true,
-            top: 3,
-            left: 0,
-            blur: 4,
-            opacity: 0.24
-          }
-        },
-        track: {
-          background: '#fff',
-          strokeWidth: '88%',
-          margin: 0, // margin is in pixels
-          dropShadow: {
-            enabled: true,
-            top: -3,
-            left: 0,
-            blur: 4,
-            opacity: 0.35
-          }
-        },
-
-        dataLabels: {
-          show: true,
-          name: {
-            offsetY: -20,
-            show: true,
-            color: '#ff6a00',
-            fontSize: '16px'
-          },
-          value: {
-            formatter: function (val) {
-              return val + '%';
-            },
-            color: '#000',
-            fontSize: '36px',
-            show: true,
-          }
-        }
-      }
-    },
-    fill: {
-      colors: ['#67C23A']
-    },
-    stroke: {
-      lineCap: 'round'
-    },
-    labels: ['达标率'],
-  },
-  totalScore: 0,
-  passScore: 0,
-  totalUser: 0,
-  maxScore: 0,
-  minScore: 0,
-  totalPass: 0,
-  totalPassDistinct: 0,
-  totalUserScore: 0,
-  totalExamTimes: 0,
-  totalExamTimesDistinct: 0,
-
-  formMark: {
-    id: 0,
-    keywords: '',
-    dateFrom: '',
-    dateTo: '',
-    pageIndex: 1,
-    pageSize: PER_PAGE
-  },
-  markList: null,
-  markTotal: 0,
-  markerList: null,
-  markSelection: [],
-  markerForm: {
-    id: null,
-    ids: null
-  },
-  markerSelectDialogVisible: false
+  courseList: null,
 });
 
 var methods = {
@@ -216,8 +42,8 @@ var methods = {
       var res = response.data;
       $this.plan = res.item;
 
-      $this.passSeries = [$this.plan.totalPassUser / $this.plan.totalUser];
-      $this.pass1Series = [$this.plan.totalPass1User / $this.plan.totalUser];
+      $this.passSeries = [utils.formatPercentFloat($this.plan.totalPassUser, $this.plan.totalUser)];
+      $this.pass1Series = [utils.formatPercentFloat($this.plan.totalPass1User, $this.plan.totalUser)];
 
     }).catch(function (error) {
       utils.error(error, { layer: true });
@@ -247,153 +73,6 @@ var methods = {
     this.userSelection = [];
     this.userUpdateDateTimeDialogVisible = false;
   },
-  btnUserUpdateExamTimes: function (inc) {
-    var increment = inc == 1 ? true : false;
-    var userIds = [];
-    if (this.userSelection && this.userSelection.length > 0) {
-      this.userSelection.forEach(u => {
-        userIds.push(u.id);
-      });
-      var $this = this;
-
-      var msg = increment ? "选中的考生全部增加1次考试机会，确定吗？" : "选中的考生全部减少1次考试机会，确定吗？";
-
-      top.utils.alertWarning({
-        title: '修改考试次数',
-        text: msg,
-        callback: function () {
-          $this.apiUserUpdateExamTimes(increment, userIds);
-        }
-      });
-    }
-    else {
-      utils.error("请选择考生", { layer: true });
-    }
-  },
-  apiUserUpdateExamTimes: function (increment, ids) {
-    var $this = this;
-    utils.loading(this, true);
-    $api.post($urlUserExamTimes, { increment: increment, ids: ids }).then(function (response) {
-      var res = response.data;
-      $this.userClearSelection();
-      utils.success("操作成功", { layer: true })
-    }).catch(function (error) {
-      utils.error(error, { layer: true });
-    }).then(function () {
-      utils.loading($this, false);
-      $this.apiGetUser();
-    });
-  },
-  btnUserRemove: function () {
-    var userIds = [];
-    if (this.userSelection && this.userSelection.length > 0) {
-      this.userSelection.forEach(u => {
-        userIds.push(u.id);
-      });
-      var $this = this;
-      top.utils.alertDelete({
-        title: '移出考生',
-        text: '将清空这些考生的考试数据，确定移出吗？',
-        button: '确 定',
-        callback: function () {
-          $this.apiUserRemove(userIds);
-        }
-      });
-    }
-    else {
-      utils.error("请选择考生", { layer: true });
-    }
-  },
-  apiUserRemove: function (ids) {
-    var $this = this;
-    utils.loading(this, true);
-    $api.post($urlUserDelete, { ids: ids }).then(function (response) {
-      var res = response.data;
-      $this.userClearSelection();
-      utils.success("操作成功", { layer: true })
-    }).catch(function (error) {
-      utils.error(error, { layer: true });
-    }).then(function () {
-      utils.loading($this, false);
-      $this.btnUserSearchClick();
-    });
-  },
-  btnUserDelete: function (row) {
-    var $this = this;
-    top.utils.alertDelete({
-      title: '移出考生-' + row.user.displayName,
-      text: '将清空该考生的考试数据，确认移出吗？',
-      button: '确 定',
-      callback: function () {
-        $this.apiUserDelete(row.id);
-      }
-    });
-  },
-  apiUserDelete: function (id) {
-    var $this = this;
-    utils.loading(this, true);
-    $api.post($urlUserDeleteOne, { id: id }).then(function (response) {
-      var res = response.data;
-      $this.userClearSelection();
-      utils.success("操作成功", { layer: true })
-    }).catch(function (error) {
-      utils.error(error, { layer: true });
-    }).then(function () {
-      utils.loading($this, false);
-      $this.btnUserSearchClick();
-    });
-  },
-  btnUserArrange: function () {
-    var $this = this;
-    top.utils.openLayer({
-      title: false,
-      closebtn: 0,
-      url: utils.getCommonUrl('usersRange', { id: this.form.id, rangeType: 'Exam' }),
-      width: "88%",
-      height: "88%",
-      end: function () {
-        $this.btnUserSearchClick();
-      }
-    });
-  },
-  btnUserUpdateDatetime: function () {
-    if (this.userSelection && this.userSelection.length > 0) {
-      this.userUpdateDateTimeDialogVisible = true;
-    }
-    else {
-      utils.error("请选择考生", { layer: true });
-    }
-  },
-  btnUserUpdateDatetimeSubmit: function () {
-    var $this = this;
-    this.$refs.userUpdateDateTimeForm.validate(function (valid) {
-      if (valid) {
-
-        $this.apiUserUpdateDateTime();
-      }
-    });
-  },
-  apiUserUpdateDateTime: function () {
-    var $this = this;
-    utils.loading(this, true);
-
-    var userIds = [];
-    this.userSelection.forEach(u => {
-      userIds.push(u.id);
-    });
-
-    $api.post($urlUserDateTime, { ids: userIds, examBeginDateTime: this.userUpdateDateTimeForm.examBeginDateTime, examEndDateTime: this.userUpdateDateTimeForm.examEndDateTime }).then(function (response) {
-      var res = response.data;
-      $this.userClearSelection();
-      utils.success("操作成功", { layer: true })
-    }).catch(function (error) {
-      utils.error(error, { layer: true });
-    }).then(function () {
-      utils.loading($this, false);
-      $this.apiGetUser();
-    });
-  },
-
   userHandleCurrentChange: function (val) {
     this.form.pageIndex = val;
     this.apiGetUser();
@@ -424,13 +103,12 @@ var methods = {
   },
 
 
-  apiGetScore: function () {
+  apiGetCourse: function () {
     var $this = this;
     utils.loading(this, true);
-    $api.get($urlScore, { params: $this.formScore }).then(function (response) {
+    $api.get($urlCourse, { params: $this.formCourse }).then(function (response) {
       var res = response.data;
-      $this.scoreList = res.list;
-      $this.scoreTotal = res.total;
+      $this.courseList = res.list;
 
     }).catch(function (error) {
       utils.error(error, { layer: true });
@@ -438,15 +116,14 @@ var methods = {
       utils.loading($this, false);
     });
   },
-  btnScoreSearchClick: function () {
-    this.formScore.pageIndex = 1;
-    this.apiGetScore();
+  btnCourseSearchClick: function () {
+    this.apiGetCourse();
   },
-  btnScoreExportClick: function () {
+  btnCourseExportClick: function () {
     var $this = this;
 
     utils.loading(this, true);
-    $api.post($urlScoreExport, this.formScore).then(function (response) {
+    $api.post($urlCourseExport, this.formCourse).then(function (response) {
       var res = response.data;
 
       window.open(res.value);
@@ -455,10 +132,6 @@ var methods = {
     }).then(function () {
       utils.loading($this, false);
     });
-  },
-  scoreHandleCurrentChange: function (val) {
-    this.formScore.pageIndex = val;
-    this.apiGetScore();
   },
   btnPaperSocreView: function (id) {
     var $this = this;
@@ -469,103 +142,7 @@ var methods = {
       width: "99%",
       height: "99%"
     });
-  },
-
-  apiGetMark: function () {
-    var $this = this;
-    utils.loading(this, true);
-    $api.get($urlMark, { params: $this.formMark }).then(function (response) {
-      var res = response.data;
-      $this.markList = res.list;
-      $this.markTotal = res.total;
-
-    }).catch(function (error) {
-      utils.error(error, { layer: true });
-    }).then(function () {
-      utils.loading($this, false);
-    });
-  },
-  markHandleSelectionChange(val) {
-    this.markSelection = val;
-  },
-  btnMarkerArrange: function () {
-
-    this.markerForm.id = null;
-    this.markerForm.ids = null;
-
-    if (this.markSelection && this.markSelection.length > 0) {
-      this.markerSelectDialogVisible = true;
-    }
-    else {
-      utils.error("请选择答卷", { layer: true });
-    }
-  },
-  btnMarkerArrangeSubmit: function () {
-
-    var startIds = [];
-    this.markSelection.forEach(u => {
-      startIds.push(u.id);
-    });
-    this.markerForm.ids = startIds;
-
-    var $this = this;
-    this.$refs.markerForm.validate(function (valid) {
-      if (valid) {
-
-        $this.apiSelectMarker();
-      }
-    });
-  },
-  apiSelectMarker: function () {
-    var $this = this;
-    utils.loading(this, true);
-    $api.post($urlMarkSelectMarker, $this.markerForm).then(function (response) {
-      var res = response.data;
-      if (res.value) {
-        utils.success("安排成功", { layer: true });
-        $this.markSelection = null;
-        $this.markerSelectDialogVisible = false;
-        $this.apiGetMark();
-      }
-
-    }).catch(function (error) {
-      utils.error(error, { layer: true });
-    }).then(function () {
-      utils.loading($this, false);
-    });
-  },
-  btnMarkSearchClick: function () {
-    this.formMark.pageIndex = 1;
-    this.apiGetMark();
-  },
-  btnPaperMarkView: function (id) {
-    var $this = this;
-    top.utils.openLayer({
-      title: false,
-      closebtn: 0,
-      url: utils.getCommonUrl('examPaperUserMark', { id: id }),
-      width: "99%",
-      height: "99%",
-      end: function () {
-        $this.btnMarkSearchClick();
-        $this.btnScoreSearchClick();
-      }
-    });
-  },
-  markHandleCurrentChange: function (val) {
-    this.formMark.pageIndex = val;
-    this.apiGetMark();
-  },
-  btnMarkView: function (id) {
-    var $this = this;
-    top.utils.openLayer({
-      title: false,
-      closebtn: 0,
-      url: utils.getCommonUrl('examPaperUserMarkLayerView', { id: id }),
-      width: "99%",
-      height: "99%"
-    });
-  },
+  }
 };
 Vue.component("apexchart", {
   extends: VueApexCharts
@@ -575,7 +152,10 @@ var $vue = new Vue({
   data: data,
   methods: methods,
   created: function () {
-    this.id = utils.getQueryInt("id");
+    this.id = this.form.id = this.formCourse.id = utils.getQueryInt("id");
     this.apiGet();
+    this.apiGetUser();
+    this.apiGetCourse();
+
   }
 });

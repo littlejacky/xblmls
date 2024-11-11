@@ -99,6 +99,37 @@ namespace XBLMS.Core.Repositories
             var list = await _repository.GetAllAsync(query.ForPage(pageIndex, pageSize));
             return (total, list);
         }
+        public async Task<(int total, List<StudyPlanUser> list)> GetListAsync(string state, string keyWords, int planId, int pageIndex, int pageSize)
+        {
+            var query = Q.Where(nameof(StudyPlanUser.PlanId), planId);
+
+            if (!string.IsNullOrEmpty(state))
+            {
+                if (state == StudyStatType.Yiwancheng.GetValue())
+                {
+                    query.Where(q =>
+                    {
+                        q.
+                        Where(nameof(StudyPlanUser.State), StudyStatType.Yiwancheng.GetValue()).
+                        OrWhere(nameof(StudyPlanUser.State), StudyStatType.Yidabiao.GetValue());
+                        return q;
+                    });
+                }
+                else
+                {
+                    query.Where(nameof(StudyPlanUser.State), state);
+                }
+            }
+            if (!string.IsNullOrEmpty(keyWords))
+            {
+                query.WhereLike(nameof(StudyPlanUser.KeyWordsAdmin), $"%{keyWords}%");
+            }
+
+            query.OrderByDesc(nameof(StudyPlanUser.Id));
+            var total = await _repository.CountAsync(query);
+            var list = await _repository.GetAllAsync(query.ForPage(pageIndex, pageSize));
+            return (total, list);
+        }
 
 
         public async Task<(decimal totalCredit, decimal totalOverCredit)> GetCreditAsync(int userId)
@@ -141,19 +172,26 @@ namespace XBLMS.Core.Repositories
 
         public async Task<int> GetCountAsync(int planId, string state)
         {
-            var query = Q.Where(nameof(StudyPlanUser.PlanId), planId).
-                Where(q =>
-                {
-                    q.
-                    Where(nameof(StudyPlanUser.State), StudyStatType.Xuexizhong.GetValue()).
-                    OrWhere(nameof(StudyPlanUser.State), StudyStatType.Weikaishi.GetValue());
-                    return q;
-                });
+            var query = Q.Where(nameof(StudyPlanUser.PlanId), planId);
 
 
             if (!string.IsNullOrEmpty(state))
             {
-                query.Where(nameof(StudyPlanUser.State), state);
+                if (state == StudyStatType.Yiwancheng.GetValue())
+                {
+                    query.Where(q =>
+                    {
+                        q.
+                        Where(nameof(StudyPlanUser.State), StudyStatType.Yiwancheng.GetValue()).
+                        OrWhere(nameof(StudyPlanUser.State), StudyStatType.Yidabiao.GetValue());
+                        return q;
+                    });
+                }
+                else
+                {
+                    query.Where(nameof(StudyPlanUser.State), state);
+                }
+         
             }
 
             return await _repository.CountAsync(query);
@@ -161,7 +199,7 @@ namespace XBLMS.Core.Repositories
         public async Task<decimal> GetTotalCreditAsync(int planId)
         {
             decimal totalCredit = 0;
-            var list= await _repository.GetAllAsync<decimal>(Q.Select(nameof(StudyPlanUser.Credit)).Where(nameof(StudyPlanUser.PlanId), planId));
+            var list= await _repository.GetAllAsync<decimal>(Q.Select(nameof(StudyPlanUser.TotalCredit)).Where(nameof(StudyPlanUser.PlanId), planId));
             if (list != null && list.Count > 0)
             {
                 totalCredit = list.Sum(x => x);

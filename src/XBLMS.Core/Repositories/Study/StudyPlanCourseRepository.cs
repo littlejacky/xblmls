@@ -72,13 +72,19 @@ namespace XBLMS.Core.Repositories
             }
             else
             {
-                query.WhereFalse(nameof(StudyPlanCourse.IsSelectCourse));
+                query.WhereNullOrFalse(nameof(StudyPlanCourse.IsSelectCourse));
             }
 
             query.OrderByDesc(nameof(StudyPlanCourse.Taxis));
             return await _repository.GetAllAsync(query);
         }
+        public async Task<List<StudyPlanCourse>> GetListAsync(int planId)
+        {
+            var query = Q.Where(nameof(StudyPlanCourse.PlanId), planId);
 
+            query.OrderByDesc(nameof(StudyPlanCourse.IsSelectCourse), nameof(StudyPlanCourse.Taxis));
+            return await _repository.GetAllAsync(query);
+        }
 
         public async Task<int> CountAsync(int planId, bool isSelect)
         {

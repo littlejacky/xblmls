@@ -27,6 +27,8 @@ namespace XBLMS.Models
         [DataColumn]
         public bool IsSelectCourse { get; set; }
         [DataColumn]
+        public bool OffLine { get; set; }
+        [DataColumn]
         public bool OffLineCourseExamOpen { get; set; }
         /// <summary>
         /// 学时

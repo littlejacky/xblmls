@@ -196,7 +196,7 @@ namespace XBLMS.Core.Services
                         {
                             planUser.State = StudyStatType.Yidabiao;
                         }
-
+                        planUser.LastStudyDateTime = DateTime.Now;
                         await _studyPlanUserRepository.UpdateAsync(planUser);
                     }
 

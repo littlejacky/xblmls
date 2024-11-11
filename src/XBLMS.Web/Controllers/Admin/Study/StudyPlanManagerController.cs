@@ -1,12 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Update;
-using NPOI.DDF;
 using NSwag.Annotations;
 using System.Collections.Generic;
 using XBLMS.Configuration;
-using XBLMS.Dto;
-using XBLMS.Enums;
 using XBLMS.Models;
 using XBLMS.Repositories;
 using XBLMS.Services;
@@ -20,12 +16,15 @@ namespace XBLMS.Web.Controllers.Admin.Study
     {
         private const string Route = "study/studyPlanManager";
         private const string RouteCourse = Route + "/course";
+        private const string RouteCourseExport = RouteCourse + "/export";
         private const string RouteUser = Route + "/user";
+        private const string RouteUserExport = RouteUser + "/export";
 
         private readonly IAuthManager _authManager;
         private readonly IStudyManager _studyManager;
         private readonly IPathManager _pathManager;
         private readonly IUploadManager _uploadManager;
+        private readonly IOrganManager _organManager;
         private readonly IUserGroupRepository _userGroupRepository;
         private readonly IStudyPlanRepository _studyPlanRepository;
         private readonly IStudyPlanCourseRepository _studyPlanCourseRepository;
@@ -35,6 +34,7 @@ namespace XBLMS.Web.Controllers.Admin.Study
         private readonly IStudyCourseWareRepository _studyCourseWareRepository;
         private readonly IStudyPlanUserRepository _studyPlanUserRepository;
         private readonly IStudyCourseUserRepository _studyCourseUserRepository;
+        private readonly IExamPaperStartRepository _examPaperStartRepository;
 
         public StudyPlanManagerController(IAuthManager authManager,
             IPathManager pathManager,
@@ -48,7 +48,9 @@ namespace XBLMS.Web.Controllers.Admin.Study
             IStudyCourseTreeRepository studyCourseTreeRepository,
             IStudyCourseWareRepository studyCourseWareRepository,
             IStudyPlanUserRepository studyPlanUserRepository,
-            IStudyCourseUserRepository studyCourseUserRepository)
+            IStudyCourseUserRepository studyCourseUserRepository,
+            IOrganManager organManager,
+            IExamPaperStartRepository examPaperStartRepository)
         {
             _authManager = authManager;
             _pathManager = pathManager;
@@ -63,6 +65,8 @@ namespace XBLMS.Web.Controllers.Admin.Study
             _studyCourseWareRepository = studyCourseWareRepository;
             _studyPlanUserRepository = studyPlanUserRepository;
             _studyCourseUserRepository = studyCourseUserRepository;
+            _organManager = organManager;
+            _examPaperStartRepository = examPaperStartRepository;
         }
         public class GetResult
         {
@@ -70,6 +74,7 @@ namespace XBLMS.Web.Controllers.Admin.Study
         }
         public class GetUserRequest
         {
+            public int Id { get; set; }
             public string KeyWords { get; set; }
             public string State { get; set; }
             public int PageIndex { get; set; }
@@ -83,13 +88,13 @@ namespace XBLMS.Web.Controllers.Admin.Study
         }
         public class GetCourseRequest
         {
+            public int Id { get; set; }
             public string KeyWords { get; set; }
             public int PageIndex { get; set; }
             public int PageSize { get; set; }
         }
         public class GetCourseResult
         {
-            public int Total { get; set; }
             public List<StudyPlanCourse> List { get; set; }
         }
 
