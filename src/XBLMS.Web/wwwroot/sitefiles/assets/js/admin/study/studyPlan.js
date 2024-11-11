@@ -155,7 +155,18 @@ var methods = {
         $this.btnSearchClick();
       }
     });
-  }
+  },
+  btnManagerClick: function (id) {
+
+    top.utils.openLayer({
+      title: false,
+      closebtn: 0,
+      url: utils.getStudyUrl('studyPlanManager', { id: id }),
+      width: "99%",
+      height: "99%"
+    });
+
+  },
 };
 
 var $vue = new Vue({

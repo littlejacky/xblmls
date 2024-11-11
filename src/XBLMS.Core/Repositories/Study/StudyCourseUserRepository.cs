@@ -165,7 +165,7 @@ namespace XBLMS.Core.Repositories
 
 
 
-        public async Task<List<StudyCourseUser>> GetListAsync(int planId,int userId)
+        public async Task<List<StudyCourseUser>> GetListAsync(int planId, int userId)
         {
             var query = Q.
                 Where(nameof(StudyCourseUser.UserId), userId).
@@ -175,7 +175,7 @@ namespace XBLMS.Core.Repositories
             return list;
         }
 
-        public async Task<(int total,int overTotal)> GetTotalAsync(int userId)
+        public async Task<(int total, int overTotal)> GetTotalAsync(int userId)
         {
             var query = Q.Where(nameof(StudyCourseUser.UserId), userId).WhereNullOrFalse(nameof(StudyCourseUser.Locked));
 
@@ -199,6 +199,41 @@ namespace XBLMS.Core.Repositories
                 WhereNullOrFalse(nameof(StudyCourseUser.Locked));
 
             return await _repository.CountAsync(query);
+        }
+        public async Task<int> GetOverCountAsync(int planId, bool isSelect)
+        {
+            var query = Q.Where(nameof(StudyCourseUser.PlanId), planId).Where(nameof(StudyCourseUser.State), StudyStatType.Yiwancheng.GetValue());
+
+            if (isSelect)
+            {
+                query.WhereTrue(nameof(StudyCourseUser.IsSelectCourse));
+            }
+            else
+            {
+                query.WhereNullOrFalse(nameof(StudyCourseUser.IsSelectCourse));
+            }
+
+            return await _repository.CountAsync(query);
+        }
+        public async Task<decimal> GetOverTotalCreditAsync(int planId, bool isSelect)
+        {
+            decimal totalCredit = 0;
+            var query = Q.Where(nameof(StudyCourseUser.PlanId), planId).Where(nameof(StudyCourseUser.State), StudyStatType.Yiwancheng.GetValue());
+
+            if (isSelect)
+            {
+                query.WhereTrue(nameof(StudyCourseUser.IsSelectCourse));
+            }
+            else
+            {
+                query.WhereNullOrFalse(nameof(StudyCourseUser.IsSelectCourse));
+            }
+            var list = await _repository.GetAllAsync<decimal>(query.Select(nameof(StudyCourseUser.Credit)));
+            if (list != null && list.Count > 0)
+            {
+                totalCredit = list.Sum(x => x);
+            }
+            return totalCredit;
         }
     }
 }

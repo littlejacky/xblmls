@@ -14,6 +14,8 @@ namespace XBLMS.Models
         [DataColumn]
         public int CourseId { get; set; }
         [DataColumn]
+        public bool IsSelectCourse { get; set; }
+        [DataColumn]
         public int UserId { get; set; }
         [DataColumn]
         public List<string> Mark { get; set; }

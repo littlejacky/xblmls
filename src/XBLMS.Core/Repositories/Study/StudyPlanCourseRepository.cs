@@ -1,5 +1,6 @@
 ﻿using Datory;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using XBLMS.Models;
 using XBLMS.Repositories;
@@ -55,13 +56,13 @@ namespace XBLMS.Core.Repositories
         {
             return await _repository.GetAsync(id);
         }
-        public async Task<StudyPlanCourse> GetAsync(int planId,int courseId)
+        public async Task<StudyPlanCourse> GetAsync(int planId, int courseId)
         {
             var query = Q.Where(nameof(StudyPlanCourse.PlanId), planId).Where(nameof(StudyPlanCourse.CourseId), courseId);
             return await _repository.GetAsync(query);
         }
 
-        public async Task<List<StudyPlanCourse>> GetListAsync(bool isSelect,int planId)
+        public async Task<List<StudyPlanCourse>> GetListAsync(bool isSelect, int planId)
         {
             var query = Q.Where(nameof(StudyPlanCourse.PlanId), planId);
 
@@ -79,7 +80,7 @@ namespace XBLMS.Core.Repositories
         }
 
 
-        public async Task<int> CountAsync(int planId,bool isSelect)
+        public async Task<int> CountAsync(int planId, bool isSelect)
         {
             var query = Q.Where(nameof(StudyPlanCourse.PlanId), planId);
 
@@ -93,6 +94,27 @@ namespace XBLMS.Core.Repositories
             }
 
             return await _repository.CountAsync(query);
+        }
+
+        public async Task<decimal> GetTotalCreditAsync(int planId, bool isSelect)
+        {
+            decimal totalCredit = 0;
+            var query = Q.Where(nameof(StudyPlanCourse.PlanId), planId);
+
+            if (isSelect)
+            {
+                query.WhereTrue(nameof(StudyPlanCourse.IsSelectCourse));
+            }
+            else
+            {
+                query.WhereNullOrFalse(nameof(StudyPlanCourse.IsSelectCourse));
+            }
+            var list = await _repository.GetAllAsync<decimal>(query.Select(nameof(StudyPlanCourse.Credit)));
+            if (list != null && list.Count > 0)
+            {
+                totalCredit = list.Sum(x => x);
+            }
+            return totalCredit;
         }
 
     }

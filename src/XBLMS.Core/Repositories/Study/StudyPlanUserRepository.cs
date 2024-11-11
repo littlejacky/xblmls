@@ -1,6 +1,7 @@
 ﻿using Datory;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using XBLMS.Enums;
 using XBLMS.Models;
@@ -136,6 +137,36 @@ namespace XBLMS.Core.Repositories
                 WhereNullOrFalse(nameof(StudyPlanUser.Locked));
 
             return await _repository.CountAsync(query);
+        }
+
+        public async Task<int> GetCountAsync(int planId, string state)
+        {
+            var query = Q.Where(nameof(StudyPlanUser.PlanId), planId).
+                Where(q =>
+                {
+                    q.
+                    Where(nameof(StudyPlanUser.State), StudyStatType.Xuexizhong.GetValue()).
+                    OrWhere(nameof(StudyPlanUser.State), StudyStatType.Weikaishi.GetValue());
+                    return q;
+                });
+
+
+            if (!string.IsNullOrEmpty(state))
+            {
+                query.Where(nameof(StudyPlanUser.State), state);
+            }
+
+            return await _repository.CountAsync(query);
+        }
+        public async Task<decimal> GetTotalCreditAsync(int planId)
+        {
+            decimal totalCredit = 0;
+            var list= await _repository.GetAllAsync<decimal>(Q.Select(nameof(StudyPlanUser.Credit)).Where(nameof(StudyPlanUser.PlanId), planId));
+            if (list != null && list.Count > 0)
+            {
+                totalCredit = list.Sum(x => x);
+            }
+            return totalCredit;
         }
     }
 }

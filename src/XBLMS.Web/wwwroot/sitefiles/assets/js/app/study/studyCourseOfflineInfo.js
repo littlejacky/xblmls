@@ -28,7 +28,7 @@ var methods = {
       $this.courseUser = res.courseInfo.courseUserInfo;
 
     }).catch(function (error) {
-      utils.error(error);
+      utils.error(error, { layer: true });
     }).then(function () {
       utils.loading($this, false);
     });
@@ -104,7 +104,7 @@ var methods = {
       $this.eTotal = res.total;
 
     }).catch(function (error) {
-      utils.error(error);
+      utils.error(error, { layer: true });
     }).then(function () {
       $this.eLoadMoreLoading = false;
     });

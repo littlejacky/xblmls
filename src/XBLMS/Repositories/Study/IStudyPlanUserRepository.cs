@@ -19,5 +19,7 @@ namespace XBLMS.Repositories
         Task<(int total, List<StudyPlanUser> list)> GetListAsync(int year, string state, string keyWords, int userId, int pageIndex, int pageSize);
         Task<(decimal totalCredit, decimal totalOverCredit)> GetCreditAsync(int userId);
         Task<int> GetTaskCountAsync(int userId);
+        Task<int> GetCountAsync(int planId, string state);
+        Task<decimal> GetTotalCreditAsync(int planId);
     }
 }

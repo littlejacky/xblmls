@@ -22,11 +22,21 @@ namespace XBLMS.Web.Controllers.Home.Study
             var userCourse = await _studyCourseUserRepository.GetAsync(user.Id, request.PlanId, request.CourseId);
             if (userCourse == null)
             {
+                var isSelectCourse = false;
+                if (request.PlanId > 0)
+                {
+                    var planCourse = await _studyPlanCourseRepository.GetAsync(request.PlanId, request.CourseId);
+                    if (planCourse != null && planCourse.IsSelectCourse)
+                    {
+                        isSelectCourse = true;
+                    }
+                }
                 await _studyCourseUserRepository.InsertAsync(new StudyCourseUser
                 {
                     UserId = user.Id,
                     PlanId = request.PlanId,
                     CourseId = request.CourseId,
+                    IsSelectCourse = isSelectCourse,
                     CompanyId = user.CompanyId,
                     DepartmentId = user.DepartmentId,
                     CreatorId = user.CreatorId,

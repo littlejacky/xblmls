@@ -1,42 +1,42 @@
 <template>
-    <div style="position:fixed;left:0;bottom:0;width:100%;" class="opacity-75 bg-dark">
+    <div style="position:fixed;left:0;bottom:0;width:100%;" class="bg-white border-0">
         <div class="d-flex align-items-center justify-content-between px-4 py-2">
             <el-link :underline="false">
-                <div class="text-center" :class="appMenuActive==='index'?'text-light fw-bold':'text-gray-400 fw-light'" v-on:click="btnAppMenuClick('index')">
-                    <i class="fs-4" :class="appMenuActive==='index'?'bi bi-house-heart-fill':'bi bi-house'"></i>
-                    <div>
+                <div class="text-center" v-on:click="btnAppMenuClick('index')">
+                    <i class="fs-3" :class="appMenuActive==='index'?'bi bi-house-heart-fill text-primary':'bi bi-house text-dark'"></i>
+                    <div :class="appMenuActive==='index'?'text-primary-light fw-bold':'text-dark fw-light'">
                         首 页
                     </div>
                 </div>
             </el-link>
             <el-link :underline="false">
-                <div class="text-center" :class="appMenuActive==='studyPlan'?'text-light fw-bold':'text-gray-400 fw-light'" v-on:click="btnAppMenuClick('studyPlan')">
-                    <i class="fs-4" :class="appMenuActive==='studyPlan'?'bi bi-star-fill':'bi bi-star'"></i>
-                    <div>
+                <div class="text-center" v-on:click="btnAppMenuClick('studyPlan')">
+                    <i class="fs-3" :class="appMenuActive==='studyPlan'?'bi bi-star-fill text-primary':'bi bi-star text-dark'"></i>
+                    <div :class="appMenuActive==='studyPlan'?'text-primary-light fw-bold':'text-dark fw-light'">
                         培 训
                     </div>
                 </div>
             </el-link>
             <el-link :underline="false">
-                <div class="text-center" :class="appMenuActive==='studyCourse'?'text-light fw-bold':'text-gray-400 fw-light'" v-on:click="btnAppMenuClick('studyCourse')">
-                    <i class="fs-4" :class="appMenuActive==='studyCourse'?'bi bi-clipboard-check-fill':'bi bi-clipboard-check'"></i>
-                    <div>
+                <div class="text-center" v-on:click="btnAppMenuClick('studyCourse')">
+                    <i class="fs-3" :class="appMenuActive==='studyCourse'?'bi bi-clipboard-check-fill text-primary':'bi bi-clipboard-check text-dark'"></i>
+                    <div :class="appMenuActive==='studyCourse'?'text-primary-light fw-bold':'text-dark fw-light'">
                         课 程
                     </div>
                 </div>
             </el-link>
             <el-link :underline="false">
-                <div class="text-center" :class="appMenuActive==='exam'?'text-light fw-bold':'text-gray-400 fw-light'" v-on:click="btnAppMenuClick('exam')">
-                    <i class="fs-4 bi bi-ui-checks"></i>
-                    <div>
+                <div class="text-center" v-on:click="btnAppMenuClick('exam')">
+                    <i class="fs-3 bi bi-ui-checks" :class="appMenuActive==='exam'?'text-primary':'text-dark fw-light'"></i>
+                    <div :class ="appMenuActive==='exam'?'text-primary-light fw-bold':'text-dark fw-light'">
                         考 试
                     </div>
                 </div>
             </el-link>
             <el-link :underline="false">
-                <div class="text-center" :class="appMenuActive==='mine'?'text-light fw-bold':'text-gray-400 fw-light'" v-on:click="btnAppMenuClick('mine')">
-                    <i class="fs-4" :class="appMenuActive==='mine'?'bi bi-person-fill':'bi bi-person'"></i>
-                    <div>
+                <div class="text-center" v-on:click="btnAppMenuClick('mine')">
+                    <i class="fs-3" :class="appMenuActive==='mine'?'bi bi-person-fill text-primary':'bi bi-person text-dark'"></i>
+                    <div :class="appMenuActive==='mine'?'text-primary-light fw-bold':'text-dark fw-light'">
                         我 的
                     </div>
                 </div>

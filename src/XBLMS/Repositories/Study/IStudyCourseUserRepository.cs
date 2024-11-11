@@ -22,6 +22,8 @@ namespace XBLMS.Repositories
         Task<(int total, int overTotal)> GetTotalAsync(int userId);
         Task<long> GetTotalDurationAsync(int userId);
         Task<int> GetTaskCountAsync(int userId);
+        Task<int> GetOverCountAsync(int planId, bool isSelect);
+        Task<decimal> GetOverTotalCreditAsync(int planId, bool isSelect);
 
     }
 }
