@@ -1,6 +1,7 @@
 @page
 @{ Layout = "_LayoutApp"; }
 @section Styles{
+    <link href="/sitefiles/assets/lib/animate/animate.min.css" rel="stylesheet" type="text/css" />
     <style>
         html {
             overflow-x: hidden !important;
@@ -15,7 +16,7 @@
     </style>
 }
 
-<div class="card border-0 rounded-0 rounded-bottom-4 mb-3  shadow-lg" v-on:click="btnAppMenuClick('mine')">
+<div class="card border-0 rounded-0 rounded-bottom-4 mb-3 smooth-shadow-lg" v-on:click="btnAppMenuClick('mine')">
     <div class="rounded-0 bg-gradient-mix-shade py-8">
         <div class="py-2"></div>
     </div>
@@ -31,7 +32,7 @@
                         <small>{{ dateStr }}</small>
                     </div>
                 </div>
-                <img :src="user.avatarUrl || DEFAULT_AVATAR_URL" class="img-fluid rounded-pill smooth-shadow-lg avatar-xl bg-light p-2">
+                <img :src="user.avatarUrl || DEFAULT_AVATAR_URL" class="img-fluid rounded-pill smooth-shadow-lg avatar-xl bg-light p-1">
             </div>
         </div>
     </div>
@@ -404,46 +405,46 @@
 </div>
 <div class="py-8"></div>
 @await Html.PartialAsync("_PartialAppMenu")
-<div style="position:fixed;right:0;top:60%;" class="text-center opacity-75" v-if="taskTotal>0">
-    <button type="button" class="btn btn-dark rounded-0 py-3 px-2 text-center" v-on:click="taskDialogVisible=true">
-        <div class="fw-bold text-light fs-3">{{ taskTotal }}</div>
-        <div class="mt-2 text-warning">个</div>
-        <div class="text-warning">待</div>
-        <div class="text-warning">办</div>
-    </button>
+<div style="position:fixed;right:5%;top:80%;" v-if="taskTotal>0" class="animate__animated animate__fadeInRight">
+    <el-badge :value="taskTotal" class="item" type="warning" :max="taskTotal">
+        <el-button icon="el-icon-message-solid" type="primary" plain circle class="fs-3" v-on:click="taskDialogVisible=true"></el-button>
+    </el-badge>
 </div>
 <template>
-    <el-drawer title="待办"
+    <el-drawer title="待完成"
                size="60%"
                :visible.sync="taskDialogVisible"
                direction="btt">
-        <div class="text-center p-2">
+        <div class="px-2">
             <div class="card">
                 <div class="card-body">
-                    <div class="my-3" v-if="taskPlanTotal>0">
-                        <div class="d-flex justify-content-between align-items-center" v-on:click="btnPlanMoreMenuClick">
-                            <span><i class="bi bi-star-half me-2 text-warning"></i>剩余<span class="text-danger mx-2">{{ taskPlanTotal }}</span>个学习任务未完成</span>
-                            <span><i class="el-icon-arrow-right"></i></span>
-                        </div>
-                    </div>
-                    <div class="my-3" v-if="taskCourseTotal>0">
-                        <div class="d-flex justify-content-between align-items-center" v-on:click="btnCourseMoreMenuClick">
-                            <span><i class="bi bi-star-half me-2 text-warning"></i>剩余<span class="text-danger mx-2">{{ taskCourseTotal }}</span>个课程未完成</span>
-                            <span><i class="el-icon-arrow-right"></i></span>
-                        </div>
-                    </div>
-                    <div class="my-3" v-if="taskPaperTotal>0">
-                        <div class="d-flex justify-content-between align-items-center" v-on:click="btnExamMoreMenuClick">
-                            <span><i class="bi bi-star-half me-2 text-warning"></i>剩余<span class="text-danger mx-2">{{ taskPaperTotal }}</span>份试卷未参考</span>
-                            <span><i class="el-icon-arrow-right"></i></span>
-                        </div>
-                    </div>
-                    <div class="my-3" v-if="taskQTotal>0">
-                        <div class="d-flex justify-content-between align-items-center" v-on:click="btnAppMenuClick('wenjuan')">
-                            <span><i class="bi bi-star-half me-2 text-warning"></i>剩余<span class="text-danger mx-2">{{ taskQTotal }}</span>份问卷未填写</span>
-                            <span><i class="el-icon-arrow-right"></i></span>
-                        </div>
-                    </div>
+                    <ul class="list-group lh-lg">
+                        <li class="list-group-item d-flex justify-content-between align-items-center" v-if="taskPlanTotal>0" v-on:click="btnPlanMoreMenuClick">
+                            <span><i class="text-warning bi bi-star-half me-2"></i>待完成学习任务</span>
+                            <span class="badge bg-warning ">{{ taskPlanTotal }}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center" v-if="taskCourseTotal>0" v-on:click="btnCourseMoreMenuClick">
+                            <span>
+                                <i class="text-warning bi bi-star-half me-2"></i>待完成课程
+                            </span>
+                            <span class="badge bg-warning ">{{ taskCourseTotal }}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center" v-if="taskPaperTotal>0" v-on:click="btnExamMoreMenuClick">
+                            <span>
+                                <i class="text-warning bi bi-star-half me-2"></i>待参加考试
+                            </span>
+                            <span class="badge bg-warning ">{{ taskPaperTotal }}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center" v-if="taskQTotal>0" v-on:click="btnAppMenuClick('wenjuan')">
+                            <span>
+                                <i class="text-warning bi bi-star-half me-2"></i>待填写问卷
+                            </span>
+                            <span class="badge bg-primary ">{{ taskQTotal }}</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-footer text-center">
+                    <button type="button" class="btn btn-outline-primary rounded-pill" v-on:click="taskDialogVisible=false"><i class="el-icon-close me-2"></i>关 闭</button>
                 </div>
             </div>
         </div>

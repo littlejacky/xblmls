@@ -120,5 +120,30 @@ namespace XBLMS.Core.Repositories
             var list = await _repository.GetAllAsync(query.ForPage(pageIndex, pageSize));
             return (total, list);
         }
+
+        public async Task<(int total, List<ExamCerUser> list)> GetListAsync(int cerId,int planId,int courseId, string keyWords, string beginDate, string endDate, int pageIndex, int pageSize)
+        {
+            var query = Q.Where(nameof(ExamCerUser.CerId), cerId).Where(nameof(ExamCerUser.PlanId), planId).Where(nameof(ExamCerUser.CourseId), courseId);
+
+            if (!string.IsNullOrEmpty(keyWords))
+            {
+                keyWords = $"%{keyWords}%";
+                query.WhereLike(nameof(ExamCerUser.KeyWordsAdmin), keyWords);
+            }
+            if (!string.IsNullOrEmpty(beginDate))
+            {
+                query.Where(nameof(ExamCerUser.CreatedDate), ">=", DateUtils.ToString(beginDate));
+            }
+            if (!string.IsNullOrEmpty(endDate))
+            {
+                query.Where(nameof(ExamCerUser.CreatedDate), "<=", DateUtils.ToString(endDate));
+            }
+            query.OrderByDesc(nameof(ExamCerUser.Id));
+
+            var total = await _repository.CountAsync(query);
+            var list = await _repository.GetAllAsync(query.ForPage(pageIndex, pageSize));
+            return (total, list);
+        }
     }
+
 }

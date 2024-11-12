@@ -7,7 +7,7 @@ using XBLMS.Utils;
 
 namespace XBLMS.Web.Controllers.Admin.Study
 {
-    public partial class StudyPlanManagerController
+    public partial class StudyCourseManagerController
     {
         [HttpGet, Route(RouteCourse)]
         public async Task<ActionResult<GetCourseResult>> GetCourse([FromQuery] GetCourseRequest request)
@@ -21,6 +21,7 @@ namespace XBLMS.Web.Controllers.Admin.Study
             {
                 foreach (var item in list)
                 {
+               
                     var totalUser = await _studyPlanUserRepository.GetCountAsync(plan.Id, "");
                     var overUser = await _studyCourseUserRepository.GetOverCountByAnalysisAsync(plan.Id, item.CourseId, true);
                     var studyUser = await _studyCourseUserRepository.GetOverCountByAnalysisAsync(plan.Id, item.CourseId, null);
@@ -44,6 +45,7 @@ namespace XBLMS.Web.Controllers.Admin.Study
                     {
                         resultList.Add(item);
                     }
+               
                 }
             }
             return new GetCourseResult
@@ -85,60 +87,48 @@ namespace XBLMS.Web.Controllers.Admin.Study
 
                 foreach (var item in list)
                 {
-
-                    var type = "必修课";
-                    if (item.IsSelectCourse)
+                    if (!string.IsNullOrEmpty(request.KeyWords) && item.CourseName.Contains(request.KeyWords))
                     {
-                        type = "选修课";
-                        if (item.OffLine)
+                        var type = "必修课";
+                        if (item.IsSelectCourse)
                         {
-                            type = type + "-线下课";
+                            type = "选修课";
+                            if (item.OffLine)
+                            {
+                                type = type + "-线下课";
+                            }
                         }
-                    }
-                    else
-                    {
-                        if (item.OffLine)
+                        else
                         {
-                            type = type + "-线下课";
+                            if (item.OffLine)
+                            {
+                                type = type + "-线下课";
+                            }
                         }
-                    }
 
-                    var totalUser = await _studyPlanUserRepository.GetCountAsync(plan.Id, "");
-                    var overUser = await _studyCourseUserRepository.GetOverCountByAnalysisAsync(plan.Id, item.CourseId, true);
-                    var studyUser = await _studyCourseUserRepository.GetOverCountByAnalysisAsync(plan.Id, item.CourseId, null);
-                    var (starUser, starTotal) = await _studyCourseUserRepository.GetEvaluation(plan.Id, item.CourseId);
+                        var totalUser = await _studyPlanUserRepository.GetCountAsync(plan.Id, "");
+                        var overUser = await _studyCourseUserRepository.GetOverCountByAnalysisAsync(plan.Id, item.CourseId, true);
+                        var studyUser = await _studyCourseUserRepository.GetOverCountByAnalysisAsync(plan.Id, item.CourseId, null);
+                        var (starUser, starTotal) = await _studyCourseUserRepository.GetEvaluation(plan.Id, item.CourseId);
 
-                    item.Set("Star", TranslateUtils.ToAvg(starTotal, starUser));
+                        item.Set("Star", TranslateUtils.ToAvg(starTotal, starUser));
 
-                    var rowsValues = new List<string>() { 
+                        rows.Add([
                             index.ToString(),
                             item.CourseName,
                             type,
                              item.StudyHour.ToString(),
-                             TranslateUtils.ToMinuteAndSecond(item.Duration, true),
+                             TranslateUtils.ToMinuteAndSecond(item.Duration,true),
                              item.Credit.ToString(),
                              totalUser.ToString(),
                              studyUser.ToString(),
                              overUser.ToString(),
-                             TranslateUtils.ToPercent(overUser, studyUser) + "%",
-                             item.StudyCourseEvaluationId > 0 ? $"{TranslateUtils.ToAvg(starTotal, starUser)}星({starUser})" : "/"
-                       };
+                             TranslateUtils.ToPercent(overUser,studyUser)+"%",
+                             item.StudyCourseEvaluationId>0?$"{TranslateUtils.ToAvg(starTotal, starUser)}星({starUser})":"/"
+                       ]);
 
-                    if (!string.IsNullOrEmpty(request.KeyWords))
-                    {
-                        if (item.CourseName.Contains(request.KeyWords))
-                        {
-                            rows.Add(rowsValues);
-                            index++;
-                        }
-                    }
-                    else
-                    {
-                        rows.Add(rowsValues);
                         index++;
                     }
-
-                    
                 }
             }
 

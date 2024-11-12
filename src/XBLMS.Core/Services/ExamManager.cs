@@ -1,6 +1,7 @@
 ﻿using DocumentFormat.OpenXml.Spreadsheet;
 using System;
 using System.Collections.Generic;
+using System.Numerics;
 using System.Threading.Tasks;
 using XBLMS.Core.Utils;
 using XBLMS.Enums;
@@ -312,6 +313,27 @@ namespace XBLMS.Core.Services
             {
                 if (examUser == null)
                 {
+
+                    var adminKeyWords = await _organManager.GetUserKeyWords(user.Id);
+
+                    if (planId > 0)
+                    {
+                        var plan = await _studyPlanRepository.GetAsync(planId);
+                        if (plan != null)
+                        {
+                            adminKeyWords = $"{adminKeyWords}-{plan.PlanName}";
+                        }
+
+                    }
+                    if (courseId > 0)
+                    {
+                        var course = await _studyPlanCourseRepository.GetAsync(planId, courseId);
+                        if (course != null)
+                        {
+                            adminKeyWords = $"{adminKeyWords}-{course.CourseName}";
+                        }
+                    }
+
                     var examUserId = await _examPaperUserRepository.InsertAsync(new ExamPaperUser
                     {
                         PlanId = planId,

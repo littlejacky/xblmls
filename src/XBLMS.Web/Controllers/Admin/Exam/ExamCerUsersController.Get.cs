@@ -8,7 +8,7 @@ namespace XBLMS.Web.Controllers.Admin.Exam
         [HttpGet, Route(Route)]
         public async Task<ActionResult<GetUserResult>> GetUserList([FromQuery] GetUserRequest request)
         {
-            var (total, list) = await _examCerUserRepository.GetListAsync(request.Id, request.Keywords, request.DateFrom, request.DateTo, request.PageIndex, request.PageSize);
+            var (total, list) = await _examCerUserRepository.GetListAsync(request.Id,request.PlanId,request.CourseId, request.Keywords, request.DateFrom, request.DateTo, request.PageIndex, request.PageSize);
             if (total > 0)
             {
                 foreach (var item in list)

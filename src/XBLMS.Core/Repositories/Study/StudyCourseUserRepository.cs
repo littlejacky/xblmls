@@ -200,7 +200,7 @@ namespace XBLMS.Core.Repositories
 
             return await _repository.CountAsync(query);
         }
-        public async Task<int> GetOverCountAsync(int planId,int userId, bool isSelect)
+        public async Task<int> GetOverCountAsync(int planId, int userId, bool isSelect)
         {
             var query = Q.Where(nameof(StudyCourseUser.PlanId), planId).Where(nameof(StudyCourseUser.UserId), userId).Where(nameof(StudyCourseUser.State), StudyStatType.Yiwancheng.GetValue());
 
@@ -230,7 +230,7 @@ namespace XBLMS.Core.Repositories
 
             return await _repository.CountAsync(query);
         }
-        public async Task<int> GetOverCountAsync(int planId,int courseId,bool? isOver)
+        public async Task<int> GetOverCountByAnalysisAsync(int planId, int courseId, bool? isOver)
         {
             var query = Q.Where(nameof(StudyCourseUser.PlanId), planId).Where(nameof(StudyCourseUser.CourseId), courseId);
             if (isOver.HasValue)
@@ -268,7 +268,7 @@ namespace XBLMS.Core.Repositories
         }
 
 
-        public async Task<decimal> GetOverTotalCreditAsync(int planId,int userId, bool isSelect)
+        public async Task<decimal> GetOverTotalCreditAsync(int planId, int userId, bool isSelect)
         {
             decimal totalCredit = 0;
             var query = Q.
@@ -290,6 +290,17 @@ namespace XBLMS.Core.Repositories
                 totalCredit = list.Sum(x => x);
             }
             return totalCredit;
+        }
+
+        public async Task<(int starUser, int starTotal)> GetEvaluation(int planId, int courseId)
+        {
+            var query = Q.
+                  Where(nameof(StudyCourseUser.TotalEvaluation), ">", 0).
+                  Where(nameof(StudyCourseUser.CourseId), courseId).
+                  Where(nameof(StudyCourseUser.PlanId), planId);
+            var starUser = await _repository.CountAsync(query);
+            var starTotal = await _repository.SumAsync(nameof(StudyCourseUser.TotalEvaluation), query);
+            return (starUser, starTotal);
         }
     }
 }

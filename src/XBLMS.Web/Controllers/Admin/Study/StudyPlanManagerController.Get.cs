@@ -23,9 +23,9 @@ namespace XBLMS.Web.Controllers.Admin.Study
 
             var userTotal = await _studyPlanUserRepository.GetCountAsync(plan.Id, "");
             var userPassTotal = await _studyPlanUserRepository.GetCountAsync(plan.Id, StudyStatType.Yiwancheng.GetValue());
-            var userPass1Total= await _studyPlanUserRepository.GetCountAsync(plan.Id, StudyStatType.Yidabiao.GetValue());
+            var userPass1Total = await _studyPlanUserRepository.GetCountAsync(plan.Id, StudyStatType.Yidabiao.GetValue());
             var totalCredit = await _studyPlanUserRepository.GetTotalCreditAsync(plan.Id);
-          
+
 
             var courseCreditTotal = await _studyPlanCourseRepository.GetTotalCreditAsync(plan.Id, false);
             var courseSelectCreditTotal = await _studyPlanCourseRepository.GetTotalCreditAsync(plan.Id, true);
@@ -53,6 +53,21 @@ namespace XBLMS.Web.Controllers.Admin.Study
 
             plan.Set("TotalCreditCourse", courseCreditTotal);
             plan.Set("TotalCreditSelectCourse", courseSelectCreditTotal);
+
+            var cerId = 0;
+            if (plan.ExamId > 0)
+            {
+                var paper = await _examPaperRepository.GetAsync(plan.ExamId);
+                if (paper != null && paper.CerId > 0)
+                {
+                    var cer = await _examCerRepository.GetAsync(paper.CerId);
+                    if (cer != null)
+                    {
+                        cerId = cer.Id;
+                    }
+                }
+            }
+            plan.Set("CerId", cerId);
 
             return new GetResult
             {

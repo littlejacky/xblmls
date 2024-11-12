@@ -131,10 +131,7 @@ var methods = {
       title: row.name + '-获证人员列表',
       url: utils.getExamUrl('examCerUsers', { id: row.id }),
       width: "88%",
-      height: "98%",
-      end: function () {
-        $this.apiGet();
-      }
+      height: "98%"
     });
   }
 };

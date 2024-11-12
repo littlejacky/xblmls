@@ -308,7 +308,7 @@
                                             操作
                                         </el-button>
                                         <el-dropdown-menu slot="dropdown">
-                                            <el-dropdown-item  icon="el-icon-view" v-on:click.native="btnUserDelete(scope.row)">详 细</el-dropdown-item>
+                                            <el-dropdown-item icon="el-icon-view" v-on:click.native="btnCourseViewClick(scope.row)">详 细</el-dropdown-item>
                                         </el-dropdown-menu>
                                     </el-dropdown>
                                 </template>
@@ -332,10 +332,13 @@
                     <div>
                         <el-form :inline="true" :size="euiSize">
                             <el-form-item label="关键字">
-                                <el-input v-model="formCourse.keywords" placeholder="课程名称" prefix-icon="el-icon-search" clearable></el-input>
+                                <el-input v-model="formCourse.keyWords" placeholder="课程名称" prefix-icon="el-icon-search" clearable></el-input>
                             </el-form-item>
                             <el-form-item>
                                 <el-button :size="euiSize" icon="el-icon-search" type="primary" v-on:click="btnCourseSearchClick">查 询</el-button>
+                                <el-button :size="euiSize" plain type="primary" icon="el-icon-download" v-on:click="btnCourseExportClick">
+                                    导 出
+                                </el-button>
                             </el-form-item>
                         </el-form>
                     </div>
@@ -373,9 +376,17 @@
                             </el-table-column>
                             <el-table-column label="完成人数" prop="overUser">
                             </el-table-column>
-                            <el-table-column label="完成率" width="180">
+                            <el-table-column label="完成率" width="160">
                                 <template slot-scope="scope">
                                     <el-progress :stroke-width="16" :percentage="utils.formatPercentFloat(scope.row.overUser,scope.row.studyUser)" color="#67c23a"></el-progress>
+                                </template>
+                            </el-table-column>
+                            <el-table-column label="评价" width="100">
+                                <template slot-scope="scope">
+                                    <span v-if="scope.row.studyCourseEvaluationId>0">
+                                        {{ scope.row.star}}<i class="el-icon-star"></i>({{scope.row.starUser}})
+                                    </span>
+                                    <span v-else>/</span>
                                 </template>
                             </el-table-column>
                             <el-table-column width="100">
@@ -385,16 +396,101 @@
                                             操作
                                         </el-button>
                                         <el-dropdown-menu slot="dropdown">
-                                            <el-dropdown-item icon="el-icon-edit" v-on:click.native="btnPaperMarkView(scope.row.id)">考试情况</el-dropdown-item>
-                                            <el-dropdown-item icon="el-icon-edit" v-on:click.native="btnPaperMarkView(scope.row.id)">问卷情况</el-dropdown-item>
-                                            <el-dropdown-item icon="el-icon-edit" v-on:click.native="btnPaperMarkView(scope.row.id)">评价情况</el-dropdown-item>
-                                            <el-dropdown-item icon="el-icon-edit" v-on:click.native="btnPaperMarkView(scope.row.id)">详 细</el-dropdown-item>
+                                            <el-dropdown-item icon="el-icon-edit" v-on:click.native="btnCourseViewClick(scope.row)">详 细</el-dropdown-item>
                                         </el-dropdown-menu>
                                     </el-dropdown>
                                 </template>
                             </el-table-column>
                             @await Html.PartialAsync("_PartialTableEmpty")
                         </el-table>
+                    </div>
+                </el-card>
+            </el-tab-pane>
+            <el-tab-pane label="大考成绩" v-if="plan.examId>0">
+                <el-card class="box-card">
+                    <div>
+                        <el-form :inline="true" :size="euiSize">
+                            <el-form-item label="关键字">
+                                <el-input v-model="formScore.keyWords" placeholder="组织、用户名、姓名" prefix-icon="el-icon-search" clearable></el-input>
+                            </el-form-item>
+                            <el-form-item label="交卷时间：从">
+                                <el-date-picker v-model="formScore.dateFrom"
+                                                type="datetime"
+                                                value-format="yyyy-MM-dd HH:mm:ss"
+                                                placeholder="选择开始日期">
+                                </el-date-picker>
+                            </el-form-item>
+                            <el-form-item label="到">
+                                <el-date-picker v-model="formScore.dateTo"
+                                                type="datetime"
+                                                value-format="yyyy-MM-dd HH:mm:ss"
+                                                placeholder="选择结束日期">
+                                </el-date-picker>
+                            </el-form-item>
+                            <el-form-item>
+                                <el-button :size="euiSize" icon="el-icon-search" type="primary" v-on:click="btnScoreSearchClick">查 询</el-button>
+                                <el-button :size="euiSize" icon="el-icon-medal" type="primary" plain v-on:click="btnCerViewClick" v-if="plan.cerId>0">证 书</el-button>
+                                <el-button :size="euiSize" plain type="primary" icon="el-icon-download" v-on:click="btnScoreExportClick">
+                                    导 出
+                                </el-button>
+                            </el-form-item>
+                        </el-form>
+                    </div>
+                    <div>
+                        <el-table ref="scoreTable" :data="scoreList" :size="euiSize"
+                                  style="width: 100%" :height="$(window).height()-255">
+                            <el-table-column label="#"
+                                             type="index"
+                                             width="60"
+                                             align="center">
+                                <template scope="scope">
+                                    <span>{{(formScore.pageIndex - 1) * formScore.pageSize + scope.$index + 1}}</span>
+                                </template>
+                            </el-table-column>
+                            <el-table-column label="账号">
+                                <template slot-scope="scope">
+                                    <el-link :underline="false" type="primary" v-on:click="btnViewClick(scope.row.user.id)">{{scope.row.user.userName}}</el-link>
+                                </template>
+                            </el-table-column>
+                            <el-table-column prop="user.displayName" label="姓名">
+                            </el-table-column>
+                            <el-table-column prop="user.organNames" label="组织" show-overflow-toolti>
+                            </el-table-column>
+                            <el-table-column label="开考时间" prop="beginDateTime" width="140">
+                            </el-table-column>
+                            <el-table-column label="交卷时间" prop="endDateTime" width="140">
+                            </el-table-column>
+                            <el-table-column prop="user.useTime" label="用时" width="100">
+                            </el-table-column>
+                            <el-table-column prop="subjectiveScore" label="主观题成绩" width="100">
+                            </el-table-column>
+                            <el-table-column prop="objectiveScore" label="客观题成绩" width="100">
+                            </el-table-column>
+                            <el-table-column prop="score" label="成绩" width="100">
+                            </el-table-column>
+                            <el-table-column width="100">
+                                <template slot-scope="scope">
+                                    <el-dropdown :show-timeout="0" placement="left">
+                                        <el-button icon="el-icon-arrow-left" :size="euiSize" v-on:click.stop="return false">
+                                            操作
+                                        </el-button>
+                                        <el-dropdown-menu slot="dropdown">
+                                            <el-dropdown-item icon="el-icon-view" v-on:click.native="btnPaperSocreView(scope.row.id)">查看答卷</el-dropdown-item>
+                                        </el-dropdown-menu>
+                                    </el-dropdown>
+                                </template>
+                            </el-table-column>
+                            @await Html.PartialAsync("_PartialTableEmpty")
+                        </el-table>
+
+                        <div style="text-align: center; margin-top: 10px;">
+                            <el-pagination v-on:current-change="scoreHandleCurrentChange" background
+                                           :current-page="formScore.pageIndex"
+                                           :page-size="formScore.pageSize"
+                                           layout="total, prev, pager, next"
+                                           :total="scoreTotal">
+                            </el-pagination>
+                        </div>
                     </div>
                 </el-card>
             </el-tab-pane>

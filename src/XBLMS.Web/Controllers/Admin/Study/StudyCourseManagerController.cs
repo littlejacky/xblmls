@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using DocumentFormat.OpenXml.Office.CustomUI;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NSwag.Annotations;
 using System.Collections.Generic;
@@ -12,14 +13,14 @@ namespace XBLMS.Web.Controllers.Admin.Study
     [OpenApiIgnore]
     [Authorize(Roles = Types.Roles.Administrator)]
     [Route(Constants.ApiAdminPrefix)]
-    public partial class StudyPlanManagerController : ControllerBase
+    public partial class StudyCourseManagerController : ControllerBase
     {
-        private const string Route = "study/studyPlanManager";
+        private const string Route = "study/studyCourseManager";
         private const string RouteCourse = Route + "/course";
         private const string RouteCourseExport = RouteCourse + "/export";
         private const string RouteUser = Route + "/user";
         private const string RouteUserExport = RouteUser + "/export";
-        private const string RouteScore = Route + "/score";
+        private const string RouteScore = Route + "/socre";
         private const string RouteScoreExport = RouteScore + "/export";
 
         private readonly IAuthManager _authManager;
@@ -40,7 +41,7 @@ namespace XBLMS.Web.Controllers.Admin.Study
         private readonly IExamPaperRepository _examPaperRepository;
         private readonly IExamCerRepository _examCerRepository;
 
-        public StudyPlanManagerController(IAuthManager authManager,
+        public StudyCourseManagerController(IAuthManager authManager,
             IPathManager pathManager,
             IUploadManager uploadManager,
             IStudyManager studyManager,
@@ -76,9 +77,14 @@ namespace XBLMS.Web.Controllers.Admin.Study
             _examPaperRepository = examPaperRepository;
             _examCerRepository = examCerRepository;
         }
+        public class GetRequest
+        {
+            public int Id { get; set; }
+            public int PlanId { get; set; }
+        }
         public class GetResult
         {
-            public StudyPlan Item { get; set; }
+            public StudyCourse Item { get; set; }
         }
         public class GetUserRequest
         {
@@ -98,29 +104,12 @@ namespace XBLMS.Web.Controllers.Admin.Study
         {
             public int Id { get; set; }
             public string KeyWords { get; set; }
-            public int PageIndex { get; set; }
-            public int PageSize { get; set; }
         }
         public class GetCourseResult
         {
             public List<StudyPlanCourse> List { get; set; }
         }
 
-
-        public class GetSocreRequest
-        {
-            public int Id { get; set; }
-            public string DateFrom { get; set; }
-            public string DateTo { get; set; }
-            public string KeyWords { get; set; }
-            public int PageIndex { get; set; }
-            public int PageSize { get; set; }
-        }
-        public class GetScoreResult
-        {
-            public int Total { get; set; }
-            public List<ExamPaperStart> List { get; set; }
-        }
 
     }
 }

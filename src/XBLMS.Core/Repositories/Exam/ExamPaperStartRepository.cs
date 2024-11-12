@@ -195,6 +195,43 @@ namespace XBLMS.Core.Repositories
             var list = await _repository.GetAllAsync(query.ForPage(pageIndex, pageSize));
             return (total, list);
         }
+        public async Task<(int total, List<ExamPaperStart> list)> GetListByAdminAsync(int paperId,int planId,int courseId, string dateFrom, string dateTo, string keyWords, int pageIndex, int pageSize, bool isMark = true)
+        {
+            var query = Q.
+                WhereTrue(nameof(ExamPaperStart.IsSubmit)).
+                Where(nameof(ExamPaperStart.PlanId), planId).
+                Where(nameof(ExamPaperStart.CourseId), courseId).
+                Where(nameof(ExamPaperStart.ExamPaperId), paperId);
+
+            if (isMark)
+            {
+                query.WhereTrue(nameof(ExamPaperStart.IsMark));
+            }
+            else
+            {
+                query.WhereNullOrFalse(nameof(ExamPaperStart.IsMark));
+            }
+
+            if (!string.IsNullOrWhiteSpace(dateFrom))
+            {
+                query.Where(nameof(ExamPaperStart.EndDateTime), ">=", DateUtils.ToString(dateFrom));
+            }
+            if (!string.IsNullOrWhiteSpace(dateTo))
+            {
+                query.Where(nameof(ExamPaperStart.EndDateTime), "<=", DateUtils.ToString(dateTo));
+            }
+            if (!string.IsNullOrEmpty(keyWords))
+            {
+                var like = $"%{keyWords}%";
+                query.WhereLike(nameof(ExamPaperStart.KeyWordsAdmin), like);
+            }
+
+            var total = await _repository.CountAsync(query);
+
+            query.OrderByDesc(nameof(ExamPaperStart.Id));
+            var list = await _repository.GetAllAsync(query.ForPage(pageIndex, pageSize));
+            return (total, list);
+        }
         public async Task<(int total, List<ExamPaperStart> list)> GetListByMarkerAsync(int markerId, string keyWords, int pageIndex, int pageSize)
         {
             var query = Q.

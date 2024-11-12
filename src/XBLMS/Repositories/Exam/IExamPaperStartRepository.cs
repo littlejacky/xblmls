@@ -25,6 +25,7 @@ namespace XBLMS.Repositories
         Task<List<ExamPaperStart>> GetListAsync(int paperId, int userId);
         Task<List<ExamPaperStart>> GetListAsync(int paperId, int userId, int planId, int courseId);
         Task<(int total, List<ExamPaperStart> list)> GetListAsync(int userId, string dateFrom, string dateTo, string keyWords, int pageIndex, int pageSize);
+        Task<(int total, List<ExamPaperStart> list)> GetListByAdminAsync(int paperId, int planId, int courseId, string dateFrom, string dateTo, string keyWords, int pageIndex, int pageSize, bool isMark = true);
         Task<(int total, List<ExamPaperStart> list)> GetListByAdminAsync(int paperId, string dateFrom, string dateTo, string keyWords, int pageIndex, int pageSize, bool isMark = true);
         Task<(int total, List<ExamPaperStart> list)> GetListByMarkerAsync(int markerId, string keyWords, int pageIndex, int pageSize);
 

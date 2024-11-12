@@ -1,20 +1,28 @@
-﻿var $url = '/study/studyPlanManager';
+﻿var $url = '/study/studyCourseManager';
 
 var $urlUser = $url + '/user';
 var $urlUserExport = $urlUser + '/export';
 
-var $urlCourse = $url + '/course';
-var $urlCourseExport = $urlCourse + '/export';
+var $urlCourseware = $url + '/courseware';
+var $urlCoursewareExport = $urlCourseware + '/export';
 
 var $urlScore = $url + '/score';
 var $urlScoreExport = $urlScore + '/export';
 
+var $urlEvaluation = $url + '/evaluation';
+var $urlEvaluationExport = $urlEvaluation + '/export';
+
+var $urlExamQ = $url + '/examq';
+var $urlExamQExport = $urlExamQ + '/export';
+
 
 var data = utils.init({
   id: 0,
-  plan: null,
+  planId:0,
+  course: null,
   form: {
     id: 0,
+    planId:0,
     state: '',
     keyWords: '',
     pageIndex: 1,
@@ -30,14 +38,16 @@ var data = utils.init({
   },
   tabPosition: 'left',
 
-  formCourse: {
+  formCourseWare: {
     id: 0,
+    planId: 0,
     keyWords: '',
   },
   courseList: null,
 
   formScore: {
     id: 0,
+    planId: 0,
     keyWords: '',
     dateFrom: '',
     dateTo: '',
@@ -46,6 +56,26 @@ var data = utils.init({
   },
   scoreList: null,
   scoreTotal: 0,
+
+  formExamq: {
+    id: 0,
+    planId: 0,
+    keyWords: '',
+    pageIndex: 1,
+    pageSize: PER_PAGE
+  },
+  examqList: null,
+  examqTotal: 0,
+
+  formEvaluation: {
+    id: 0,
+    planId: 0,
+    keyWords: '',
+    pageIndex: 1,
+    pageSize: PER_PAGE
+  },
+  evaluationList: null,
+  evaluationTotal: 0,
 
   passSeries: [100],
   passChartOptions: {
@@ -115,86 +145,17 @@ var data = utils.init({
     },
     labels: ['完成率'],
   },
-  pass1Series: [100],
-  pass1ChartOptions: {
-    chart: {
-      type: 'radialBar',
-      toolbar: {
-        show: false
-      }
-    },
-    plotOptions: {
-      radialBar: {
-        startAngle: -135,
-        endAngle: 225,
-        hollow: {
-          margin: 0,
-          size: '70%',
-          background: '#fff',
-          image: undefined,
-          imageOffsetX: 0,
-          imageOffsetY: 0,
-          position: 'front',
-          dropShadow: {
-            enabled: true,
-            top: 3,
-            left: 0,
-            blur: 4,
-            opacity: 0.24
-          }
-        },
-        track: {
-          background: '#fff',
-          strokeWidth: '88%',
-          margin: 0, // margin is in pixels
-          dropShadow: {
-            enabled: true,
-            top: -3,
-            left: 0,
-            blur: 4,
-            opacity: 0.35
-          }
-        },
-
-        dataLabels: {
-          show: true,
-          name: {
-            offsetY: -20,
-            show: true,
-            color: '#ff6a00',
-            fontSize: '16px'
-          },
-          value: {
-            formatter: function (val) {
-              return val + '%';
-            },
-            color: '#000',
-            fontSize: '36px',
-            show: true,
-          }
-        }
-      }
-    },
-    fill: {
-      colors: ['#67C23A']
-    },
-    stroke: {
-      lineCap: 'round'
-    },
-    labels: ['达标率'],
-  },
 });
 
 var methods = {
   apiGet: function () {
     var $this = this;
     utils.loading(this, true);
-    $api.get($url, { params: { id: this.id } }).then(function (response) {
+    $api.get($url, { params: { id: this.id,planId:this.planId } }).then(function (response) {
       var res = response.data;
-      $this.plan = res.item;
+      $this.course = res.item;
 
-      $this.passSeries = [utils.formatPercentFloat($this.plan.totalPassUser, $this.plan.totalUser)];
-      $this.pass1Series = [utils.formatPercentFloat($this.plan.totalPass1User, $this.plan.totalUser)];
+      $this.passSeries = [utils.formatPercentFloat($this.course.totalPassUser, $this.course.totalUser)];
 
     }).catch(function (error) {
       utils.error(error, { layer: true });
@@ -338,16 +299,6 @@ var methods = {
       width: "88%",
       height: "98%"
     });
-  },
-  btnCourseViewClick: function (row) {
-    var $this = this;
-    top.utils.openLayer({
-      title: false,
-      closebtn: 0,
-      url: utils.getStudyUrl('studyCourseManager', { id: row.courseId, planId: $this.plan.id }),
-      width: "99%",
-      height: "99%"
-    });
   }
 };
 Vue.component("apexchart", {
@@ -358,10 +309,8 @@ var $vue = new Vue({
   data: data,
   methods: methods,
   created: function () {
-    this.id = this.form.id = this.formCourse.id = this.formScore.id = utils.getQueryInt("id");
+    this.id = this.form.id = this.formCourseWare.id = this.formScore.id = utils.getQueryInt("id");
+    this.planId = this.form.planId = this.formCourseWare.planId = this.formScore.planId = utils.getQueryInt("planId");
     this.apiGet();
-    this.apiGetUser();
-    this.apiGetCourse();
-    this.apiGetScore();
   }
 });

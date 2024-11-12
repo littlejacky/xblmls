@@ -239,6 +239,16 @@ var methods = {
       }
     });
   },
+  btnCourseManagerClick: function (row) {
+    var $this = this;
+    top.utils.openLayer({
+      title: false,
+      closebtn: 0,
+      url: utils.getStudyUrl('studyCourseManager', { id: row.id }),
+      width: "99%",
+      height: "99%"
+    });
+  },
 
   //tree
   apiGetTree: function () {
