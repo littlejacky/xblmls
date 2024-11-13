@@ -15,6 +15,8 @@ namespace XBLMS.Repositories
         Task ClearByPaperAndUserAsync(int paperId, int userId);
         Task DeleteAsync(int id);
         Task<int> GetCountSubmitUser(int paperId, int tmId, string answer);
+        Task<List<string>> GetListAnswer(int planId, int courseId, int paperId, int tmId);
+        Task<int> GetCountSubmitUser(int planId, int courseId, int paperId, int tmId, string answer);
         Task<List<string>> GetListAnswer(int paperId, int tmId);
  
     }

@@ -422,7 +422,8 @@
                                                         </span>
                                                         <span v-else>
                                                             <i class="bi bi-star-fill text-warning me-2"></i>
-                                                            <el-link type="warning" v-on:click="btnViewExamQClick">前往课后问卷</el-link>
+                                                            <el-link type="warning" v-on:click="btnViewExamQClick" v-if="courseUser.isSignin">前往课后问卷</el-link>
+                                                            <el-link type="warning" v-on:click="utils.error('请参加培训',{layer:true})" v-else>前往课后问卷</el-link>
                                                         </span>
                                                     </span>
                                                     <span v-else>
@@ -454,21 +455,18 @@
                                                         </span>
                                                         <span v-else>
                                                             <i class="bi bi-star-fill text-warning me-2"></i>
-                                                            <el-link type="warning" v-on:click="btnViewEvaluationClick">前往课后评价</el-link>
+                                                            <el-link type="warning" v-on:click="btnViewEvaluationClick" v-if="courseUser.isSignin">前往课后评价</el-link>
+                                                            <el-link type="warning" v-on:click="utils.error('请参加培训',{layer:true})" v-else>前往课后评价</el-link>
                                                         </span>
                                                     </span>
                                                     <span v-else>
                                                         <i class="bi bi-star-fill text-warning me-2"></i>
                                                         <el-link type="warning" v-on:click="utils.error('请先通过课后考试',{layer:true})">前往课后评价</el-link>
                                                     </span>
-                                                    <span v-else>
-                                                        <i class="bi bi-star-fill text-warning me-2"></i>
-                                                        <el-link type="warning" v-on:click="utils.error('请先完成章节学习',{layer:true})">前往课后评价</el-link>
-                                                    </span>
                                                 </span>
                                                 <span v-else>
                                                     <i class="bi bi-star-fill text-success me-2"></i>
-                                                    无课后问卷
+                                                    无课后评价
                                                 </span>
                                             </li>
                                         </ul>

@@ -13,8 +13,10 @@ namespace XBLMS.Repositories
         Task<bool> DeleteAsync(int id);
         Task<bool> DeleteByCourseAsync(int courseId);
         Task<StudyCourseUser> GetAsync(int id);
+        Task<bool> ExistsAsync(int userId, int planId, int courseId);
         Task<StudyCourseUser> GetAsync(int userId, int planId, int courseId);
         Task<(int total, List<StudyCourseUser> list)> GetLastListAsync(int userId, int pageIndex, int pageSize);
+        Task<(int total, List<StudyCourseUser> list)> GetListAsync(int planId, int courseId, string keyWords, string state, int pageIndex, int pageSize);
         Task<(int total, List<StudyCourseUser> list)> GetListAsync(int userId, bool collection, string keyWords, string mark, string orderby, string state, int pageIndex, int pageSize);
         Task<(int total, List<string>)> GetMarkListAsync(int userId);
         Task<int> GetAvgEvaluationAsync(int courseId, int minStar);

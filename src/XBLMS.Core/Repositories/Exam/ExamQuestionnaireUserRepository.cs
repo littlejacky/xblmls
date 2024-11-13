@@ -65,7 +65,7 @@ namespace XBLMS.Core.Repositories
         {
             var query = Q.
                 WhereNullOrFalse(nameof(ExamQuestionnaireUser.Locked)).
-                Where(nameof(ExamQuestionnaireUser.UserId),userId);
+                Where(nameof(ExamQuestionnaireUser.UserId), userId);
 
             if (!string.IsNullOrWhiteSpace(keyWords))
             {
@@ -79,7 +79,19 @@ namespace XBLMS.Core.Repositories
             return (total, list);
         }
 
-        public async Task<(int total, List<ExamQuestionnaireUser> list)> GetListAsync(int paperId,string isSubmit, string keyWords, int pageIndex, int pageSize)
+        public async Task<int> GetSubmitUserCountAsync(int planId, int courseId, int paperId)
+        {
+            var query = Q.
+                Where(nameof(ExamQuestionnaireUser.SubmitType), SubmitType.Submit.GetValue()).
+                Where(nameof(ExamQuestionnaireUser.ExamPaperId), paperId).
+                Where(nameof(ExamQuestionnaireUser.PlanId), planId).
+                Where(nameof(ExamQuestionnaireUser.CourseId), courseId);
+
+            var total = await _repository.CountAsync(query);
+            return total;
+        }
+
+        public async Task<(int total, List<ExamQuestionnaireUser> list)> GetListAsync(int paperId, string isSubmit, string keyWords, int pageIndex, int pageSize)
         {
             var query = Q.
                 WhereNullOrFalse(nameof(ExamQuestionnaireUser.Locked)).
@@ -107,7 +119,7 @@ namespace XBLMS.Core.Repositories
             var list = await _repository.GetAllAsync(query.ForPage(pageIndex, pageSize));
             return (total, list);
         }
-        public async Task<ExamQuestionnaireUser> GetAsync(int paperId, int userId,int planId,int courseId)
+        public async Task<ExamQuestionnaireUser> GetAsync(int paperId, int userId, int planId, int courseId)
         {
             return await _repository.GetAsync(Q.
                 Where(nameof(ExamQuestionnaireUser.PlanId), planId).
@@ -139,7 +151,7 @@ namespace XBLMS.Core.Repositories
                 Where(nameof(ExamQuestionnaireUser.UserId), userId).
                 WhereNullOrFalse(nameof(ExamQuestionnaireUser.Locked)).
                 Where(nameof(ExamQuestionnaireUser.ExamEndDateTime), ">", DateTime.Now).
-                Where(nameof(ExamQuestionnaireUser.SubmitType),SubmitType.Save.GetValue());
+                Where(nameof(ExamQuestionnaireUser.SubmitType), SubmitType.Save.GetValue());
 
             return await _repository.GetAllAsync<int>(query);
         }

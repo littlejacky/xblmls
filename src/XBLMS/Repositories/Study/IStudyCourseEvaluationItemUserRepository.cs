@@ -8,6 +8,7 @@ namespace XBLMS.Repositories
     {
         Task<int> InsertAsync(StudyCourseEvaluationItemUser item);
         Task<StudyCourseEvaluationItemUser> GetAsync(int id);
+        Task<StudyCourseEvaluationItemUser> GetAsync(int planId, int courseId, int userId, int evaluationId, int itemId);
         Task<string> GetTextAsync(int courseId, int userId);
     }
 }

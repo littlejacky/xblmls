@@ -13,7 +13,6 @@ namespace XBLMS.Web.Controllers.Home.Study
             if (user == null) { return Unauthorized(); }
 
 
-
             var title = "";
             if (request.PlanId > 0)
             {
@@ -25,6 +24,9 @@ namespace XBLMS.Web.Controllers.Home.Study
                 var course = await _studyCourseRepository.GetAsync(request.CourseId);
                 title = course.Name;
             }
+
+            var evaluation = await _studyCourseEvaluationRepository.GetAsync(request.EId);
+
             var list = await _studyCourseEvaluationItemRepository.GetListAsync(request.EId);
 
             if (list != null && list.Count > 0)
@@ -37,6 +39,7 @@ namespace XBLMS.Web.Controllers.Home.Study
             }
             return new GetResult()
             {
+                MaxStar = evaluation.MaxStar,
                 Title = title,
                 List = list
             };

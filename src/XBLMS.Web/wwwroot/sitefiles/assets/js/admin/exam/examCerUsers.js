@@ -8,7 +8,7 @@ var data = utils.init({
   form: {
     id: 0,
     planId: utils.getQueryInt("planId"),
-    couresId: utils.getQueryInt("courseId"),
+    courseId: utils.getQueryInt("courseId"),
     keywords: '',
     dateFrom: null,
     dateTo: null,

@@ -60,7 +60,13 @@ namespace XBLMS.Core.Repositories
         {
             return await _repository.GetAsync(id);
         }
-
+        public async Task<bool> ExistsAsync(int userId, int planId, int courseId)
+        {
+            return await _repository.ExistsAsync(Q.
+                Where(nameof(StudyCourseUser.UserId), userId).
+                Where(nameof(StudyCourseUser.PlanId), planId).
+                Where(nameof(StudyCourseUser.CourseId), courseId));
+        }
         public async Task<StudyCourseUser> GetAsync(int userId, int planId, int courseId)
         {
             return await _repository.GetAsync(Q.
@@ -122,6 +128,28 @@ namespace XBLMS.Core.Repositories
             {
                 query.OrderByDesc(nameof(StudyCourseUser.Id));
             }
+
+            var total = await _repository.CountAsync(query);
+            var list = await _repository.GetAllAsync(query.ForPage(pageIndex, pageSize));
+            return (total, list);
+        }
+        public async Task<(int total, List<StudyCourseUser> list)> GetListAsync(int planId,int courseId, string keyWords, string state, int pageIndex, int pageSize)
+        {
+            var query = Q.
+                Where(nameof(StudyCourseUser.PlanId), planId).
+                Where(nameof(StudyCourseUser.CourseId),courseId);
+
+            if (!string.IsNullOrEmpty(keyWords))
+            {
+                query.WhereLike(nameof(StudyCourseUser.KeyWordsAdmin), $"%{keyWords}%");
+            }
+
+            if (!string.IsNullOrEmpty(state))
+            {
+                query.Where(nameof(StudyCourseUser.State), state);
+            }
+
+            query.OrderByDesc(nameof(StudyCourseUser.Id));
 
             var total = await _repository.CountAsync(query);
             var list = await _repository.GetAllAsync(query.ForPage(pageIndex, pageSize));

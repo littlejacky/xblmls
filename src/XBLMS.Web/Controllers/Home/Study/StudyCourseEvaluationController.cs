@@ -28,6 +28,7 @@ namespace XBLMS.Web.Controllers.Home.Study
         private readonly IStudyCourseEvaluationItemRepository _studyCourseEvaluationItemRepository;
         private readonly IStudyCourseEvaluationUserRepository _studyCourseEvaluationUserRepository;
         private readonly IStudyCourseEvaluationItemUserRepository _studyCourseEvaluationItemUserRepository;
+        private readonly IStudyCourseEvaluationRepository _studyCourseEvaluationRepository;
 
         public StudyCourseEvaluationController(IConfigRepository configRepository,
             IAuthManager authManager,
@@ -39,7 +40,8 @@ namespace XBLMS.Web.Controllers.Home.Study
             IStudyPlanRepository studyPlanRepository,
             IStudyCourseEvaluationUserRepository studyCourseEvaluationUserRepository,
             IStudyCourseEvaluationItemUserRepository studyCourseEvaluationItemUserRepository,
-            IStudyCourseEvaluationItemRepository studyCourseEvaluationItemRepository)
+            IStudyCourseEvaluationItemRepository studyCourseEvaluationItemRepository,
+            IStudyCourseEvaluationRepository studyCourseEvaluationRepository)
         {
             _configRepository = configRepository;
             _authManager = authManager;
@@ -52,6 +54,7 @@ namespace XBLMS.Web.Controllers.Home.Study
             _studyCourseEvaluationUserRepository = studyCourseEvaluationUserRepository;
             _studyCourseEvaluationItemUserRepository = studyCourseEvaluationItemUserRepository;
             _studyCourseEvaluationItemRepository = studyCourseEvaluationItemRepository;
+            _studyCourseEvaluationRepository = studyCourseEvaluationRepository;
         }
         public class GetRequest
         {
@@ -63,6 +66,7 @@ namespace XBLMS.Web.Controllers.Home.Study
         {
             public string Title { get; set; }
             public List<StudyCourseEvaluationItem> List { get; set; }
+            public int MaxStar { get; set; }
         }
         public class GetSubmitRequest
         {

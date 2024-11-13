@@ -130,7 +130,12 @@ namespace XBLMS.Core.Repositories
             var list = await _repository.GetAllAsync(query.ForPage(pageIndex, pageSize));
             return (total, list);
         }
-
+        public async Task<List<int>> GetUserIdsAsync(int planId)
+        {
+            var query = Q.Select(nameof(StudyPlanUser.UserId)).Where(nameof(StudyPlanUser.PlanId), planId);
+            var list = await _repository.GetAllAsync<int>(query);
+            return list;
+        }
 
         public async Task<(decimal totalCredit, decimal totalOverCredit)> GetCreditAsync(int userId)
         {

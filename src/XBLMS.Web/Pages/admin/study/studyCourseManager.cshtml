@@ -118,7 +118,7 @@
                     </el-col>
                 </el-row>
             </el-tab-pane>
-            <el-tab-pane label="学员列表">
+            <el-tab-pane label="学习情况">
                 <el-card class="box-card">
                     <div>
                         <el-form :inline="true" :size="euiSize">
@@ -128,7 +128,8 @@
                             <el-form-item label="状态">
                                 <el-select v-model="form.state" placeholder="" v-on:change="btnUserSearchClick" clearable>
                                     <el-option label="全部状态" value=""></el-option>
-                                    <el-option label="未完成" value="Weiwancheng"></el-option>
+                                    <el-option label="未开始" value="Weikaishi"></el-option>
+                                    <el-option label="学习中" value="Xuexizhong"></el-option>
                                     <el-option label="已完成" value="Yiwancheng"></el-option>
                                 </el-select>
                             </el-form-item>
@@ -141,11 +142,8 @@
                         </el-form>
                     </div>
                     <div>
-                        <el-table ref="userTable" :data="userList" :size="euiSize" v-on:selection-change="userHandleSelectionChange"
+                        <el-table ref="userTable" :data="userList" :size="euiSize"
                                   style="width: 100%" :height="$(window).height()-257">
-                            <el-table-column type="selection"
-                                             width="55">
-                            </el-table-column>
                             <el-table-column label="#"
                                              type="index"
                                              width="60"
@@ -167,26 +165,22 @@
                             </el-table-column>
                             <el-table-column label="学时">
                                 <template slot-scope="scope">
-                                    {{ utils.formatDuration(scope.row.totalDuration) }}/ {{ utils.formatDuration(course.duration) }}
+                                    {{ utils.formatDuration(scope.row.totalDuration) }}/{{ utils.formatDuration(course.duration) }}
                                 </template>
                             </el-table-column>
                             <el-table-column prop="maxScore" label="成绩" width="100">
                             </el-table-column>
-                            <el-table-column prop="maxScore" label="评价" width="100">
+                            <el-table-column label="评价" width="100">
+                                <template slot-scope="scope">
+                                    {{ scope.row.avgEvaluation}}
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-star-fill text-warning" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                </template>
                             </el-table-column>
                             <el-table-column prop="stateStr" label="状态" width="100">
                             </el-table-column>
-                            <el-table-column width="100">
-                                <template slot-scope="scope">
-                                    <el-dropdown :show-timeout="0" placement="left">
-                                        <el-button icon="el-icon-arrow-left" :size="euiSize" v-on:click.stop="return false">
-                                            操作
-                                        </el-button>
-                                        <el-dropdown-menu slot="dropdown">
-                                            <el-dropdown-item  icon="el-icon-view" v-on:click.native="btnUserDelete(scope.row)">详 细</el-dropdown-item>
-                                        </el-dropdown-menu>
-                                    </el-dropdown>
-                                </template>
+                            <el-table-column prop="overStudyDateTime" label="完成时间" width="135">
                             </el-table-column>
                             @await Html.PartialAsync("_PartialTableEmpty")
                         </el-table>
@@ -202,12 +196,12 @@
                     </div>
                 </el-card>
             </el-tab-pane>
-            <el-tab-pane label="成绩" v-if="course.examId>0">
+            <el-tab-pane label="考试成绩" v-if="course.examId>0">
                 <el-card class="box-card">
                     <div>
                         <el-form :inline="true" :size="euiSize">
                             <el-form-item label="关键字">
-                                <el-input v-model="formScore.keywords" placeholder="组织、用户名、姓名" prefix-icon="el-icon-search" clearable></el-input>
+                                <el-input v-model="formScore.keyWords" placeholder="组织、用户名、姓名" prefix-icon="el-icon-search" clearable></el-input>
                             </el-form-item>
                             <el-form-item label="交卷时间：从">
                                 <el-date-picker v-model="formScore.dateFrom"
@@ -234,7 +228,7 @@
                     </div>
                     <div>
                         <el-table ref="scoreTable" :data="scoreList" :size="euiSize"
-                                  style="width: 100%" :height="$(window).height()-255">
+                                  style="width: 100%" :height="$(window).height()-260">
                             <el-table-column label="#"
                                              type="index"
                                              width="60"
@@ -285,6 +279,169 @@
                                            :page-size="formScore.pageSize"
                                            layout="total, prev, pager, next"
                                            :total="scoreTotal">
+                            </el-pagination>
+                        </div>
+                    </div>
+                </el-card>
+            </el-tab-pane>
+            <el-tab-pane label="问卷结果" v-if="course.examQuestionnaireId>0">
+                <el-card>
+                    <div slot="header" class="clearfix">
+                        <span>共：{{ qTmTotal }}项，提交人数：{{ qAnswerTotal }}</span>
+                    </div>
+                    <el-scrollbar class="scrollbar" :style="{ height: ($(window).innerHeight()-225) + 'px' }" ref="answerScrollbar">
+                        <div class="pe-3">
+                            <div class="mb-3" v-for="(tm,tmIndex) in qList">
+                                <el-card>
+                                    <div :id="'tm_'+tm.id">
+                                        <span class="mb-3 d-flex justify-content-start  align-items-start">
+                                            <span>{{ tmIndex+1 }}、</span>
+                                            <span v-if="tm.tx==='Danxuanti'">
+                                                （单选）
+                                            </span>
+                                            <span v-else-if="tm.tx==='Duoxuanti'">
+                                                （多选）
+                                            </span>
+                                            <span v-else>
+                                                （简答）
+                                            </span>
+                                            <span v-html="tm.title"></span>
+                                        </span>
+                                        <div class="list-group">
+                                            <div v-if="tm.tx==='Danxuanti'">
+                                                <div class="d-flex justify-content-start align-items-center">
+                                                    <div v-if="qAnswerTotal>0">
+                                                        <apexchart type="pie" :options="{labels:tm.optionsValues,legend:{show:false},colors:pieChartColors}" :series="tm.optionsAnswer" height="200"></apexchart>
+                                                    </div>
+                                                    <div class="w-100">
+                                                        <div class="list-group-item list-group-item-action" v-for="(option,optionIndex) in tm.options">
+                                                            <div class="d-flex justify-content-start align-items-start">
+                                                                <div style="width:150px;" v-if="qAnswerTotal>0">
+                                                                    <el-progress :stroke-width="18" :percentage="utils.formatPercentFloat(tm.optionsAnswer[optionIndex],tm.tmAnswerTotal)" :show-text="false" color="#67c23a"></el-progress>
+                                                                </div>
+                                                                <div class="mx-2">
+                                                                    {{optionsABC[optionIndex]}}.
+                                                                </div>
+                                                                <div>
+                                                                    <span v-html="option"></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div v-if="tm.tx==='Duoxuanti'">
+                                                <div class="d-flex justify-content-start align-items-center">
+                                                    <div v-if="qAnswerTotal>0">
+                                                        <apexchart type="pie" :options="{labels:tm.optionsValues,legend:{show:false},colors:pieChartColors}" :series="tm.optionsAnswer" height="200"></apexchart>
+                                                    </div>
+                                                    <div class="w-100">
+                                                        <div class="list-group-item list-group-item-action" v-for="(option,optionIndex) in tm.options">
+                                                            <div class="d-flex justify-content-start align-items-start">
+                                                                <div style="width:150px;" v-if="qAnswerTotal>0">
+                                                                    <el-progress :stroke-width="18" :percentage="utils.formatPercentFloat(tm.optionsAnswer[optionIndex],tm.tmAnswerTotal)" :show-text="false" color="#67c23a"></el-progress>
+                                                                </div>
+                                                                <div class="mx-2">
+                                                                    {{optionsABC[optionIndex]}}.
+                                                                </div>
+                                                                <div>
+                                                                    <span v-html="option"></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div v-if="tm.tx==='Jiandati'">
+                                                <div class="list-group-item list-group-item-action" v-for="(option,optionIndex) in tm.optionsAnswer">
+                                                    <div class="d-flex justify-content-start align-items-start">
+                                                        <div class="me-1">
+                                                            <i class="el-icon-user me-2"></i>
+                                                        </div>
+                                                        <div>
+                                                            <span v-html="option"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </el-card>
+                            </div>
+                        </div>
+                    </el-scrollbar>
+                </el-card>
+            </el-tab-pane>
+            <el-tab-pane label="课程评价" v-if="course.studyCourseEvaluationId>0">
+                <el-card class="box-card">
+                    <div>
+                        <el-form :inline="true" :size="euiSize">
+                            <el-form-item label="关键字">
+                                <el-input v-model="formEvaluation.keyWords" placeholder="组织、用户名、姓名" prefix-icon="el-icon-search" clearable></el-input>
+                            </el-form-item>
+                            <el-form-item>
+                                <el-button :size="euiSize" icon="el-icon-search" type="primary" v-on:click="btnEvaluationSearchClick">查 询</el-button>
+                                <el-button :size="euiSize" plain type="primary" icon="el-icon-download" v-on:click="btnEvaluationExportClick">
+                                    导 出
+                                </el-button>
+                            </el-form-item>
+                        </el-form>
+                    </div>
+                    <div>
+                        <el-table ref="evaluationTable" :data="evaluationList" :size="euiSize"
+                                  style="width: 100%" :height="$(window).height()-260">
+                            <el-table-column label="#"
+                                             type="index"
+                                             width="60"
+                                             align="center">
+                                <template scope="scope">
+                                    <span>{{(formEvaluation.pageIndex - 1) * formEvaluation.pageSize + scope.$index + 1}}</span>
+                                </template>
+                            </el-table-column>
+                            <el-table-column label="账号">
+                                <template slot-scope="scope">
+                                    <el-link :underline="false" type="primary" v-on:click="btnViewClick(scope.row.user.id)">{{scope.row.user.userName}}</el-link>
+                                </template>
+                            </el-table-column>
+                            <el-table-column prop="user.displayName" label="姓名">
+                            </el-table-column>
+                            <el-table-column prop="user.organNames" label="组织" show-overflow-toolti>
+                            </el-table-column>
+                            <el-table-column label="平均分">
+                                <template slot-scope="scope">
+                                    {{ scope.row.avgEvaluation }}
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-star-fill text-warning" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                    </svg>
+                                </template>
+                            </el-table-column>
+                            <el-table-column label="评价项">
+                                <el-table-column v-for="(item,itemIndex) in evaluationItems"
+                                                 v-if="evaluationItems"
+                                                 :key="item.id"
+                                                 :column-key="item.id"
+                                                 :label="item.title">
+                                    <template slot-scope="scope">
+                                        <template v-if="scope.row.items[itemIndex].textContent">
+                                            {{ scope.row.items[itemIndex].contentValue }}
+                                        </template>
+                                        <template v-else>
+                                            {{ scope.row.items[itemIndex].starValue }}
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-star-fill text-warning" viewBox="0 0 16 16">
+                                                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                            </svg>
+                                        </template>
+                                    </template>
+                                </el-table-column>
+                            </el-table-column>
+                            @await Html.PartialAsync("_PartialTableEmpty")
+                        </el-table>
+                        <div style="text-align: center; margin-top: 10px;">
+                            <el-pagination v-on:current-change="evaluationHandleCurrentChange" background
+                                           :current-page="formEvaluation.pageIndex"
+                                           :page-size="formEvaluation.pageSize"
+                                           layout="total, prev, pager, next"
+                                           :total="evaluationTotal">
                             </el-pagination>
                         </div>
                     </div>

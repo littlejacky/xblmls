@@ -63,6 +63,16 @@ namespace XBLMS.Core.Repositories
                  Where(nameof(ExamQuestionnaireAnswer.ExamPaperId), paperId).
                  OrderBy(nameof(ExamQuestionnaireAnswer.Id)));
         }
+        public async Task<List<string>> GetListAnswer(int planId,int courseId,int paperId, int tmId)
+        {
+            return await _repository.GetAllAsync<string>(Q.
+                 Select(nameof(ExamQuestionnaireAnswer.Answer)).
+                 Where(nameof(ExamQuestionnaireAnswer.TmId), tmId).
+                 Where(nameof(ExamQuestionnaireAnswer.PlanId), planId).
+                 Where(nameof(ExamQuestionnaireAnswer.CourseId), courseId).
+                 Where(nameof(ExamQuestionnaireAnswer.ExamPaperId), paperId).
+                 OrderBy(nameof(ExamQuestionnaireAnswer.Id)));
+        }
         public async Task<int> GetCountSubmitUser(int paperId,int tmId,string answer)
         {
             answer = $"%{answer}%";
@@ -70,6 +80,18 @@ namespace XBLMS.Core.Repositories
             return await _repository.CountAsync(Q.
                  Select(nameof(ExamQuestionnaireAnswer.Id)).
                  Where(nameof(ExamQuestionnaireAnswer.TmId), tmId).
+                 WhereLike(nameof(ExamQuestionnaireAnswer.Answer), answer).
+                 Where(nameof(ExamQuestionnaireAnswer.ExamPaperId), paperId));
+        }
+        public async Task<int> GetCountSubmitUser(int planId,int courseId,int paperId, int tmId, string answer)
+        {
+            answer = $"%{answer}%";
+
+            return await _repository.CountAsync(Q.
+                 Select(nameof(ExamQuestionnaireAnswer.Id)).
+                 Where(nameof(ExamQuestionnaireAnswer.TmId), tmId).
+                 Where(nameof(ExamQuestionnaireAnswer.CourseId), courseId).
+                 Where(nameof(ExamQuestionnaireAnswer.ExamPaperId), paperId).
                  WhereLike(nameof(ExamQuestionnaireAnswer.Answer), answer).
                  Where(nameof(ExamQuestionnaireAnswer.ExamPaperId), paperId));
         }

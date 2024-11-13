@@ -142,11 +142,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xl-12 col-lg-12 col-md-12 col-12" v-if="(item.cjList && item.cjList.length>0) || (item.subject && item.subject.length>0)">
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-12" v-if="(item.cjList && item.cjList.length>0)">
                                 <div class="card rounded-0 bg-white border-start-0 border-end-0 border-bottom-0 border-5 card-hover-with-icon">
                                     <div class="card-body p-3">
                                         <el-collapse accordion>
-                                            <el-collapse-item v-if="item.cjList && item.cjList.length>0">
+                                            <el-collapse-item>
                                                 <template slot="title">
                                                     <span class="fs-4"><i class="bi bi-clock-history me-2"></i>考试记录（{{ item.cjList.length }}）</span>
                                                 </template>
@@ -182,7 +182,15 @@
                                                     </el-table>
                                                 </div>
                                             </el-collapse-item>
-                                            <el-collapse-item v-if="item.subject && item.subject.length>0">
+                                        </el-collapse>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-12" v-if="(item.subject && item.subject.length>0)">
+                                <div class="card rounded-0 bg-white border-start-0 border-end-0 border-bottom-0 border-5 card-hover-with-icon">
+                                    <div class="card-body p-3">
+                                        <el-collapse accordion>
+                                            <el-collapse-item>
                                                 <template slot="title">
                                                     <span class="fs-4"><i class="el-icon-info me-2"></i>考试须知</span>
                                                 </template>

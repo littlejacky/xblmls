@@ -99,7 +99,9 @@
                                             </ul>
                                         </div>
                                     </div>
-                                    <p v-html="courseInfo.description"></p>
+                                    <el-card>
+                                        <p v-html="courseInfo.description"></p>
+                                    </el-card>
                                 </div>
                                 <div class="tab-pane fade" id="review" role="tabpanel" aria-labelledby="review-tab" v-if="eUser>0">
                                     <div class="mb-3">

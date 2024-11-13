@@ -1,9 +1,13 @@
 ﻿using Datory;
+using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
+using System.Data.SQLite;
 using System.Numerics;
 using System.Threading.Tasks;
 using XBLMS.Dto;
+using XBLMS.Enums;
 using XBLMS.Models;
 using XBLMS.Utils;
 
@@ -14,16 +18,46 @@ namespace XBLMS.Web.Controllers.Admin.Study
         [HttpGet, Route(RouteUser)]
         public async Task<ActionResult<GetUserResult>> Submit([FromQuery] GetUserRequest request)
         {
-            var (total, list) = await _studyPlanUserRepository.GetListAsync(request.State, request.KeyWords, request.Id, request.PageIndex, request.PageSize);
+            var planCourse = await _studyPlanCourseRepository.GetAsync(request.PlanId, request.Id);
+            if (request.PlanId > 0)
+            {
+                var planUserIds = await _studyPlanUserRepository.GetUserIdsAsync(request.PlanId);
+                if (planUserIds != null && planUserIds.Count > 0)
+                {
+                    foreach (var userId in planUserIds)
+                    {
+                        var exsist = await _studyCourseUserRepository.ExistsAsync(userId, request.PlanId, request.Id);
+                        if (!exsist && !planCourse.IsSelectCourse)
+                        {
+                            var user = await _userRepository.GetByUserIdAsync(userId);
+                            await _studyCourseUserRepository.InsertAsync(new StudyCourseUser
+                            {
+                                UserId = user.Id,
+                                PlanId = request.PlanId,
+                                CourseId = request.Id,
+                                IsSelectCourse = planCourse.IsSelectCourse,
+                                CompanyId = user.CompanyId,
+                                DepartmentId = user.DepartmentId,
+                                CreatorId = user.CreatorId,
+                                State = StudyStatType.Weikaishi,
+                                TotalDuration = 0,
+                                BeginStudyDateTime = DateTime.Now,
+                                LastStudyDateTime = DateTime.Now,
+                                KeyWordsAdmin = await _organManager.GetUserKeyWords(user.Id),
+                                KeyWords = planCourse.CourseName,
+                            });
+                        }
+
+                    }
+                }
+            }
+
+            var course = await _studyCourseRepository.GetAsync(request.Id);
+            var (total, list) = await _studyCourseUserRepository.GetListAsync(request.PlanId, request.Id, request.KeyWords, request.State, request.PageIndex, request.PageSize);
             if (total > 0)
             {
-                var plan = await _studyPlanRepository.GetAsync(request.Id);
-                var courseCreditTotal = await _studyPlanCourseRepository.GetTotalCreditAsync(request.Id, false);
-                var courseSelectCreditTotal = await _studyPlanCourseRepository.GetTotalCreditAsync(request.Id, true);
-
                 foreach (var item in list)
                 {
-
                     var user = await _organManager.GetUser(item.UserId);
                     if (user == null)
                     {
@@ -31,42 +65,36 @@ namespace XBLMS.Web.Controllers.Admin.Study
                     }
 
                     item.Set("User", user);
-                    item.Set("Plan", plan);
+                    item.Set("StateStr", item.State.GetDisplayName());
 
-                    var overCourse = await _studyCourseUserRepository.GetOverCountAsync(plan.Id, user.Id, false);
-                    var overSelectCourse = await _studyCourseUserRepository.GetOverCountAsync(plan.Id, user.Id, true);
-                    item.Set("OverCourse", overCourse);
-                    item.Set("OverSelectCourse", overSelectCourse);
 
-                    var overCourseCreditTotal = await _studyCourseUserRepository.GetOverTotalCreditAsync(plan.Id, user.Id, false);
-                    var overSelectCourseCreditTotal = await _studyCourseUserRepository.GetOverTotalCreditAsync(plan.Id, user.Id, true);
-                    item.Set("OverCredit", overCourseCreditTotal);
-                    item.Set("OverSelectCredit", overSelectCourseCreditTotal);
-                    item.Set("Credit", courseCreditTotal);
-                    item.Set("SelectCredit", courseSelectCreditTotal);
-
-                    decimal maxScore = 0;
-                    if (plan.ExamId > 0)
+                    decimal maxCj = -1;
+                    if (request.PlanId > 0)
                     {
-                        maxScore = await _examPaperStartRepository.GetMaxScoreAsync(user.Id, plan.ExamId, plan.Id, 0);
+                        if ((planCourse != null && planCourse.ExamId > 0))
+                        {
+                            maxCj = await _examPaperStartRepository.GetMaxScoreAsync(item.UserId, planCourse.ExamId, request.PlanId, item.CourseId);
+                        }
                     }
                     else
                     {
-                        maxScore = -1;
+                        if (course.ExamId > 0)
+                        {
+                            maxCj = await _examPaperStartRepository.GetMaxScoreAsync(item.UserId, course.ExamId, 0, course.Id);
+                        }
                     }
-                    if (maxScore >= 0)
+                    if (maxCj >= 0)
                     {
-                        item.Set("MaxScore", maxScore);
+                        item.Set("MaxScore", maxCj);
                     }
                     else
                     {
                         item.Set("MaxScore", "/");
                     }
 
-                    item.Set("StateStr", item.State.GetDisplayName());
-
                 }
             }
+
             return new GetUserResult
             {
                 List = list,
@@ -78,9 +106,14 @@ namespace XBLMS.Web.Controllers.Admin.Study
         [HttpPost, Route(RouteUserExport)]
         public async Task<ActionResult<StringResult>> UserExport([FromBody] GetUserRequest request)
         {
-            var plan = await _studyPlanRepository.GetAsync(request.Id);
+            var course = await _studyCourseRepository.GetAsync(request.Id);
+            if (request.PlanId > 0)
+            {
+                var plancCourse = await _studyPlanCourseRepository.GetAsync(request.PlanId, request.Id);
+                course.Name = plancCourse.CourseName;
+            }
 
-            var fileName = $"{plan.PlanName}-学员列表.xlsx";
+            var fileName = $"{course.Name}-学员列表.xlsx";
             var filePath = _pathManager.GetDownloadFilesPath(fileName);
 
             DirectoryUtils.CreateDirectoryIfNotExists(DirectoryUtils.GetDirectoryPath(filePath));
@@ -92,23 +125,19 @@ namespace XBLMS.Web.Controllers.Admin.Study
                 "账号",
                 "姓名",
                 "组织",
-                "必修课",
-                "选修课",
-                "完成学分",
-                "必修学分",
-                "选修学分",
-                "大考成绩",
+                "学分",
+                "学时",
+                "成绩",
+                "评价",
                 "状态",
                 "完成时间"
             };
             var rows = new List<List<string>>();
 
-            var (total, list) = await _studyPlanUserRepository.GetListAsync(request.State, request.KeyWords, request.Id, 1, int.MaxValue);
+            var (total, list) = await _studyCourseUserRepository.GetListAsync(request.PlanId, request.Id, request.KeyWords, request.State, 1, int.MaxValue);
             if (total > 0)
             {
                 var index = 1;
-                var courseCreditTotal = await _studyPlanCourseRepository.GetTotalCreditAsync(request.Id, false);
-                var courseSelectCreditTotal = await _studyPlanCourseRepository.GetTotalCreditAsync(request.Id, true);
 
                 foreach (var item in list)
                 {
@@ -119,37 +148,34 @@ namespace XBLMS.Web.Controllers.Admin.Study
                         user = new User();
                     }
 
-                    var overCourse = await _studyCourseUserRepository.GetOverCountAsync(plan.Id, user.Id, false);
-                    var overSelectCourse = await _studyCourseUserRepository.GetOverCountAsync(plan.Id, user.Id, true);
-
-                    var overCourseCreditTotal = await _studyCourseUserRepository.GetOverTotalCreditAsync(plan.Id, user.Id, false);
-                    var overSelectCourseCreditTotal = await _studyCourseUserRepository.GetOverTotalCreditAsync(plan.Id, user.Id, true);
-
-                    decimal maxScore = 0;
-                    if (plan.ExamId > 0)
+                    decimal maxCj = -1;
+                    if (request.PlanId > 0)
                     {
-                        maxScore = await _examPaperStartRepository.GetMaxScoreAsync(user.Id, plan.ExamId, plan.Id, 0);
+                        var planCourse = await _studyPlanCourseRepository.GetAsync(request.PlanId, item.CourseId);
+                        if ((planCourse != null && planCourse.ExamId > 0))
+                        {
+                            maxCj = await _examPaperStartRepository.GetMaxScoreAsync(item.UserId, planCourse.ExamId, request.PlanId, item.CourseId);
+                        }
                     }
                     else
                     {
-                        maxScore = -1;
+                        if (course.ExamId > 0)
+                        {
+                            maxCj = await _examPaperStartRepository.GetMaxScoreAsync(item.UserId, course.ExamId, 0, course.Id);
+                        }
                     }
-
-                    item.Set("StateStr", item.State.GetDisplayName());
 
                     rows.Add([
                                 index.ToString(),
                                 user.UserName,
                                 user.DisplayName,
                                 user.Get("OrganNames").ToString(),
-                                $"{overCourse}/{plan.TotalCount}",
-                                 $"{overSelectCourse}/{plan.SelectTotalCount}",
-                                item.TotalCredit.ToString(),
-                                $"{overCourseCreditTotal}/{courseCreditTotal}",
-                               $"{overSelectCourseCreditTotal}/{courseSelectCreditTotal}",
-                               maxScore >= 0?maxScore.ToString():"/",
+                                $"{item.Credit}",
+                                 $"{TranslateUtils.ToMinuteAndSecond(item.TotalDuration)}/{TranslateUtils.ToMinuteAndSecond(course.TotalEvaluation)}",
+                               maxCj >= 0?maxCj.ToString():"/",
+                               item.AvgEvaluation.ToString(),
                                item.State.GetDisplayName(),
-                               item.LastStudyDateTime.ToString()
+                              item.OverStudyDateTime.HasValue? item.OverStudyDateTime.Value.ToString():"/"
                             ]);
 
                     index++;

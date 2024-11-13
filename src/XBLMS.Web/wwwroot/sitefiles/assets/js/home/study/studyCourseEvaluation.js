@@ -5,7 +5,8 @@ var data = utils.init({
   courseId: utils.getQueryInt("courseId"),
   planId: utils.getQueryInt("planId"),
   eId: utils.getQueryInt("eId"),
-  list: null
+  list: null,
+  maxStar:0
 });
 
 var methods = {
@@ -15,6 +16,7 @@ var methods = {
     $api.get($url, { params: { courseId: this.courseId, planId: this.planId, eId: this.eId } }).then(function (response) {
       var res = response.data;
 
+      $this.maxStar = res.maxStar;
       $this.title = res.title;
       $this.list = res.list;
 

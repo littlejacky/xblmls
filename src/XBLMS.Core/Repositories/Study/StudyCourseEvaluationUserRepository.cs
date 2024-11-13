@@ -34,19 +34,35 @@ namespace XBLMS.Core.Repositories
         {
             return await _repository.GetAsync(id);
         }
-        public async Task<StudyCourseEvaluationUser> GetAsync(int planId,int courseId,int evaluationId,int userId)
+        public async Task<StudyCourseEvaluationUser> GetAsync(int planId, int courseId, int evaluationId, int userId)
         {
             return await _repository.GetAsync(Q.
                 Where(nameof(StudyCourseEvaluationUser.PlanId), planId).
                 Where(nameof(StudyCourseEvaluationUser.CourseId), courseId).
                 Where(nameof(StudyCourseEvaluationUser.EvaluationId), evaluationId).
-                Where(nameof(StudyCourseEvaluationUser.UserId),userId));
+                Where(nameof(StudyCourseEvaluationUser.UserId), userId));
         }
         public async Task<(int total, List<StudyCourseEvaluationUser> list)> GetListAsync(int courseId, int pageIndex, int pageSize)
         {
             var query = Q.
                 Where(nameof(StudyCourseEvaluationUser.CourseId), courseId).
                 OrderByDesc(nameof(StudyCourseEvaluationUser.Id));
+
+            var total = await _repository.CountAsync(query);
+            var list = await _repository.GetAllAsync(query.ForPage(pageIndex, pageSize));
+            return (total, list);
+        }
+        public async Task<(int total, List<StudyCourseEvaluationUser> list)> GetListAsync(int planId, int courseId,string keyWords, int pageIndex, int pageSize)
+        {
+            var query = Q.
+                Where(nameof(StudyCourseEvaluationUser.PlanId), planId).
+                Where(nameof(StudyCourseEvaluationUser.CourseId), courseId).
+                OrderByDesc(nameof(StudyCourseEvaluationUser.Id));
+
+            if (!string.IsNullOrEmpty(keyWords))
+            {
+                query.WhereLike(nameof(StudyCourseEvaluationUser.KeyWordsAdmin), $"%{keyWords}%");
+            }
 
             var total = await _repository.CountAsync(query);
             var list = await _repository.GetAllAsync(query.ForPage(pageIndex, pageSize));

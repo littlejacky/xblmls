@@ -16,6 +16,7 @@ namespace XBLMS.Repositories
         Task<bool> DeleteByPlanAsync(int planId);
         Task<StudyPlanUser> GetAsync(int id);
         Task<StudyPlanUser> GetAsync(int planId, int userId);
+        Task<List<int>> GetUserIdsAsync(int planId);
         Task<(int total, List<StudyPlanUser> list)> GetListAsync(int year, string state, string keyWords, int userId, int pageIndex, int pageSize);
         Task<(int total, List<StudyPlanUser> list)> GetListAsync(string state, string keyWords, int planId, int pageIndex, int pageSize);
         Task<(decimal totalCredit, decimal totalOverCredit)> GetCreditAsync(int userId);

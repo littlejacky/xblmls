@@ -229,7 +229,7 @@
                     </el-col>
                 </el-row>
             </el-tab-pane>
-            <el-tab-pane label="学员列表">
+            <el-tab-pane label="学习情况">
                 <el-card class="box-card">
                     <div>
                         <el-form :inline="true" :size="euiSize">
@@ -301,18 +301,6 @@
                             </el-table-column>
                             <el-table-column prop="stateStr" label="状态" width="100">
                             </el-table-column>
-                            <el-table-column width="100">
-                                <template slot-scope="scope">
-                                    <el-dropdown :show-timeout="0" placement="left">
-                                        <el-button icon="el-icon-arrow-left" :size="euiSize" v-on:click.stop="return false">
-                                            操作
-                                        </el-button>
-                                        <el-dropdown-menu slot="dropdown">
-                                            <el-dropdown-item icon="el-icon-view" v-on:click.native="btnCourseViewClick(scope.row)">详 细</el-dropdown-item>
-                                        </el-dropdown-menu>
-                                    </el-dropdown>
-                                </template>
-                            </el-table-column>
                             @await Html.PartialAsync("_PartialTableEmpty")
                         </el-table>
 
@@ -327,7 +315,7 @@
                     </div>
                 </el-card>
             </el-tab-pane>
-            <el-tab-pane label="课程列表">
+            <el-tab-pane label="课程进度">
                 <el-card class="box-card">
                     <div>
                         <el-form :inline="true" :size="euiSize">
@@ -406,7 +394,7 @@
                     </div>
                 </el-card>
             </el-tab-pane>
-            <el-tab-pane label="大考成绩" v-if="plan.examId>0">
+            <el-tab-pane label="考试成绩" v-if="plan.examId>0">
                 <el-card class="box-card">
                     <div>
                         <el-form :inline="true" :size="euiSize">

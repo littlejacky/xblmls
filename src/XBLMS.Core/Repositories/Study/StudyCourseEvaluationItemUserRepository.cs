@@ -45,5 +45,16 @@ namespace XBLMS.Core.Repositories
             }
             return "";
         }
+
+
+        public async Task<StudyCourseEvaluationItemUser> GetAsync(int planId,int courseId,int userId,int evaluationId,int itemId)
+        {
+            return await _repository.GetAsync(Q.
+                Where(nameof(StudyCourseEvaluationItemUser.PlanId), planId).
+                Where(nameof(StudyCourseEvaluationItemUser.CourseId), courseId).
+                Where(nameof(StudyCourseEvaluationItemUser.EvaluationId), evaluationId).
+                Where(nameof(StudyCourseEvaluationItemUser.EvaluationItemId), itemId).
+                Where(nameof(StudyCourseEvaluationItemUser.UserId), userId));
+        }
     }
 }

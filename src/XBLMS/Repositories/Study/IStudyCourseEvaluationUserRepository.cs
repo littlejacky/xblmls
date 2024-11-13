@@ -11,5 +11,6 @@ namespace XBLMS.Repositories
         Task<StudyCourseEvaluationUser> GetAsync(int id);
         Task<StudyCourseEvaluationUser> GetAsync(int planId, int courseId, int evaluationId, int userId);
         Task<(int total, List<StudyCourseEvaluationUser> list)> GetListAsync(int courseId, int pageIndex, int pageSize);
+        Task<(int total, List<StudyCourseEvaluationUser> list)> GetListAsync(int planId, int courseId, string keyWords, int pageIndex, int pageSize);
     }
 }

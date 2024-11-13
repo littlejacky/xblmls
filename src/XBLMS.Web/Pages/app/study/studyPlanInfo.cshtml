@@ -143,57 +143,35 @@
                 <div class="col-md-12">
                     <div class="tab-content" id="pills-tabContent">
                         <div class="tab-pane fade show active pb-8" id="pills-course" role="tabpanel" aria-labelledby="pills-course-tab">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="mb-5">
-                                        <h2 class="mb-1">必修课</h2>
-                                        <p>请完成所有必修课学习</p>
-                                    </div>
-                                </div>
+                            <div class="mb-3">
+                                <p>请完成所有必修课学习</p>
                             </div>
-                            <div class="row g-4">
-                                <div class="col-xl-3 col-lg-3 col-md-3 col-3" v-for="course in studyPlan.courseList">
-                                    <div class="card card-lift card-hover border bg-white p-2" v-on:click="btnViewCourseClick(course)" style="cursor:pointer;">
-                                        <div class="position-relative">
-                                            <img :src="course.coverImg" class="img-fluid card-img">
-                                            <span class="px-2 rounded-3 bg-dark text-white position-absolute bottom-0 end-0 m-2 fs-6">{{ utils.formatDuration(course.duration) }}</span>
-                                            <el-tag size="mini" type="success" effect="dark" class="position-absolute top-0 end-0 m-2" v-if="course.state==='Yiwancheng'">{{ course.stateStr }}</el-tag>
-                                            <el-tag size="mini" type="warning" effect="dark" class="position-absolute top-0 end-0 m-2" v-else>{{ course.stateStr }}</el-tag>
-                                            <span class="position-absolute bottom-0 start-0 m-2">
-                                                <el-tag size="mini" type="primary" effect="dark" class="me-1">{{ course.courseType}}</el-tag>
-                                                <el-tag size="mini" type="primary" effect="plain" v-if="course.offLine">面授课</el-tag>
-                                            </span>
+                            <div class="card mb-3" v-for="course in studyPlan.courseList" v-on:click="btnViewCourseClick(course)">
+                                <div class="card-body p-2">
+                                    <div class="row g-3">
+                                        <div class="col-xl-6 col-lg-6 col-md-6 col-6">
+                                            <div class="position-relative">
+                                                <img :src="course.coverImg" class="img-fluid card-img">
+                                                <el-tag size="mini" type="success" effect="dark" class="position-absolute top-0 end-0 m-2" v-if="course.state==='Yiwancheng'">{{ course.stateStr }}</el-tag>
+                                                <el-tag size="mini" type="warning" effect="dark" class="position-absolute top-0 end-0 m-2" v-else>{{ course.stateStr }}</el-tag>
+                                                <span class="position-absolute bottom-0 start-0 m-2">
+                                                    <el-tag size="mini" type="primary" effect="dark" class="me-1">{{ course.courseType}}</el-tag>
+                                                    <el-tag size="mini" type="primary" effect="plain" v-if="course.offLine">面授课</el-tag>
+                                                </span>
+                                            </div>
                                         </div>
-                                        <div class="card-body">
+                                        <div class="col-xl-6 col-lg-6 col-md-6 col-6">
                                             <h4 class="mb-3">
                                                 <a href="javascript:;" class="text-inherit">{{ course.name }}</a>
                                             </h4>
-                                            <div class="mb-3 lh-1">
-                                                <span>
-                                                    <i class="bi bi-star-fill text-warning me-2"></i>
-                                                    <span class="text-inherit fw-semibold">{{ course.evaluationAvg }}</span>
-                                                </span>
-                                                <span class="mx-1">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                         fill="var(--gk-gray-400)" class="bi bi-dot" viewBox="0 0 16 16">
-                                                        <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"></path>
-                                                    </svg>
-                                                </span>
-                                                <span>
-                                                    <i class="bi bi-person-video3 me-2"></i>
-                                                    <span class="text-inherit fw-semibold">{{ course.totaEvaluationlUser }}</span>
-                                                </span>
+                                            <div class="lh-1">
+                                                <i class="bi bi-credit-card-2-front-fill me-2"></i><span class="text-inherit fw-semibold">{{ course.studyHour }}</span>课时
                                             </div>
                                             <div class="lh-1">
-                                                <i class="bi bi-credit-card-2-front-fill me-2"></i><span class="text-inherit fw-semibold">{{ course.studyHour }}</span> 课时
-                                                <span class="mx-1">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                         fill="var(--gk-gray-400)" class="bi bi-dot" viewBox="0 0 16 16">
-                                                        <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"></path>
-                                                    </svg>
-                                                </span>
-                                                <span class="text-inherit fw-semibold text-success" v-if="course.state==='Yiwancheng'">{{ course.credit }}学分</span>
-                                                <span class="text-inherit fw-semibold" v-else>{{ course.credit }}学分</span>
+                                                <i class="bi bi-credit-card-2-front-fill me-2"></i>
+                                                <span class="text-inherit fw-semibold text-success" v-if="course.state==='Yiwancheng'">{{ course.credit }}</span>
+                                                <span class="text-inherit fw-semibold" v-else>{{ course.credit }}</span>
+                                                学分
                                             </div>
                                         </div>
                                     </div>
@@ -201,60 +179,38 @@
                             </div>
                         </div>
                         <div class="tab-pane fade  pb-8" id="pills-about" role="tabpanel" aria-labelledby="pills-about-tab">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="mb-5">
-                                        <h2 class="mb-1">选修课</h2>
-                                        <p>
-                                            <span :class="studyPlan.overSelectCourseTotal>=studyPlan.plan.selectCourseOverCount ? 'text-success' : ' text-danger'" class="me-2" v-if="studyPlan.plan.selectCourseOverByCount">完成条件：任意完成 {{ studyPlan.overSelectCourseTotal }}/{{ studyPlan.plan.selectCourseOverCount }} 门课程</span>
-                                            <span :class="(studyPlan.plan.selectCourseOverByDuration/60)>=studyPlan.plan.selectCourseOverMinute ? 'text-success' : ' text-danger'" class="text-warning" v-if="studyPlan.plan.selectCourseOverByDuration">累计学时要求: {{ utils.formatDuration(studyPlan.overSelectCourseDurationTotal) }}/{{ studyPlan.plan.selectCourseOverMinute }}分钟</span>
-                                        </p>
-                                    </div>
-                                </div>
+                            <div class="mb-3">
+                                <p>
+                                    <span :class="studyPlan.overSelectCourseTotal>=studyPlan.plan.selectCourseOverCount ? 'text-success' : ' text-danger'" class="me-2" v-if="studyPlan.plan.selectCourseOverByCount">完成条件：任意完成 {{ studyPlan.overSelectCourseTotal }}/{{ studyPlan.plan.selectCourseOverCount }} 门课程</span>
+                                    <span :class="(studyPlan.plan.selectCourseOverByDuration/60)>=studyPlan.plan.selectCourseOverMinute ? 'text-success' : ' text-danger'" class="text-warning" v-if="studyPlan.plan.selectCourseOverByDuration">累计学时要求: {{ utils.formatDuration(studyPlan.overSelectCourseDurationTotal) }}/{{ studyPlan.plan.selectCourseOverMinute }}分钟</span>
+                                </p>
                             </div>
-                            <div class="row g-4">
-                                <div class="col-xl-3 col-lg-3 col-md-3 col-3" v-for="course in studyPlan.courseSelectList">
-                                    <div class="card card-lift card-hover border bg-white p-2" v-on:click="btnViewCourseClick(course)" style="cursor:pointer;">
-                                        <div class="position-relative">
-                                            <img :src="course.coverImg" class="img-fluid card-img">
-                                            <span class="px-2 rounded-3 bg-dark text-white position-absolute bottom-0 end-0 m-2 fs-6">{{ utils.formatDuration(course.duration) }}</span>
-                                            <el-tag size="mini" type="success" effect="dark" class="position-absolute top-0 end-0 m-2" v-if="course.state==='Yiwancheng'">{{ course.stateStr }}</el-tag>
-                                            <el-tag size="mini" type="warning" effect="dark" class="position-absolute top-0 end-0 m-2" v-else>{{ course.stateStr }}</el-tag>
-                                            <span class="position-absolute bottom-0 start-0 m-2">
-                                                <el-tag size="mini" type="primary" effect="dark" class="me-1">{{ course.courseType}}</el-tag>
-                                                <el-tag size="mini" type="primary" effect="plain" v-if="course.offLine">面授课</el-tag>
-                                            </span>
+                            <div class="card mb-3" v-for="course in studyPlan.courseSelectList" v-on:click="btnViewCourseClick(course)">
+                                <div class="card-body p-2">
+                                    <div class="row g-3">
+                                        <div class="col-xl-6 col-lg-6 col-md-6 col-6">
+                                            <div class="position-relative">
+                                                <img :src="course.coverImg" class="img-fluid card-img">
+                                                <el-tag size="mini" type="success" effect="dark" class="position-absolute top-0 end-0 m-2" v-if="course.state==='Yiwancheng'">{{ course.stateStr }}</el-tag>
+                                                <el-tag size="mini" type="warning" effect="dark" class="position-absolute top-0 end-0 m-2" v-else>{{ course.stateStr }}</el-tag>
+                                                <span class="position-absolute bottom-0 start-0 m-2">
+                                                    <el-tag size="mini" type="primary" effect="dark" class="me-1">{{ course.courseType}}</el-tag>
+                                                    <el-tag size="mini" type="primary" effect="plain" v-if="course.offLine">面授课</el-tag>
+                                                </span>
+                                            </div>
                                         </div>
-                                        <div class="card-body">
+                                        <div class="col-xl-6 col-lg-6 col-md-6 col-6">
                                             <h4 class="mb-3">
                                                 <a href="javascript:;" class="text-inherit">{{ course.name }}</a>
                                             </h4>
-                                            <div class="mb-3 lh-1">
-                                                <span>
-                                                    <i class="bi bi-star-fill text-warning me-2"></i>
-                                                    <span class="text-inherit fw-semibold">{{ course.evaluationAvg }}</span>
-                                                </span>
-                                                <span class="mx-1">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                         fill="var(--gk-gray-400)" class="bi bi-dot" viewBox="0 0 16 16">
-                                                        <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"></path>
-                                                    </svg>
-                                                </span>
-                                                <span>
-                                                    <i class="bi bi-person-video3 me-2"></i>
-                                                    <span class="text-inherit fw-semibold">{{ course.totaEvaluationlUser }}</span>
-                                                </span>
+                                            <div class="lh-1">
+                                                <i class="bi bi-credit-card-2-front-fill me-2"></i><span class="text-inherit fw-semibold">{{ course.studyHour }}</span>课时
                                             </div>
                                             <div class="lh-1">
-                                                <i class="bi bi-credit-card-2-front-fill me-2"></i><span class="text-inherit fw-semibold">{{ course.studyHour }}</span> 课时
-                                                <span class="mx-1">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                         fill="var(--gk-gray-400)" class="bi bi-dot" viewBox="0 0 16 16">
-                                                        <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"></path>
-                                                    </svg>
-                                                </span>
-                                                <span class="text-inherit fw-semibold text-success" v-if="course.state==='Yiwancheng'">{{ course.credit }}学分</span>
-                                                <span class="text-inherit fw-semibold" v-else>{{ course.credit }}学分</span>
+                                                <i class="bi bi-credit-card-2-front-fill me-2"></i>
+                                                <span class="text-inherit fw-semibold text-success" v-if="course.state==='Yiwancheng'">{{ course.credit }}</span>
+                                                <span class="text-inherit fw-semibold" v-else>{{ course.credit }}</span>
+                                                学分
                                             </div>
                                         </div>
                                     </div>

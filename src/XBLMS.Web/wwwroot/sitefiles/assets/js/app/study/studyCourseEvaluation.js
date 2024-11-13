@@ -5,7 +5,8 @@ var data = utils.init({
   courseId: utils.getQueryInt("courseId"),
   planId: utils.getQueryInt("planId"),
   eId: utils.getQueryInt("eId"),
-  list: null
+  list: null,
+  maxStar:0
 });
 
 var methods = {
@@ -17,6 +18,7 @@ var methods = {
 
       $this.title = res.title;
       $this.list = res.list;
+      $this.maxStar = res.maxStar;
 
     }).catch(function (error) {
       utils.error(error, { layer: true });

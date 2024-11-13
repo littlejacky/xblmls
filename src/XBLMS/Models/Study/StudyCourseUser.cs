@@ -34,6 +34,8 @@ namespace XBLMS.Models
         [DataColumn]
         public DateTime? LastStudyDateTime { get; set; }
         [DataColumn]
+        public DateTime? OverStudyDateTime { get; set; }
+        [DataColumn]
         public bool Collection { get; set; }
         /// <summary>
         /// 面授课是否上课，由老师确认

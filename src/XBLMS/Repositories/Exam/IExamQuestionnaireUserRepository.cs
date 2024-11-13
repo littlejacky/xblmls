@@ -19,6 +19,7 @@ namespace XBLMS.Repositories
         Task<int> InsertAsync(ExamQuestionnaireUser item);
         Task<bool> UpdateAsync(ExamQuestionnaireUser item);
         Task<bool> ExistsAsync(int paperId, int userId);
+        Task<int> GetSubmitUserCountAsync(int planId, int courseId, int paperId);
         Task<List<int>> GetPaperIdsAsync(int userId);
         Task<(int total, List<ExamQuestionnaireUser> list)> GetListAsync(int userId, string keyWords, int pageIndex, int pageSize);
         Task<(int total, List<ExamQuestionnaireUser> list)> GetListAsync(int paperId,string isSubmit, string keyWords, int pageIndex, int pageSize);

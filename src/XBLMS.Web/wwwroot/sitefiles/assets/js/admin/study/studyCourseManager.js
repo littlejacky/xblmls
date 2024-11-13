@@ -15,6 +15,9 @@ var $urlEvaluationExport = $urlEvaluation + '/export';
 var $urlExamQ = $url + '/examq';
 var $urlExamQExport = $urlExamQ + '/export';
 
+var $urlEvaluation = $url + '/evaluation';
+var $urlEvaluationExport = $urlEvaluation + '/export';
+
 
 var data = utils.init({
   id: 0,
@@ -30,12 +33,6 @@ var data = utils.init({
   },
   userList: null,
   userTotal: 0,
-  userSelection: [],
-  userUpdateDateTimeDialogVisible: false,
-  userUpdateDateTimeForm: {
-    examBeginDateTime: '',
-    examEndDateTime: ''
-  },
   tabPosition: 'left',
 
   formCourseWare: {
@@ -57,16 +54,6 @@ var data = utils.init({
   scoreList: null,
   scoreTotal: 0,
 
-  formExamq: {
-    id: 0,
-    planId: 0,
-    keyWords: '',
-    pageIndex: 1,
-    pageSize: PER_PAGE
-  },
-  examqList: null,
-  examqTotal: 0,
-
   formEvaluation: {
     id: 0,
     planId: 0,
@@ -76,6 +63,11 @@ var data = utils.init({
   },
   evaluationList: null,
   evaluationTotal: 0,
+  evaluationItems:null,
+
+  qTmTotal: 0,
+  qAnswerTotal: 0,
+  qList:null,
 
   passSeries: [100],
   passChartOptions: {
@@ -145,6 +137,7 @@ var data = utils.init({
     },
     labels: ['完成率'],
   },
+  pieChartColors: ['#67c23a', '#1989fa', '#5cb87a', '#e6a23c'],
 });
 
 var methods = {
@@ -177,13 +170,6 @@ var methods = {
     }).then(function () {
       utils.loading($this, false);
     });
-  },
-  userHandleSelectionChange(val) {
-    this.userSelection = val;
-  },
-  userClearSelection: function () {
-    this.userSelection = [];
-    this.userUpdateDateTimeDialogVisible = false;
   },
   userHandleCurrentChange: function (val) {
     this.form.pageIndex = val;
@@ -281,6 +267,58 @@ var methods = {
     this.formScore.pageIndex = val;
     this.apiGetScore();
   },
+  apiGetQ: function () {
+    var $this = this;
+    utils.loading(this, true);
+    $api.get($urlExamQ, { params: { id: this.id, planId: this.planId } }).then(function (response) {
+      var res = response.data;
+      $this.qTmTotal = res.qTmTotal;
+      $this.qAnswerTotal = res.qAnswerTotal;
+      $this.qList = res.qList;
+
+    }).catch(function (error) {
+      utils.error(error, { layer: true });
+    }).then(function () {
+      utils.loading($this, false, { layer: true });
+    });
+  },
+  apiGetEvaluation: function () {
+    var $this = this;
+    utils.loading(this, true);
+    $api.get($urlEvaluation, { params: $this.formEvaluation }).then(function (response) {
+      var res = response.data;
+      $this.evaluationList = res.list;
+      $this.evaluationTotal = res.total;
+      $this.evaluationItems = res.items;
+
+    }).catch(function (error) {
+      utils.error(error, { layer: true });
+    }).then(function () {
+      utils.loading($this, false);
+    });
+  },
+  btnEvaluationSearchClick: function () {
+    this.formEvaluation.pageIndex = 1;
+    this.apiGetEvaluation();
+  },
+  btnEvaluationExportClick: function () {
+    var $this = this;
+
+    utils.loading(this, true);
+    $api.post($urlEvaluationExport, this.formScore).then(function (response) {
+      var res = response.data;
+
+      window.open(res.value);
+    }).catch(function (error) {
+      utils.error(error, { layer: true });
+    }).then(function () {
+      utils.loading($this, false);
+    });
+  },
+  evaluationHandleCurrentChange: function (val) {
+    this.formEvaluation.pageIndex = val;
+    this.apiGetEvaluation();
+  },
   btnPaperSocreView: function (id) {
     var $this = this;
     top.utils.openLayer({
@@ -294,8 +332,8 @@ var methods = {
   btnCerViewClick: function () {
     var $this = this;
     top.utils.openLayer({
-      title: $this.plan.planName + '-获证人员列表',
-      url: utils.getExamUrl('examCerUsers', { id: $this.plan.cerId,planId:$this.plan.id }),
+      title: $this.course.name + '-获证人员列表',
+      url: utils.getExamUrl('examCerUsers', { id: $this.course.cerId, planId: $this.planId,courseId:$this.id }),
       width: "88%",
       height: "98%"
     });
@@ -309,8 +347,13 @@ var $vue = new Vue({
   data: data,
   methods: methods,
   created: function () {
-    this.id = this.form.id = this.formCourseWare.id = this.formScore.id = utils.getQueryInt("id");
-    this.planId = this.form.planId = this.formCourseWare.planId = this.formScore.planId = utils.getQueryInt("planId");
+    this.id = this.form.id = this.formCourseWare.id = this.formScore.id = this.formEvaluation.id = utils.getQueryInt("id");
+    this.planId = this.form.planId = this.formCourseWare.planId = this.formScore.planId = this.formEvaluation.planId = utils.getQueryInt("planId");
+
     this.apiGet();
+    this.apiGetUser();
+    this.apiGetScore();
+    this.apiGetQ();
+    this.apiGetEvaluation();
   }
 });

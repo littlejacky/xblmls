@@ -147,12 +147,12 @@
                         <div class="my-3">
                             <el-input clearable prefix-icon="el-icon-search" v-model="form.keyWords" placeholder="关键字" class="w-100"></el-input>
                         </div>
-                        <div v-if="markTotal>0" class="mt-1 p-2 bg-light rounded-3">
+                        <div v-if="markTotal>0" class="mt-1 p-2 bg-light rounded-3 text-start">
                             <template v-for="mark in markShowList">
-                                <el-tag v-if="form.mark===mark" size="mini" class="me-1 mb-1" v-on:click="marChangeClick(mark)" effect="dark" type="success" style="cursor:pointer;">{{ mark }}</el-tag>
-                                <el-tag v-else size="mini" class="me-1 mb-1" v-on:click="marChangeClick(mark)" style="cursor:pointer;" effect="plain">{{ mark }}</el-tag>
+                                <el-tag v-if="form.mark===mark" class="m-1" v-on:click="marChangeClick(mark)" effect="dark" type="success" style="cursor:pointer;">{{ mark }}</el-tag>
+                                <el-tag v-else class="m-1" v-on:click="marChangeClick(mark)" style="cursor:pointer;" effect="plain">{{ mark }}</el-tag>
                             </template>
-                            <el-tag size="mini" v-on:click="moreMarkList" type="info" effect="plain" v-if="markMore" style="cursor:pointer;">more({{ markTotal-markShowList.length }})</el-tag>
+                            <el-tag v-on:click="moreMarkList" type="info" effect="plain" v-if="markMore" style="cursor:pointer;">more({{ markTotal-markShowList.length }})</el-tag>
                         </div>
                     </div>
                 </div>

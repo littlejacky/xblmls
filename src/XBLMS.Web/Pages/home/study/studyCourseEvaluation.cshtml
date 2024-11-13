@@ -17,7 +17,7 @@
                     </template>
                     <template v-else>
                         <el-form-item :label="item.title">
-                            <el-rate v-model="item.starValue"></el-rate>
+                            <el-rate v-model="item.starValue" :max="maxStar"></el-rate>
                             <small class="text-warning">必填项</small>
                         </el-form-item>
                     </template>

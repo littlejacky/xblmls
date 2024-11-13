@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using XBLMS.Core.Utils;
 using XBLMS.Dto;
 using XBLMS.Utils;
-using static XBLMS.Web.Controllers.Admin.Exam.ExamPaperManagerController;
 
 namespace XBLMS.Web.Controllers.Admin.Study
 {
@@ -13,8 +12,13 @@ namespace XBLMS.Web.Controllers.Admin.Study
         [HttpGet, Route(RouteScore)]
         public async Task<ActionResult<GetScoreResult>> GetSocreList([FromQuery] GetSocreRequest request)
         {
-            var plan = await _studyPlanRepository.GetAsync(request.Id);
-            var (total, list) = await _examPaperStartRepository.GetListByAdminAsync(plan.ExamId, plan.Id, 0, request.DateFrom, request.DateTo, request.Keywords, request.PageIndex, request.PageSize);
+            var course = await _studyCourseRepository.GetAsync(request.Id);
+            if (request.PlanId > 0)
+            {
+                var planCourse = await _studyPlanCourseRepository.GetAsync(request.PlanId, request.Id);
+                course.ExamId = planCourse.ExamId;
+            }
+            var (total, list) = await _examPaperStartRepository.GetListByAdminAsync(course.ExamId, request.PlanId, request.Id, request.DateFrom, request.DateTo, request.KeyWords, request.PageIndex, request.PageSize);
             if (total > 0)
             {
                 foreach (var item in list)
@@ -36,11 +40,18 @@ namespace XBLMS.Web.Controllers.Admin.Study
         [HttpPost, Route(RouteScoreExport)]
         public async Task<ActionResult<StringResult>> SocreExport([FromBody] GetSocreRequest request)
         {
-            var (total, list) = await _examPaperStartRepository.GetListByAdminAsync(request.Id, request.DateFrom, request.DateTo, request.Keywords, 1, int.MaxValue);
+            var course = await _studyCourseRepository.GetAsync(request.Id);
+            if (request.PlanId > 0)
+            {
+                var planCourse = await _studyPlanCourseRepository.GetAsync(request.PlanId, request.Id);
+                course.ExamId = planCourse.ExamId;
+                course.Name = planCourse.CourseName;
+            }
 
-            var plan = await _studyPlanRepository.GetAsync(request.Id);
+            var (total, list) = await _examPaperStartRepository.GetListByAdminAsync(course.ExamId, request.PlanId, request.Id, request.DateFrom, request.DateTo, request.KeyWords, 1, int.MaxValue);
 
-            var fileName = $"{plan.PlanName}-大考成绩单.xlsx";
+
+            var fileName = $"{course.Name}-成绩单.xlsx";
             var filePath = _pathManager.GetDownloadFilesPath(fileName);
 
             DirectoryUtils.CreateDirectoryIfNotExists(DirectoryUtils.GetDirectoryPath(filePath));

@@ -123,7 +123,16 @@ namespace XBLMS.Core.Repositories
 
         public async Task<(int total, List<ExamCerUser> list)> GetListAsync(int cerId,int planId,int courseId, string keyWords, string beginDate, string endDate, int pageIndex, int pageSize)
         {
-            var query = Q.Where(nameof(ExamCerUser.CerId), cerId).Where(nameof(ExamCerUser.PlanId), planId).Where(nameof(ExamCerUser.CourseId), courseId);
+            var query = Q.Where(nameof(ExamCerUser.CerId), cerId);
+
+            if (planId > 0)
+            {
+                query.Where(nameof(ExamCerUser.PlanId), planId);
+            }
+            if (courseId > 0)
+            {
+                query.Where(nameof(ExamCerUser.CourseId),courseId);
+            }
 
             if (!string.IsNullOrEmpty(keyWords))
             {

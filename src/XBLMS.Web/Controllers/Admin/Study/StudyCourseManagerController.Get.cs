@@ -24,6 +24,8 @@ namespace XBLMS.Web.Controllers.Admin.Study
                 }
                 course.Name = planCourse.CourseName;
                 course.ExamId = planCourse.ExamId;
+                course.ExamQuestionnaireId = planCourse.ExamQuestionnaireId;
+                course.StudyCourseEvaluationId = planCourse.StudyCourseEvaluationId;
 
                 if (planCourse.StudyCourseEvaluationId > 0)
                 {

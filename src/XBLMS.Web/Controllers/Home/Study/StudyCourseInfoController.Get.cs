@@ -207,6 +207,8 @@ namespace XBLMS.Web.Controllers.Home.Study
                     {
                         userCourse.State = StudyStatType.Yiwancheng;
                         userCourse.Credit = course.Credit;
+                        userCourse.OverStudyDateTime = DateTime.Now;
+
                         await _studyCourseUserRepository.UpdateAsync(userCourse);
                         courseStateStr = userCourse.State.GetDisplayName();
 
