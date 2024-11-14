@@ -3,9 +3,9 @@
 <div v-if="total>0">
     <div class="row g-2">
         <div class="col-xl-6 col-lg-6 col-md-6 col-6">
-            <div class="card card-lift card-hover border bg-white p-2 mb-2" v-on:click="btnViewClick(course)" style="cursor:pointer;" v-for="course in list1">
+            <div class="card rounded-0 card-lift card-hover border bg-white p-2 mb-2  shadow-lg" v-on:click="btnViewClick(course)" style="cursor:pointer;" v-for="course in list1">
                 <div class="position-relative">
-                    <img :src="course.coverImg" class="img-fluid card-img">
+                    <img :src="course.coverImg" class="img-fluid card-img rounded-0">
                     <el-tag class="position-absolute bottom-0 end-0 m-2" size="mini" type="primary" effect="plain" v-if="course.offLine">面授课</el-tag>
                     <el-tag size="mini" class="bg-dark text-white position-absolute bottom-0 end-0 m-2 fs-6" v-else>{{ utils.formatDuration(course.duration) }}</el-tag>
                     <el-tag size="mini" type="success" effect="dark" class="position-absolute top-0 end-0 m-2" v-if="course.state==='Yiwancheng'">{{ course.stateStr }}</el-tag>
@@ -46,9 +46,9 @@
             </div>
         </div>
         <div class="col-xl-6 col-lg-6 col-md-6 col-6">
-            <div class="card card-lift card-hover border bg-white p-2 mb-2" v-on:click="btnViewClick(course)" style="cursor:pointer;" v-for="course in list2">
+            <div class="card rounded-0 card-lift card-hover border bg-white p-2 mb-2 shadow-lg" v-on:click="btnViewClick(course)" style="cursor:pointer;" v-for="course in list2">
                 <div class="position-relative">
-                    <img :src="course.coverImg" class="img-fluid card-img">
+                    <img :src="course.coverImg" class="img-fluid card-img rounded-0">
                     <el-tag class="position-absolute bottom-0 end-0 m-2" size="mini" type="primary" effect="plain" v-if="course.offLine">面授课</el-tag>
                     <el-tag size="mini" class="bg-dark text-white position-absolute bottom-0 end-0 m-2 fs-6" v-else>{{ utils.formatDuration(course.duration) }}</el-tag>
                     <el-tag size="mini" type="success" effect="dark" class="position-absolute top-0 end-0 m-2" v-if="course.state==='Yiwancheng'">{{ course.stateStr }}</el-tag>

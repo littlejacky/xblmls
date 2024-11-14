@@ -51,13 +51,28 @@
                 <i v-else class="el-icon-plus"></i>
             </el-upload>
         </el-form-item>
+        <el-form-item label="背景">
+            <el-upload :action="uploadUrl"
+                       :show-file-list="false"
+                       :headers="{Authorization: 'Bearer ' + $token}"
+                       list-type="picture-card"
+                       :before-upload="uploadBgBefore"
+                       :on-progress="uploadBgProgress"
+                       :on-success="uploadBgSuccess"
+                       :on-error="uploadBgError"
+                       :on-remove="uploadBgRemove"
+                       :multiple="false">
+                <img v-if="form.avatarbgUrl" :src="form.avatarbgUrl" class="avatar">
+                <i v-else class="el-icon-plus"></i>
+            </el-upload>
+        </el-form-item>
     </el-form>
 </el-card>
 <div class="py-8"></div>
 <div style="position:fixed;left:0;bottom:0;width:100%;" class="text-center mb-5 animate__animated animate__fadeInUp">
     <div class="btn-group">
         <button type="button" class="btn btn-primary rounded-start-pill" v-on:click="btnSubmitClick"><i class="el-icon-check me-2"></i>提 交</button>
-        <button type="button" class="btn btn-outline-primary rounded-end-pill" v-on:click="utils.closeLayerSelf"><i class="el-icon-close me-2"></i>取 消</button>
+        <button type="button" class="btn btn-outline-primary rounded-end-pill" v-on:click="utils.closeLayerSelf"><i class="el-icon-back me-2"></i>返 回</button>
     </div>
 </div>
 @section Scripts{

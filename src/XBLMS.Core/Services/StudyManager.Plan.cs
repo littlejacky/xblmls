@@ -14,8 +14,8 @@ namespace XBLMS.Core.Services
         public async Task User_GetPlanInfo(StudyPlanUser planUser, bool isDetail = false)
         {
             var studyPlan = await _studyPlanRepository.GetAsync(planUser.PlanId);
-            studyPlan.Set("PlanBeginDateTimeStr", studyPlan.PlanBeginDateTime.Value.ToString(DateUtils.FormatStringDateOnlyCN));
-            studyPlan.Set("PlanEndDateTimeStr", studyPlan.PlanEndDateTime.Value.ToString(DateUtils.FormatStringDateOnlyCN));
+            studyPlan.Set("PlanBeginDateTimeStr", studyPlan.PlanBeginDateTime.Value.ToString(DateUtils.FormatStringDateTimeCN));
+            studyPlan.Set("PlanEndDateTimeStr", studyPlan.PlanEndDateTime.Value.ToString(DateUtils.FormatStringDateTimeCN));
 
             var planCourseTotal = await _studyPlanCourseRepository.CountAsync(studyPlan.Id, false);
             var planSelectCourseTotal = await _studyPlanCourseRepository.CountAsync(studyPlan.Id, false);

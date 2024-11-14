@@ -23,9 +23,9 @@ var methods = {
   },
   btnViewCourseClick: function (row) {
 
-    var curl = utils.getStudyUrl('studyCourseInfo', { id: row.id, planId: this.id });
+    var curl = utils.getStudyUrl('studyCourseInfo', { id: row.id, planId: this.studyPlan.plan.id });
     if (row.offLine) {
-      curl = utils.getStudyUrl('studyCourseOfflineInfo', { id: row.id, planId: this.id });
+      curl = utils.getStudyUrl('studyCourseOfflineInfo', { id: row.id, planId: this.studyPlan.plan.id });
     }
 
     var $this = this;
@@ -45,7 +45,7 @@ var methods = {
     top.utils.openLayer({
       title: false,
       closebtn: 0,
-      url: utils.getExamUrl('examPaperInfo', { id: this.studyPlan.plan.examId, planId: this.id, courseId: 0 }),
+      url: utils.getExamUrl('examPaperInfo', { id: this.studyPlan.plan.examId, planId: this.studyPlan.plan.id, courseId: 0 }),
       width: "100%",
       height: "100%",
       end: function () {

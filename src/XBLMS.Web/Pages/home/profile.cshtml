@@ -55,6 +55,21 @@
                             <i v-else class="el-icon-plus"></i>
                         </el-upload>
                     </el-form-item>
+                    <el-form-item label="背景">
+                        <el-upload :action="uploadUrl"
+                                   :show-file-list="false"
+                                   :headers="{Authorization: 'Bearer ' + $token}"
+                                   list-type="picture-card"
+                                   :before-upload="uploadBgBefore"
+                                   :on-progress="uploadBgProgress"
+                                   :on-success="uploadBgSuccess"
+                                   :on-error="uploadBgError"
+                                   :on-remove="uploadBgRemove"
+                                   :multiple="false">
+                            <img v-if="form.avatarbgUrl" :src="form.avatarbgUrl" class="avatar">
+                            <i v-else class="el-icon-plus"></i>
+                        </el-upload>
+                    </el-form-item>
                     <el-form-item>
                         <el-divider></el-divider>
                     </el-form-item>

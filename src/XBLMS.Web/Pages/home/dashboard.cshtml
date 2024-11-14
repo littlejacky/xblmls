@@ -5,8 +5,9 @@
         <el-col :span="7" style="text-align:center;">
             <div class="card rounded-4 card-bordered card-lift border-muted border-1">
                 <div class="d-flex flex-column gap-3">
-                    <div class="opacity-75 bg-white z-1">
-                        <img :src="DEFAULT_AVATAR_URL" alt="mentor 1" class="img-fluid w-100 rounded-3">
+                    <div class="bg-cover rounded-0 p-8 z-1 rounded-top-4" :style="{'background-image':'url('+(user.avatarbgUrl || DEFAULT_AVATAR_BG_URL)+')'}">
+                        <div class="py-8"></div>
+                        <div class="py-5"></div>
                     </div>
                     <div class="mt-n8 z-2">
                         <img :src="user.avatarUrl || DEFAULT_AVATAR_URL" class="img-fluid rounded-pill smooth-shadow-lg avatar-xxl bg-light p-2">

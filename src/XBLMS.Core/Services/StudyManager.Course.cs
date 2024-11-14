@@ -18,20 +18,23 @@ namespace XBLMS.Core.Services
             var courseType = "";
             if (courseUser != null)
             {
-
                 course.Set("State", courseUser.State);
                 course.Set("StateStr", courseUser.State.GetDisplayName());
                 if (planId > 0)
                 {
                     var planCourse = await _studyPlanCourseRepository.GetAsync(planId, course.Id);
-                    if (planCourse.IsSelectCourse)
+                    if (planCourse != null)
                     {
-                        courseType = "选修课";
+                        if (planCourse.IsSelectCourse)
+                        {
+                            courseType = "选修课";
+                        }
+                        else
+                        {
+                            courseType = "必修课";
+                        }
                     }
-                    else
-                    {
-                        courseType = "必修课";
-                    }
+               
                 }
                 else
                 {
