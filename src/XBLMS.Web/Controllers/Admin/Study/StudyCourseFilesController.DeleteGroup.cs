@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using XBLMS.Configuration;
 using XBLMS.Dto;
+using XBLMS.Enums;
 using XBLMS.Utils;
 
 namespace XBLMS.Web.Controllers.Admin.Study
@@ -14,6 +15,11 @@ namespace XBLMS.Web.Controllers.Admin.Study
             if (_settingsManager.IsSafeMode)
             {
                 return this.Error(Constants.ErrorSafe);
+            }
+
+            if (!await _authManager.HasPermissionsAsync(MenuPermissionType.Delete))
+            {
+                return this.NoAuth();
             }
 
             var admin = await _authManager.GetAdminAsync();

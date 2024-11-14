@@ -16,7 +16,7 @@
     </style>
 }
 
-<div class="card border-0 rounded-0 rounded-bottom-4 mb-3 smooth-shadow-lg" v-on:click="btnAppMenuClick('mine')">
+<div class="card border-0 rounded-0 mb-3 smooth-shadow-lg" v-on:click="btnAppMenuClick('mine')">
     <div class="rounded-0 bg-gradient-mix-shade py-8">
         <div class="py-2"></div>
     </div>
@@ -41,7 +41,7 @@
     <div class="mb-3">
         <div class="row g-3">
             <div class="col-xl-5 col-lg-5 col-md-5 col-5">
-                <div class="card border-top border-5 rounded-4 card-hover-with-icon shadow-lg bg-primary border-white" v-on:click="btnPlanMoreMenuClick">
+                <div class="card border-top border-5 rounded-0 card-hover-with-icon shadow-lg bg-primary border-white" v-on:click="btnPlanMoreMenuClick">
                     <div class="card-body text-center">
                         <div class="icon-shape icon-xxl rounded-circle bg-warning text-white mb-5 card-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-activity" viewBox="0 0 16 16">
@@ -49,12 +49,12 @@
                             </svg>
                         </div>
                         <div class="text-center">
-                            <h4 class="mb-2 text-white">培训学分</h4>
-                            <p class="mb-0">
-                                <span class="text-success">{{ studyPlanTotalOverCredit }}</span>
+                            <p class="mb-2 text-white">培训学分</p>
+                            <h4 class="mb-0">
+                                <span class="text-white">{{ studyPlanTotalOverCredit }}</span>
                                 <span class="vr mx-1 text-gray-200"></span>
-                                <span class="text-warning">{{ studyPlanTotalCredit }}</span>
-                            </p>
+                                <span class="text-white fs-6">{{ studyPlanTotalCredit }}</span>
+                            </h4>
                         </div>
                     </div>
                 </div>
@@ -62,7 +62,7 @@
             <div class="col-xl-7 col-lg-7 col-md-7 col-7">
                 <div class="row g-3">
                     <div class="col-xl-12 col-lg-12 col-md-12 col-12">
-                        <div class="card border-start-0 border-bottom-0 border-top-0 border-5 border-success card-hover-with-icon shadow-lg" v-on:click="btnCourseMoreMenuClick">
+                        <div class="card rounded-0 border-start-0 border-bottom-0 border-top-0 border-5 border-success card-hover-with-icon shadow-lg" v-on:click="btnCourseMoreMenuClick">
                             <div class="card-body d-flex align-items-center justify-content-between">
                                 <div class="icon-shape icon rounded-circle bg-success text-white card-icon p-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-palette" viewBox="0 0 16 16">
@@ -82,7 +82,7 @@
                         </div>
                     </div>
                     <div class="col-xl-12 col-lg-12 col-md-12 col-12">
-                        <div class="card border-start-0 border-bottom-0 border-top-0 border-5 border-warning card-hover-with-icon shadow-lg" v-on:click="btnCourseMoreMenuClick">
+                        <div class="card rounded-0 border-start-0 border-bottom-0 border-top-0 border-5 border-warning card-hover-with-icon shadow-lg" v-on:click="btnCourseMoreMenuClick">
                             <div class="card-body d-flex align-items-center justify-content-between">
                                 <div class="icon-shape icon rounded-circle bg-primary text-white card-icon p-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-code-slash" viewBox="0 0 16 16">
@@ -102,7 +102,7 @@
             </div>
         </div>
     </div>
-    <div class="card mb-3">
+    <div class="card rounded-0 mb-3">
         <div class="card-body">
             <div class="mb-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-star-fill text-warning align-baseline" viewBox="0 0 16 16">
@@ -143,14 +143,14 @@
             </div>
         </div>
     </div>
-    <div class="card mb-3 shadow-lg">
+    <div class="card rounded-0 mb-3 shadow-lg">
         <div class="card-body">
             <h5 class="card-title d-flex justify-content-between align-items-center">
                 <span><i class="bi bi-box-fill me-2 card-icon text-primary"></i>最新学习任务</span>
                 <el-link :underline="false" v-on:click="btnPlanMoreMenuClick">更多<i class="el-icon-more ms-2"></i></el-link>
             </h5>
             <div class="mt-3">
-                <div class="card card-hover position-relative p-3 px-4 bg-gray-100" v-if="studyPlan && studyPlan.id>0" style="cursor:pointer;" v-on:click="studyPlan.isStudy ? btnViewPlanClick(studyPlan.id) : utils.error('计划不在有效期内')">
+                <div class="card rounded-0 card-hover position-relative p-3 px-4 bg-gray-100" v-if="studyPlan && studyPlan.id>0" style="cursor:pointer;" v-on:click="studyPlan.isStudy ? btnViewPlanClick(studyPlan.id) : utils.error('计划不在有效期内')">
                     <div class="position-absolute top-50 end-0 translate-middle-y pe-3">
                         <img width="88" src="/sitefiles/assets/images/status/weikaishi.png" v-if="studyPlan.state==='Weikaishi'" />
                         <img width="88" src="/sitefiles/assets/images/status/xuexizhong.png" v-if="studyPlan.state==='Xuexizhong'" />
@@ -159,7 +159,7 @@
                         <img width="88" src="/sitefiles/assets/images/status/yiwancheng.png" v-if="studyPlan.state==='Yiwancheng'" />
                     </div>
                     <div class="row">
-                        <div class="col-12 col-md-12 col-xl-12 col-lg-12 bg-cover rounded p-8" :style="{'background-image':'url('+studyPlan.plan.coverImg+')'}"></div>
+                        <div class="col-12 col-md-12 col-xl-12 col-lg-12 bg-cover rounded-0 p-8" :style="{'background-image':'url('+studyPlan.plan.coverImg+')'}"></div>
                         <div class="col-12 col-md-12 col-xl-12 col-lg-12">
                             <div class="mt-3">
                                 <h3 class="mb-2"><a href="javascript:;" class="text-inherit">{{ studyPlan.plan.planName }}</a></h3>
@@ -199,7 +199,7 @@
             </div>
         </div>
     </div>
-    <div class="card mb-3 shadow-lg">
+    <div class="card rounded-0 mb-3 shadow-lg">
         <div class="card-body">
             <h5 class="card-title d-flex justify-content-between align-items-center">
                 <span><i class="bi bi-box-fill me-2 card-icon text-primary"></i>新上课程</span>
@@ -208,8 +208,8 @@
             <div class="mt-3">
                 <div class="d-flex flex-row overflow-x-auto" v-if="courseList && courseList.length>0">
                     <div class="me-3 mb-3" v-for="course in courseList" style="min-width:200px;">
-                        <div class="card border bg-white p-2" v-on:click="btnViewCourseClick(course)" style="cursor:pointer;">
-                            <div class="position-relative p-8 rounded bg-cover" :style="{'background-image':'url('+course.coverImg+')'}">
+                        <div class="card rounded-0 border bg-white p-2" v-on:click="btnViewCourseClick(course)" style="cursor:pointer;">
+                            <div class="position-relative p-8  rounded-0 bg-cover" :style="{'background-image':'url('+course.coverImg+')'}">
                                 <el-tag class="position-absolute bottom-0 end-0 m-2" size="mini" type="primary" effect="plain" v-if="course.offLine">面授课</el-tag>
                                 <el-tag size="mini" class="bg-dark text-white position-absolute bottom-0 end-0 m-2 fs-6" v-else>{{ utils.formatDuration(course.duration) }}</el-tag>
                                 <el-tag size="mini" type="success" effect="dark" class="position-absolute top-0 end-0 m-2" v-if="course.state==='Yiwancheng'">{{ course.stateStr }}</el-tag>
@@ -259,7 +259,7 @@
             </div>
         </div>
     </div>
-    <div class="card mb-3 shadow-lg">
+    <div class="card rounded-0 mb-3 shadow-lg">
         <div class="card-body">
             <h5 class="card-title d-flex justify-content-between align-items-center">
                 <span><i class="el-icon-platform-eleme me-2 card-icon text-primary"></i>最新考试安排</span>
@@ -300,7 +300,7 @@
             </div>
         </div>
     </div>
-    <div class="card mb-3 shadow-lg">
+    <div class="card rounded-0 mb-3 shadow-lg">
         <div class="card-body">
             <h5 class="card-title d-flex justify-content-between align-items-center">
                 <span><i class="el-icon-s-order me-2 card-icon text-primary"></i>刷题练习</span>
@@ -343,7 +343,7 @@
             </div>
         </div>
     </div>
-    <div class="card mb-3 shadow-lg">
+    <div class="card rounded-0 mb-3 shadow-lg">
         <div class="card-body">
             <h5 class="card-title d-flex justify-content-between align-items-center">
                 <span><i class="el-icon-eleme me-2 card-icon text-primary"></i>最新模拟考试</span>
@@ -384,7 +384,7 @@
             </div>
         </div>
     </div>
-    <div class="card mb-3 shadow-lg">
+    <div class="card rounded-0 mb-3 shadow-lg">
         <div class="card-body">
             <h5 class="card-title d-flex justify-content-between align-items-center">
                 <span><i class="bi bi-award-fill me-2 card-icon text-primary"></i>最近获得证书</span>
@@ -414,7 +414,7 @@
                :visible.sync="taskDialogVisible"
                direction="btt">
         <div class="px-2">
-            <div class="card">
+            <div class="card rounded-0">
                 <div class="card-body">
                     <ul class="list-group lh-lg">
                         <li class="list-group-item d-flex justify-content-between align-items-center" v-if="taskPlanTotal>0" v-on:click="btnPlanMoreMenuClick">

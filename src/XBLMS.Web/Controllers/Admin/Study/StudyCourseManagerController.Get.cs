@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using XBLMS.Enums;
 using XBLMS.Utils;
 
 namespace XBLMS.Web.Controllers.Admin.Study
@@ -9,6 +10,11 @@ namespace XBLMS.Web.Controllers.Admin.Study
         [HttpGet, Route(Route)]
         public async Task<ActionResult<GetResult>> Get([FromQuery] GetRequest request)
         {
+            if (!await _authManager.HasPermissionsAsync(MenuPermissionType.Manage))
+            {
+                return this.NoAuth();
+            }
+
             var auth = await _authManager.GetAuthorityAuth();
 
             var course = await _studyCourseRepository.GetAsync(request.Id);

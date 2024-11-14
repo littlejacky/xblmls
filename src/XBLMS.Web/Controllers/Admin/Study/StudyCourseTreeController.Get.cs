@@ -10,7 +10,7 @@ namespace XBLMS.Web.Controllers.Admin.Study
         {
             var auth = await _authManager.GetAuthorityAuth();
 
-            var trees = await _studyManager.GetStudyCourseTreeCascadesAsync();
+            var trees = await _studyManager.GetStudyCourseTreeCascadesAsync(auth);
 
             return new GetResult
             {

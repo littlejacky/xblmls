@@ -18,6 +18,7 @@ namespace XBLMS.Web.Controllers.Admin.Study
             {
                 return this.NoAuth();
             }
+
             var resulttotal = 0;
             var resultList = new List<StudyCourse>();
 

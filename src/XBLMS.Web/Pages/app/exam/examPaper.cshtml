@@ -2,7 +2,7 @@
 @{ Layout = "_LayoutApp"; }
 <div v-if="total>0">
     <div v-for="(paper,index) in list" v-on:click="btnViewClick(paper)">
-        <el-card shadow="hover" class="mb-3">
+        <el-card shadow="hover" class="mb-3 rounded-0 shadow-lg">
             <div slot="header">
                 <div class="fw-bold text-primary">{{ paper.title }}</div>
                 <div v-if="paper.planId>0 || paper.courseId>0">
@@ -62,7 +62,7 @@
 </div>
 <div class="py-8"></div>
 @await Html.PartialAsync("_PartialAppMenu")
-<el-button class="fs-4 p-3" icon="el-icon-search" circle style="position:fixed;right:5%;top:80%;" type="primary" v-on:click="examDialogVisible=true"></el-button>
+<el-button plain class="fs-4 p-3" icon="el-icon-search" circle style="position:fixed;right:5%;top:80%;" type="primary" v-on:click="examDialogVisible=true"></el-button>
 <template>
     <el-drawer title="考试查询"
                size="90%"

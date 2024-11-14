@@ -17,7 +17,7 @@ namespace XBLMS.Repositories
 
         Task<string> GetPathAsync(int id);
         Task<List<int>> GetParentIdListAsync(int id);
-        Task<List<StudyCourseTree>> GetListAsync();
+        Task<List<StudyCourseTree>> GetListAsync(AuthorityAuth auth);
         Task<string> GetPathNamesAsync(int id);
         Task<StudyCourseTree> GetAsync(int id);
         Task<List<int>> GetIdsAsync(int id);

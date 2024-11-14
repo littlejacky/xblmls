@@ -13,6 +13,11 @@ namespace XBLMS.Web.Controllers.Admin.Study
         [HttpGet, Route(RouteQ)]
         public async Task<ActionResult<GetExamqResult>> GetCourse([FromQuery] GetExamqRequest request)
         {
+            if (!await _authManager.HasPermissionsAsync(MenuPermissionType.Manage))
+            {
+                return this.NoAuth();
+            }
+
             var course = await _studyCourseRepository.GetAsync(request.Id);
             if (request.PlanId > 0)
             {

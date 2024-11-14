@@ -23,29 +23,35 @@ var data = utils.init({
 
 var methods = {
   apiGet: function () {
-    var $this = this;
+    if (this.id > 0) {
+      var $this = this;
 
-    $api.get($url, { params: { id: this.id } }).then(function (response) {
-      var res = response.data;
-      var cerInfo = res.item;
+      $api.get($url, { params: { id: this.id } }).then(function (response) {
+        var res = response.data;
+        var cerInfo = res.item;
 
-      $this.form = _.assign({}, cerInfo);
+        $this.form = _.assign({}, cerInfo);
 
-      if ($this.id > 0) {
-        $this.backgroundImg = cerInfo.backgroundImg;
-        $this.typeNow = cerInfo.markList;
-        $this.timer = setTimeout(function () {
-          for (var i = 0; i < cerInfo.position.length; i++) {
-            $this.createBox(cerInfo.position[i]);
-          }
-        }, 200);
-      }
+        if ($this.id > 0) {
+          $this.backgroundImg = cerInfo.backgroundImg;
+          $this.typeNow = cerInfo.markList;
+          $this.timer = setTimeout(function () {
+            for (var i = 0; i < cerInfo.position.length; i++) {
+              $this.createBox(cerInfo.position[i]);
+            }
+          }, 200);
+        }
 
-    }).catch(function (error) {
-      utils.error(error, { layer: true });
-    }).then(function () {
-      utils.loading($this, false);
-    });
+      }).catch(function (error) {
+        utils.error(error, { layer: true });
+      }).then(function () {
+        utils.loading($this, false);
+      });
+    }
+    else {
+      utils.loading(this, false);
+    }
+
 
   },
   btnSubmitClick: function () {

@@ -15,7 +15,7 @@ namespace XBLMS.Repositories
         Task<bool> DeleteAsync(int id);
         Task<StudyCourseFilesGroup> GetAsync(int id);
         Task<bool> IsExistsAsync(int parentId, string groupName);
-        Task<List<StudyCourseFilesGroup>> GetListAsync(int parentId);
+        Task<List<StudyCourseFilesGroup>> GetListAsync(AuthorityAuth auth, int parentId);
         Task<List<int>> GetParentIdListAsync(int id);
         Task<List<int>> GetChildIdListAsync(int id);
     }

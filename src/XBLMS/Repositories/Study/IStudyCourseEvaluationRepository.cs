@@ -13,6 +13,6 @@ namespace XBLMS.Repositories
         Task<bool> DeleteAsync(int id);
         Task<StudyCourseEvaluation> GetAsync(int id);
         Task<int> MaxAsync();
-        Task<(int total, List<StudyCourseEvaluation> list)> GetListAsync(string keyWords, int pageIndex, int pageSize);
+        Task<(int total, List<StudyCourseEvaluation> list)> GetListAsync(AuthorityAuth auth, string keyWords, int pageIndex, int pageSize);
     }
 }

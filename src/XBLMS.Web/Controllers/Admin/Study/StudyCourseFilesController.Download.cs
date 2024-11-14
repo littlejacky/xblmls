@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using XBLMS.Dto;
+using XBLMS.Enums;
 using XBLMS.Utils;
 
 namespace XBLMS.Web.Controllers.Admin.Study
@@ -10,6 +11,11 @@ namespace XBLMS.Web.Controllers.Admin.Study
         [HttpGet, Route(RouteActionsDownload)]
         public async Task<ActionResult> ActionsDownload([FromQuery] IdRequest request)
         {
+            if (!await _authManager.HasPermissionsAsync(MenuPermissionType.Download))
+            {
+                return this.NoAuth();
+            }
+
             var admin = await _authManager.GetAdminAsync();
             if (admin == null) return Unauthorized();
 

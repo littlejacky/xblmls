@@ -11,9 +11,9 @@ namespace XBLMS.Repositories
         Task<int> InsertAsync(StudyCourseFiles file);
         Task<bool> UpdateAsync(StudyCourseFiles file);
         Task<bool> DeleteAsync(int id);
-        Task<List<StudyCourseFiles>> GetAllAsync(string keyWords);
+        Task<List<StudyCourseFiles>> GetAllAsync(AuthorityAuth auth, string keyWords);
         Task<List<int>> GetIdsAsync(int groupId, string keyword, int organId);
-        Task<List<StudyCourseFiles>> GetAllAsync(int groupId);
+        Task<List<StudyCourseFiles>> GetAllAsync(AuthorityAuth auth, int groupId);
         Task<List<StudyCourseFiles>> GetAllAsync(AuthorityAuth auth, int groupId, string keyword,int organId);
 
         Task<StudyCourseFiles> GetAsync(int id);

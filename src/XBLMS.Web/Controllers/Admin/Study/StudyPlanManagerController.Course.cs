@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using XBLMS.Dto;
+using XBLMS.Enums;
 using XBLMS.Models;
 using XBLMS.Utils;
 
@@ -12,6 +13,11 @@ namespace XBLMS.Web.Controllers.Admin.Study
         [HttpGet, Route(RouteCourse)]
         public async Task<ActionResult<GetCourseResult>> GetCourse([FromQuery] GetCourseRequest request)
         {
+            if (!await _authManager.HasPermissionsAsync(MenuPermissionType.Manage))
+            {
+                return this.NoAuth();
+            }
+
             var plan = await _studyPlanRepository.GetAsync(request.Id);
 
             var resultList = new List<StudyPlanCourse>();

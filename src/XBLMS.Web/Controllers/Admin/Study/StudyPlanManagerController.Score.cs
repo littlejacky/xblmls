@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using XBLMS.Core.Utils;
 using XBLMS.Dto;
+using XBLMS.Enums;
 using XBLMS.Utils;
 
 namespace XBLMS.Web.Controllers.Admin.Study
@@ -12,6 +13,11 @@ namespace XBLMS.Web.Controllers.Admin.Study
         [HttpGet, Route(RouteScore)]
         public async Task<ActionResult<GetScoreResult>> GetSocreList([FromQuery] GetSocreRequest request)
         {
+            if (!await _authManager.HasPermissionsAsync(MenuPermissionType.Manage))
+            {
+                return this.NoAuth();
+            }
+
             var plan = await _studyPlanRepository.GetAsync(request.Id);
             var (total, list) = await _examPaperStartRepository.GetListByAdminAsync(plan.ExamId, plan.Id, 0, request.DateFrom, request.DateTo, request.KeyWords, request.PageIndex, request.PageSize);
             if (total > 0)

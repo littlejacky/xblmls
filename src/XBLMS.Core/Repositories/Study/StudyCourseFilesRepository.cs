@@ -60,16 +60,46 @@ namespace XBLMS.Core.Repositories
             }
             return query;
         }
-        public async Task<List<StudyCourseFiles>> GetAllAsync(string keyWords)
+        public async Task<List<StudyCourseFiles>> GetAllAsync(AuthorityAuth auth, string keyWords)
         {
             var query = Q.
                 WhereLike(nameof(StudyCourseFiles.FileName), $"%{keyWords}%").
                 OrderBy(nameof(StudyCourseFiles.CreatedDate));
+
+            if (auth.AuthType == Enums.AuthorityType.Admin || auth.AuthType == Enums.AuthorityType.AdminCompany)
+            {
+                query.Where(nameof(StudyCourseFiles.CompanyId), auth.CurManageOrganId);
+            }
+            else if (auth.AuthType == Enums.AuthorityType.AdminDepartment)
+            {
+                query.Where(nameof(StudyCourseFiles.DepartmentId), auth.CurManageOrganId);
+            }
+            else
+            {
+                query.Where(nameof(StudyCourseFiles.CreatorId), auth.AdminId);
+            }
+
+
             return await _repository.GetAllAsync(query);
         }
-        public async Task<List<StudyCourseFiles>> GetAllAsync(int groupId)
+        public async Task<List<StudyCourseFiles>> GetAllAsync(AuthorityAuth auth, int groupId)
         {
             var query = Q.Where(nameof(StudyCourseFiles.GroupId), groupId).OrderBy(nameof(StudyCourseFiles.CreatedDate));
+
+            if (auth.AuthType == Enums.AuthorityType.Admin || auth.AuthType == Enums.AuthorityType.AdminCompany)
+            {
+                query.Where(nameof(StudyCourseFiles.CompanyId), auth.CurManageOrganId);
+            }
+            else if (auth.AuthType == Enums.AuthorityType.AdminDepartment)
+            {
+                query.Where(nameof(StudyCourseFiles.DepartmentId), auth.CurManageOrganId);
+            }
+            else
+            {
+                query.Where(nameof(StudyCourseFiles.CreatorId), auth.AdminId);
+            }
+
+
             return await _repository.GetAllAsync(query);
         }
 

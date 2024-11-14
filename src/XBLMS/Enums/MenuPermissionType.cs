@@ -16,6 +16,8 @@ namespace XBLMS.Enums
         [DataEnum(DisplayName = "导出", Value = "Export")] Export,
         [DataEnum(DisplayName = "导入", Value = "Import")] Import,
 
+        [DataEnum(DisplayName = "下载", Value = "Download")] Download,
+
         [DataEnum(DisplayName = "清除缓存", Value = "SystemClearCache")] SystemClearCache,
         [DataEnum(DisplayName = "重启系统", Value = "SystemRestart")] SystemRestart,
     }

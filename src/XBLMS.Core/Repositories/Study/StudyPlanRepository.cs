@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using XBLMS.Dto;
 using XBLMS.Models;
 using XBLMS.Repositories;
 using XBLMS.Services;
@@ -46,9 +47,23 @@ namespace XBLMS.Core.Repositories
         }
 
 
-        public async Task<(int total, List<StudyPlan> list)> GetListAsync(string keyWords, int pageIndex, int pageSize)
+        public async Task<(int total, List<StudyPlan> list)> GetListAsync(AuthorityAuth auth, string keyWords, int pageIndex, int pageSize)
         {
             var query = Q.NewQuery();
+
+            if (auth.AuthType == Enums.AuthorityType.Admin || auth.AuthType == Enums.AuthorityType.AdminCompany)
+            {
+                query.Where(nameof(StudyPlan.CompanyId), auth.CurManageOrganId);
+            }
+            else if (auth.AuthType == Enums.AuthorityType.AdminDepartment)
+            {
+                query.Where(nameof(StudyPlan.DepartmentId), auth.CurManageOrganId);
+            }
+            else
+            {
+                query.Where(nameof(StudyPlan.CreatorId), auth.AdminId);
+            }
+
             if (!string.IsNullOrEmpty(keyWords))
             {
                 query.Where(q => q.WhereLike(nameof(StudyPlan.PlanName), $"%{keyWords}%").OrWhereLike(nameof(StudyPlan.Description), $"%{keyWords}%"));

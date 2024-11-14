@@ -1,6 +1,7 @@
 ﻿using Datory;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using XBLMS.Dto;
 using XBLMS.Models;
 using XBLMS.Repositories;
 using XBLMS.Services;
@@ -46,9 +47,23 @@ namespace XBLMS.Core.Repositories
         }
 
 
-        public async Task<(int total, List<StudyCourseEvaluation> list)> GetListAsync(string keyWords, int pageIndex, int pageSize)
+        public async Task<(int total, List<StudyCourseEvaluation> list)> GetListAsync(AuthorityAuth auth, string keyWords, int pageIndex, int pageSize)
         {
             var query = Q.NewQuery();
+
+            if (auth.AuthType == Enums.AuthorityType.Admin || auth.AuthType == Enums.AuthorityType.AdminCompany)
+            {
+                query.Where(nameof(StudyCourseEvaluation.CompanyId), auth.CurManageOrganId);
+            }
+            else if (auth.AuthType == Enums.AuthorityType.AdminDepartment)
+            {
+                query.Where(nameof(StudyCourseEvaluation.DepartmentId), auth.CurManageOrganId);
+            }
+            else
+            {
+                query.Where(nameof(StudyCourseEvaluation.CreatorId), auth.AdminId);
+            }
+
 
             if (!string.IsNullOrEmpty(keyWords))
             {

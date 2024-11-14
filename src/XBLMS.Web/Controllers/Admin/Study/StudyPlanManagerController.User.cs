@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using XBLMS.Dto;
+using XBLMS.Enums;
 using XBLMS.Models;
 using XBLMS.Utils;
 
@@ -13,6 +14,10 @@ namespace XBLMS.Web.Controllers.Admin.Study
         [HttpGet, Route(RouteUser)]
         public async Task<ActionResult<GetUserResult>> Submit([FromQuery] GetUserRequest request)
         {
+            if (!await _authManager.HasPermissionsAsync(MenuPermissionType.Manage))
+            {
+                return this.NoAuth();
+            }
             var (total, list) = await _studyPlanUserRepository.GetListAsync(request.State, request.KeyWords, request.Id, request.PageIndex, request.PageSize);
             if (total > 0)
             {

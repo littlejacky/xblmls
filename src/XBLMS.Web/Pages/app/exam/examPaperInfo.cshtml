@@ -8,7 +8,7 @@
         }
     </style>
 }
-<el-card>
+<el-card class="rounded-0">
     <div slot="header" class="text-center pt-3">
         <span class="fw-bold"><i class="el-icon-s-order me-2"></i>{{ item.title }}</span>
     </div>
@@ -26,7 +26,7 @@
             </div>
             <div class="row gy-3">
                 <div class="col-xl-12 col-lg-12 col-md-12 col-12" v-if="item.planId>0 || item.courseId>0">
-                    <div class="card rounded-4 bg-white border-top-0 border-end-0 border-bottom-0 border-5 border-warning card-hover-with-icon">
+                    <div class="card rounded-0 bg-white border-start-0 border-end-0 border-bottom-0 border-5 border-warning card-hover-with-icon">
                         <div class="card-body pt-3 pb-0">
                             <div class="d-flex align-items-center justify-content-between">
                                 <div>
@@ -41,7 +41,7 @@
                     </div>
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-6 col-6">
-                    <div class="card rounded-4 bg-white border-top-0 border-end-0 border-bottom-0 border-primary border-5 card-hover-with-icon">
+                    <div class="card rounded-0 bg-white border-start-0 border-end-0 border-bottom-0 border-5 card-hover-with-icon">
                         <div class="card-body pt-3 pb-0">
                             <div class="d-flex align-items-center justify-content-between">
                                 <div>
@@ -59,7 +59,7 @@
                     </div>
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-6 col-6">
-                    <div class="card rounded-4 bg-white border-top-0 border-end-0 border-bottom-0 border-primary border-5 card-hover-with-icon">
+                    <div class="card rounded-0 bg-white border-start-0 border-end-0 border-bottom-0 border-5 card-hover-with-icon">
                         <div class="card-body pt-3 pb-0">
                             <div class="d-flex align-items-center justify-content-between">
                                 <div>
@@ -77,7 +77,7 @@
                     </div>
                 </div>
                 <div class="col-xl-12 col-lg-12 col-md-12 col-12">
-                    <div class="card rounded-4 bg-white border-top-0 border-end-0 border-bottom-0 border-primary border-5 card-hover-with-icon">
+                    <div class="card rounded-0 bg-white border-start-0 border-end-0 border-bottom-0 border-5 card-hover-with-icon">
                         <div class="card-body pt-3 pb-0">
                             <div class="d-flex align-items-center justify-content-between">
                                 <div v-if="item.cerId>0">
@@ -96,7 +96,7 @@
                     </div>
                 </div>
                 <div class="col-xl-12 col-lg-12 col-md-12 col-12">
-                    <div class="card rounded-4 bg-white border-top-0 border-end-0 border-bottom-0 border-primary border-5 card-hover-with-icon">
+                    <div class="card rounded-0 bg-white border-start-0 border-end-0 border-bottom-0 border-5 card-hover-with-icon">
                         <div class="card-body pt-3 pb-0">
                             <div class="d-flex align-items-center justify-content-between">
                                 <div>
@@ -112,7 +112,7 @@
                     </div>
                 </div>
                 <div class="col-xl-12 col-lg-12 col-md-12 col-12">
-                    <div class="card rounded-4 bg-white border-top-0 border-end-0 border-bottom-0 border-primary border-5 card-hover-with-icon">
+                    <div class="card rounded-0 bg-white border-start-0 border-end-0 border-bottom-0 border-5 card-hover-with-icon">
                         <div class="card-body pt-3 pb-0">
                             <div class="d-flex align-items-center justify-content-between">
                                 <div>
@@ -135,7 +135,7 @@
                     </div>
                 </div>
                 <div class="col-xl-12 col-lg-12 col-md-12 col-12">
-                    <div class="card rounded-4 bg-white border-top-0 border-end-0 border-bottom-0 border-primary border-5 card-hover-with-icon">
+                    <div class="card rounded-0 bg-white border-start-0 border-end-0 border-bottom-0 border-5 card-hover-with-icon">
                         <div class="card-body pt-3 pb-0">
                             <div class="d-flex align-items-center justify-content-between">
                                 <div>
@@ -150,7 +150,7 @@
                     </div>
                 </div>
                 <div class="col-xl-12 col-lg-12 col-md-12 col-12" v-if="(item.cjList && item.cjList.length>0)">
-                    <div class="card rounded-4 bg-white border-top-0 border-end-0 border-bottom-0 border-primary border-5 card-hover-with-icon">
+                    <div class="card rounded-0 bg-white border-start-0 border-end-0 border-bottom-0 border-5 card-hover-with-icon">
                         <div class="card-body pt-3 pb-0">
                             <el-collapse accordion>
                                 <el-collapse-item>
@@ -186,7 +186,7 @@
                     </div>
                 </div>
                 <div class="col-xl-12 col-lg-12 col-md-12 col-12" v-if="(item.subject && item.subject.length>0)">
-                    <div class="card rounded-4 bg-white border-top-0 border-end-0 border-bottom-0 border-primary border-5 card-hover-with-icon">
+                    <div class="card rounded-0 bg-white border-start-0 border-end-0 border-bottom-0 border-5 card-hover-with-icon">
                         <div class="card-body pt-3 pb-0">
                             <el-collapse accordion>
                                 <el-collapse-item>

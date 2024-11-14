@@ -8,7 +8,7 @@ namespace XBLMS.Services
 {
     public partial interface IStudyManager
     {
-        Task<List<Cascade<int>>> GetStudyCourseTreeCascadesAsync();
+        Task<List<Cascade<int>>> GetStudyCourseTreeCascadesAsync(AuthorityAuth auth);
     }
 
 }

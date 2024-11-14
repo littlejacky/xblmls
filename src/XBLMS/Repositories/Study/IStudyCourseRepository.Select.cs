@@ -8,6 +8,6 @@ namespace XBLMS.Repositories
 {
     public partial interface IStudyCourseRepository
     {
-        Task<(int total, List<StudyCourse> list)> Select_GetListAsync(string keyWords, string type, int pageIndex, int pageSize);
+        Task<(int total, List<StudyCourse> list)> Select_GetListAsync(AuthorityAuth auth, string keyWords, string type, int pageIndex, int pageSize);
     }
 }

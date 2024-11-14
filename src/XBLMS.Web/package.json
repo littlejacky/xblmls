@@ -37,7 +37,7 @@
             "text": "课件上传",
             "link": "/admin/study/studyCourseFiles/",
             "iconClass": "el-icon-s-custom",
-            "Permissions": [ "Select", "Add", "Update", "Delete" ],
+            "Permissions": [ "Select", "Add", "Update", "Delete", "Download" ],
             "isPermission": true,
             "children": [
             ]

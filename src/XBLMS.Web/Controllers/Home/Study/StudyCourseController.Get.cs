@@ -42,11 +42,11 @@ namespace XBLMS.Web.Controllers.Home.Study
             }
             else
             {
-                var (markTotal, markList) = await _studyCourseRepository.User_GetPublicMarkListAsync();
+                var (markTotal, markList) = await _studyCourseRepository.User_GetPublicMarkListAsync(user.CompanyId);
                 resultMarkTotal = markTotal;
                 resultMarkList = markList;
 
-                var (total, list) = await _studyCourseRepository.User_GetPublicListAsync(request.KeyWords, request.Mark, request.Orderby, request.PageIndex, request.PageSize);
+                var (total, list) = await _studyCourseRepository.User_GetPublicListAsync(user.CompanyId, request.KeyWords, request.Mark, request.Orderby, request.PageIndex, request.PageSize);
                 resultTotal = total;
                 if (total > 0)
                 {

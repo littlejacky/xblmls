@@ -51,9 +51,24 @@ namespace XBLMS.Core.Repositories
         }
 
 
-        public async Task<(int total, List<StudyCourse> list)> GetListAsync(string keyWords, string type, int treeId, bool children, int pageIndex, int pageSize)
+        public async Task<(int total, List<StudyCourse> list)> GetListAsync(AuthorityAuth auth, string keyWords, string type, int treeId, bool children, int pageIndex, int pageSize)
         {
             var query = Q.NewQuery();
+
+            if (auth.AuthType == Enums.AuthorityType.Admin || auth.AuthType == Enums.AuthorityType.AdminCompany)
+            {
+                query.Where(nameof(StudyCourse.CompanyId), auth.CurManageOrganId);
+            }
+            else if (auth.AuthType == Enums.AuthorityType.AdminDepartment)
+            {
+                query.Where(nameof(StudyCourse.DepartmentId), auth.CurManageOrganId);
+            }
+            else
+            {
+                query.Where(nameof(StudyCourse.CreatorId), auth.AdminId);
+            }
+
+
             if (!string.IsNullOrEmpty(type))
             {
                 if (type == "online")
@@ -92,7 +107,7 @@ namespace XBLMS.Core.Repositories
             return (total, list);
         }
 
-        public async Task<(int total, List<StudyCourse> list)> GetListByTeacherAsync(int teacherId,string keyWords, int pageIndex, int pageSize)
+        public async Task<(int total, List<StudyCourse> list)> GetListByTeacherAsync(int teacherId, string keyWords, int pageIndex, int pageSize)
         {
             var query = Q.Where(nameof(StudyCourse.TeacherId), teacherId);
 

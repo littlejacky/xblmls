@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using XBLMS.Configuration;
 using XBLMS.Dto;
+using XBLMS.Enums;
 using XBLMS.Models;
 using XBLMS.Utils;
 
@@ -17,7 +18,12 @@ namespace XBLMS.Web.Controllers.Admin.Study
                 return this.Error(Constants.ErrorSafe);
             }
 
-            var admin = await _authManager.GetAdminAsync();
+            if (!await _authManager.HasPermissionsAsync(MenuPermissionType.Add))
+            {
+                return this.NoAuth();
+            }
+
+            var auth = await _authManager.GetAuthorityAuth();
 
             if (!DirectoryUtils.IsDirectoryNameCompliant(request.GroupName)) return this.Error("文件夹名称不合法");
 
@@ -30,12 +36,12 @@ namespace XBLMS.Web.Controllers.Admin.Study
             {
                 GroupName = request.GroupName,
                 ParentId = request.ParentId,
-                CompanyId = admin.CompanyId,
-                DepartmentId = admin.DepartmentId,
-                CreatorId = admin.Id
+                CompanyId = auth.CompanyId,
+                DepartmentId = auth.DepartmentId,
+                CreatorId = auth.AdminId
             });
 
-            var path = _pathManager.GetCourseFilesUploadPath(admin.CompanyId.ToString());
+            var path = _pathManager.GetCourseFilesUploadPath(auth.CompanyId.ToString());
             if (request.ParentId > 0)
             {
                 var group = await _studyCourseFilesGroupRepository.GetAsync(request.ParentId);

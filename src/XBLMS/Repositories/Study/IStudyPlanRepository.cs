@@ -12,7 +12,7 @@ namespace XBLMS.Repositories
         Task<bool> UpdateAsync(StudyPlan item);
         Task<bool> DeleteAsync(int id);
         Task<StudyPlan> GetAsync(int id);
-        Task<(int total, List<StudyPlan> list)> GetListAsync(string keyWords, int pageIndex, int pageSize);
+        Task<(int total, List<StudyPlan> list)> GetListAsync(AuthorityAuth auth, string keyWords, int pageIndex, int pageSize);
         Task<int> MaxAsync();
         Task<List<int>> GetYearListAsync();
     }

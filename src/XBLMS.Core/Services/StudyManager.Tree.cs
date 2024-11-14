@@ -9,10 +9,10 @@ namespace XBLMS.Core.Services
 {
     public partial class StudyManager
     {
-        public async Task<List<Cascade<int>>> GetStudyCourseTreeCascadesAsync()
+        public async Task<List<Cascade<int>>> GetStudyCourseTreeCascadesAsync(AuthorityAuth auth)
         {
             var list = new List<Cascade<int>>();
-            var trees = await _studyCourseTreeRepository.GetListAsync();
+            var trees = await _studyCourseTreeRepository.GetListAsync(auth);
             var items = trees.Where(p => p.ParentId == 0).ToList();
 
             if (items != null && items.Any())

@@ -16,7 +16,7 @@ namespace XBLMS.Web.Controllers.Admin.Study
 
             var auth = await _authManager.GetAuthorityAuth();
 
-            var (total, list) = await _studyCourseRepository.Select_GetListAsync(request.Keyword, request.Type, request.PageIndex, request.PageSize);
+            var (total, list) = await _studyCourseRepository.Select_GetListAsync(auth,request.Keyword, request.Type, request.PageIndex, request.PageSize);
 
             return new GetResult
             {

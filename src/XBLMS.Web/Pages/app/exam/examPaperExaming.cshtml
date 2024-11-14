@@ -26,7 +26,8 @@
         .number {
             background-color:#000000;
             padding:8px 10px !important;
-            color: red !important;
+            color: white !important;
+            text-shadow: 0px 0px 10px #427ed1, 0px 0px 10px #427ed1;
             opacity:0.5;
             font-size:14px !important;
         }
@@ -120,7 +121,7 @@
         <button type="button" v-on:click="btnPaperSubmit" :class="(paper && paper.openExist) ? 'btn btn-warning rounded-start-pill' : 'btn btn-warning rounded-pill'">
             <i class="el-icon-upload me-2"></i>立即交卷
         </button>
-        <button type="button" class="btn btn-outline-primary" v-if="paper && paper.openExist" v-on:click="utils.closeLayerSelf"><i class="el-icon-back me-2"></i>退 出</button>
+        <button type="button" class="btn btn-outline-primary  rounded-end-pill" v-if="paper && paper.openExist" v-on:click="utils.closeLayerSelf"><i class="el-icon-back me-2"></i>退 出</button>
     </div>
 </div>
 <div style="position:fixed;right:10%;top:80%;" class="text-center">

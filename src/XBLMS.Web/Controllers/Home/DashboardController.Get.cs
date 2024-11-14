@@ -26,7 +26,7 @@ namespace XBLMS.Web.Controllers.Home
             var resultPaper = new ExamPaper();
             var resultMoni = new ExamPaper();
 
-            var (paperTotal, paperList) = await _examPaperUserRepository.GetListAsync(user.Id, false, "","", 1,1);
+            var (paperTotal, paperList) = await _examPaperUserRepository.GetListAsync(user.Id, false, "", "", 1, 1);
             var (moniPaperTotal, moniPaperList) = await _examPaperUserRepository.GetListAsync(user.Id, true, "", "", 1, 1);
 
             if (paperTotal > 0)
@@ -97,7 +97,7 @@ namespace XBLMS.Web.Controllers.Home
             }
 
 
-            var (courseTotal, courseList) = await _studyCourseRepository.User_GetPublicListAsync("", "", "", 1, 3);
+            var (courseTotal, courseList) = await _studyCourseRepository.User_GetPublicListAsync(user.CompanyId, "", "", "", 1, 3);
             if (courseTotal > 0)
             {
                 foreach (var course in courseList)

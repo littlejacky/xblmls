@@ -14,6 +14,12 @@ namespace XBLMS.Web.Controllers.Admin.Study
         [HttpGet, Route(Route)]
         public async Task<ActionResult<GetResult>> Get([FromQuery] IdRequest request)
         {
+            if (!await _authManager.HasPermissionsAsync(MenuPermissionType.Manage))
+            {
+                return this.NoAuth();
+            }
+
+
             var auth = await _authManager.GetAuthorityAuth();
 
             var plan = await _studyPlanRepository.GetAsync(request.Id);

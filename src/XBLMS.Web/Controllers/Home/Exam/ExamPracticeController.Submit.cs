@@ -105,6 +105,8 @@ namespace XBLMS.Web.Controllers.Home.Exam
                     Title = request.PracticeType.GetDisplayName(),
                     PracticeType = request.PracticeType,
                     UserId = user.Id,
+                    CompanyId = user.CompanyId,
+                    DepartmentId = user.DepartmentId,
                     TmCount = tmIds.Count,
                     TmIds = tmIds,
                     Zsds = zsds,

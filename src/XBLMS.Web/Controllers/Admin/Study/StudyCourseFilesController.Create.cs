@@ -4,6 +4,7 @@ using System;
 using System.Drawing;
 using System.Threading.Tasks;
 using XBLMS.Configuration;
+using XBLMS.Enums;
 using XBLMS.Models;
 using XBLMS.Utils;
 
@@ -20,9 +21,14 @@ namespace XBLMS.Web.Controllers.Admin.Study
                 return this.Error(Constants.ErrorSafe);
             }
 
+            if (!await _authManager.HasPermissionsAsync(MenuPermissionType.Add))
+            {
+                return this.NoAuth();
+            }
+
             try
             {
-                var admin = await _authManager.GetAdminAsync();
+                var auth = await _authManager.GetAuthorityAuth();
 
                 var fileName = PathUtils.GetFileName(file.FileName);
 
@@ -36,12 +42,12 @@ namespace XBLMS.Web.Controllers.Admin.Study
 
 
                 var realFileName = PathUtils.GetFileNameWithoutExtension(fileName);
-                if (await _studyCourseFilesRepository.IsExistsAsync(realFileName, admin.CompanyId, request.GroupId))
+                if (await _studyCourseFilesRepository.IsExistsAsync(realFileName, auth.CompanyId, request.GroupId))
                 {
                     return this.Error("文件已存在，请勿重复上传");
                 }
 
-                var path = _pathManager.GetCourseFilesUploadPath(admin.CompanyId.ToString());
+                var path = _pathManager.GetCourseFilesUploadPath(auth.CompanyId.ToString());
                 if (request.GroupId > 0)
                 {
                     var parentIds = await _studyCourseFilesGroupRepository.GetParentIdListAsync(request.GroupId);
@@ -72,9 +78,9 @@ namespace XBLMS.Web.Controllers.Admin.Study
                     Url = url,
                     FileSize = TranslateUtils.ToInt(file.Length.ToString()),
                     Duration = request.Duration,
-                    CompanyId = admin.CompanyId,
-                    DepartmentId = admin.DepartmentId,
-                    CreatorId = admin.Id
+                    CompanyId = auth.CompanyId,
+                    DepartmentId = auth.DepartmentId,
+                    CreatorId = auth.AdminId
                 };
                 await _studyCourseFilesRepository.InsertAsync(courseFile);
 

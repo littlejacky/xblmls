@@ -15,6 +15,11 @@ namespace XBLMS.Web.Controllers.Admin.Study
         [HttpGet, Route(RouteUser)]
         public async Task<ActionResult<GetUserResult>> Submit([FromQuery] GetUserRequest request)
         {
+            if (!await _authManager.HasPermissionsAsync(MenuPermissionType.Manage))
+            {
+                return this.NoAuth();
+            }
+
             var planCourse = await _studyPlanCourseRepository.GetAsync(request.PlanId, request.Id);
             if (request.PlanId > 0)
             {

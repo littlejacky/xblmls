@@ -48,9 +48,22 @@ namespace XBLMS.Core.Repositories
             return await _repository.DeleteAsync(Q.WhereIn(nameof(StudyCourseTree.Id), ids)) > 0;
         }
 
-        public async Task<List<StudyCourseTree>> GetListAsync()
+        public async Task<List<StudyCourseTree>> GetListAsync(AuthorityAuth auth)
         {
-            return await GetAllAsync();
+            var query = Q.NewQuery();
+            if (auth.AuthType == Enums.AuthorityType.Admin || auth.AuthType == Enums.AuthorityType.AdminCompany)
+            {
+                query.Where(nameof(StudyCourseTree.CompanyId), auth.CurManageOrganId);
+            }
+            else if (auth.AuthType == Enums.AuthorityType.AdminDepartment)
+            {
+                query.Where(nameof(StudyCourseTree.DepartmentId), auth.CurManageOrganId);
+            }
+            else
+            {
+                query.Where(nameof(StudyCourseTree.CreatorId), auth.AdminId);
+            }
+            return await _repository.GetAllAsync(query.OrderBy(nameof(StudyCourseTree.Id)));
         }
         public async Task<List<StudyCourseTree>> GetAllAsync()
         {

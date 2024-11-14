@@ -3,7 +3,9 @@ using Microsoft.IdentityModel.Tokens;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using XBLMS.Core.Utils;
+using XBLMS.Enums;
 using XBLMS.Models;
+using XBLMS.Utils;
 
 namespace XBLMS.Web.Controllers.Admin.Study
 {
@@ -12,7 +14,12 @@ namespace XBLMS.Web.Controllers.Admin.Study
         [HttpGet, Route(Route)]
         public async Task<ActionResult<GetQueryResult>> Get([FromQuery] GetRequest request)
         {
-            var admin = await _authManager.GetAdminAsync();
+            if (!await _authManager.HasPermissionsAsync())
+            {
+                return this.NoAuth();
+            }
+
+            var auth = await _authManager.GetAuthorityAuth();
 
             var idList = new List<int> { 0 };
 
@@ -20,7 +27,7 @@ namespace XBLMS.Web.Controllers.Admin.Study
 
             if (!string.IsNullOrEmpty(request.Keyword))
             {
-                var files = await _studyCourseFilesRepository.GetAllAsync(request.Keyword);
+                var files = await _studyCourseFilesRepository.GetAllAsync(auth, request.Keyword);
 
                 if (files != null && files.Count > 0)
                 {
@@ -41,7 +48,7 @@ namespace XBLMS.Web.Controllers.Admin.Study
             }
             else
             {
-                var groups = await _studyCourseFilesGroupRepository.GetListAsync(request.GroupId);
+                var groups = await _studyCourseFilesGroupRepository.GetListAsync(auth, request.GroupId);
 
                 if (groups != null && groups.Count > 0)
                 {
@@ -60,7 +67,7 @@ namespace XBLMS.Web.Controllers.Admin.Study
                     }
                 }
 
-                var files = await _studyCourseFilesRepository.GetAllAsync(request.GroupId);
+                var files = await _studyCourseFilesRepository.GetAllAsync(auth, request.GroupId);
 
                 if (files != null && files.Count > 0)
                 {

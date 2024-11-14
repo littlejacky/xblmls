@@ -11,10 +11,11 @@ namespace XBLMS.Core.Repositories
 {
     public partial class StudyCourseRepository
     {
-        public async Task<(int total, List<string>)> User_GetPublicMarkListAsync()
+        public async Task<(int total, List<string>)> User_GetPublicMarkListAsync(int companyId)
         {
             var query = Q.
                 Select(nameof(StudyCourse.Mark)).
+                Where(nameof(StudyCourse.CompanyId), companyId).
                 WhereTrue(nameof(StudyCourse.Public)).
                 WhereNullOrFalse(nameof(StudyCourse.Locked));
             var list = new List<string>();
@@ -40,9 +41,10 @@ namespace XBLMS.Core.Repositories
             return (total, list);
 
         }
-        public async Task<(int total, List<StudyCourse> list)> User_GetPublicListAsync(string keyWords,string mark,string orderby, int pageIndex, int pageSize)
+        public async Task<(int total, List<StudyCourse> list)> User_GetPublicListAsync(int companyId, string keyWords, string mark, string orderby, int pageIndex, int pageSize)
         {
             var query = Q.
+                Where(nameof(StudyCourse.CompanyId), companyId).
                 WhereTrue(nameof(StudyCourse.Public)).
                 WhereNullOrFalse(nameof(StudyCourse.Locked));
             if (!string.IsNullOrEmpty(keyWords))
@@ -69,7 +71,7 @@ namespace XBLMS.Core.Repositories
                 query.OrderByDesc(nameof(StudyCourse.Id));
             }
 
-  
+
             var total = await _repository.CountAsync(query);
             var list = await _repository.GetAllAsync(query.ForPage(pageIndex, pageSize));
             return (total, list);

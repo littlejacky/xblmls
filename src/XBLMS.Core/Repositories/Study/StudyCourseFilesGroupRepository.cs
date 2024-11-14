@@ -54,8 +54,25 @@ namespace XBLMS.Core.Repositories
         }
 
 
-        public async Task<List<StudyCourseFilesGroup>> GetListAsync(int parentId)
+        public async Task<List<StudyCourseFilesGroup>> GetListAsync(AuthorityAuth auth, int parentId)
         {
+            var query = Q.NewQuery();
+
+
+            if (auth.AuthType == Enums.AuthorityType.Admin || auth.AuthType == Enums.AuthorityType.AdminCompany)
+            {
+                query.Where(nameof(StudyCourseFilesGroup.CompanyId), auth.CurManageOrganId);
+            }
+            else if (auth.AuthType == Enums.AuthorityType.AdminDepartment)
+            {
+                query.Where(nameof(StudyCourseFilesGroup.DepartmentId), auth.CurManageOrganId);
+            }
+            else
+            {
+                query.Where(nameof(StudyCourseFilesGroup.CreatorId), auth.AdminId);
+            }
+
+
             return await _repository.GetAllAsync(Q.
                 Where(nameof(StudyCourseFilesGroup.ParentId), parentId).
                 OrderBy(nameof(StudyCourseFilesGroup.CreatedDate)));

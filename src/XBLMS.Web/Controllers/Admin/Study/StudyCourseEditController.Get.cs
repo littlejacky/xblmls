@@ -62,7 +62,7 @@ namespace XBLMS.Web.Controllers.Admin.Study
                 }
             }
 
-            var tree = await _studyManager.GetStudyCourseTreeCascadesAsync();
+            var tree = await _studyManager.GetStudyCourseTreeCascadesAsync(auth);
             var markList = await _studyCourseRepository.GetMarkListAsync();
 
             if (tree == null || tree.Count == 0)
@@ -75,7 +75,7 @@ namespace XBLMS.Web.Controllers.Admin.Study
                     CreatorId = auth.AdminId
                 });
                 course.TreeId = treeId;
-                tree = await _studyManager.GetStudyCourseTreeCascadesAsync();
+                tree = await _studyManager.GetStudyCourseTreeCascadesAsync(auth);
             }
             return new GetResult
             {

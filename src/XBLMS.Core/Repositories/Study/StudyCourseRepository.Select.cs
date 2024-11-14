@@ -1,6 +1,7 @@
 ﻿using Datory;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using XBLMS.Dto;
 using XBLMS.Models;
 using XBLMS.Repositories;
 using XBLMS.Services;
@@ -10,9 +11,25 @@ namespace XBLMS.Core.Repositories
 {
     public partial class StudyCourseRepository
     {
-        public async Task<(int total, List<StudyCourse> list)> Select_GetListAsync(string keyWords, string type, int pageIndex, int pageSize)
+        public async Task<(int total, List<StudyCourse> list)> Select_GetListAsync(AuthorityAuth auth, string keyWords, string type, int pageIndex, int pageSize)
         {
             var query = Q.WhereNullOrFalse(nameof(StudyCourse.Locked));
+
+
+            if (auth.AuthType == Enums.AuthorityType.Admin || auth.AuthType == Enums.AuthorityType.AdminCompany)
+            {
+                query.Where(nameof(StudyCourse.CompanyId), auth.CurManageOrganId);
+            }
+            else if (auth.AuthType == Enums.AuthorityType.AdminDepartment)
+            {
+                query.Where(nameof(StudyCourse.DepartmentId), auth.CurManageOrganId);
+            }
+            else
+            {
+                query.Where(nameof(StudyCourse.CreatorId), auth.AdminId);
+            }
+
+
             if (!string.IsNullOrEmpty(type))
             {
                 if (type == "online")
