@@ -61,7 +61,20 @@ namespace XBLMS.Core.Repositories
             var query = Q.Where(nameof(StudyPlanCourse.PlanId), planId).Where(nameof(StudyPlanCourse.CourseId), courseId);
             return await _repository.GetAsync(query);
         }
+        public async Task<(int total, List<StudyPlanCourse> list)> GetListByTeacherAsync(int teacherId, string keyWords, int pageIndex, int pageSize)
+        {
+            var query = Q.Where(nameof(StudyPlanCourse.TeacherId), teacherId);
 
+            if (!string.IsNullOrEmpty(keyWords))
+            {
+                query.Where(q => q.WhereLike(nameof(StudyPlanCourse.CourseName), $"%{keyWords}%"));
+            }
+
+            query.OrderByDesc(nameof(StudyPlanCourse.Id));
+            var total = await _repository.CountAsync(query);
+            var list = await _repository.GetAllAsync(query.ForPage(pageIndex, pageSize));
+            return (total, list);
+        }
         public async Task<List<StudyPlanCourse>> GetListAsync(bool isSelect, int planId)
         {
             var query = Q.Where(nameof(StudyPlanCourse.PlanId), planId);

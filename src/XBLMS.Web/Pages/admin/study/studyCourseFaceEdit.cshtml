@@ -70,6 +70,12 @@
                 <el-form-item label="培训老师" prop="offlineTeacher" :rules="{ required: true, message: '请输入培训老师' }">
                     <el-input v-model="form.offlineTeacher"></el-input>
                 </el-form-item>
+                <el-form-item label="">
+                    <el-tooltip effect="dark" :content="form.teacherName" placement="right" v-if="form.teacherId>0">
+                        <el-button type="success" icon="el-icon-star-on" v-on:click="btnDeleteTeacherClick">已选择上课老师</el-button>
+                    </el-tooltip>
+                    <el-button plain icon="el-icon-star-off" v-on:click="btnSelectTeacherClick" v-else>选择上课老师</el-button>
+                </el-form-item>
                 <el-form-item label="课程描述" prop="description">
                     <el-input ref="description" type="textarea" :autosize="{ minRows: 3}" v-model="form.description"></el-input>
                     <el-link type="primary" icon="el-icon-document" v-on:click="btnOpenEditClick('description','form')">富文本编辑</el-link>

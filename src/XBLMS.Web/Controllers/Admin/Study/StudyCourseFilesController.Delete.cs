@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using XBLMS.Configuration;
 using XBLMS.Dto;
 using XBLMS.Utils;
 
@@ -10,6 +11,11 @@ namespace XBLMS.Web.Controllers.Admin.Study
         [HttpPost, Route(RouteDelete)]
         public async Task<ActionResult<BoolResult>> Delete([FromBody] IdRequest request)
         {
+            if (_settingsManager.IsSafeMode)
+            {
+                return this.Error(Constants.ErrorSafe);
+            }
+
             var admin = await _authManager.GetAdminAsync();
 
             var info = await _studyCourseFilesRepository.GetAsync(request.Id);

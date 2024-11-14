@@ -131,6 +131,8 @@ var methods = {
         courseName: item.name,
         isSelectCourse: isSelect,
         offLine: item.offLine,
+        teacherId: item.teacherId,
+        teacherName: item.teacherName,
         examId: item.examId,
         examName: item.examName,
         examQuestionnaireId: item.examQuestionnaireId,
@@ -161,6 +163,26 @@ var methods = {
 
     })
 
+  },
+  btnRemoveCourse: function (row, isSelect) {
+    var $this = this;
+    top.utils.alertWarning({
+      title: '提醒',
+      text: '确定移除该课程吗？',
+      callback: function () {
+        if (isSelect) {
+          $this.form.selectTotalDuration -= row.duration;
+          $this.form.selectTotalCount -= 1;
+          $this.form.selectCourseOverCount -= 1;
+          $this.courseSelectList = $this.courseSelectList.filter(f => f.guid !== row.guid);
+        }
+        else {
+          $this.form.totalDuration -= row.duration;
+          $this.form.totalCount -= 1;
+          $this.courseList = $this.courseList.filter(f => f.guid !== row.guid);
+        }
+      }
+    });
   },
   btnDeleteExamClick: function (guid, isSelect) {
     var $this = this;
@@ -231,6 +253,62 @@ var methods = {
       }
 
     }
+  },
+  btnSelectTeacherClick: function (guid, isSelect) {
+    this.curGuid = guid;
+    this.curIsSelect = isSelect;
+
+    var $this = this;
+    top.utils.openLayer({
+      title: false,
+      closebtn: 0,
+      url: utils.getCommonUrl('selectAdministrators', { pf: window.name }),
+      width: "88%",
+      height: "98%"
+    });
+  },
+  selectAdminCallback: function (id, name) {
+    if (this.curIsSelect) {
+      this.courseSelectList.forEach(item => {
+        if (item.guid === this.curGuid) {
+          item.teacherId = id;
+          item.teacherName = name;
+        }
+      });
+    }
+    else {
+      this.courseList.forEach(item => {
+        if (item.guid === this.curGuid) {
+          item.teacherId = id;
+          item.teacherName = name;
+        }
+      });
+    }
+  },
+  btnDeleteTeacherClick: function (guid, isSelect) {
+    var $this = this;
+    top.utils.alertWarning({
+      title: '提醒',
+      text: '确定移除上课老师吗？',
+      callback: function () {
+        if (isSelect) {
+          $this.courseSelectList.forEach(item => {
+            if (item.guid === guid) {
+              item.teacherId = 0;
+              item.teacherName = '';
+            }
+          });
+        }
+        else {
+          $this.courseList.forEach(item => {
+            if (item.guid === guid) {
+              item.teacherId = 0;
+              item.teacherName = '';
+            }
+          });
+        }
+      }
+    });
   },
   btnSelectQClick: function (guid, isSelect) {
     this.curGuid = guid;
@@ -344,26 +422,6 @@ var methods = {
       }
     });
   },
-  btnRemoveCourse: function (row, isSelect) {
-    var $this = this;
-    top.utils.alertWarning({
-      title: '提醒',
-      text: '确定移除该课程吗？',
-      callback: function () {
-        if (isSelect) {
-          $this.form.selectTotalDuration -= row.duration;
-          $this.form.selectTotalCount -= 1;
-          $this.form.selectCourseOverCount -= 1;
-          $this.courseSelectList = $this.courseSelectList.filter(f => f.guid !== row.guid);
-        }
-        else {
-          $this.form.totalDuration -= row.duration;
-          $this.form.totalCount -= 1;
-          $this.courseList = $this.courseList.filter(f => f.guid !== row.guid);
-        }
-      }
-    });
-  }
 };
 
 var $vue = new Vue({

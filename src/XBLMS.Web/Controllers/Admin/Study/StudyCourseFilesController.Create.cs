@@ -15,6 +15,11 @@ namespace XBLMS.Web.Controllers.Admin.Study
         [HttpPost, Route(Route)]
         public async Task<ActionResult<GetResult>> Create([FromForm] CreateRequest request, [FromForm] IFormFile file)
         {
+            if (_settingsManager.IsSafeMode)
+            {
+                return this.Error(Constants.ErrorSafe);
+            }
+
             try
             {
                 var admin = await _authManager.GetAdminAsync();

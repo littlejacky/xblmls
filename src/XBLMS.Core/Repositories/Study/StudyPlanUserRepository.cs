@@ -167,8 +167,8 @@ namespace XBLMS.Core.Repositories
                     OrWhere(nameof(StudyPlanUser.State), StudyStatType.Weikaishi.GetValue());
                     return q;
                 }).
-                Where(nameof(StudyPlanUser.PlanBeginDateTime), ">", DateTime.Now).
-                Where(nameof(StudyPlanUser.PlanEndDateTime), "<", DateTime.Now).
+                Where(nameof(StudyPlanUser.PlanBeginDateTime), "<", DateTime.Now).
+                Where(nameof(StudyPlanUser.PlanEndDateTime), ">", DateTime.Now).
                 Where(nameof(StudyPlanUser.UserId), userId).
                 WhereNullOrFalse(nameof(StudyPlanUser.Locked));
 

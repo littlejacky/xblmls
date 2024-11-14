@@ -50,6 +50,10 @@ namespace XBLMS.Models
         public string OfflineAddress { get; set; }
         [DataColumn]
         public string OfflineTeacher { get; set; }
+        [DataColumn]
+        public int TeacherId { get; set; }
+        [DataColumn]
+        public string TeacherName { get; set; }
 
         [DataColumn]
         public int ExamId { get; set; }

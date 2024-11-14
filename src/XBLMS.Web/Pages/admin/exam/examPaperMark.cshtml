@@ -10,6 +10,14 @@
                 <el-form-item>
                     <el-button :size="euiSize" icon="el-icon-search" type="primary" v-on:click="btnMarkSearchClick">查 询</el-button>
                 </el-form-item>
+                <el-form-item>
+                    <el-tooltip placement="top">
+                        <div slot="content">
+                            如果某场考试的某些答卷被分配了阅卷老师，阅卷老师可以在这里进行阅卷管理，如果阅卷老师为普通管理员，记得分配角色。
+                        </div>
+                        <i class="el-icon-info"></i>
+                    </el-tooltip>
+                </el-form-item>
             </el-form>
         </div>
         <div>

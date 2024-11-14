@@ -17,7 +17,7 @@
         <el-form-item>
         </el-form-item>
     </el-form>
-    <el-table ref="paperTable" :data="paperList" :size="euiSize" highlight-current-row :row-style="{ cursor: 'pointer' }" v-on:current-change="handleCurrentChange"
+    <el-table ref="paperTable" :data="paperList" :size="euiSize" highlight-current-row :row-style="{ cursor: 'pointer' }" v-on:current-change="selectCurrentChange"
               style="width: 100%" :height="$(window).height()-263">
         <el-table-column label="#"
                          type="index"

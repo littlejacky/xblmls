@@ -27,7 +27,9 @@ var data = utils.init({
   contextMenuVisible: false,
   contextTabName: null,
   contextLeft: 0,
-  contextTop: 0
+  contextTop: 0,
+
+  isSafeMode:false
 });
 
 var methods = {
@@ -47,6 +49,7 @@ var methods = {
           $this.redirectPassword(res.local.userName);
         } else {
 
+          $this.isSafeMode = res.isSafeMode;
           $this.local = res.local;
           $this.menus = res.menus;
           $this.getLevelMenus($this.menus);

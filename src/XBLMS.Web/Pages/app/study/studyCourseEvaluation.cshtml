@@ -1,6 +1,12 @@
 ﻿@page
 @{ Layout = "_LayoutApp"; }
-
+@section Styles {
+    <style>
+        .el-rate__icon {
+            font-size: 24px !important;
+        }
+    </style>
+}
 <el-card>
     <el-form label-position="top">
         <template v-for="item in list">

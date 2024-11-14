@@ -2,9 +2,9 @@
 
 var $urlUser = $url + '/user';
 var $urlUserExport = $urlUser + '/export';
+var $urlUserSet = $urlUser + '/set';
+var $urlUserOver = $urlUser + '/over';
 
-var $urlCourseware = $url + '/courseware';
-var $urlCoursewareExport = $urlCourseware + '/export';
 
 var $urlScore = $url + '/score';
 var $urlScoreExport = $urlScore + '/export';
@@ -33,6 +33,7 @@ var data = utils.init({
   },
   userList: null,
   userTotal: 0,
+  userSelection: [],
   tabPosition: 'left',
 
   formCourseWare: {
@@ -169,6 +170,78 @@ var methods = {
       utils.error(error, { layer: true });
     }).then(function () {
       utils.loading($this, false);
+    });
+  },
+  userHandleSelectionChange(val) {
+    this.userSelection = val;
+  },
+  btnOfflineSetClick: function () {
+
+    var $this = this;
+
+    var msg = "如果没有选择部分学员，则操作所有学员。确定批量设置为已上课状态吗？";
+
+    top.utils.alertWarning({
+      title: '批量设置已上课',
+      text: msg,
+      callback: function () {
+        $this.apiSetOffLine();
+      }
+    });
+  },
+  apiSetOffLine: function () {
+    var userIds = [];
+    if (this.userSelection && this.userSelection.length > 0) {
+      this.userSelection.forEach(u => {
+        userIds.push(u.id);
+      });
+    }
+
+    var $this = this;
+    utils.loading(this, true);
+    $api.post($urlUserSet, { keyWords: this.form.keyWords, courseId: this.id, planId: this.planId, courseUserIds: userIds }).then(function (response) {
+      var res = response.data;
+      $this.userSelection = [];
+      utils.success("操作成功", { layer: true })
+    }).catch(function (error) {
+      utils.error(error, { layer: true });
+    }).then(function () {
+      utils.loading($this, false);
+      $this.apiGetUser();
+    });
+  },
+  btnOfflineOverClick: function () {
+    var $this = this;
+
+    var msg = "如果没有选择部分学员，则操作所有学员。确定批量设置为已完成状态吗？";
+
+    top.utils.alertWarning({
+      title: '批量设置完成课程',
+      text: msg,
+      callback: function () {
+        $this.apiOverOffLine();
+      }
+    });
+  },
+  apiOverOffLine: function () {
+    var userIds = [];
+    if (this.userSelection && this.userSelection.length > 0) {
+      this.userSelection.forEach(u => {
+        userIds.push(u.id);
+      });
+    }
+
+    var $this = this;
+    utils.loading(this, true);
+    $api.post($urlUserOver, { keyWords: this.form.keyWords, courseId: this.id, planId: this.planId, courseUserIds: userIds }).then(function (response) {
+      var res = response.data;
+      $this.userSelection = [];
+      utils.success("操作成功", { layer: true })
+    }).catch(function (error) {
+      utils.error(error, { layer: true });
+    }).then(function () {
+      utils.loading($this, false);
+      $this.apiGetUser();
     });
   },
   userHandleCurrentChange: function (val) {

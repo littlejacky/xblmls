@@ -138,12 +138,17 @@
                                 <el-button :size="euiSize" plain type="primary" icon="el-icon-download" v-on:click="btnUserExportClick">
                                     导 出
                                 </el-button>
+                                <el-button v-if="course.offLine && userTotal>0" :size="euiSize" icon="el-icon-setting" type="warning" v-on:click="btnOfflineSetClick">批量上课</el-button>
+                                <el-button v-if="course.offLine && userTotal>0" :size="euiSize" icon="el-icon-setting" type="warning" v-on:click="btnOfflineOverClick">批量完成</el-button>
                             </el-form-item>
                         </el-form>
                     </div>
                     <div>
-                        <el-table ref="userTable" :data="userList" :size="euiSize"
+                        <el-table ref="userTable" :data="userList" :size="euiSize" v-on:selection-change="userHandleSelectionChange"
                                   style="width: 100%" :height="$(window).height()-257">
+                            <el-table-column type="selection"
+                                             width="55">
+                            </el-table-column>
                             <el-table-column label="#"
                                              type="index"
                                              width="60"
@@ -180,7 +185,13 @@
                             </el-table-column>
                             <el-table-column prop="stateStr" label="状态" width="100">
                             </el-table-column>
-                            <el-table-column prop="overStudyDateTime" label="完成时间" width="135">
+                            <el-table-column label="上课状态" v-if="course.offLine">
+                                <template slot-scope="scope">
+                                    <el-tag type="success" v-if="scope.row.isSignin" size="mini">已上课</el-tag>
+                                    <el-tag type="warning" v-else size="mini">未上课</el-tag>
+                                </template>
+                            </el-table-column>
+                            <el-table-column prop="overStudyDateTime" label="完成时间" width="140">
                             </el-table-column>
                             @await Html.PartialAsync("_PartialTableEmpty")
                         </el-table>

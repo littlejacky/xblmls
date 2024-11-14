@@ -15,7 +15,7 @@
         "id": "studyplan",
         "order": 2,
         "text": "发布培训",
-        "link": "/admin/study/studyplan/",
+        "link": "/admin/study/studyPlan/",
         "iconClass": "el-icon-platform-eleme",
         "permissions": [ "Select", "Add", "Update", "Delete", "Manage" ],
         "isPermission": true,
@@ -48,14 +48,14 @@
             "text": "发布课程",
             "link": "/admin/study/studyCourse/",
             "iconClass": "el-icon-s-custom",
-            "Permissions": [ "Select", "Add", "Update", "Delete" ],
+            "Permissions": [ "Select", "Add", "Update", "Delete", "Manage" ],
             "isPermission": true,
             "children": [
             ]
           },
           {
             "id": "studymanage_courseevaluation",
-            "order": 2,
+            "order": 3,
             "text": "课程评价",
             "link": "/admin/study/studyCourseEvaluation/",
             "iconClass": "el-icon-s-custom",
@@ -67,8 +67,19 @@
         ]
       },
       {
-        "id": "exampaper",
+        "id": "studyteacher",
         "order": 4,
+        "text": "上课",
+        "link": "/admin/study/studyCourseTeacher/",
+        "iconClass": "el-icon-user-solid",
+        "permissions": [ "Select", "Manage" ],
+        "isPermission": true,
+        "children": [
+        ]
+      },
+      {
+        "id": "exampaper",
+        "order": 5,
         "text": "发布考试",
         "link": "/admin/exam/examPaper/",
         "iconClass": "el-icon-platform-eleme",
@@ -79,7 +90,7 @@
       },
       {
         "id": "exam",
-        "order": 5,
+        "order": 6,
         "text": "考试管理",
         "link": "",
         "iconClass": "el-icon-document-checked",
@@ -134,7 +145,7 @@
       },
       {
         "id": "exampapermark",
-        "order": 6,
+        "order": 7,
         "text": "阅卷",
         "link": "/admin/exam/examPaperMark/",
         "iconClass": "el-icon-finished",
@@ -145,7 +156,7 @@
       },
       {
         "id": "questionnaire",
-        "order": 7,
+        "order": 8,
         "text": "发布问卷",
         "link": "/admin/exam/examQuestionnaire",
         "iconClass": "el-icon-document-checked",
@@ -156,7 +167,7 @@
       },
       {
         "id": "account",
-        "order": 8,
+        "order": 9,
         "text": "企业管理",
         "link": "",
         "iconClass": "el-icon-s-custom",
@@ -222,7 +233,7 @@
       },
       {
         "id": "system",
-        "order": 9,
+        "order": 10,
         "text": "系统管理",
         "link": "",
         "iconClass": "el-icon-s-tools",
@@ -286,7 +297,7 @@
               },
               {
                 "id": "systemdatabasequery",
-                "order": 1,
+                "order": 2,
                 "text": "数据查询",
                 "link": "/admin/settings/databaseQuery/",
                 "iconClass": "el-icon-s-custom",
@@ -296,7 +307,7 @@
               },
               {
                 "id": "systemdatabasebackup",
-                "order": 1,
+                "order": 3,
                 "text": "备份与恢复",
                 "link": "/admin/settings/databaseBackup/",
                 "iconClass": "el-icon-s-custom",
@@ -306,7 +317,7 @@
               },
               {
                 "id": "systemdatabaseupdate",
-                "order": 1,
+                "order": 4,
                 "text": "升级数据库",
                 "link": "/admin/syncDatabase/",
                 "iconClass": "el-icon-s-custom",
@@ -319,7 +330,7 @@
           },
           {
             "id": "systemaminconfig",
-            "order": 6,
+            "order": 5,
             "text": "管理员设置",
             "link": "/admin/settings/administratorsConfig/",
             "iconClass": "el-icon-s-custom",
@@ -329,7 +340,7 @@
           },
           {
             "id": "systemuserconfig",
-            "order": 7,
+            "order": 6,
             "text": "用户设置",
             "link": "/admin/settings/usersConfig/",
             "iconClass": "el-icon-s-custom",
@@ -339,7 +350,7 @@
           },
           {
             "id": "systemhomemenus",
-            "order": 8,
+            "order": 7,
             "text": "用户菜单设置",
             "link": "/admin/settings/homeMenus/",
             "iconClass": "el-icon-s-custom",
@@ -349,7 +360,7 @@
           },
           {
             "id": "systemencrypt",
-            "order": 9,
+            "order": 8,
             "text": "加密工具",
             "link": "/admin/settings/utilitiesEncrypt/",
             "iconClass": "el-icon-s-custom",
@@ -361,7 +372,7 @@
       },
       {
         "id": "logs",
-        "order": 10,
+        "order": 11,
         "text": "日志管理",
         "link": "",
         "iconClass": "el-icon-warning",
@@ -414,7 +425,7 @@
       },
       {
         "id": "analysis",
-        "order": 11,
+        "order": 12,
         "text": "统计图表",
         "link": "",
         "iconClass": "el-icon-s-operation",
@@ -434,7 +445,7 @@
           },
           {
             "id": "analysisblock",
-            "order": 1,
+            "order": 2,
             "text": "访问拦截统计",
             "link": "/admin/settings/blockAnalysis/",
             "iconClass": "el-icon-s-custom",

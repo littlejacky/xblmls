@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using XBLMS.Configuration;
 using XBLMS.Dto;
 using XBLMS.Models;
 using XBLMS.Utils;
@@ -11,6 +12,11 @@ namespace XBLMS.Web.Controllers.Admin.Study
         [HttpPost, Route(RouteAdd)]
         public async Task<ActionResult<BoolResult>> Create([FromBody] CreateRequest request)
         {
+            if (_settingsManager.IsSafeMode)
+            {
+                return this.Error(Constants.ErrorSafe);
+            }
+
             var admin = await _authManager.GetAdminAsync();
 
             if (!DirectoryUtils.IsDirectoryNameCompliant(request.GroupName)) return this.Error("文件夹名称不合法");

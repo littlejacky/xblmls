@@ -132,7 +132,7 @@ namespace XBLMS.Core.Services
                     var byDurationOver = false;
                     if (studyPlan.SelectCourseOverByCount)
                     {
-                        if (overSelectCourseTotal >= studyPlan.SelectTotalCount)
+                        if (overSelectCourseTotal >= studyPlan.SelectCourseOverCount)
                         {
                             byCountOver = true;
                         }
@@ -143,7 +143,7 @@ namespace XBLMS.Core.Services
                     }
                     if (studyPlan.SelectCourseOverByDuration)
                     {
-                        if (overSelectCourseDurationTotal >= studyPlan.SelectTotalDuration)
+                        if (overSelectCourseDurationTotal >= studyPlan.SelectCourseOverMinute * 60)
                         {
                             byDurationOver = true;
                         }

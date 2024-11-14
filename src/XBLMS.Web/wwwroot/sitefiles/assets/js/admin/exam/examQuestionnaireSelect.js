@@ -77,7 +77,7 @@ var methods = {
       }
     });
   },
-  handleCurrentChange: function (row) {
+  selectCurrentChange: function (row) {
     this.selectRow = row;
   },
   btnSelectConfirmClick: function () {

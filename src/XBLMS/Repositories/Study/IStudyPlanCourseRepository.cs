@@ -16,6 +16,7 @@ namespace XBLMS.Repositories
         Task<StudyPlanCourse> GetAsync(int id);
         Task<StudyPlanCourse> GetAsync(int planId, int courseId);
         Task<List<StudyPlanCourse>> GetListAsync(bool isSelect, int planId);
+        Task<(int total, List<StudyPlanCourse> list)> GetListByTeacherAsync(int teacherId, string keyWords, int pageIndex, int pageSize);
         Task<List<StudyPlanCourse>> GetListAsync(int planId);
         Task<int> CountAsync(int planId, bool isSelect);
         Task<decimal> GetTotalCreditAsync(int planId, bool isSelect);

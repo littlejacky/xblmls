@@ -92,7 +92,20 @@ namespace XBLMS.Core.Repositories
             return (total, list);
         }
 
+        public async Task<(int total, List<StudyCourse> list)> GetListByTeacherAsync(int teacherId,string keyWords, int pageIndex, int pageSize)
+        {
+            var query = Q.Where(nameof(StudyCourse.TeacherId), teacherId);
 
+            if (!string.IsNullOrEmpty(keyWords))
+            {
+                query.Where(q => q.WhereLike(nameof(StudyCourse.Name), $"%{keyWords}%").OrWhereLike(nameof(StudyCourse.Mark), $"%{keyWords}%"));
+            }
+
+            query.OrderByDesc(nameof(StudyCourse.Id));
+            var total = await _repository.CountAsync(query);
+            var list = await _repository.GetAllAsync(query.ForPage(pageIndex, pageSize));
+            return (total, list);
+        }
         public async Task<int> MaxAsync()
         {
             var maxId = await _repository.MaxAsync(nameof(StudyCourse.Id));

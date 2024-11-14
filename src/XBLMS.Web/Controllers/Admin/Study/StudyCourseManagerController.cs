@@ -17,10 +17,15 @@ namespace XBLMS.Web.Controllers.Admin.Study
     public partial class StudyCourseManagerController : ControllerBase
     {
         private const string Route = "study/studyCourseManager";
+
         private const string RouteCourse = Route + "/course";
         private const string RouteCourseExport = RouteCourse + "/export";
+
         private const string RouteUser = Route + "/user";
         private const string RouteUserExport = RouteUser + "/export";
+        private const string RouteUserOfflineSet = RouteUser + "/set";
+        private const string RouteUserOfflineOver = RouteUser + "/over";
+
         private const string RouteScore = Route + "/score";
         private const string RouteScoreExport = RouteScore + "/export";
 
@@ -184,6 +189,18 @@ namespace XBLMS.Web.Controllers.Admin.Study
             public int Total { get; set; }
             public List<StudyCourseEvaluationUser> List { get; set; }
             public List<StudyCourseEvaluationItem> Items { get; set; }
+        }
+
+
+
+        public class GetSetOfflineRequest
+        {
+            public string State { get; set; }
+            public string KeyWords { get; set; }
+            public int CourseId { get; set; }
+            public int PlanId { get; set; }
+            public List<int> CourseUserIds { get; set; }
+
         }
 
     }

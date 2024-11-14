@@ -118,6 +118,33 @@ var methods = {
   uploadRemove(file) {
     this.form.coverImg = null;
   },
+  btnDeleteTeacherClick: function () {
+    var $this = this;
+    top.utils.alertWarning({
+      title: '提醒',
+      text: '确定移除上课老师吗？',
+      callback: function () {
+        $this.form.teacherId = 0;
+        $this.form.teacherName = "";
+        $this.form.offlineTeacher = "无";
+      }
+    });
+  },
+  btnSelectTeacherClick: function () {
+    var $this = this;
+    top.utils.openLayer({
+      title: false,
+      closebtn: 0,
+      url: utils.getCommonUrl('selectAdministrators', { pf: window.name }),
+      width: "88%",
+      height: "98%"
+    });
+  },
+  selectAdminCallback: function (id, name) {
+    this.form.teacherId = id;
+    this.form.teacherName = name;
+    this.form.offlineTeacher = name;
+  },
 
   btnDeleteExamClick: function () {
     var $this = this;

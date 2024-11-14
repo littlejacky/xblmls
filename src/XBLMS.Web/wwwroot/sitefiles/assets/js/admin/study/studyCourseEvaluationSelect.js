@@ -77,7 +77,7 @@ var methods = {
       height: "88%"
     });
   },
-  handleCurrentChange: function (row) {
+  selectCurrentChange: function (row) {
     this.selectRow = row;
   },
   btnSelectConfirmClick: function () {

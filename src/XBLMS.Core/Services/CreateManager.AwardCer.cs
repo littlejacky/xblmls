@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Numerics;
 using System.Threading.Tasks;
 using XBLMS.Core.Utils;
 using XBLMS.Dto;
@@ -43,14 +44,14 @@ namespace XBLMS.Core.Services
                             if (cerId > 0)
                             {
                                 var cerUser = await _databaseManager.ExamCerUserRepository.GetAsync(cerId);
-                                await AwardCerImg(paper, cerInfo, cerUser, user);
+                                await AwardCerImg(paper, cerInfo, cerUser, user, examStar.Score);
                             }
                         }
                     }
                 }
             }
         }
-        private async Task AwardCerImg(ExamPaper paper, ExamCer cerInfo, ExamCerUser cerUser, User user)
+        private async Task AwardCerImg(ExamPaper paper, ExamCer cerInfo, ExamCerUser cerUser, User user, decimal score)
         {
             if (string.IsNullOrWhiteSpace(cerUser.CerImg))
             {
@@ -67,7 +68,7 @@ namespace XBLMS.Core.Services
 
                     foreach (var position in positionmodel)
                     {
-                        //1001 姓名 2暂无 3暂无 4证件照  5证书编号 6认证日期 7颁发单位
+                        //1001 姓名 2暂无 3暂无 4证件照  5证书编号 6认证日期 7颁发单位 8计划 9课程 10试卷 11 成绩
                         if (position.Id == "1004")
                         {
                             var avatar = user.AvatarUrl;
@@ -102,6 +103,44 @@ namespace XBLMS.Core.Services
                             if (position.Id == "1007")
                             {
                                 _pathManager.AddWaterMarkForCertificateReviewAsync(filePath, cerInfo.OrganName, fontSize, position.PageX, position.PageY);
+                            }
+                            if (position.Id == "1008")//计划
+                            {
+                                if (cerUser.PlanId > 0)
+                                {
+                                    var plan = await _databaseManager.StudyPlanRepository.GetAsync(cerUser.PlanId);
+                                    if (plan != null)
+                                    {
+                                        _pathManager.AddWaterMarkForCertificateReviewAsync(filePath, plan.PlanName, fontSize, position.PageX, position.PageY);
+                                    }
+                                }
+                            }
+                            if (position.Id == "1009")//课程
+                            {
+                                if ((cerUser.CourseId > 0))
+                                {
+                                    var course = await _databaseManager.StudyCourseRepository.GetAsync(cerUser.CourseId);
+                                    if (course != null)
+                                    {
+                                        if (cerUser.PlanId > 0)
+                                        {
+                                            var planCourse = await _databaseManager.StudyPlanCourseRepository.GetAsync(cerUser.PlanId, cerUser.CourseId);
+                                            if (planCourse != null)
+                                            {
+                                                course.Name = planCourse.CourseName;
+                                            }
+                                        }
+                                        _pathManager.AddWaterMarkForCertificateReviewAsync(filePath, course.Name, fontSize, position.PageX, position.PageY);
+                                    }
+                                }
+                            }
+                            if (position.Id == "1010")//试卷
+                            {
+                                _pathManager.AddWaterMarkForCertificateReviewAsync(filePath, paper.Title, fontSize, position.PageX, position.PageY);
+                            }
+                            if (position.Id == "1011")//成绩
+                            {
+                                _pathManager.AddWaterMarkForCertificateReviewAsync(filePath, score.ToString(), fontSize, position.PageX, position.PageY);
                             }
                         }
                     }

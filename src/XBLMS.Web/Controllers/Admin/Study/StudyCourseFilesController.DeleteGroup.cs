@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using XBLMS.Configuration;
 using XBLMS.Dto;
 using XBLMS.Utils;
 
@@ -10,6 +11,11 @@ namespace XBLMS.Web.Controllers.Admin.Study
         [HttpPost, Route(RouteActionsDeleteGroup)]
         public async Task<ActionResult<BoolResult>> DeleteGroup([FromBody] IdRequest request)
         {
+            if (_settingsManager.IsSafeMode)
+            {
+                return this.Error(Constants.ErrorSafe);
+            }
+
             var admin = await _authManager.GetAdminAsync();
 
 

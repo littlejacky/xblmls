@@ -13,6 +13,10 @@ namespace XBLMS.Models
         [DataColumn]
         public string CourseName { get; set; }
         [DataColumn]
+        public int TeacherId { get; set; }
+        [DataColumn]
+        public string TeacherName { get; set; }
+        [DataColumn]
         public int ExamId { get; set; }
         [DataColumn]
         public string ExamName { get; set; }

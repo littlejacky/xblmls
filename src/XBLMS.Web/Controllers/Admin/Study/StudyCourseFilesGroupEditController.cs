@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using NSwag.Annotations;
 using System.Collections.Generic;
 using XBLMS.Configuration;
+using XBLMS.Core.Services;
 using XBLMS.Models;
 using XBLMS.Repositories;
 using XBLMS.Services;
@@ -18,12 +19,14 @@ namespace XBLMS.Web.Controllers.Admin.Study
         private const string RouteAdd = Route + "/add";
         private const string RouteUpdate = Route + "/update";
 
+        private readonly ISettingsManager _settingsManager;
         private readonly IAuthManager _authManager;
         private readonly IPathManager _pathManager;
         private readonly IStudyCourseFilesGroupRepository _studyCourseFilesGroupRepository;
 
-        public StudyCourseFilesGroupEditController(IAuthManager authManager, IPathManager pathManager, IStudyCourseFilesGroupRepository studyCourseFilesGroupRepository)
+        public StudyCourseFilesGroupEditController(ISettingsManager settingsManager, IAuthManager authManager, IPathManager pathManager, IStudyCourseFilesGroupRepository studyCourseFilesGroupRepository)
         {
+            _settingsManager = settingsManager;
             _authManager = authManager;
             _pathManager = pathManager;
             _studyCourseFilesGroupRepository = studyCourseFilesGroupRepository;

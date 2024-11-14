@@ -253,11 +253,8 @@
                         </el-form>
                     </div>
                     <div>
-                        <el-table ref="userTable" :data="userList" :size="euiSize" v-on:selection-change="userHandleSelectionChange"
+                        <el-table ref="userTable" :data="userList" :size="euiSize"
                                   style="width: 100%" :height="$(window).height()-257">
-                            <el-table-column type="selection"
-                                             width="55">
-                            </el-table-column>
                             <el-table-column label="#"
                                              type="index"
                                              width="60"
@@ -364,9 +361,9 @@
                             </el-table-column>
                             <el-table-column label="完成人数" prop="overUser">
                             </el-table-column>
-                            <el-table-column label="完成率" width="160">
+                            <el-table-column label="完成率">
                                 <template slot-scope="scope">
-                                    <el-progress :stroke-width="16" :percentage="utils.formatPercentFloat(scope.row.overUser,scope.row.studyUser)" color="#67c23a"></el-progress>
+                                    <el-progress :percentage="utils.formatPercentFloat(scope.row.overUser,scope.row.studyUser)" color="#67c23a"></el-progress>
                                 </template>
                             </el-table-column>
                             <el-table-column label="评价" width="100">

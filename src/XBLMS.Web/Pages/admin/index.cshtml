@@ -37,6 +37,11 @@
         <div class="me-1 mt-0">
             <el-avatar icon="el-icon-user-solid" :src="local.avatarUrl || DEFAULT_AVATAR_URL"></el-avatar>
         </div>
+        <div class="ms-2" v-if="isSafeMode">
+            <el-tooltip class="item" effect="dark" content="安全模式下可能会禁用一些功能，比如上传课件、系统运行环境等" placement="left">
+                <span class="p-2 bg-danger text-white">安全模式</span>
+            </el-tooltip>
+        </div>
     </div>
     <div id="sidebar" :style="{width: leftWidth + 'px'}">
         <div class="title">

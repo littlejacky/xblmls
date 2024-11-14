@@ -10,6 +10,11 @@ namespace XBLMS.Web.Controllers.Admin.Study
         [HttpPost, Route(RouteUpdate)]
         public async Task<ActionResult<UpdateResult>> Update([FromBody] UpdateRequest request)
         {
+            if (_settingsManager.IsSafeMode)
+            {
+                return this.Error(Constants.ErrorSafe);
+            }
+
             var admin = await _authManager.GetAdminAsync();
 
 

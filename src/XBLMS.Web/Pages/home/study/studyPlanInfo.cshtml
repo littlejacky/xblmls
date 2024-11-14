@@ -65,13 +65,14 @@
                         <div class="d-md-flex align-items-center text-lg-start">
                             <blockquote class="card blockquote-left card-lift pt-3 pe-4 border-warning">
                                 <p class="mb-4 font-italic ms-4">
-                                    <span class="fw-bold text-success">{{ studyPlan.overCourseTotal }}</span>/<span class="fw-light fs-5">{{ studyPlan.plan.courseTotal }}</span>
+                                    <span class="fw-bold text-success">{{ studyPlan.overCourseTotal }}</span>/<span class="fw-light fs-5">{{ studyPlan.plan.totalCount }}</span>
                                 </p>
-                                <footer class="blockquote-footer ms-4">必修课<span class="ms-2 text-warning">请完成所有必修课的学习</span></footer>
+                                <footer class="blockquote-footer ms-4" v-if="studyPlan.overCourseTotal>=studyPlan.plan.courseTotal">必修课<span class="ms-2 text-success">已完成</span></footer>
+                                <footer class="blockquote-footer ms-4" v-else>必修课<span class="ms-2 text-warning">请完成所有必修课的学习</span></footer>
                             </blockquote>
                             <blockquote class="card blockquote-left border-warning card-lift pt-3 pe-4 ms-4">
                                 <p class="mb-4 font-italic ms-4">
-                                    <span class="fw-bold text-success">{{ studyPlan.overSelectCourseTotal }}</span>/<span class="fw-light fs-5">{{ studyPlan.plan.selectCourseTotal }}</span>
+                                    <span class="fw-bold text-success">{{ studyPlan.overSelectCourseTotal }}</span>/<span class="fw-light fs-5">{{ studyPlan.plan.selectTotalCount }}</span>
                                 </p>
                                 <footer class="blockquote-footer ms-4">
                                     选修课

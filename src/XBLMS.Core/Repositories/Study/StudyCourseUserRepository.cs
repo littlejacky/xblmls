@@ -295,7 +295,14 @@ namespace XBLMS.Core.Repositories
             return totalCredit;
         }
 
+        public async Task<(int totalUser,int overTotalUser)> GetOverCountByAnalysisAsync(int planId, int courseId)
+        {
+            var query = Q.Where(nameof(StudyCourseUser.PlanId), planId).Where(nameof(StudyCourseUser.CourseId), courseId);
 
+            var count = await _repository.CountAsync(query);
+            var total = await _repository.CountAsync(query.Where(nameof(StudyCourseUser.State),StudyStatType.Yiwancheng.GetValue()));
+            return (count, total);
+        }
         public async Task<decimal> GetOverTotalCreditAsync(int planId, int userId, bool isSelect)
         {
             decimal totalCredit = 0;
@@ -327,7 +334,7 @@ namespace XBLMS.Core.Repositories
                   Where(nameof(StudyCourseUser.CourseId), courseId).
                   Where(nameof(StudyCourseUser.PlanId), planId);
             var starUser = await _repository.CountAsync(query);
-            var starTotal = await _repository.SumAsync(nameof(StudyCourseUser.TotalEvaluation), query);
+            var starTotal = await _repository.SumAsync(nameof(StudyCourseUser.AvgEvaluation), query);
             return (starUser, starTotal);
         }
     }

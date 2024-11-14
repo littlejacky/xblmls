@@ -138,7 +138,7 @@
                                             <el-input-number v-model="scope.row.taxis" :min="1" :max="100"></el-input-number>
                                         </template>
                                     </el-table-column>
-                                    <el-table-column label="课后设置" width="200">
+                                    <el-table-column label="课后设置" width="300">
                                         <template slot-scope="scope">
                                             <el-button-group>
                                                 <el-tooltip effect="dark" :content="scope.row.examName" placement="top" v-if="scope.row.examId>0">
@@ -153,6 +153,12 @@
                                                     <el-button size="mini" type="success" v-on:click.stop="btnDeleteEvaluationClick(scope.row.guid,false)">评价</el-button>
                                                 </el-tooltip>
                                                 <el-button size="mini" plain v-on:click.stop="btnSelectEvaluationClick(scope.row.guid,false)" v-else>评价</el-button>
+                                                <template v-if="scope.row.offLine">
+                                                    <el-tooltip effect="dark" :content="scope.row.teacherName" placement="top" v-if="scope.row.teacherId>0">
+                                                        <el-button size="mini" type="success"v-on:click.stop="btnDeleteTeacherClick(scope.row.guid,false)">上课老师</el-button>
+                                                    </el-tooltip>
+                                                    <el-button size="mini" plain v-on:click.stop="btnSelectTeacherClick(scope.row.guid,false)" v-else>上课老师</el-button>
+                                                </template>
                                             </el-button-group>
                                         </template>
                                     </el-table-column>
@@ -220,7 +226,7 @@
                                             <el-input-number v-model="scope.row.taxis" :min="1" :max="100"></el-input-number>
                                         </template>
                                     </el-table-column>
-                                    <el-table-column label="课后设置" width="200">
+                                    <el-table-column label="课后设置" width="300">
                                         <template slot-scope="scope">
                                             <el-button-group>
                                                 <el-tooltip effect="dark" :content="scope.row.examName" placement="top" v-if="scope.row.examId>0">
@@ -235,6 +241,12 @@
                                                     <el-button size="mini" type="success"  v-on:click.stop="btnDeleteEvaluationClick(scope.row.guid,true)">评价</el-button>
                                                 </el-tooltip>
                                                 <el-button size="mini" plain v-on:click.stop="btnSelectEvaluationClick(scope.row.guid,true)" v-else>评价</el-button>
+                                                <template v-if="scope.row.offLine">
+                                                    <el-tooltip effect="dark" :content="scope.row.teacherName" placement="top" v-if="scope.row.teacherId>0">
+                                                        <el-button size="mini" type="success" v-on:click.stop="btnDeleteTeacherClick(scope.row.guid,true)">上课老师</el-button>
+                                                    </el-tooltip>
+                                                    <el-button size="mini" plain v-on:click.stop="btnSelectTeacherClick(scope.row.guid,true)" v-else>上课老师</el-button>
+                                                </template>
                                             </el-button-group>
                                         </template>
                                     </el-table-column>

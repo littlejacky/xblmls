@@ -61,7 +61,7 @@
                         <div class="mb-3">
                             <blockquote class="card blockquote-left card-lift pt-3 border-warning">
                                 <p class="mb-3 font-italic ms-4">
-                                    <span class="fw-bold text-success">{{ studyPlan.overCourseTotal }}</span>/<span class="fw-light fs-5">{{ studyPlan.plan.courseTotal }}</span>
+                                    <span class="fw-bold text-success">{{ studyPlan.overCourseTotal }}</span>/<span class="fw-light fs-5">{{ studyPlan.plan.totalCount }}</span>
                                 </p>
                                 <footer class="blockquote-footer ms-4">必修课
                                     <span class="ms-2 text-success" v-if="studyPlan.overCourseTotal>=studyPlan.plan.courseTotal">已完成</span>
@@ -72,7 +72,7 @@
                         <div class="mb-3">
                             <blockquote class="card blockquote-left border-warning card-lift pt-3">
                                 <p class="mb-3 font-italic ms-4">
-                                    <span class="fw-bold text-success">{{ studyPlan.overSelectCourseTotal }}</span>/<span class="fw-light fs-5">{{ studyPlan.plan.selectCourseTotal }}</span>
+                                    <span class="fw-bold text-success">{{ studyPlan.overSelectCourseTotal }}</span>/<span class="fw-light fs-5">{{ studyPlan.plan.selectTotalCount }}</span>
                                 </p>
                                 <footer class="blockquote-footer ms-4">
                                     选修课

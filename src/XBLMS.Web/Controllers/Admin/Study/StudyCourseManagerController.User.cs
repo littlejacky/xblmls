@@ -1,10 +1,7 @@
 ﻿using Datory;
-using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Data.SQLite;
-using System.Numerics;
 using System.Threading.Tasks;
 using XBLMS.Dto;
 using XBLMS.Enums;
@@ -132,6 +129,10 @@ namespace XBLMS.Web.Controllers.Admin.Study
                 "状态",
                 "完成时间"
             };
+            if (course.OffLine)
+            {
+                head.Add("上课状态");
+            }
             var rows = new List<List<string>>();
 
             var (total, list) = await _studyCourseUserRepository.GetListAsync(request.PlanId, request.Id, request.KeyWords, request.State, 1, int.MaxValue);
@@ -164,19 +165,31 @@ namespace XBLMS.Web.Controllers.Admin.Study
                             maxCj = await _examPaperStartRepository.GetMaxScoreAsync(item.UserId, course.ExamId, 0, course.Id);
                         }
                     }
+                    var rowValue = new List<string>() {
 
-                    rows.Add([
                                 index.ToString(),
                                 user.UserName,
                                 user.DisplayName,
                                 user.Get("OrganNames").ToString(),
                                 $"{item.Credit}",
                                  $"{TranslateUtils.ToMinuteAndSecond(item.TotalDuration)}/{TranslateUtils.ToMinuteAndSecond(course.TotalEvaluation)}",
-                               maxCj >= 0?maxCj.ToString():"/",
+                               maxCj >= 0 ? maxCj.ToString() : "/",
                                item.AvgEvaluation.ToString(),
                                item.State.GetDisplayName(),
-                              item.OverStudyDateTime.HasValue? item.OverStudyDateTime.Value.ToString():"/"
-                            ]);
+                              item.OverStudyDateTime.HasValue ? item.OverStudyDateTime.Value.ToString() : "/"
+                            };
+                    if (course.OffLine)
+                    {
+                        if (item.IsSignin)
+                        {
+                            rowValue.Add("已上课");
+                        }
+                        else
+                        {
+                            rowValue.Add("未上课");
+                        }
+                    }
+                    rows.Add(rowValue);
 
                     index++;
 
@@ -190,6 +203,78 @@ namespace XBLMS.Web.Controllers.Admin.Study
             return new StringResult
             {
                 Value = downloadUrl
+            };
+        }
+
+        [HttpPost, Route(RouteUserOfflineOver)]
+        public async Task<ActionResult<BoolResult>> OfflineOver([FromBody] GetSetOfflineRequest request)
+        {
+            var course = await _studyCourseRepository.GetAsync(request.CourseId);
+            if (request.PlanId > 0)
+            {
+                var planCourse = await _studyPlanCourseRepository.GetAsync(request.PlanId, request.CourseId);
+                course.Credit = planCourse.Credit;
+            }
+            if (request.CourseUserIds != null && request.CourseUserIds.Count > 0)
+            {
+            
+                foreach (var id in request.CourseUserIds)
+                {
+                    var courseUser = await _studyCourseUserRepository.GetAsync(id);
+                    courseUser.Credit = course.Credit;
+                    courseUser.IsSignin = true;
+                    courseUser.State = StudyStatType.Yiwancheng;
+                    courseUser.OverStudyDateTime = DateTime.Now;
+                    await _studyCourseUserRepository.UpdateAsync(courseUser);
+                }
+            }
+            else
+            {
+                var (total, list) = await _studyCourseUserRepository.GetListAsync(request.PlanId, request.CourseId, request.KeyWords, request.State, 1, int.MaxValue);
+                if (total > 0)
+                {
+                    foreach (var item in list)
+                    {
+                        item.Credit = course.Credit;
+                        item.IsSignin = true;
+                        item.State = StudyStatType.Yiwancheng;
+                        item.OverStudyDateTime = DateTime.Now;
+                        await _studyCourseUserRepository.UpdateAsync(item);
+                    }
+                }
+            }
+            return new BoolResult
+            {
+                Value = true
+            };
+        }
+        [HttpPost, Route(RouteUserOfflineSet)]
+        public async Task<ActionResult<BoolResult>> OfflineSet([FromBody] GetSetOfflineRequest request)
+        {
+            if (request.CourseUserIds != null && request.CourseUserIds.Count > 0)
+            {
+                foreach (var id in request.CourseUserIds)
+                {
+                    var courseUser = await _studyCourseUserRepository.GetAsync(id);
+                    courseUser.IsSignin = true;
+                    await _studyCourseUserRepository.UpdateAsync(courseUser);
+                }
+            }
+            else
+            {
+                var (total, list) = await _studyCourseUserRepository.GetListAsync(request.PlanId, request.CourseId, request.KeyWords, request.State, 1, int.MaxValue);
+                if (total > 0)
+                {
+                    foreach (var item in list)
+                    {
+                        item.IsSignin = true;
+                        await _studyCourseUserRepository.UpdateAsync(item);
+                    }
+                }
+            }
+            return new BoolResult
+            {
+                Value = true
             };
         }
     }

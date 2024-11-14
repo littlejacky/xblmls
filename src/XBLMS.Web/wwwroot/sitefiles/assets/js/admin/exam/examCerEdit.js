@@ -23,36 +23,29 @@ var data = utils.init({
 
 var methods = {
   apiGet: function () {
-    if (utils.getQueryInt("id") > 0) {
+    var $this = this;
 
-      var $this = this;
-      utils.loading(this, true);
-      $api.get($url, { params: { id: this.id } }).then(function (response) {
-        var res = response.data;
-        var cerInfo = res.item;
+    $api.get($url, { params: { id: this.id } }).then(function (response) {
+      var res = response.data;
+      var cerInfo = res.item;
 
-        $this.form = _.assign({}, cerInfo);
+      $this.form = _.assign({}, cerInfo);
 
-        if ($this.id > 0)
-        {
-          $this.backgroundImg = cerInfo.backgroundImg;
-          $this.typeNow = cerInfo.markList;
-          $this.timer = setTimeout(function () {
-            for (var i = 0; i < cerInfo.position.length; i++) {
-              $this.createBox(cerInfo.position[i]);
-            }
-          }, 200);
-        }
+      if ($this.id > 0) {
+        $this.backgroundImg = cerInfo.backgroundImg;
+        $this.typeNow = cerInfo.markList;
+        $this.timer = setTimeout(function () {
+          for (var i = 0; i < cerInfo.position.length; i++) {
+            $this.createBox(cerInfo.position[i]);
+          }
+        }, 200);
+      }
 
-      }).catch(function (error) {
-        utils.error(error,{ layer:true });
-      }).then(function () {
-        utils.loading($this, false);
-      });
-    }
-    else {
-      utils.loading(this, false);
-    }
+    }).catch(function (error) {
+      utils.error(error, { layer: true });
+    }).then(function () {
+      utils.loading($this, false);
+    });
 
   },
   btnSubmitClick: function () {
@@ -227,6 +220,10 @@ var methods = {
     this.boxChange(value, 1005, "number", "证书编号", 30, 100, 10, 265);
     this.boxChange(value, 1006, "date", "认证日期", 30, 100, 10, 304);
     this.boxChange(value, 1007, "organName", "颁发单位", 30, 100, 10, 352);
+    this.boxChange(value, 1008, "planName", "计划名称", 30, 100, 10, 400);
+    this.boxChange(value, 1009, "courseName", "课程名称", 30, 100, 120, 400);
+    this.boxChange(value, 1010, "examName", "试卷名称", 30, 100, 10, 450);
+    this.boxChange(value, 1011, "examScore", "考试成绩", 30, 100, 120, 450);
   },
   uploadBefore(file) {
     var re = /(\.jpg|\.jpeg|\.bmp|\.gif|\.png|\.webp)$/i;

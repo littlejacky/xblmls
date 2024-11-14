@@ -1,5 +1,12 @@
 ﻿@page
 @{ Layout = "_LayoutHome"; }
+@section Styles{
+    <style>
+        .el-rate__icon{
+            font-size:30px !important;
+        }
+    </style>
+}
 
 <el-card>
     <div slot="header" class="clearfix">
@@ -17,7 +24,7 @@
                     </template>
                     <template v-else>
                         <el-form-item :label="item.title">
-                            <el-rate v-model="item.starValue" :max="maxStar"></el-rate>
+                            <el-rate v-model="item.starValue" :max="maxStar" class="fs-3"></el-rate>
                             <small class="text-warning">必填项</small>
                         </el-form-item>
                     </template>
