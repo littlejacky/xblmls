@@ -158,7 +158,7 @@ var utils = {
     if (duration > 3600) {
       var shi = Math.trunc(duration / 3600);
       var fen = Math.trunc(duration / 60);
-      return shi + "小时" + miao + "分钟";
+      return shi + "时" + miao + "分";
     }
     else {
       if (duration <= 60) {
@@ -167,7 +167,7 @@ var utils = {
       else {
         fen = Math.trunc(duration / 60);
         miao = Math.trunc(duration % 60);
-        return fen + "分钟" + miao + "秒";
+        return fen + "分" + miao + "秒";
       }
 
     }
@@ -1149,7 +1149,7 @@ if (window.swal && swal.mixin) {
 var PER_PAGE = 15;
 var DEFAULT_AVATAR_URL = '/sitefiles/assets/images/default_avatar.png';
 var DEFAULT_AVATAR_BG_URL = '/sitefiles/assets/images/default_avatar_bg.jpg';
-var DOCUMENTTITLE = 'XBLMS.EXAM';
+var DOCUMENTTITLE = 'XBLMS.ELEARNING';
 var DOCUMENTTITLE_ADMIN = DOCUMENTTITLE + '-后台管理';
 var DOCUMENTTITLE_HOME = DOCUMENTTITLE + '-用户中心';
 var DOCUMENTTITLE_DATABASEUPDATE = DOCUMENTTITLE + '-数据库升级';

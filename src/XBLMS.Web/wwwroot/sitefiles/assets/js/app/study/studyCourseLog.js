@@ -61,7 +61,7 @@ var methods = {
       }
 
     }).catch(function (error) {
-      utils.error(error);
+      utils.error(error, { layer: true });
     }).then(function () {
       utils.loading($this, false);
       $this.loadMoreLoading = false;
@@ -161,7 +161,7 @@ var $vue = new Vue({
   data: data,
   methods: methods,
   created: function () {
-    document.title = "上次学习";
+    top.document.title = "上次学习";
     this.apiGet();
   },
 });

@@ -25,6 +25,9 @@ var methods = {
       var res = response.data;
 
       $this.courseInfo = res.courseInfo;
+
+      top.document.title = res.courseInfo.name;
+
       $this.courseUser = res.courseInfo.courseUserInfo;
 
     }).catch(function (error) {

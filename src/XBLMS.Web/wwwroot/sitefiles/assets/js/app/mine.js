@@ -23,26 +23,10 @@ var methods = {
       utils.loading($this, false);
     });
   },
-  btnAppMenuClick: function (common) {
-    if (common === 'index') {
-      location.href = utils.getIndexUrl();
-    }
-    if (common === 'studyPlan') {
-      location.href = utils.getStudyUrl("studyPlan");
-    }
-    if (common === 'studyCourse') {
-      location.href = utils.getStudyUrl("studyCourse");
-    }
-    if (common === 'exam') {
-      location.href = utils.getExamUrl("examPaper");
-    }
-    if (common === 'wenjuan') {
-      location.href = utils.getExamUrl("examQuestionnaire");
-    }
-    if (common === 'mine') {
-      location.href = utils.getRootUrl('mine');
-    }
+  setDocumentTitel: function () {
+    top.document.title = "用户中心";
   },
+
   btnViewCourseClick: function (row) {
 
     var curl = utils.getStudyUrl('studyCourseInfo', { id: row.id, planId: row.planId });
@@ -58,6 +42,7 @@ var methods = {
       width: "100%",
       height: "100%",
       end: function () {
+        $this.setDocumentTitel();
         $this.apiGet();
       }
     });
@@ -74,6 +59,7 @@ var methods = {
         width: "100%",
         height: "100%",
         end: function () {
+          $this.setDocumentTitel();
           $this.apiGet();
         }
       });
@@ -84,23 +70,72 @@ var methods = {
         closebtn: 0,
         url: utils.getRootUrl('password'),
         width: "100%",
-        height: "100%"
+        height: "100%",
+        end: function () {
+          $this.setDocumentTitel();
+        }
       });
     }
     if (common === 'courseLog') {
-      location.href = utils.getStudyUrl('studyCourseLog');
+      top.utils.openLayer({
+        title: false,
+        closebtn: 0,
+        url: utils.getStudyUrl('studyCourseLog'),
+        width: "100%",
+        height: "100%",
+        end: function () {
+          $this.setDocumentTitel();
+          $this.apiGet();
+        }
+      });
     }
     if (common === 'logout') {
-      location.href = utils.getRootUrl("logout");
+      top.utils.openLayer({
+        title: false,
+        closebtn: 0,
+        url: utils.getRootUrl("logout"),
+        width: "100%",
+        height: "100%",
+        end: function () {
+          $this.setDocumentTitel();
+        }
+      });
     }
     if (common === 'shuati') {
-      location.href = utils.getExamUrl("examPracticeLog");
+      top.utils.openLayer({
+        title: false,
+        closebtn: 0,
+        url: utils.getExamUrl("examPracticeLog"),
+        width: "100%",
+        height: "100%",
+        end: function () {
+          $this.setDocumentTitel();
+        }
+      });
     }
     if (common === 'cer') {
-      location.href = utils.getExamUrl("examPaperCer");
+      top.utils.openLayer({
+        title: false,
+        closebtn: 0,
+        url: utils.getExamUrl("examPaperCer"),
+        width: "100%",
+        height: "100%",
+        end: function () {
+          $this.setDocumentTitel();
+        }
+      });
     }
     if (common === 'score') {
-      location.href = utils.getExamUrl("examPaperScore");
+      top.utils.openLayer({
+        title: false,
+        closebtn: 0,
+        url: utils.getExamUrl("examPaperScore"),
+        width: "100%",
+        height: "100%",
+        end: function () {
+          $this.setDocumentTitel();
+        }
+      });
     }
   }
 };
@@ -110,7 +145,7 @@ var $vue = new Vue({
   data: data,
   methods: methods,
   created: function () {
-    document.title = "我的";
+    this.setDocumentTitel();
     this.apiGet();
   }
 });

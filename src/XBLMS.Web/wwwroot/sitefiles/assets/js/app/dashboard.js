@@ -178,21 +178,7 @@ var methods = {
       utils.loading($this, false);
     });
   },
-  btnExamMoreMenuClick: function () {
-    location.href = utils.getExamUrl("examPaper");
-  },
-  btnExamMoniMoreMenuClick: function () {
-    location.href = utils.getExamUrl("examPaperMoni");
-  },
-  btnShuatiMoreMenuClick: function () {
-    location.href = utils.getExamUrl("examPractice");
-  },
-  btnPlanMoreMenuClick: function () {
-    location.href = utils.getStudyUrl("studyPlan");
-  },
-  btnCourseMoreMenuClick: function () {
-    location.href = utils.getStudyUrl("studyCourse");
-  },
+
   btnViewCer: function (cer) {
     top.utils.openLayerPhoto({
       title: cer.name,
@@ -256,6 +242,49 @@ var methods = {
       width: "100%",
       height: "100%",
       end: function () {
+        $this.setDocumentTitel();
+        $this.apiGet();
+      }
+    });
+  },
+  goMoni: function () {
+    var $this = this;
+    top.utils.openLayer({
+      title: false,
+      closebtn: 0,
+      url: utils.getExamUrl("examPaperMoni"),
+      width: "100%",
+      height: "100%",
+      end: function () {
+        $this.setDocumentTitel();
+        $this.apiGet();
+      }
+    });
+  },
+  goShuati: function () {
+    var $this = this;
+    top.utils.openLayer({
+      title: false,
+      closebtn: 0,
+      url: utils.getExamUrl("examPractice"),
+      width: "100%",
+      height: "100%",
+      end: function () {
+        $this.setDocumentTitel();
+        $this.apiGet();
+      }
+    });
+  },
+  goWenjuan: function () {
+    var $this = this;
+    top.utils.openLayer({
+      title: false,
+      closebtn: 0,
+      url: utils.getExamUrl("examQuestionnaire"),
+      width: "100%",
+      height: "100%",
+      end: function () {
+        $this.setDocumentTitel();
         $this.apiGet();
       }
     });
@@ -269,6 +298,7 @@ var methods = {
       width: "100%",
       height: "100%",
       end: function () {
+        $this.setDocumentTitel();
         $this.apiGet();
       }
     });
@@ -282,6 +312,7 @@ var methods = {
       width: "100%",
       height: "100%",
       end: function () {
+        $this.setDocumentTitel();
         $this.apiGet();
       }
     });
@@ -301,30 +332,14 @@ var methods = {
       width: "100%",
       height: "100%",
       end: function () {
+        $this.setDocumentTitel();
         $this.apiGet();
       }
     });
   },
-  btnAppMenuClick: function (common) {
-    if (common === 'index') {
-      location.href = utils.getIndexUrl();
-    }
-    if (common === 'studyPlan') {
-      location.href = utils.getStudyUrl("studyPlan");
-    }
-    if (common === 'studyCourse') {
-      location.href = utils.getStudyUrl("studyCourse");
-    }
-    if (common === 'exam') {
-      location.href = utils.getExamUrl("examPaper");
-    }
-    if (common === 'wenjuan') {
-      location.href = utils.getExamUrl("examQuestionnaire");
-    }
-    if (common === 'mine') {
-      location.href = utils.getRootUrl('mine');
-    }
-  }
+  setDocumentTitel: function () {
+    top.document.title = "首页";
+  },
 };
 Vue.component("apexchart", {
   extends: VueApexCharts
@@ -334,7 +349,7 @@ var $vue = new Vue({
   data: data,
   methods: methods,
   created: function () {
-    document.title = "首页";
+    this.setDocumentTitel();
     this.apiGet();
   },
 });

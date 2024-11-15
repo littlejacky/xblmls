@@ -81,7 +81,7 @@ var methods = {
   uploadError: function(err) {
     utils.loading(this, false);
     var error = JSON.parse(err.message);
-    utils.error(error.message);
+    utils.error(error.message, { layer: true });
   },
 
   uploadRemove(file) {
@@ -91,13 +91,13 @@ var methods = {
   uploadBgBefore(file) {
     var re = /(\.jpg|\.jpeg|\.bmp|\.gif|\.png|\.webp)$/i;
     if (!re.exec(file.name)) {
-      utils.error('背景只能是图片格式，请选择有效的文件上传!');
+      utils.error('背景只能是图片格式，请选择有效的文件上传!', { layer: true });
       return false;
     }
 
     var isLt10M = file.size / 1024 / 1024 < 10;
     if (!isLt10M) {
-      utils.error('背景图片大小不能超过 10MB!');
+      utils.error('背景图片大小不能超过 10MB!', { layer: true });
       return false;
     }
     return true;
@@ -129,6 +129,7 @@ var $vue = new Vue({
   data: data,
   methods: methods,
   created: function () {
+    top.document.title = "修改信息";
     this.uploadUrl = $apiUrl + $urlUpload;
     this.apiGet();
   }

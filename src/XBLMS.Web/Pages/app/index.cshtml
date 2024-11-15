@@ -12,12 +12,7 @@
     </style>
 }
 <div style="height:100%;" :style="{height: ($(window).height()) + 'px'}" class="bg-white">
-    <div v-if="contentLoading" class="text-center py-8">
-        <div class="py-8"></div>
-        <span><i class="spinner-border text-primary fs-4" style="width: 3rem; height: 3rem;"></i></span>
-        <p class="pt-3 fs-4 text-primary">Å¬Á¦¼ÓÔØÖÐ...</p>
-    </div>
-    <iframe v-else id="homeRightIframe" ref="homeRightIframe" :src="rightUrl" style="width: 100%;height:100%; border: none;" :style="{height: ($(window).height()) + 'px'}"></iframe>
+    <iframe id="homeRightIframe" ref="homeRightIframe" :src="rightUrl" style="width: 100%;height:100%; border: none;" :style="{height: ($(window).height()) + 'px'}"></iframe>
 </div>
 <template>
     <div style="position:fixed;left:0;bottom:0;width:100%;" class="bg-gray-100">
@@ -26,7 +21,7 @@
                 <div class="text-center" v-on:click="btnAppMenuClick('index')">
                     <i class="fs-3" :class="appMenuActive==='index'?'bi bi-house-heart-fill text-primary fw-bold':'bi bi-house text-black fw-light'"></i>
                     <div :class="appMenuActive==='index'?'text-primary fw-bold':'text-black fw-light'">
-                        Ê× Ò³
+                        é¦– é¡µ
                     </div>
                 </div>
             </el-link>
@@ -34,7 +29,7 @@
                 <div class="text-center" v-on:click="btnAppMenuClick('studyPlan')">
                     <i class="fs-3" :class="appMenuActive==='studyPlan'?'bi bi-star-fill text-primary fw-bold':'bi bi-star text-black fw-light'"></i>
                     <div :class="appMenuActive==='studyPlan'?'text-primary fw-bold':'text-black fw-light'">
-                        Åà Ñµ
+                        åŸ¹ è®­
                     </div>
                 </div>
             </el-link>
@@ -42,7 +37,7 @@
                 <div class="text-center" v-on:click="btnAppMenuClick('studyCourse')">
                     <i class="fs-3" :class="appMenuActive==='studyCourse'?'bi bi-clipboard-check-fill text-primary fw-bold':'bi bi-clipboard-check text-black fw-light'"></i>
                     <div :class="appMenuActive==='studyCourse'?'text-primary fw-bold':'text-black fw-light'">
-                        ¿Î ³Ì
+                        è¯¾ ç¨‹
                     </div>
                 </div>
             </el-link>
@@ -50,7 +45,7 @@
                 <div class="text-center" v-on:click="btnAppMenuClick('exam')">
                     <i class="fs-3 bi bi-ui-checks" :class="appMenuActive==='exam'?'text-primary fw-bold':'text-black fw-light'"></i>
                     <div :class="appMenuActive==='exam'?'text-primary fw-bold':'text-black fw-light'">
-                        ¿¼ ÊÔ
+                        è€ƒ è¯•
                     </div>
                 </div>
             </el-link>
@@ -58,7 +53,7 @@
                 <div class="text-center" v-on:click="btnAppMenuClick('mine')">
                     <i class="fs-3" :class="appMenuActive==='mine'?'bi bi-person-fill text-primary fw-bold':'bi bi-person text-black fw-light'"></i>
                     <div :class="appMenuActive==='mine'?'text-primary fw-bold':'text-black fw-light'">
-                        ÎÒ µÄ
+                        æˆ‘ çš„
                     </div>
                 </div>
             </el-link>

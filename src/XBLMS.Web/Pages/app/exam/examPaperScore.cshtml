@@ -51,6 +51,12 @@
 <div class="pt-10" v-else>
     <el-empty image="/sitefiles/assets/images/nodata.svg" description="暂无考试记录"></el-empty>
 </div>
+<div class="py-8"></div>
+<div style="position:fixed;left:0;bottom:0;width:100%;" class="text-center mb-5 animate__animated animate__fadeInUp">
+    <div class="btn-group">
+        <button type="button" class="btn btn-primary rounded-pill" v-on:click="utils.closeLayerSelf"><i class="el-icon-back me-2"></i>返 回</button>
+    </div>
+</div>
 <el-button class="fs-4 p-3" icon="el-icon-search" circle style="position:fixed;right:5%;top:80%;" type="primary" v-on:click="scoreDialogVisible=true"></el-button>
 <template>
     <el-drawer title="成绩查询"

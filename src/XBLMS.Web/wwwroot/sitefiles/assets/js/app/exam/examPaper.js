@@ -79,26 +79,6 @@ var methods = {
         $this.apiGetItem(row.examUserId);
       }
     });
-  },
-  btnAppMenuClick: function (common) {
-    if (common === 'index') {
-      location.href = utils.getIndexUrl();
-    }
-    if (common === 'studyPlan') {
-      location.href = utils.getStudyUrl("studyPlan");
-    }
-    if (common === 'studyCourse') {
-      location.href = utils.getStudyUrl("studyCourse");
-    }
-    if (common === 'exam') {
-      location.href = utils.getExamUrl("examPaper");
-    }
-    if (common === 'wenjuan') {
-      location.href = utils.getExamUrl("examQuestionnaire");
-    }
-    if (common === 'mine') {
-      location.href = utils.getRootUrl('mine');
-    }
   }
 };
 

@@ -21,7 +21,7 @@ var methods = {
       $this.form.parentId = $this.groupId;
 
     }).catch(function (error) {
-      utils.error(error);
+      utils.error(error, { layer: true });
     }).then(function () {
       utils.loading($this, false);
     });
@@ -41,7 +41,7 @@ var methods = {
       var res = response.data;
       utils.success("操作成功")
     }).catch(function (error) {
-      utils.error(error);
+      utils.error(error, { layer: true });
     }).then(function () {
       utils.loading($this, false);
       utils.closeLayerSelf();

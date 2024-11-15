@@ -33,7 +33,7 @@ var methods = {
       $this.total = res.total;
 
     }).catch(function (error) {
-      utils.error(error);
+      utils.error(error, { layer: true });
     }).then(function () {
       utils.loading($this, false);
       $this.loadMoreLoading = false;
@@ -62,7 +62,7 @@ var methods = {
       });
     }
     else {
-      utils.error("不允许查看答卷");
+      utils.error("不允许查看答卷", { layer: true });
     }
 
   },
@@ -73,7 +73,7 @@ var $vue = new Vue({
   data: data,
   methods: methods,
   created: function () {
-    document.title = "考试成绩";
+    top.document.title = "考试成绩";
     this.apiGet();
   },
 });

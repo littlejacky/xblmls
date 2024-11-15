@@ -31,7 +31,7 @@ var methods = {
       $this.total = res.total;
 
     }).catch(function (error) {
-      utils.error(error);
+      utils.error(error, { layer: true });
     }).then(function () {
       utils.loading($this, false);
       $this.loadMoreLoading = false;
@@ -77,10 +77,10 @@ var methods = {
     $api.post($urlDelete).then(function (response) {
       var res = response.data;
       if (res.value) {
-        utils.success("已清空");
+        utils.success("已清空", { layer: true });
       }
     }).catch(function (error) {
-      utils.error(error);
+      utils.error(error, { layer: true });
     }).then(function () {
       utils.loading($this, false);
       $this.apiGet();
@@ -93,7 +93,7 @@ var $vue = new Vue({
   data: data,
   methods: methods,
   created: function () {
-    document.title = "刷题记录";
+    top.document.title = "刷题记录";
     this.apiGet();
   },
 });

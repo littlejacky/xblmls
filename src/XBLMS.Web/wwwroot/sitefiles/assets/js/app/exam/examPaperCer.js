@@ -24,7 +24,7 @@ var methods = {
 
 
     }).catch(function (error) {
-      utils.error(error);
+      utils.error(error, { layer: true });
     }).then(function () {
       utils.loading($this, false);
     });
@@ -48,7 +48,7 @@ var $vue = new Vue({
   data: data,
   methods: methods,
   created: function () {
-    document.title = "我的证书";
+    top.document.title = "我的证书";
     this.apiGet();
   },
 });

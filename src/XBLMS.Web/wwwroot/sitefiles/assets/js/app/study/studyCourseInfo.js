@@ -32,6 +32,9 @@ var methods = {
       var res = response.data;
 
       $this.courseInfo = res.courseInfo;
+
+      top.document.title = res.courseInfo.name;
+
       $this.courseWareList = res.courseInfo.courseWareList;
       $this.courseUser = res.courseInfo.courseUserInfo;
 
@@ -41,7 +44,7 @@ var methods = {
       }
 
     }).catch(function (error) {
-      utils.error(error);
+      utils.error(error, { layer: true });
     }).then(function () {
       utils.loading($this, false);
     });
@@ -60,14 +63,15 @@ var methods = {
       $this.videoPlayer = new Player({
         el: document.querySelector('#videoPlayer'),
         url: $this.courseWareCurrent.courseWareInfo.url,
-        autoplay: $this.courseInfo.state || $this.courseInfo.boolWare ? false : true,
+        autoplay: true,
+        loop: true,
         videoInit: true,
         closeInactive: true,
         disableProgress: $this.courseInfo.state || $this.courseInfo.boolWare ? false : true,
         lastPlayTime: ($this.courseWareCurrent.currentDuration + 10) > $this.courseWareCurrent.courseWareInfo.duration ? 0 : $this.courseWareCurrent.currentDuration,
         //playbackRate: [0.5, 0.75, 1, 1.5, 2],
         //cssFullscreen: true,
-        rotateFullscreen:true,
+        rotateFullscreen: true,
         fluid: true,
         miniplayerConfig: {
           top: 0,
@@ -131,7 +135,7 @@ var methods = {
       var res = response.data;
       $this.courseUser.totalDuration = res.totalDuration;
     }).catch(function (error) {
-      utils.error(error);
+      utils.error(error, { layer: true });
     }).then(function () {
     });
   },
@@ -144,7 +148,7 @@ var methods = {
         $this.apiGet();
       }
     }).catch(function (error) {
-      utils.error(error);
+      utils.error(error, { layer: true });
     }).then(function () {
     });
   },
@@ -219,7 +223,7 @@ var methods = {
       $this.eTotal = res.total;
 
     }).catch(function (error) {
-      utils.error(error);
+      utils.error(error, { layer: true });
     }).then(function () {
       $this.eLoadMoreLoading = false;
     });

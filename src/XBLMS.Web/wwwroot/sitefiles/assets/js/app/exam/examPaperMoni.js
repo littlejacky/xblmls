@@ -87,7 +87,7 @@ var $vue = new Vue({
   data: data,
   methods: methods,
   created: function () {
-    document.title = "模拟测试";
+    top.document.title = "模拟测试";
     this.apiGet();
   },
 });

@@ -17,15 +17,17 @@
 </style>
 }
 <div class="position-relative" v-if="local">
-    <div class="position-absolute top-0 end-0 z-3 d-flex justify-content-between  align-items-center pt-1 me-1">
+    <div class="position-absolute top-0 end-0 z-3 d-flex justify-content-between align-items-center pt-2 me-1">
         <div class="me-1" v-if="local.isOrganAdmin">
-            <button type="button" class="btn btn-outline-warning btn-sm me-1 rounded-pill" v-on:click="btnChangeAuthOrganClick">
-                切换管理单位：{{ local.curOrganName }}<i class="el-icon-arrow-down el-icon--right"></i>
-            </button>
+            <el-tooltip class="item" effect="dark" content="切换管理单位" placement="left">
+                <button type="button" class="btn btn-outline-warning btn-sm me-1 rounded" v-on:click="btnChangeAuthOrganClick">
+                    {{ local.curOrganName }}<i class="el-icon-arrow-down el-icon--right"></i>
+                </button>
+            </el-tooltip>
         </div>
         <div class="me-2">
             <el-dropdown :show-timeout="0" v-on:command="btnUserMenuClick">
-                <button type="button" class="btn btn-outline-success btn-sm rounded-pill">{{ local.auth }}-{{ local.displayName }}<i class="el-icon-arrow-down el-icon--right"></i></button>
+                <button type="button" class="btn btn-outline-success btn-sm rounded">{{ local.auth }}-{{ local.displayName }}<i class="el-icon-arrow-down el-icon--right"></i></button>
                 <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item icon="el-icon-user" command="view">预览信息</el-dropdown-item>
                     <el-dropdown-item icon="el-icon-edit" command="profile">修改信息</el-dropdown-item>
@@ -35,11 +37,13 @@
             </el-dropdown>
         </div>
         <div class="me-1 mt-0">
-            <el-avatar icon="el-icon-user-solid" :src="local.avatarUrl || DEFAULT_AVATAR_URL"></el-avatar>
+            <span class="avatar avatar-sm">
+                <img :src="local.avatarUrl || DEFAULT_AVATAR_URL" class="rounded">
+            </span>
         </div>
         <div class="ms-2" v-if="isSafeMode">
             <el-tooltip class="item" effect="dark" content="安全模式下可能会禁用一些功能，比如上传课件、系统运行环境等" placement="left">
-                <span class="p-2 bg-danger text-white">安全模式</span>
+                <span class="p-3 bg-danger text-white rounded-0">安全模式</span>
             </el-tooltip>
         </div>
     </div>

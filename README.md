@@ -14,19 +14,16 @@
 
 ## 演示地址
 
-* 演示环境为单机构版本，多机构版本麻烦自己在本地运行代码体验
 
-* 单机构版本源码地址 [点击前往单机构版本源码](https://gitee.com/xblms/xblmes)
-
-### 管理端 [点击前往管理端演示](http://8.131.91.222:5000/admin)：
+### 管理端 [点击前往管理端演示](http://8.131.91.222:5001/admin)：
 
 * 账号：admin，密码：123123
 
-### 用户端 [点击前往用户端演示](http://8.131.91.222:5000/home)：
+### 用户端 [点击前往用户端演示](http://8.131.91.222:5001/home)：
 
 * 账号：test1，密码：123123
 
-### 移动端 [点击前往移动端演示](http://8.131.91.222:5000/app)：
+### 移动端 [点击前往移动端演示](http://8.131.91.222:5001/app)：
 
 * 账号：test1，密码：123123
 
@@ -34,29 +31,21 @@
 
 * 扫码前往移动端演示
 
-* <img width="200" src="https://gitee.com/xblms/xblmes/raw/master/src/XBLMS.Web/wwwroot/sitefiles/assets/images/demo/app/二维码.png"/>
+* <img width="200" src="https://gitee.com/xblms/xblmls/raw/master/src/XBLMS.Web/wwwroot/sitefiles/assets/images/demo/app/qrcode.png"/>
 
 
 ## 系统展示
 
 * 移动端
 
-<img width="180" src="https://gitee.com/xblms/xblmes/raw/master/src/XBLMS.Web/wwwroot/sitefiles/assets/images/demo/app/首页.jpg"/>
-<img width="180"  src="https://gitee.com/xblms/xblmes/raw/master/src/XBLMS.Web/wwwroot/sitefiles/assets/images/demo/app/考试中心.jpg"/>
-<img width="180"  src="https://gitee.com/xblms/xblmes/raw/master/src/XBLMS.Web/wwwroot/sitefiles/assets/images/demo/app/考试详细.jpg"/>
-<img width="180"  src="https://gitee.com/xblms/xblmes/raw/master/src/XBLMS.Web/wwwroot/sitefiles/assets/images/demo/app/考试中.jpg"/>
-<img width="180"  src="https://gitee.com/xblms/xblmes/raw/master/src/XBLMS.Web/wwwroot/sitefiles/assets/images/demo/app/交卷结果.jpg"/>
-<img width="180"  src="https://gitee.com/xblms/xblmes/raw/master/src/XBLMS.Web/wwwroot/sitefiles/assets/images/demo/app/考试成绩.jpg"/>
-<img width="180"  src="https://gitee.com/xblms/xblmes/raw/master/src/XBLMS.Web/wwwroot/sitefiles/assets/images/demo/app/查看答卷.jpg"/>
-<img width="180"  src="https://gitee.com/xblms/xblmes/raw/master/src/XBLMS.Web/wwwroot/sitefiles/assets/images/demo/app/问卷调查.jpg"/>
-<img width="180"  src="https://gitee.com/xblms/xblmes/raw/master/src/XBLMS.Web/wwwroot/sitefiles/assets/images/demo/app/刷题练习.jpg"/>
-<img width="180"  src="https://gitee.com/xblms/xblmes/raw/master/src/XBLMS.Web/wwwroot/sitefiles/assets/images/demo/app/刷题练习中.jpg"/>
-<img width="180"  src="https://gitee.com/xblms/xblmes/raw/master/src/XBLMS.Web/wwwroot/sitefiles/assets/images/demo/app/练习结果.jpg"/>
-<img width="180"  src="https://gitee.com/xblms/xblmes/raw/master/src/XBLMS.Web/wwwroot/sitefiles/assets/images/demo/app/刷题记录.jpg"/>
-<img width="180"  src="https://gitee.com/xblms/xblmes/raw/master/src/XBLMS.Web/wwwroot/sitefiles/assets/images/demo/app/我的.jpg"/>
-
-
-
+<img width="180" src="https://gitee.com/xblms/xblmls/raw/master/src/XBLMS.Web/wwwroot/sitefiles/assets/images/demo/app/index.jpg"/>
+<img width="180" src="https://gitee.com/xblms/xblmls/raw/master/src/XBLMS.Web/wwwroot/sitefiles/assets/images/demo/app/plan.jpg"/>
+<img width="180" src="https://gitee.com/xblms/xblmls/raw/master/src/XBLMS.Web/wwwroot/sitefiles/assets/images/demo/app/plan1.jpg"/>
+<img width="180" src="https://gitee.com/xblms/xblmls/raw/master/src/XBLMS.Web/wwwroot/sitefiles/assets/images/demo/app/course.jpg"/>
+<img width="180" src="https://gitee.com/xblms/xblmls/raw/master/src/XBLMS.Web/wwwroot/sitefiles/assets/images/demo/app/course1.jpg"/>
+<img width="180" src="https://gitee.com/xblms/xblmls/raw/master/src/XBLMS.Web/wwwroot/sitefiles/assets/images/demo/app/exam.jpg"/>
+<img width="180" src="https://gitee.com/xblms/xblmls/raw/master/src/XBLMS.Web/wwwroot/sitefiles/assets/images/demo/app/exam1.jpg"/>
+<img width="180" src="https://gitee.com/xblms/xblmls/raw/master/src/XBLMS.Web/wwwroot/sitefiles/assets/images/demo/app/mine.jpg"/>
 
 ## 发布手册
 发布和部署手册：(https://gitee.com/xblms/xblms/tree/master/%E9%83%A8%E7%BD%B2%E6%89%8B%E5%86%8C)
@@ -131,6 +120,33 @@
 |修改信息|修改基本信息。|
 |修改密码|修改登录密码。|
 |退出登录|退出系统。|
+
+#### 发布培训
+- 支持 培训考试，可绑定培训证书，学员完成所有课程即可获得证书
+
+|功能|说明|
+|:-|:-|
+|发布培训|新增，修改，删除等操作。|
+|复制|复制培训计划。|
+|启停用|支持启用停用。|
+|培训管理|统计分析，学员管理，课程管理，成绩管理。|
+
+#### 培训管理
+- 围绕培训计划的一些管理功能。
+
+|功能|说明|
+|:-|:-|
+|课件上传|课件管理，支持上传、下载、预览、分组等。|
+|课程管理|支持线上、线下课管理，支持绑定课后考试、课后问卷、课后评价，支持绑定培训计划。支持学员管理、成绩管理、问卷管理、评价管理、证书管理等。|
+|评价管理|不同的课程绑定不同的课程评价，支持评星和文本。|
+
+#### 上课
+- 如果培训计划绑定了线下课或者公共课线下类型的课程，在管理员发布课程的时候可以选择上课老师，上课老师登录系统可以在该功能进行课程管理。
+
+|功能|说明|
+|:-|:-|
+|学员管理|可以批量设置上课状态和完成状态。|
+|其他|考试成绩、课后问卷、课后评价、证书管理等。|
 
 #### 发布考试
 - 支持 正式考试、模拟自测 等模式

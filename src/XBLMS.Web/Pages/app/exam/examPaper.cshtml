@@ -64,13 +64,13 @@
 <el-button plain class="fs-4 p-3 animate__animated animate__fadeInRight" icon="el-icon-search" circle style="position:fixed;right:5%;top:80%;" type="primary" v-on:click="examDialogVisible=true"></el-button>
 <template>
     <el-drawer title="考试查询"
-               size="90%"
+               size="60%"
                :visible.sync="examDialogVisible"
                direction="btt">
         <div class="text-center p-2">
             <div class="card border mb-6 mb-md-0 shadow-none sticky-top">
                 <div class="card-body border-top py-3">
-                    <div class="text-start">开考时间</div>
+                    <div class="text-start mb-2"><small>开考时间</small></div>
                     <el-select v-model="form.date" placeholder="开考时间" class="w-100">
                         <el-option label="全部" value=""></el-option>
                         <el-option label="今天" value="today"></el-option>

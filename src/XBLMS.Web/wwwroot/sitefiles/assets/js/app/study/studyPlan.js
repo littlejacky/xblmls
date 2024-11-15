@@ -80,30 +80,14 @@ var methods = {
       width: "100%",
       height: "100%",
       end: function () {
+        $this.setDocumentTitel();
         $this.apiGetItem(id);
       }
     });
   },
-  btnAppMenuClick: function (common) {
-    if (common === 'index') {
-      location.href = utils.getIndexUrl();
-    }
-    if (common === 'studyPlan') {
-      location.href = utils.getStudyUrl("studyPlan");
-    }
-    if (common === 'studyCourse') {
-      location.href = utils.getStudyUrl("studyCourse");
-    }
-    if (common === 'exam') {
-      location.href = utils.getExamUrl("examPaper");
-    }
-    if (common === 'wenjuan') {
-      location.href = utils.getExamUrl("examQuestionnaire");
-    }
-    if (common === 'mine') {
-      location.href = utils.getRootUrl('mine');
-    }
-  }
+  setDocumentTitel: function () {
+    top.document.title = "学习中心";
+  },
 };
 
 var $vue = new Vue({
@@ -111,7 +95,7 @@ var $vue = new Vue({
   data: data,
   methods: methods,
   created: function () {
-    document.title = "学习中心";
+    this.setDocumentTitel();
     this.apiGet();
   },
 });

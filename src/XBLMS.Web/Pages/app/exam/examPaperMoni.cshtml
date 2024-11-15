@@ -49,13 +49,13 @@
 <div class="py-8"></div>
 <div style="position:fixed;left:0;bottom:0;width:100%;" class="text-center mb-5 animate__animated animate__fadeInUp">
     <el-button-group class="btn-group p-1 bg-gray-300 rounded-pill">
-        <el-button v-on:click="location.href=utils.getIndexUrl()" icon="el-icon-back" class="rounded-pill" type="primary">返 回</el-button>
+        <el-button v-on:click="utils.closeLayerSelf" icon="el-icon-back" class="rounded-pill" type="primary">返 回</el-button>
     </el-button-group>
 </div>
-<el-button class="fs-4 p-3" icon="el-icon-search" circle style="position:fixed;right:5%;top:80%;" type="primary" v-on:click="examDialogVisible=true"></el-button>
+<el-button plain class="fs-4 p-3" icon="el-icon-search" circle style="position:fixed;right:5%;top:80%;" type="primary" v-on:click="examDialogVisible=true"></el-button>
 <template>
     <el-drawer title="考试查询"
-               size="90%"
+               size="60%"
                :visible.sync="examDialogVisible"
                direction="btt">
         <div class="text-center p-2">

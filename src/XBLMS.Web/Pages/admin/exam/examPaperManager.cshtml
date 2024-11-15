@@ -11,7 +11,7 @@
         </div>
         <el-tabs tab-position="left">
             <el-tab-pane label="统计分析">
-                <el-scrollbar class="scrollbar" :style="{ height: ($(window).innerHeight()-120) + 'px' }">
+                <el-scrollbar class="scrollbar" :style="{ height: ($(window).innerHeight()-125) + 'px' }">
                     <div style="margin-right:18px;">
                         <el-row :gutter="5">
                             <el-col :span="8" class="text-center">
@@ -202,7 +202,7 @@
                     </div>
                     <div>
                         <el-table ref="userTable" :data="userList" :size="euiSize" v-on:selection-change="userHandleSelectionChange"
-                                  style="width: 100%" :height="$(window).height()-255">
+                                  style="width: 100%" :height="$(window).height()-260">
                             <el-table-column type="selection"
                                              width="55">
                             </el-table-column>
@@ -291,7 +291,7 @@
                     </div>
                     <div>
                         <el-table ref="markTable" :data="markList" :size="euiSize" v-on:selection-change="markHandleSelectionChange"
-                                  style="width: 100%" :height="$(window).height()-255">
+                                  style="width: 100%" :height="$(window).height()-260">
                             <el-table-column type="selection"
                                              width="55">
                             </el-table-column>
@@ -381,7 +381,7 @@
                     </div>
                     <div>
                         <el-table ref="scoreTable" :data="scoreList" :size="euiSize"
-                                  style="width: 100%" :height="$(window).height()-255">
+                                  style="width: 100%" :height="$(window).height()-260">
                             <el-table-column label="#"
                                              type="index"
                                              width="60"

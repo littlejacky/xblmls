@@ -92,9 +92,6 @@ var methods = {
       width: "100%",
       height: "100%",
     });
-  },
-  btnLogClick: function () {
-    location.href = utils.getExamUrl('examPracticeLog');
   }
 };
 
@@ -103,7 +100,7 @@ var $vue = new Vue({
   data: data,
   methods: methods,
   created: function () {
-    document.title = "练习中心";
+    top.document.title = "刷题中心";
     this.apiGet();
   },
 });
