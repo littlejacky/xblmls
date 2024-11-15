@@ -81,26 +81,42 @@
         <div>
             <el-tooltip placement="left-end">
                 <div slot="content">
-                    <div class="p-2">
+                    <div class="p-1">
                         <el-card>
+                            <div slot="header">
+                                <span>待完成</span>
+                            </div>
                             <div>
-                                <div v-if="planTotal>0" class="mb-2">
-                                    <el-link :underline="true" v-on:click="btnTopMenuClick('studyPlan')" type="warning">剩余<span class="text-danger mx-2">{{ planTotal }}</span>个学习任务未完成</el-link>
-                                </div>
-                                <div v-if="courseTotal>0" class="mb-2">
-                                    <el-link :underline="true" v-on:click="btnTopMenuClick('studyCourse')" type="warning">剩余<span class="text-danger mx-2">{{ courseTotal }}</span>个课程未完成</el-link>
-                                </div>
-                                <div v-if="paperTotal>0" class="mb-2">
-                                    <el-link :underline="true" v-on:click="btnTopMenuClick('examPaper')" type="warning">剩余<span class="text-danger mx-2">{{ paperTotal }}</span>份试卷未参考</el-link>
-                                 </div>
-                                <div v-if="qPaperTotal>0">
-                                    <el-link :underline="true" v-on:click="btnTopMenuClick('examQuestionnaire')" type="warning">剩余<span class="text-danger mx-2">{{ qPaperTotal }}</span>份问卷未填写</el-link>
-                                </div>
+                                <ul class="list-group lh-2g">
+                                    <li style="cursor:pointer;" class="list-group-item d-flex justify-content-between align-items-center" v-if="planTotal>0" v-on:click="btnTopMenuClick('studyPlan')">
+                                        <span class="me-5"><i class="text-warning bi bi-star-half me-2"></i>待完成学习任务</span>
+                                        <span class="badge bg-primary ms-5">{{ planTotal }}</span>
+                                    </li>
+                                    <li style="cursor:pointer;" class="list-group-item d-flex justify-content-between align-items-center" v-if="courseTotal>0" v-on:click="btnTopMenuClick('studyCourse')">
+                                        <span class="me-5">
+                                            <i class="text-warning bi bi-star-half me-2"></i>待完成课程
+                                        </span>
+                                        <span class="badge bg-primary ms-5">{{ courseTotal }}</span>
+                                    </li>
+                                    <li style="cursor:pointer;" class="list-group-item d-flex justify-content-between align-items-center" v-if="paperTotal>0" v-on:click="btnTopMenuClick('examPaper')">
+                                        <span class="me-5">
+                                            <i class="text-warning bi bi-star-half me-2"></i>待参加考试
+                                        </span>
+                                        <span class="badge bg-primary ms-5">{{ paperTotal }}</span>
+                                    </li>
+                                    <li style="cursor:pointer;" class="list-group-item d-flex justify-content-between align-items-center" v-if="qPaperTotal>0" v-on:click="btnTopMenuClick('examQuestionnaire')">
+                                        <span class="me-5">
+                                            <i class="text-warning bi bi-star-half me-2"></i>待填写问卷
+                                        </span>
+                                        <span class="badge bg-primary ms-5">{{ qPaperTotal }}</span>
+                                    </li>
+                                </ul>
                             </div>
                         </el-card>
                     </div>
                 </div>
-                <button type="button" class="btn btn-outline-warning btn-sm me-2 rounded-pill border-0" v-if="taskTotal>0">
+                <button type="button" class="btn btn-outline-warning btn-sm me-2 rounded-pill border-0 position-relative" v-if="taskTotal>0">
+                    <span class="position-absolute top-0 end-0 translate-middle p-1 bg-danger border border-light rounded-circle"></span>
                     <span class="mx-1">{{ taskTotal }}</span> 个待办任务<i class="el-icon-arrow-down el-icon--right"></i>
                 </button>
             </el-tooltip>
@@ -124,7 +140,7 @@
             <span>
                 <span v-if="!isCollapse">
                     <el-link v-if="!isMobileMenu" :underline="false" v-on:click="isCollapse = true;">
-                        <i class="el-icon-s-fold" style="font-size: 16px;"></i><span style="font-size: 16px;margin-left:8px;">用户中心</span>
+                        <i class="el-icon-s-fold" style="font-size: 16px;"></i><span style="font-size: 16px;margin-left:8px;" class="text-dark">用户中心</span>
                     </el-link>
                 </span>
                 <span v-else>

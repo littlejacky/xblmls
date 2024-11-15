@@ -16,7 +16,7 @@
     </style>
 }
 
-<div class="card border-0 rounded-0 mb-3 smooth-shadow-lg" v-on:click="top.$vue.btnAppMenuClick('mine')">
+<div class="card border-0 rounded-bottom-4 mb-3 smooth-shadow-lg" v-on:click="top.$vue.btnAppMenuClick('mine')">
     <div class="rounded-0 bg-gradient-mix-shade py-8">
         <div class="py-2"></div>
     </div>
@@ -150,44 +150,46 @@
                 <el-link :underline="false" v-on:click="top.$vue.btnAppMenuClick('studyPlan')">更多<i class="el-icon-more ms-2"></i></el-link>
             </h5>
             <div class="mt-3">
-                <div class="card rounded-0 card-hover position-relative p-3 px-4 bg-gray-100" v-if="studyPlan && studyPlan.id>0" style="cursor:pointer;" v-on:click="studyPlan.isStudy ? btnViewPlanClick(studyPlan.id) : utils.error('计划不在有效期内')">
-                    <div class="position-absolute top-50 end-0 translate-middle-y pe-3">
-                        <img width="88" src="/sitefiles/assets/images/status/weikaishi.png" v-if="studyPlan.state==='Weikaishi'" />
-                        <img width="88" src="/sitefiles/assets/images/status/xuexizhong.png" v-if="studyPlan.state==='Xuexizhong'" />
-                        <img width="88" src="/sitefiles/assets/images/status/yidabiao.png" v-if="studyPlan.state==='Yidabiao'" />
-                        <img width="88" src="/sitefiles/assets/images/status/weidabiao.png" v-if="studyPlan.state==='Weidabiao'" />
-                        <img width="88" src="/sitefiles/assets/images/status/yiwancheng.png" v-if="studyPlan.state==='Yiwancheng'" />
-                    </div>
-                    <div class="row">
-                        <div class="col-12 col-md-12 col-xl-12 col-lg-12 bg-cover rounded-0 p-8" :style="{'background-image':'url('+studyPlan.plan.coverImg+')'}"></div>
-                        <div class="col-12 col-md-12 col-xl-12 col-lg-12">
-                            <div class="mt-3">
-                                <h3 class="mb-2"><a href="javascript:;" class="text-inherit">{{ studyPlan.plan.planName }}</a></h3>
-                                <ul class="mb-2 list-inline">
-                                    <li class="list-inline-item">
-                                        <span class="fw-light fs-5">计划年度：</span><span class="fw-bold text-warning">{{ studyPlan.plan.planYear }}</span>
-                                    </li>
-                                </ul>
-                                <ul class="mb-2 list-inline">
-                                    <li class="list-inline-item">
-                                        <span class="fw-light fs-5">计划学分：</span><span class="fw-bold text-success">{{ studyPlan.totalCredit }}</span>/<span class="fw-light fs-5">{{ studyPlan.plan.planCredit }}</span>
-                                    </li>
-                                </ul>
-                                <ul class="mb-3 list-inline">
-                                    <li class="list-inline-item">
-                                        <span class="fw-light fs-5">必修课：</span><span class="fw-bold text-success">{{ studyPlan.overCourseTotal }}</span>/<span class="fw-light fs-5">{{ studyPlan.plan.totalCount }}</span>
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <span class="fw-light fs-5">选修课：</span><span class="fw-bold text-success">{{ studyPlan.overSelectCourseTotal }}</span>/<span class="fw-light fs-5">{{ studyPlan.plan.selectTotalCount }}</span>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="row align-items-center g-0">
-                                <div class="col-auto">
-                                    <i class="bi bi-calendar-range text-warning"></i>
+                <div v-if="studyPlan && studyPlan.id>0" style="cursor:pointer;" v-on:click="studyPlan.isStudy ? btnViewPlanClick(studyPlan.id) : utils.error('计划不在有效期内')">
+                    <div class="bg-cover rounded-0 p-8" :style="{'background-image':'url('+studyPlan.plan.coverImg+')'}"></div>
+                    <div class="card rounded-0 card-hover position-relative p-3 px-4 bg-gray-100">
+                        <div class="position-absolute top-50 end-0 translate-middle-y pe-3">
+                            <img width="88" src="/sitefiles/assets/images/status/weikaishi.png" v-if="studyPlan.state==='Weikaishi'" />
+                            <img width="88" src="/sitefiles/assets/images/status/xuexizhong.png" v-if="studyPlan.state==='Xuexizhong'" />
+                            <img width="88" src="/sitefiles/assets/images/status/yidabiao.png" v-if="studyPlan.state==='Yidabiao'" />
+                            <img width="88" src="/sitefiles/assets/images/status/weidabiao.png" v-if="studyPlan.state==='Weidabiao'" />
+                            <img width="88" src="/sitefiles/assets/images/status/yiwancheng.png" v-if="studyPlan.state==='Yiwancheng'" />
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-md-12 col-xl-12 col-lg-12">
+                                <div class="mt-3">
+                                    <h3 class="mb-2"><a href="javascript:;" class="text-inherit">{{ studyPlan.plan.planName }}</a></h3>
+                                    <ul class="mb-2 list-inline">
+                                        <li class="list-inline-item">
+                                            <span class="fw-light fs-5">计划年度：</span><span class="fw-bold text-warning">{{ studyPlan.plan.planYear }}</span>
+                                        </li>
+                                    </ul>
+                                    <ul class="mb-2 list-inline">
+                                        <li class="list-inline-item">
+                                            <span class="fw-light fs-5">计划学分：</span><span class="fw-bold text-success">{{ studyPlan.totalCredit }}</span>/<span class="fw-light fs-5">{{ studyPlan.plan.planCredit }}</span>
+                                        </li>
+                                    </ul>
+                                    <ul class="mb-3 list-inline">
+                                        <li class="list-inline-item">
+                                            <span class="fw-light fs-5">必修课：</span><span class="fw-bold text-success">{{ studyPlan.overCourseTotal }}</span>/<span class="fw-light fs-5">{{ studyPlan.plan.totalCount }}</span>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <span class="fw-light fs-5">选修课：</span><span class="fw-bold text-success">{{ studyPlan.overSelectCourseTotal }}</span>/<span class="fw-light fs-5">{{ studyPlan.plan.selectTotalCount }}</span>
+                                        </li>
+                                    </ul>
                                 </div>
-                                <div class="col ms-2">
-                                    <span>{{ studyPlan.plan.planBeginDateTimeStr }} -  {{ studyPlan.plan.planEndDateTimeStr }}</span>
+                                <div class="row align-items-center g-0">
+                                    <div class="col-auto">
+                                        <i class="bi bi-calendar-range text-warning"></i>
+                                    </div>
+                                    <div class="col ms-2">
+                                        <span>{{ studyPlan.plan.planBeginDateTimeStr }} -  {{ studyPlan.plan.planEndDateTimeStr }}</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -405,11 +407,13 @@
 </div>
 <div class="py-8"></div>
 <div style="position:fixed;right:0;top:80%;" v-if="taskTotal>0" class="animate__animated animate__fadeInRightBig">
-    <button type="button" class="btn btn-warning rounded-start-pill" v-on:click="taskDialogVisible=true"><i class="bi bi-star-half"></i><span class="mx-2 fs-4">{{ taskTotal }}</span></button>
+    <button type="button" class="btn btn-dark rounded-start-pill" v-on:click="taskDialogVisible=true">
+        <i class="bi bi-ui-checks-grid text-gray-300"></i><span class="mx-2 fs-4 text-light">{{ taskTotal }}</span>
+    </button>
 </div>
 <template>
     <el-drawer title="待完成"
-               size="60%"
+               size="70%"
                :visible.sync="taskDialogVisible"
                direction="btt">
         <div class="px-2">
@@ -418,19 +422,19 @@
                     <ul class="list-group lh-lg">
                         <li class="list-group-item d-flex justify-content-between align-items-center" v-if="taskPlanTotal>0" v-on:click="top.$vue.btnAppMenuClick('studyPlan')">
                             <span><i class="text-warning bi bi-star-half me-2"></i>待完成学习任务</span>
-                            <span class="badge bg-warning ">{{ taskPlanTotal }}</span>
+                            <span class="badge bg-primary ">{{ taskPlanTotal }}</span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center" v-if="taskCourseTotal>0" v-on:click="top.$vue.btnAppMenuClick('studyCourse')">
                             <span>
                                 <i class="text-warning bi bi-star-half me-2"></i>待完成课程
                             </span>
-                            <span class="badge bg-warning ">{{ taskCourseTotal }}</span>
+                            <span class="badge bg-primary ">{{ taskCourseTotal }}</span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center" v-if="taskPaperTotal>0" v-on:click="top.$vue.btnAppMenuClick('exam')">
                             <span>
                                 <i class="text-warning bi bi-star-half me-2"></i>待参加考试
                             </span>
-                            <span class="badge bg-warning ">{{ taskPaperTotal }}</span>
+                            <span class="badge bg-primary ">{{ taskPaperTotal }}</span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center" v-if="taskQTotal>0" v-on:click="goWenjuan">
                             <span>

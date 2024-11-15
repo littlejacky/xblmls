@@ -2,6 +2,7 @@ var $url = "/error";
 
 var data = utils.init({
   logId: utils.getQueryInt('logId'),
+  isView: utils.getQueryBoolean('isView'),
   uuid: utils.getQueryString('uuid'),
   message: utils.getQueryString('message'),
   stackTrace: null,
@@ -37,7 +38,9 @@ var $vue = new Vue({
   methods: methods,
   created: function () {
     document.title = DOCUMENTTITLE_ERROR;
-    top.$vue.apiGet();
+    if (!this.isView) {
+      top.$vue.apiGet();
+    }
     if (this.logId > 0) {
       this.apiGet();
     } else if (this.uuid) {

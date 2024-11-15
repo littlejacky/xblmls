@@ -4,7 +4,7 @@
     <div v-for="(paper,index) in list" v-on:click="btnViewClick(paper)">
         <el-card shadow="hover" class="mb-3 rounded-0 shadow-lg">
             <div slot="header">
-                <div class="fw-bold text-primary">{{ paper.title }}</div>
+                <div>{{ paper.title }}</div>
                 <div v-if="paper.planId>0 || paper.courseId>0">
                     <el-tag type="warning" size="mini">课后考试：{{ paper.courseName }}</el-tag>
                 </div>
@@ -61,7 +61,7 @@
     <el-empty image="/sitefiles/assets/images/nodata.svg" description="暂无考试安排"></el-empty>
 </div>
 <div class="py-8"></div>
-<el-button plain class="fs-4 p-3 animate__animated animate__fadeInRight" icon="el-icon-search" circle style="position:fixed;right:5%;top:80%;" type="primary" v-on:click="examDialogVisible=true"></el-button>
+<el-button plain class="fs-4 p-3 animate__animated animate__fadeInRight" icon="el-icon-search" circle style="position:fixed;right:80%;top:80%;" type="primary" v-on:click="examDialogVisible=true"></el-button>
 <template>
     <el-drawer title="考试查询"
                size="60%"

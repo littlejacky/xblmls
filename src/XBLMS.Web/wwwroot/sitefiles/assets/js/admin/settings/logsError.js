@@ -63,11 +63,11 @@ var methods = {
     });
   },
 
-  btnLogView: function(logId) {
+  btnLogView: function (logId) {
     top.utils.openLayer({
       title: false,
-      closebtn:0,
-      url: utils.getRootUrl('error', { logId: logId }),
+      closebtn: 0,
+      url: utils.getRootUrl('error', { logId: logId, isView: true }),
       width: '80%',
       height: '80%'
     });
@@ -113,7 +113,7 @@ var methods = {
     });
   },
 
-  handleCurrentChange: function(val) {
+  handleCurrentChange: function (val) {
     var $this = this;
 
     this.formInline.currentValue = val;
@@ -133,7 +133,7 @@ var methods = {
     window.scrollTo(0, 0);
   },
 
-  btnCloseClick: function() {
+  btnCloseClick: function () {
     utils.removeTab();
   },
 };

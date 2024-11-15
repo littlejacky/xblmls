@@ -11,7 +11,7 @@
     <div v-for="(paper,index) in list">
         <el-card shadow="hover" class="mb-3">
             <div slot="header" class="clearfix">
-                <div class="fw-bold text-primary">{{ paper.paper.title }}</div>
+                <div>{{ paper.paper.title }}</div>
             </div>
             <div class="d-flex justify-content-between align-items-center">
                 <div>
@@ -36,7 +36,7 @@
                 </div>
                 <div>
                     <div v-if="paper.paper.secrecyPaperContent">
-                        <el-button type="primary" plain icon="el-icon-view" circle v-on:click.stop="btnViewClick(paper)"></el-button>
+                        <el-button type="primary" icon="el-icon-view" circle v-on:click.stop="btnViewClick(paper)"></el-button>
                     </div>
                     <el-button v-else disabled circle type="danger"><i class="bi bi-eye-slash-fill"></i></el-button>
                 </div>
@@ -57,7 +57,7 @@
         <button type="button" class="btn btn-primary rounded-pill" v-on:click="utils.closeLayerSelf"><i class="el-icon-back me-2"></i>返 回</button>
     </div>
 </div>
-<el-button class="fs-4 p-3" icon="el-icon-search" circle style="position:fixed;right:5%;top:80%;" type="primary" v-on:click="scoreDialogVisible=true"></el-button>
+<el-button plain class="fs-4 p-3" icon="el-icon-search" circle style="position:fixed;right:80%;top:80%;" type="primary" v-on:click="scoreDialogVisible=true"></el-button>
 <template>
     <el-drawer title="成绩查询"
                size="60%"

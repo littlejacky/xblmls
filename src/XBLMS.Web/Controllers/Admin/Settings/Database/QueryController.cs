@@ -21,6 +21,8 @@ namespace XBLMS.Web.Controllers.Admin.Settings.Database
     public partial class QueryController : ControllerBase
     {
         private const string Route = "settings/databaseQuery";
+
+        private readonly ISettingsManager _settingsManager;
         private readonly IAuthManager _authManager;
         private readonly IDatabaseManager _databaseManager;
         public class QueryRequest
@@ -34,16 +36,21 @@ namespace XBLMS.Web.Controllers.Admin.Settings.Database
             public List<string> Properties { get; set; }
             public int Count { get; set; }
         }
-        public QueryController(IAuthManager authManager, IDatabaseManager databaseManager)
+        public QueryController(IAuthManager authManager, IDatabaseManager databaseManager, ISettingsManager settingsManager)
         {
             _authManager = authManager;
             _databaseManager = databaseManager;
-
+            _settingsManager = settingsManager;
         }
 
         [HttpPost, Route(Route)]
         public async Task<ActionResult<QueryResult>> Query([FromBody] QueryRequest request)
         {
+            if (_settingsManager.IsSafeMode)
+            {
+                return this.Error(Constants.ErrorSafe);
+            }
+
             if (!await _authManager.HasPermissionsAsync())
             {
                 return this.NoAuth();

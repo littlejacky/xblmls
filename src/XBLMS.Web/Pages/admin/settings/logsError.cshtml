@@ -32,7 +32,7 @@
         <el-table-column width="100"
                          label="Id">
             <template slot-scope="scope">
-                <el-link :underline="false" type="primary" v-on:click="btnLogView(scope.row.id)">{{scope.row.id}}</el-link>
+                <el-link :underline="false" type="primary" v-on:click.stop="btnLogView(scope.row.id)">{{scope.row.id}}</el-link>
             </template>
         </el-table-column>
         <el-table-column prop="createdDate"

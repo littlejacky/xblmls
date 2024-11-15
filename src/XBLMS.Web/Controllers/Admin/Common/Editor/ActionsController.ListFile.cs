@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using XBLMS.Configuration;
 using XBLMS.Dto;
 using XBLMS.Enums;
 using XBLMS.Utils;
@@ -14,6 +15,17 @@ namespace XBLMS.Web.Controllers.Admin.Common.Editor
         [HttpGet, Route(RouteActionsListFile)]
         public ActionResult<ListFileResult> ListFile([FromQuery] ListFileRequest request)
         {
+            if (_settingsManager.IsSafeMode)
+            {
+                return new ListFileResult
+                {
+                    State = Constants.ErrorSafe,
+                    Size = 0,
+                    Start = 0,
+                    Total = 0,
+                    List = null
+                };
+            }
 
             var directoryPath = _pathManager.GetEditUploadFilesPath();
 

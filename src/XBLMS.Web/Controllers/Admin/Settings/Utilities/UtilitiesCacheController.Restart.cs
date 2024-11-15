@@ -4,6 +4,7 @@ using XBLMS.Dto;
 using XBLMS.Core.Utils;
 using XBLMS.Enums;
 using XBLMS.Utils;
+using XBLMS.Configuration;
 
 namespace XBLMS.Web.Controllers.Admin.Settings.Utilities
 {
@@ -12,6 +13,11 @@ namespace XBLMS.Web.Controllers.Admin.Settings.Utilities
         [HttpPost, Route(RouteRestart)]
         public async Task<ActionResult<BoolResult>> Restart()
         {
+            if (_settingsManager.IsSafeMode)
+            {
+                return this.Error(Constants.ErrorSafe);
+            }
+
             if (!await _authManager.HasPermissionsAsync(MenuPermissionType.SystemRestart))
             {
                 return this.NoAuth();

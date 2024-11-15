@@ -13,6 +13,15 @@ namespace XBLMS.Web.Controllers.Admin.Common.Editor
         [HttpPost, Route(RouteActionsUploadScrawl)]
         public async Task<ActionResult<UploadScrawlResult>> UploadScrawl([FromQuery] int siteId, [FromForm] UploadScrawlRequest request)
         {
+            if (_settingsManager.IsSafeMode)
+            {
+                return new UploadScrawlResult
+                {
+                    Error = Constants.ErrorSafe
+                };
+            }
+
+
             var bytes = Convert.FromBase64String(request.File);
 
             var original = "scrawl.png";

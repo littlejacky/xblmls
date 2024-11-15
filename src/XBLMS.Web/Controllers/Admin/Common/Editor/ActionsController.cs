@@ -23,10 +23,11 @@ namespace XBLMS.Web.Controllers.Admin.Common.Editor
         private const string RouteActionsUploadScrawl = "common/editor/actions/uploadScrawl";
 
         private readonly IPathManager _pathManager;
-
-        public ActionsController(IPathManager pathManager)
+        private readonly ISettingsManager _settingsManager;
+        public ActionsController(IPathManager pathManager, ISettingsManager settingsManager)
         {
             _pathManager = pathManager;
+            _settingsManager = settingsManager;
         }
 
         public class ConfigResult

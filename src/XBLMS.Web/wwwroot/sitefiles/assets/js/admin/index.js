@@ -103,10 +103,7 @@ var methods = {
         closebtn: 0,
         url: utils.getSettingsUrl('administratorsLayerProfile', { userName: this.local.userName }),
         width: "60%",
-        height: "88%",
-        end: function () {
-          $this.apiGet();
-        }
+        height: "88%"
       });
     } else if (command === 'password') {
       top.utils.openLayer({

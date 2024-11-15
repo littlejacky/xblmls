@@ -15,6 +15,14 @@ namespace XBLMS.Web.Controllers.Admin.Common.Editor
         [HttpPost, Route(RouteActionsUploadImage)]
         public async Task<ActionResult<UploadImageResult>> UploadImage([FromForm] IFormFile file)
         {
+            if (_settingsManager.IsSafeMode)
+            {
+                return new UploadImageResult
+                {
+                    Error = Constants.ErrorSafe
+                };
+            }
+
             if (file == null)
             {
                 return new UploadImageResult
