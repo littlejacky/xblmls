@@ -51,7 +51,7 @@ var methods = {
       var res = response.data;
 
       setTimeout(function () {
-        utils.alertSuccess({
+        top.utils.alertSuccess({
           title: '系统重启成功',
           callback: function() {
             window.top.location.reload(true);

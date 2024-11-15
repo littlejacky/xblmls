@@ -123,9 +123,14 @@ namespace XBLMS.Core.Services
             {
                 await _settingsManager.Database.CreateTableAsync(tableName, tableColumns);
 
+
                 if (tableName == ExamCerUserRepository.TableName)
                 {
                     await _settingsManager.Database.CreateIndexAsync(tableName, $"IX_{tableName}_General", $"{nameof(ExamCerUser.UserId)} DESC", $"{nameof(ExamCerUser.CerId)} DESC");
+                }
+                else if (tableName == ExamPaperRepository.TableName)
+                {
+                    await _settingsManager.Database.CreateIndexAsync(tableName, $"IX_{tableName}_General", $"{nameof(ExamPaper.TreeId)} DESC");
                 }
                 else if (tableName == ExamPaperAnswerRepository.TableName)
                 {
@@ -145,11 +150,11 @@ namespace XBLMS.Core.Services
                 }
                 else if (tableName == ExamPaperStartRepository.TableName)
                 {
-                    await _settingsManager.Database.CreateIndexAsync(tableName, $"IX_{tableName}_General", $"{nameof(ExamPaperStart.ExamPaperId)} DESC", $"{nameof(ExamPaperStart.ExamPaperRandomId)} DESC", $"{nameof(ExamPaperStart.UserId)} DESC", $"{nameof(ExamPaperStart.MarkTeacherId)} DESC");
+                    await _settingsManager.Database.CreateIndexAsync(tableName, $"IX_{tableName}_General", $"{nameof(ExamPaperStart.PlanId)} DESC", $"{nameof(ExamPaperStart.CourseId)} DESC", $"{nameof(ExamPaperStart.ExamPaperId)} DESC", $"{nameof(ExamPaperStart.ExamPaperRandomId)} DESC", $"{nameof(ExamPaperStart.UserId)} DESC", $"{nameof(ExamPaperStart.MarkTeacherId)} DESC");
                 }
                 else if (tableName == ExamPaperUserRepository.TableName)
                 {
-                    await _settingsManager.Database.CreateIndexAsync(tableName, $"IX_{tableName}_General", $"{nameof(ExamPaperUser.ExamPaperId)} DESC", $"{nameof(ExamPaperUser.UserId)} DESC");
+                    await _settingsManager.Database.CreateIndexAsync(tableName, $"IX_{tableName}_General", $"{nameof(ExamPaperUser.PlanId)} DESC", $"{nameof(ExamPaperUser.CourseId)} DESC", $"{nameof(ExamPaperUser.ExamPaperId)} DESC", $"{nameof(ExamPaperUser.UserId)} DESC");
                 }
                 else if (tableName == ExamPracticeRepository.TableName)
                 {
@@ -169,15 +174,15 @@ namespace XBLMS.Core.Services
                 }
                 else if (tableName == ExamQuestionnaireTmRepository.TableName)
                 {
-                    await _settingsManager.Database.CreateIndexAsync(tableName, $"IX_{tableName}_General", $"{nameof(ExamQuestionnaireTm.ExamPaperId)} DESC");
+                    await _settingsManager.Database.CreateIndexAsync(tableName, $"IX_{tableName}_General", $"{nameof(ExamPaperUser.PlanId)} DESC", $"{nameof(ExamPaperUser.CourseId)} DESC", $"{nameof(ExamQuestionnaireTm.ExamPaperId)} DESC");
                 }
                 else if (tableName == ExamQuestionnaireUserRepository.TableName)
                 {
-                    await _settingsManager.Database.CreateIndexAsync(tableName, $"IX_{tableName}_General", $"{nameof(ExamQuestionnaireUser.ExamPaperId)} DESC", $"{nameof(ExamQuestionnaireUser.UserId)} DESC");
+                    await _settingsManager.Database.CreateIndexAsync(tableName, $"IX_{tableName}_General", $"{nameof(ExamQuestionnaireUser.PlanId)} DESC", $"{nameof(ExamQuestionnaireUser.CourseId)} DESC", $"{nameof(ExamQuestionnaireUser.ExamPaperId)} DESC", $"{nameof(ExamQuestionnaireUser.UserId)} DESC");
                 }
-                else if (tableName == ExamQuestionnaireUserRepository.TableName)
+                else if (tableName == ExamQuestionnaireAnswerRepository.TableName)
                 {
-                    await _settingsManager.Database.CreateIndexAsync(tableName, $"IX_{tableName}_General", $"{nameof(ExamQuestionnaireUser.ExamPaperId)} DESC", $"{nameof(ExamQuestionnaireUser.UserId)} DESC");
+                    await _settingsManager.Database.CreateIndexAsync(tableName, $"IX_{tableName}_General", $"{nameof(ExamQuestionnaireAnswer.PlanId)} DESC", $"{nameof(ExamQuestionnaireAnswer.CourseId)} DESC", $"{nameof(ExamQuestionnaireAnswer.ExamPaperId)} DESC", $"{nameof(ExamQuestionnaireAnswer.TmId)} DESC", $"{nameof(ExamQuestionnaireAnswer.UserId)} DESC");
                 }
                 else if (tableName == OrganDepartmentRepository.TableName)
                 {
@@ -190,6 +195,42 @@ namespace XBLMS.Core.Services
                 else if (tableName == UserRepository.TableName)
                 {
                     await _settingsManager.Database.CreateIndexAsync(tableName, $"IX_{tableName}_General", $"{nameof(User.CompanyId)} DESC", $"{nameof(User.DepartmentId)} DESC", $"{nameof(User.DutyId)} DESC");
+                }
+                else if (tableName == StudyPlanCourseRepository.TableName)
+                {
+                    await _settingsManager.Database.CreateIndexAsync(tableName, $"IX_{tableName}_General", $"{nameof(StudyPlanCourse.PlanId)} DESC", $"{nameof(StudyPlanCourse.CourseId)} DESC");
+                }
+                else if (tableName == StudyPlanUserRepository.TableName)
+                {
+                    await _settingsManager.Database.CreateIndexAsync(tableName, $"IX_{tableName}_General", $"{nameof(StudyPlanUser.PlanId)} DESC", $"{nameof(StudyPlanUser.UserId)} DESC");
+                }
+                else if (tableName == StudyCourseUserRepository.TableName)
+                {
+                    await _settingsManager.Database.CreateIndexAsync(tableName, $"IX_{tableName}_General", $"{nameof(StudyCourseUser.PlanId)} DESC", $"{nameof(StudyCourseUser.CourseId)} DESC", $"{nameof(StudyCourseUser.UserId)} DESC");
+                }
+                else if (tableName == StudyCourseWareUserRepository.TableName)
+                {
+                    await _settingsManager.Database.CreateIndexAsync(tableName, $"IX_{tableName}_General", $"{nameof(StudyCourseWareUser.PlanId)} DESC", $"{nameof(StudyCourseWareUser.CourseId)} DESC", $"{nameof(StudyCourseWareUser.CourseWareId)} DESC", $"{nameof(StudyCourseWareUser.UserId)} DESC");
+                }
+                else if (tableName == StudyCourseWareRepository.TableName)
+                {
+                    await _settingsManager.Database.CreateIndexAsync(tableName, $"IX_{tableName}_General", $"{nameof(StudyCourseWare.CourseId)} DESC");
+                }
+                else if (tableName == StudyCourseEvaluationUserRepository.TableName)
+                {
+                    await _settingsManager.Database.CreateIndexAsync(tableName, $"IX_{tableName}_General", $"{nameof(StudyCourseEvaluationUser.PlanId)} DESC", $"{nameof(StudyCourseEvaluationUser.CourseId)} DESC", $"{nameof(StudyCourseEvaluationUser.EvaluationId)} DESC", $"{nameof(StudyCourseEvaluationUser.UserId)} DESC");
+                }
+                else if (tableName == StudyCourseEvaluationItemRepository.TableName)
+                {
+                    await _settingsManager.Database.CreateIndexAsync(tableName, $"IX_{tableName}_General", $"{nameof(StudyCourseEvaluationItem.EvaluationId)} DESC");
+                }
+                else if (tableName == StudyCourseEvaluationItemUserRepository.TableName)
+                {
+                    await _settingsManager.Database.CreateIndexAsync(tableName, $"IX_{tableName}_General", $"{nameof(StudyCourseEvaluationItemUser.PlanId)} DESC", $"{nameof(StudyCourseEvaluationItemUser.CourseId)} DESC", $"{nameof(StudyCourseEvaluationItemUser.EvaluationId)} DESC", $"{nameof(StudyCourseEvaluationItemUser.EvaluationItemId)} DESC", $"{nameof(StudyCourseEvaluationItemUser.UserId)} DESC");
+                }
+                else if (tableName == StudyCourseRepository.TableName)
+                {
+                    await _settingsManager.Database.CreateIndexAsync(tableName, $"IX_{tableName}_General", $"{nameof(StudyCourse.TreeId)} DESC");
                 }
             }
             catch (Exception ex)

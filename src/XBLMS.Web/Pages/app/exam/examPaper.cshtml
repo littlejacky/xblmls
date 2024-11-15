@@ -61,7 +61,6 @@
     <el-empty image="/sitefiles/assets/images/nodata.svg" description="暂无考试安排"></el-empty>
 </div>
 <div class="py-8"></div>
-@await Html.PartialAsync("_PartialAppMenu")
 <el-button plain class="fs-4 p-3 animate__animated animate__fadeInRight" icon="el-icon-search" circle style="position:fixed;right:5%;top:80%;" type="primary" v-on:click="examDialogVisible=true"></el-button>
 <template>
     <el-drawer title="考试查询"

@@ -32,7 +32,7 @@
                         <small>{{ dateStr }}</small>
                     </div>
                 </div>
-                <img :src="user.avatarUrl || DEFAULT_AVATAR_URL" class="img-fluid rounded-pill smooth-shadow-lg avatar-xl bg-light p-1  animate__animated animate__fadeIn">
+                <img :src="user.avatarUrl || DEFAULT_AVATAR_URL" class="img-fluid rounded-pill smooth-shadow-lg avatar-xl bg-light p-1">
             </div>
         </div>
     </div>
@@ -40,7 +40,7 @@
 <div class="px-3">
     <div class="mb-3">
         <div class="row g-3">
-            <div class="col-xl-5 col-lg-5 col-md-5 col-5 animate__animated animate__fadeInLeft">
+            <div class="col-xl-5 col-lg-5 col-md-5 col-5">
                 <div class="card border-top border-5 rounded-0 card-hover-with-icon shadow-lg bg-primary border-white" v-on:click="btnPlanMoreMenuClick">
                     <div class="card-body text-center">
                         <div class="icon-shape icon-xxl rounded-circle bg-warning text-white mb-5 card-icon">
@@ -59,7 +59,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-7 col-lg-7 col-md-7 col-7 animate__animated animate__fadeInRight">
+            <div class="col-xl-7 col-lg-7 col-md-7 col-7">
                 <div class="row g-3">
                     <div class="col-xl-12 col-lg-12 col-md-12 col-12">
                         <div class="card rounded-0 border-start-0 border-bottom-0 border-top-0 border-5 border-success card-hover-with-icon shadow-lg" v-on:click="btnCourseMoreMenuClick">
@@ -404,7 +404,6 @@
     </div>
 </div>
 <div class="py-8"></div>
-@await Html.PartialAsync("_PartialAppMenu")
 <div style="position:fixed;right:0;top:80%;" v-if="taskTotal>0" class="animate__animated animate__fadeInRightBig">
     <button type="button" class="btn btn-warning rounded-start-pill" v-on:click="taskDialogVisible=true"><i class="bi bi-star-half"></i><span class="mx-2 fs-4">{{ taskTotal }}</span></button>
 </div>

@@ -66,6 +66,8 @@ var methods = {
         disableProgress: $this.courseInfo.state || $this.courseInfo.boolWare ? false : true,
         lastPlayTime: ($this.courseWareCurrent.currentDuration + 10) > $this.courseWareCurrent.courseWareInfo.duration ? 0 : $this.courseWareCurrent.currentDuration,
         //playbackRate: [0.5, 0.75, 1, 1.5, 2],
+        //cssFullscreen: true,
+        rotateFullscreen:true,
         fluid: true,
         miniplayerConfig: {
           top: 0,
