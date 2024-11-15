@@ -9,7 +9,7 @@ namespace XBLMS.Core.Utils
     public static class DateUtils
     {
         public const string FormatStringDateTimeCN = "MM月dd日 HH:mm";
-        public const string FormatStringDateOnlyCN = "yyyy年MM月dd日";
+        public const string FormatStringDateOnlyCN = "yy年MM月dd日";
 
         public const string FormatStringDateTime = "yyyy-MM-dd HH:mm:ss";
         public const string FormatStringDateOnly = "yyyy-MM-dd";
