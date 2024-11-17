@@ -17,7 +17,7 @@
     <div class="card rounded-0">
         <div class="card-body">
             <div class="d-flex justify-content-between align-items-center">
-                <h1 class="fw-semibold mb-2">{{ courseInfo.name }}</h1>
+                <div class="fw-semibold mb-2">{{ courseInfo.name }}</div>
                 <a href="javascript:;" v-on:click="btnCollectionClick">
                     <i class="bi bi-heart-fill fs-3 text-danger" v-if="courseUser.collection"></i>
                     <i class="bi bi-heart fs-3 text-warning" v-else></i>
@@ -40,7 +40,14 @@
         </div>
     </div>
     <div class="p-3">
-        <div class="card rounded-0" id="courseAccordion">
+        <div class="card rounded-4 mb-3"  v-if="courseInfo.duration>courseUser.totalDuration">
+            <div class="w-100">
+                <div class="progress" role="progressbar">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-success text-end" :style="{width:(utils.formatPercentFloat(courseUser.totalDuration,courseInfo.duration))+'%'}">{{ utils.formatPercentFloat(courseUser.totalDuration,courseInfo.duration) }}%</div>
+                </div>
+            </div>
+        </div>
+        <div class="card rounded-4 mb-3" id="courseAccordion">
             <div>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item p-0 bg-transparent">
@@ -94,7 +101,7 @@
                 </ul>
             </div>
         </div>
-        <div class="card rounded-0 mt-3">
+        <div class="card rounded-4 mt-3">
             <div>
                 <div class="card-header">
                     <h4 class="mb-0">课程数据</h4>
@@ -227,7 +234,7 @@
                 </ul>
             </div>
         </div>
-        <div class="card rounded-0 mt-3">
+        <div class="card rounded-4 mt-3">
             <div>
                 <div class="card-header">
                     <h4 class="mb-0">完成条件</h4>
@@ -270,7 +277,7 @@
                 </div>
             </div>
         </div>
-        <div class="card rounded-0 mt-3">
+        <div class="card rounded-4 mt-3">
             <div>
                 <div class="card-header">
                     <h4 class="mb-0">课程评价</h4>
@@ -342,7 +349,7 @@
                 </div>
             </div>
         </div>
-        <div class="card rounded-0 mt-3">
+        <div class="card rounded-4 mt-3">
             <div>
                 <div class="card-header">
                     <h4 class="mb-0">课程介绍</h4>

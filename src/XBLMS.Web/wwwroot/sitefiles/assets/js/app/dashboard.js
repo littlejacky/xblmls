@@ -106,7 +106,10 @@ var data = utils.init({
   totalDuration: 0,
 
   topCer: null,
-  dateStr:null,
+  dateStr: null,
+
+  planCount: 0,
+  planOverCount:0,
 
   appMenuActive:"index"
 
@@ -164,8 +167,13 @@ var methods = {
 
       $this.topCer = res.topCer;
 
+      $this.planCount = 100;
+      $this.planOverCount = 100;
+
       setTimeout(function () {
         $this.passSeries = [100];
+        $this.planCount = res.planCount;
+        $this.planOverCount = res.planOverCount;
       }, 1000);
 
       setTimeout(function () {

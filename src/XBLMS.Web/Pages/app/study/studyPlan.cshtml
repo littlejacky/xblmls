@@ -2,8 +2,8 @@
 @{ Layout = "_LayoutApp"; }
 <div>
     <div v-if="total>0">
-        <div v-for="(studyPlan,planIndex) in list" class="card rounded-0 shadow-lg position-relative mb-3" style="cursor:pointer;" v-on:click="studyPlan.isStudy ? btnViewClick(studyPlan.id) : utils.error('计划不在有效期内')">
-            <div class="bg-cover rounded-0 p-8" :style="{'background-image':'url('+studyPlan.plan.coverImg+')'}"><div class="py-5"></div></div>
+        <div v-for="(studyPlan,planIndex) in list" class="card rounded-4 shadow-lg position-relative mb-3" style="cursor:pointer;" v-on:click="studyPlan.isStudy ? btnViewClick(studyPlan.id) : utils.error('计划不在有效期内')">
+            <div class="bg-cover rounded-top-4 p-8" :style="{'background-image':'url('+studyPlan.plan.coverImg+')'}"><div class="py-5"></div></div>
             <div class="position-absolute top-50 end-0 translate-middle-y pe-3">
                 <img width="88" src="/sitefiles/assets/images/status/weikaishi.png" v-if="studyPlan.state==='Weikaishi'" />
                 <img width="88" src="/sitefiles/assets/images/status/xuexizhong.png" v-if="studyPlan.state==='Xuexizhong'" />
@@ -13,7 +13,7 @@
             </div>
             <div class="card-body">
                 <div>
-                    <h3 class="mb-2"><a href="javascript:;" class="text-inherit">{{ studyPlan.plan.planName }}</a></h3>
+                    <div class="mb-2 fw-semibold"><a href="javascript:;" class="text-inherit">{{ studyPlan.plan.planName }}</a></div>
                     <ul class="mb-2 list-inline">
                         <li class="list-inline-item">
                             <span class="fw-light fs-5">计划年度：</span><span class="fw-bold text-warning">{{ studyPlan.plan.planYear }}</span>
@@ -53,7 +53,11 @@
     </div>
 </div>
 <div class="py-8"></div>
-<el-button plain class="fs-4 p-3 animate__animated animate__fadeInRight" icon="el-icon-search" circle style="position:fixed;right:5%;top:80%;" type="primary" v-on:click="planDialogVisible=true"></el-button>
+<div style="position:fixed;right:0;top:80%;" class="animate__animated animate__fadeInRightBig">
+    <button type="button" class="btn btn-dark rounded-start-pill" v-on:click="planDialogVisible=true">
+        <i class="bi bi-search text-light"></i>
+    </button>
+</div>
 <template>
     <el-drawer title="任务查询"
                size="60%"

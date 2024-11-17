@@ -3,9 +3,9 @@
 
 <div v-if="total>0">
     <div v-for="(paper,index) in list" v-on:click="btnViewClick(paper.id)">
-        <el-card shadow="hover" class="mb-3">
+        <el-card shadow="hover" class="mb-3 rounded-4">
             <div slot="header">
-                <div>{{ paper.title }}</div>
+                <div class="fw-semibold">{{ paper.title }}</div>
             </div>
             <div class="d-flex justify-content-between align-items-center">
                 <div>
@@ -32,7 +32,7 @@
                 </div>
                 <div>
                     <div class="bg-light p-2 rounded-circle">
-                        <el-button type="primary" circle icon="el-icon-s-order" class="p-3 fs-3" v-on:click.stop="btnViewClick(paper.id)"></el-button>
+                        <el-button type="primary" circle icon="el-icon-s-order" class="p-3 fs-3" plain></el-button>
                     </div>
                 </div>
             </div>
@@ -52,7 +52,11 @@
         <el-button v-on:click="utils.closeLayerSelf" icon="el-icon-back" class="rounded-pill" type="primary">返 回</el-button>
     </el-button-group>
 </div>
-<el-button plain class="fs-4 p-3" icon="el-icon-search" circle style="position:fixed;right:80%;top:80%;" type="primary" v-on:click="examDialogVisible=true"></el-button>
+<div style="position:fixed;right:0;top:80%;" class="animate__animated animate__fadeInRightBig">
+    <button type="button" class="btn btn-dark rounded-start-pill" v-on:click="examDialogVisible=true">
+        <i class="bi bi-search text-light"></i>
+    </button>
+</div>
 <template>
     <el-drawer title="考试查询"
                size="60%"

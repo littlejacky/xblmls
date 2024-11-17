@@ -64,7 +64,7 @@ var methods = {
         el: document.querySelector('#videoPlayer'),
         url: $this.courseWareCurrent.courseWareInfo.url,
         autoplay: true,
-        loop: true,
+        loop: false,
         videoInit: true,
         closeInactive: true,
         disableProgress: $this.courseInfo.state || $this.courseInfo.boolWare ? false : true,

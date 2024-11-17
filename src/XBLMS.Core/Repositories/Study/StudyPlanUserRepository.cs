@@ -174,7 +174,30 @@ namespace XBLMS.Core.Repositories
 
             return await _repository.CountAsync(query);
         }
+        public async Task<(int count, int overCount)> GetCountAsync(int userId)
+        {
+            var query = Q.
+                Where(nameof(StudyPlanUser.UserId), userId).
+                WhereNullOrFalse(nameof(StudyPlanUser.Locked));
 
+            var count = await _repository.CountAsync(query);
+
+
+            var queryOver = Q.
+             Where(q =>
+             {
+                 q.
+                 Where(nameof(StudyPlanUser.State), StudyStatType.Yiwancheng.GetValue()).
+                 OrWhere(nameof(StudyPlanUser.State), StudyStatType.Yidabiao.GetValue());
+                 return q;
+             }).
+             Where(nameof(StudyPlanUser.UserId), userId).
+             WhereNullOrFalse(nameof(StudyPlanUser.Locked));
+
+            var overCount = await _repository.CountAsync(queryOver);
+
+            return (count, overCount);
+        }
         public async Task<int> GetCountAsync(int planId, string state)
         {
             var query = Q.Where(nameof(StudyPlanUser.PlanId), planId);

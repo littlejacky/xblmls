@@ -2,9 +2,9 @@
 @{ Layout = "_LayoutApp"; }
 <div v-if="total>0">
     <div v-for="(paper,index) in list" v-on:click="btnViewClick(paper)">
-        <el-card shadow="hover" class="mb-3 rounded-0 shadow-lg">
+        <el-card shadow="hover" class="mb-3 rounded-4 shadow-lg">
             <div slot="header">
-                <div>{{ paper.title }}</div>
+                <div class="fw-semibold">{{ paper.title }}</div>
                 <div v-if="paper.planId>0 || paper.courseId>0">
                     <el-tag type="warning" size="mini">课后考试：{{ paper.courseName }}</el-tag>
                 </div>
@@ -46,7 +46,7 @@
                 </div>
                 <div>
                     <div class="bg-light p-2 rounded-circle">
-                        <el-button type="primary" circle icon="el-icon-s-order" class="p-3 fs-3" v-on:click.stop="btnViewClick(paper)"></el-button>
+                        <el-button type="primary" circle icon="el-icon-s-order" class="p-3 fs-3" plain></el-button>
                     </div>
                 </div>
             </div>
@@ -61,7 +61,11 @@
     <el-empty image="/sitefiles/assets/images/nodata.svg" description="暂无考试安排"></el-empty>
 </div>
 <div class="py-8"></div>
-<el-button plain class="fs-4 p-3 animate__animated animate__fadeInRight" icon="el-icon-search" circle style="position:fixed;right:80%;top:80%;" type="primary" v-on:click="examDialogVisible=true"></el-button>
+<div style="position:fixed;right:0;top:80%;" class="animate__animated animate__fadeInRightBig">
+    <button type="button" class="btn btn-dark rounded-start-pill" v-on:click="examDialogVisible=true">
+        <i class="bi bi-search text-light"></i>
+    </button>
+</div>
 <template>
     <el-drawer title="考试查询"
                size="60%"

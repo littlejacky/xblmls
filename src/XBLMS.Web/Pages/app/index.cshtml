@@ -43,7 +43,7 @@
             </el-link>
             <el-link :underline="false">
                 <div class="text-center" v-on:click="btnAppMenuClick('exam')">
-                    <i class="fs-3 bi bi-ui-checks" :class="appMenuActive==='exam'?'text-primary fw-bold':'text-black fw-light'"></i>
+                    <i class="fs-3" :class="appMenuActive==='exam'?'bi bi-ui-checks text-primary fw-bold':'bi bi-list-check text-black fw-light'"></i>
                     <div :class="appMenuActive==='exam'?'text-primary fw-bold':'text-black fw-light'">
                         考 试
                     </div>
@@ -51,7 +51,7 @@
             </el-link>
             <el-link :underline="false">
                 <div class="text-center" v-on:click="btnAppMenuClick('mine')">
-                    <i class="fs-3" :class="appMenuActive==='mine'?'bi bi-person-fill text-primary fw-bold':'bi bi-person text-black fw-light'"></i>
+                    <i class="fs-3" :class="appMenuActive==='mine'?'bi bi-person-lines-fill text-primary fw-bold':'bi bi-person text-black fw-light'"></i>
                     <div :class="appMenuActive==='mine'?'text-primary fw-bold':'text-black fw-light'">
                         我 的
                     </div>
