@@ -15,7 +15,7 @@
     <iframe id="homeRightIframe" ref="homeRightIframe" :src="rightUrl" style="width: 100%;height:100%; border: none;" :style="{height: ($(window).height()) + 'px'}"></iframe>
 </div>
 <template>
-    <div style="position:fixed;left:0;bottom:0;width:100%;" class="bg-gray-100">
+    <div style="position:fixed;left:0;bottom:0;width:100%;display:block;" class="bg-gray-100 animate__animated animate__fadeInUp">
         <div class="d-flex align-items-center justify-content-between px-4 py-2">
             <el-link :underline="false">
                 <div class="text-center" v-on:click="btnAppMenuClick('index')">

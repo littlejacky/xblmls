@@ -12,7 +12,7 @@
 }
 <div v-if="list && list.length>0">
     <div v-for="(cer,index) in list" v-on:click="btnViewCer(cer)">
-        <el-card shadow="hover" class="mb-3 rounded-4">
+        <el-card shadow="hover" class="mb-3 rounded-4 shadow-lg">
             <div slot="header">
                 <span class="fw-bold">{{ cer.cerName }}【{{ cer.cerNumber }}】</span>
             </div>

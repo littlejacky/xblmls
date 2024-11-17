@@ -1,7 +1,6 @@
 @page
 @{ Layout = "_LayoutApp"; }
 @section Styles{
-    <link href="/sitefiles/assets/lib/animate/animate.min.css" rel="stylesheet" type="text/css" />
     <style>
         html {
             overflow-x: hidden !important;
@@ -16,13 +15,13 @@
     </style>
 }
 <div class="bg-gradient-mix-shade py-8 px-3 text-white text-center rounded-4">
-    <div class="pb-2"><span class="fs-6"><i class="bi bi-calendar-event me-2"></i>{{ dateStr }}</span></div>
+    <div class="pb-1"><span class="fs-6"><i class="bi bi-calendar-event me-2"></i>{{ dateStr }}</span></div>
 </div>
-<div class="p-3">
+<div class="p-3 animate__animated animate__fadeInDownBig">
     <div class="mt-n8">
         <div class="bg-white p-2 rounded-pill d-flex justify-content-between align-items-center smooth-shadow-lg">
             <span class="d-flex justify-content-start align-items-center">
-                <i class="bi bi-person-fill me-2 fs-1 text-warning ms-4"></i><span>欢迎：{{ user.displayName }}</span>
+                <i class="bi bi-person-fill me-2 fs-1 ms-4"></i><span>欢迎：{{ user.displayName }}</span>
             </span>
             <img :src="user.avatarUrl || DEFAULT_AVATAR_URL" class="img-fluid avatar-xl rounded-circle bg-light p-1">
         </div>
@@ -32,7 +31,7 @@
     <div class="mb-3">
         <div class="row g-3">
             <div class="col-xl-5 col-lg-5 col-md-5 col-5">
-                <div class="card  border-end-0 border-bottom-0 border-top-0 border-5 rounded-4 card-hover-with-icon shadow-lg border-warning" v-on:click="top.$vue.btnAppMenuClick('studyPlan')">
+                <div class="card  border-end-0 border-bottom-0 border-top-0 border-5 rounded-4 card-hover-with-icon shadow-lg border-warning animate__animated animate__fadeInLeft" v-on:click="top.$vue.btnAppMenuClick('studyPlan')">
                     <div class="card-body text-center py-3">
                         <div class="icon-shape icon-xxl rounded-circle bg-warning text-white mb-4 card-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-activity" viewBox="0 0 16 16">
@@ -53,7 +52,7 @@
             <div class="col-xl-7 col-lg-7 col-md-7 col-7">
                 <div class="row g-3">
                     <div class="col-xl-12 col-lg-12 col-md-12 col-12">
-                        <div class="card rounded-4 border-start-0 border-bottom-0 border-top-0 border-5 border-success card-hover-with-icon shadow-lg" v-on:click="top.$vue.btnAppMenuClick('studyCourse')">
+                        <div class="card rounded-4 border-start-0 border-bottom-0 border-top-0 border-5 border-success card-hover-with-icon shadow-lg animate__animated animate__fadeInRight" v-on:click="top.$vue.btnAppMenuClick('studyCourse')">
                             <div class="card-body d-flex align-items-center justify-content-between py-3">
                                 <div class="icon-shape icon rounded-circle bg-success text-white card-icon p-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-palette" viewBox="0 0 16 16">
@@ -73,7 +72,7 @@
                         </div>
                     </div>
                     <div class="col-xl-12 col-lg-12 col-md-12 col-12">
-                        <div class="card rounded-4 border-start-0 border-bottom-0 border-top-0 border-5 border-primary card-hover-with-icon shadow-lg" v-on:click="top.$vue.btnAppMenuClick('studyCourse')">
+                        <div class="card rounded-4 border-start-0 border-bottom-0 border-top-0 border-5 border-primary card-hover-with-icon shadow-lg animate__animated animate__fadeInRight" v-on:click="top.$vue.btnAppMenuClick('studyCourse')">
                             <div class="card-body d-flex align-items-center justify-content-between py-3">
                                 <div class="icon-shape icon rounded-circle bg-primary text-white card-icon p-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-code-slash" viewBox="0 0 16 16">
@@ -93,7 +92,7 @@
             </div>
         </div>
     </div>
-    <div class="card rounded-4 mb-3" v-on:click="top.$vue.btnAppMenuClick('studyPlan')">
+    <div class="card rounded-4 mb-3 shadow-lg" v-on:click="top.$vue.btnAppMenuClick('studyPlan')">
         <div class="card-body">
             <h5 class="card-title d-flex justify-content-between align-items-center">
                 <span><img class="me-2" src="/sitefiles//assets/images/ing.gif" />任务进度</span>
@@ -104,7 +103,7 @@
             </div>
         </div>
     </div>
-    <div class="card rounded-4 mb-3" v-on:click="top.$vue.btnAppMenuClick('exam')">
+    <div class="card rounded-4 mb-3 shadow-lg" v-on:click="top.$vue.btnAppMenuClick('exam')">
         <div class="card-body">
             <div class="mb-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-star-fill text-warning align-baseline" viewBox="0 0 16 16">
@@ -449,7 +448,7 @@
                     </ul>
                 </div>
                 <div class="pb-5 text-center">
-                    <button type="button" class="btn btn-outline-primary rounded-pill" v-on:click="taskDialogVisible=false"><i class="el-icon-close me-2"></i>关 闭</button>
+                    <button type="button" class="btn btn-primary rounded-pill" v-on:click="taskDialogVisible=false"><i class="el-icon-close me-2"></i>取 消</button>
                 </div>
             </div>
         </div>
