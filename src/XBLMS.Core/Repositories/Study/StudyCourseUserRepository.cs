@@ -212,11 +212,11 @@ namespace XBLMS.Core.Repositories
 
             return (total, overTotal);
         }
-        public async Task<long> GetTotalDurationAsync(int userId)
+        public async Task<int> GetTotalDurationAsync(int userId)
         {
             var query = Q.Where(nameof(StudyCourseUser.UserId), userId).WhereNullOrFalse(nameof(StudyCourseUser.Locked));
 
-            var total = await _repository.SumAsync(nameof(StudyCourseUser.TotalDuration));
+            var total = await _repository.SumAsync(nameof(StudyCourseUser.TotalDuration), query);
             return total;
         }
         public async Task<int> GetTaskCountAsync(int userId)

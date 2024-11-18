@@ -22,7 +22,7 @@ namespace XBLMS.Repositories
         Task<int> GetAvgEvaluationAsync(int courseId, int minStar);
         Task<List<StudyCourseUser>> GetListAsync(int planId, int userId);
         Task<(int total, int overTotal)> GetTotalAsync(int userId);
-        Task<long> GetTotalDurationAsync(int userId);
+        Task<int> GetTotalDurationAsync(int userId);
         Task<int> GetTaskCountAsync(int userId);
         Task<int> GetOverCountAsync(int planId, bool isSelect);
         Task<(int totalUser, int overTotalUser)> GetOverCountByAnalysisAsync(int planId, int courseId);
