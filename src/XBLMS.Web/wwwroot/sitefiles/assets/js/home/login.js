@@ -91,6 +91,7 @@ var methods = {
 
     utils.loading(this, true);
     $api.post($url, {
+      appLogin:false,
       account: this.form.account,
       password: this.form.password ? md5(this.form.password) : '',
       mobile: this.form.mobile,

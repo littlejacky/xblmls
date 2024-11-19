@@ -49,6 +49,7 @@ namespace XBLMS.Web.Controllers.Home
 
         public class SubmitRequest
         {
+            public bool AppLogin { get; set; }
             public string Account { get; set; }
             public string Password { get; set; }
             public string Mobile { get; set; }

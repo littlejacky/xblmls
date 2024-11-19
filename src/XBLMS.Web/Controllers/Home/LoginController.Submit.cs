@@ -33,7 +33,11 @@ namespace XBLMS.Web.Controllers.Home
             await _userRepository.UpdateLastActivityDateAndCountOfLoginAsync(user); // 记录最后登录时间、失败次数清零
 
             await _statRepository.AddCountAsync(StatType.UserLogin, user);
-            await _logRepository.AddUserLogAsync(user, ipAddress, Constants.ActionsLoginSuccess);
+
+            var loginLog = Constants.ActionsLoginSuccess;
+            if (request.AppLogin) { loginLog = loginLog + "-移动端"; }
+            await _logRepository.AddUserLogAsync(user, ipAddress, loginLog);
+
             var token = _authManager.AuthenticateUser(user, request.IsPersistent);
 
 

@@ -67,7 +67,9 @@ var methods = {
       var res = response.data;
       $this.paperTotal = res.paperTotal;
       $this.qPaperTotal = res.qPaperTotal;
-      $this.taskTotal = $this.paperTotal + $this.qPaperTotal;
+      $this.planTotal = res.planTotal;
+      $this.courseTotal = res.courseTotal;
+      $this.taskTotal = $this.paperTotal + $this.qPaperTotal + $this.planTotal + $this.courseTotal;
     }).catch(function (error) {
       utils.error(error);
     });
