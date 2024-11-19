@@ -40,11 +40,11 @@ var methods = {
     $api.post(editUrl, this.form).then(function (response) {
       var res = response.data;
       utils.success("操作成功")
+      utils.closeLayerSelf();
     }).catch(function (error) {
       utils.error(error, { layer: true });
     }).then(function () {
       utils.loading($this, false);
-      utils.closeLayerSelf();
     });
   },
 
