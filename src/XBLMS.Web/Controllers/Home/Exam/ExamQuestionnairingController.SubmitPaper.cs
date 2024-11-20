@@ -23,11 +23,6 @@ namespace XBLMS.Web.Controllers.Home.Exam
                 return this.Error("无效的问卷调查");
             }
 
-            if ((paper.ExamEndDateTime < DateTime.Now || paper.ExamBeginDateTime >= DateTime.Now) && request.PlanId <= 0 && request.CourseId <= 0)
-            {
-                return this.Error("不在有效期内");
-            }
-
             var user = new User();
             user.Id = 0;
 

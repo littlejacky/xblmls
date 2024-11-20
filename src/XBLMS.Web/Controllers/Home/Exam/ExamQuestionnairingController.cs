@@ -45,6 +45,8 @@ namespace XBLMS.Web.Controllers.Home.Exam
         public class GetRequest
         {
             public int Id { get; set; }
+            public int PlanId { get; set; }
+            public int CourseId { get; set; }
             public string ps { get; set; }
         }
 

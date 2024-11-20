@@ -19,11 +19,19 @@ namespace XBLMS.Web.Controllers.Home.Exam
 
             if (paper == null) { return this.Error("无效的问卷"); }
 
-
-            if (paper.Locked)
+            if (request.PlanId <= 0 && request.CourseId <= 0)
             {
-                return this.Error("无效的问卷");
+                if (paper.Locked)
+                {
+                    return this.Error("无效的问卷");
+                }
+
+                if ((paper.ExamEndDateTime < DateTime.Now || paper.ExamBeginDateTime >= DateTime.Now))
+                {
+                    return this.Error("不在有效期内");
+                }
             }
+
 
             var tmTotal = 0;
             var tmList = await _examQuestionnaireTmRepository.GetListAsync(paper.Id);
