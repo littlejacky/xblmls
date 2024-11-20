@@ -47,7 +47,7 @@ var methods = {
       var res = response.data;
 
       let pIndex = $this.list.findIndex(item => {
-        return item.id === id;
+        return item.examUserId === id;
       });
 
       $this.$set($this.list, pIndex, res.item);
