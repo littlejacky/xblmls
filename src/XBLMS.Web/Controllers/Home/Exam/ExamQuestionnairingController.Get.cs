@@ -25,12 +25,6 @@ namespace XBLMS.Web.Controllers.Home.Exam
                 return this.Error("无效的问卷");
             }
 
-            if (paper.ExamEndDateTime < DateTime.Now || paper.ExamBeginDateTime >= DateTime.Now)
-            {
-                return this.Error("不在有效期内");
-            }
-
-
             var tmTotal = 0;
             var tmList = await _examQuestionnaireTmRepository.GetListAsync(paper.Id);
             if (tmList != null && tmList.Count > 0)
