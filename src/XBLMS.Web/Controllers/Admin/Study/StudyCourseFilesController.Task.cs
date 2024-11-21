@@ -1,8 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-using XBLMS.Dto;
-
-namespace XBLMS.Web.Controllers.Admin.Study
+﻿namespace XBLMS.Web.Controllers.Admin.Study
 {
     public partial class StudyCourseFilesController
     {

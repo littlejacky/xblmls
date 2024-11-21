@@ -1,11 +1,8 @@
-﻿using System;
+﻿using Datory;
+using SqlKata;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Datory;
-using SqlKata;
-using XBLMS.Core.Utils;
 using XBLMS.Models;
-using XBLMS.Utils;
 
 namespace XBLMS.Core.Repositories
 {

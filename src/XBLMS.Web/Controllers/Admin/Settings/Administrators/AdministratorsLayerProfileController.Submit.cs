@@ -1,11 +1,9 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
+using XBLMS.Configuration;
 using XBLMS.Dto;
 using XBLMS.Models;
 using XBLMS.Utils;
-using XBLMS.Core.Utils;
-using XBLMS.Configuration;
-using XBLMS.Enums;
 
 namespace XBLMS.Web.Controllers.Admin.Settings.Administrators
 {

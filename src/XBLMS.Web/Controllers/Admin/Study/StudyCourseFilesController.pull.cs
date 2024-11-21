@@ -1,17 +1,4 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using XBLMS.Dto;
-using XBLMS.Core.Utils;
-using XBLMS.Utils;
-using System.Collections.Specialized;
-using System.Text;
-using System.IO;
-using System.Collections.Generic;
-using XBLMS.Models;
-using XBLMS.Enums;
-using XBLMS.Configuration;
-
-namespace XBLMS.Web.Controllers.Admin.Study
+﻿namespace XBLMS.Web.Controllers.Admin.Study
 {
     public partial class StudyCourseFilesController
     {

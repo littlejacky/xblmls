@@ -1,10 +1,8 @@
-﻿using DocumentFormat.OpenXml.Office.CustomUI;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NSwag.Annotations;
 using System.Collections.Generic;
 using XBLMS.Configuration;
-using XBLMS.Core.Repositories;
 using XBLMS.Models;
 using XBLMS.Repositories;
 using XBLMS.Services;

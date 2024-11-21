@@ -4,8 +4,6 @@ using System.Threading.Tasks;
 using XBLMS.Core.Utils;
 using XBLMS.Enums;
 using XBLMS.Models;
-using XBLMS.Services;
-using XBLMS.Utils;
 
 namespace XBLMS.Core.Services
 {

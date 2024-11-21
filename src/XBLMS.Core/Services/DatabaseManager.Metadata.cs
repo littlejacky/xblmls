@@ -1,13 +1,9 @@
-﻿using System;
+﻿using Datory;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Datory;
-using Datory.Utils;
-using XBLMS.Core.Repositories;
-using XBLMS.Core.Utils;
 using XBLMS.Enums;
 using XBLMS.Models;
-using XBLMS.Repositories;
 using XBLMS.Utils;
 
 namespace XBLMS.Core.Services

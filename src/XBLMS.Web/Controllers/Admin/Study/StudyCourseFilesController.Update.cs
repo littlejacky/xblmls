@@ -1,8 +1,7 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using XBLMS.Models;
-using XBLMS.Core.Utils;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 using XBLMS.Dto;
+using XBLMS.Models;
 
 namespace XBLMS.Web.Controllers.Admin.Study
 {
