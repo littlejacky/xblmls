@@ -225,12 +225,12 @@ var methods = {
       }
     });
   },
-  btnViewPaperClick: function (id) {
+  btnViewPaperClick: function (row) {
     var $this = this;
     top.utils.openLayer({
       title: false,
       closebtn: 0,
-      url: utils.getExamUrl('examPaperInfo', { id: id }),
+      url: utils.getExamUrl('examPaperInfo', { id: row.id, planId: row.planId, courseId: row.courseId }),
       width: "78%",
       height: "98%",
       end: function () {
