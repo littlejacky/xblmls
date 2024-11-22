@@ -210,7 +210,7 @@
 <div style="position:fixed;left:0;bottom:0;width:100%;" class="text-center mb-5 animate__animated animate__fadeInUp">
     <div class="btn-group">
         <template v-if="item.examSubmiting">
-            <button type="button" :loading="item.examSubmiting" class="rounded-start-pill"><i class="el-icon-s-promotion me-2"></i>正在交卷...</button>
+            <button type="button" :loading="item.examSubmiting" class="btn btn-warning rounded-start-pill"><i class="el-icon-s-promotion me-2"></i>正在交卷...</button>
         </template>
         <template v-else>
             <button type="button" v-on:click="btnStartExamClick" v-if="item.startId>0 && isStart" class="btn btn-warning rounded-start-pill"><i class="el-icon-s-promotion me-2"></i>准备就绪，恢复考试</button>
