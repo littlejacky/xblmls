@@ -268,11 +268,11 @@
 <el-row align="center" style="margin-top:18px;">
     <el-col :span="24" align="center">
         <template v-if="form.submitType==='Save'">
-            <el-button :size="euiSize" plain type="primary" v-on:click="btnSaveClick">保 存</el-button>
-            <el-button :size="euiSize" type="primary" v-on:click="btnSubmitClick">发 布</el-button>
+            <el-button icon="el-icon-check" :size="euiSize" plain type="primary" v-on:click="btnSaveClick">保 存</el-button>
+            <el-button icon="el-icon-s-promotion" :size="euiSize" type="primary" v-on:click="btnSubmitClick">发 布</el-button>
         </template>
         <template v-else>
-            <el-button :size="euiSize" type="primary" v-on:click="btnSubmitClick">确 定</el-button>
+            <el-button icon="el-icon-check" :size="euiSize" type="primary" v-on:click="btnSubmitClick">确 定</el-button>
         </template>
         <el-button :size="euiSize" icon="el-icon-close" plain v-on:click="utils.closeLayerSelf">取 消</el-button>
     </el-col>

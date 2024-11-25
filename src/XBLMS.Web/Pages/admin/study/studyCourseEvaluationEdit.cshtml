@@ -39,8 +39,8 @@
                             </el-table-column>
                             <el-table-column label="类别" width="100">
                                 <template slot-scope="scope">
-                                    <el-tag v-if="scope.row.textContent">文本</el-tag>
-                                    <el-tag type="warning" v-else>评星<i class="el-icon-star-on"></i></el-tag>
+                                    <el-tag size="mini" v-if="scope.row.textContent">文本</el-tag>
+                                    <el-tag size="mini" type="warning" v-else>评星<i class="el-icon-star-on"></i></el-tag>
                                 </template>
                             </el-table-column>
                             <el-table-column label="排序" width="160" prop="taxis">
@@ -57,8 +57,8 @@
                         </el-table>
                     </el-form-item>
                     <el-form-item>
-                        <el-button type="warning" plain icon="el-icon-plus" v-on:click.stop="btnAddItemClick(true)">添加评星</el-button>
-                        <el-button plain icon="el-icon-plus" v-on:click.stop="btnAddItemClick(false)">添加文本</el-button>
+                        <el-button type="success" icon="el-icon-plus" v-on:click.stop="btnAddItemClick(true)">添加评星</el-button>
+                        <el-button plain type="success" icon="el-icon-plus" v-on:click.stop="btnAddItemClick(false)">添加文本</el-button>
                     </el-form-item>
                 </el-form>
                 </div>
@@ -67,8 +67,8 @@
 </el-card>
 <el-row align="center" style="margin-top:18px;">
     <el-col :span="24" align="center">
-        <el-button type="primary" v-on:click="btnSubmitClick" :size="euiSize">确 定</el-button>
-        <el-button icon="el-icon-close" :size="euiSize" v-on:click="utils.closeLayerSelf">关 闭</el-button>
+        <el-button icon="el-icon-check" type="primary" v-on:click="btnSubmitClick" :size="euiSize">确 定</el-button>
+        <el-button icon="el-icon-close" :size="euiSize" v-on:click="utils.closeLayerSelf">取 消</el-button>
     </el-col>
 </el-row>
 

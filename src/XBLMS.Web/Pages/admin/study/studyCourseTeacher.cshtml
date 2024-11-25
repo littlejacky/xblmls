@@ -3,7 +3,7 @@
 
 <el-card>
     <el-form :inline="true" :size="euiSize">
-        <el-form-item label="">
+        <el-form-item label="课程">
             <el-input v-model="form.keyword" placeholder="名称，标签 关键字" prefix-icon="el-icon-search" clearable></el-input>
         </el-form-item>
         <el-form-item label="">
@@ -51,14 +51,14 @@
         </el-table-column>
         <el-table-column label="完成人数" prop="overUser" width="85">
         </el-table-column>
-        <el-table-column width="100">
+        <el-table-column width="100" align="right">
             <template slot-scope="scope">
                 <el-dropdown :show-timeout="0" placement="left">
                     <el-button icon="el-icon-arrow-left" size="mini" v-on:click.stop="return false">
                         操作
                     </el-button>
                     <el-dropdown-menu slot="dropdown">
-                        <el-dropdown-item icon="el-icon-s-data" v-on:click.native="btnCourseManagerClick(scope.row)">课程管理</el-dropdown-item>
+                        <el-dropdown-item icon="el-icon-s-data" v-on:click.native="btnCourseManagerClick(scope.row)">管 理</el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>
             </template>

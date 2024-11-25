@@ -235,7 +235,7 @@
                             </el-table-column>
                             <el-table-column prop="user.maxScore" label="最高分" width="100">
                             </el-table-column>
-                            <el-table-column width="100">
+                            <el-table-column width="100" align="right">
                                 <template slot-scope="scope">
                                     <el-dropdown :show-timeout="0" placement="left">
                                         <el-button icon="el-icon-arrow-left" :size="euiSize" v-on:click.stop="return false">
@@ -285,7 +285,7 @@
                             </el-form-item>
                             <el-form-item>
                                 <el-button :size="euiSize" icon="el-icon-search" type="primary" v-on:click="btnMarkSearchClick">查 询</el-button>
-                                <el-button :size="euiSize" plain type="primary" v-on:click="btnMarkerArrange">安排阅卷老师</el-button>
+                                <el-button icon="el-icon-user" :size="euiSize" plain type="primary" v-on:click="btnMarkerArrange">安排阅卷老师</el-button>
                             </el-form-item>
                         </el-form>
                     </div>
@@ -324,7 +324,7 @@
                                     <span v-else>/</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column width="100">
+                            <el-table-column width="100" align="right">
                                 <template slot-scope="scope">
                                     <el-dropdown :show-timeout="0" placement="left">
                                         <el-button icon="el-icon-arrow-left" :size="euiSize" v-on:click.stop="return false">
@@ -411,7 +411,7 @@
                             </el-table-column>
                             <el-table-column prop="score" label="成绩" width="100">
                             </el-table-column>
-                            <el-table-column width="100">
+                            <el-table-column width="100" align="right">
                                 <template slot-scope="scope">
                                     <el-dropdown :show-timeout="0" placement="left">
                                         <el-button icon="el-icon-arrow-left" :size="euiSize" v-on:click.stop="return false">
@@ -460,8 +460,8 @@
             </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
+            <el-button icon="el-icon-check" type="primary" v-on:click="btnUserUpdateDatetimeSubmit">确 定</el-button>
             <el-button icon="el-icon-close" v-on:click="userUpdateDateTimeDialogVisible = false">取 消</el-button>
-            <el-button type="primary" v-on:click="btnUserUpdateDatetimeSubmit">确 定</el-button>
         </div>
     </el-dialog>
 </template>
@@ -481,8 +481,8 @@
             </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
+            <el-button icon="el-icon-check" type="primary" v-on:click="btnMarkerArrangeSubmit">确 定</el-button>
             <el-button icon="el-icon-close" v-on:click="markerSelectDialogVisible = false">取 消</el-button>
-            <el-button type="primary" v-on:click="btnMarkerArrangeSubmit">确 定</el-button>
         </div>
     </el-dialog>
 </template>

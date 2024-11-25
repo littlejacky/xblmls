@@ -14,10 +14,10 @@
         }
     </style>
 }
-<div class="bg-gradient-mix-shade py-8 px-3 text-white text-center rounded-4">
+<div class="bg-gradient-mix-shade py-8 px-3 text-white text-center rounded-0">
     <div class="pb-1"><span class="fs-6"><i class="bi bi-calendar-event me-2"></i>{{ dateStr }}</span></div>
 </div>
-<div class="p-3 animate__animated animate__fadeInDownBig">
+<div class="p-3 animate__animated animate__zoomIn">
     <div class="mt-n8">
         <div class="bg-white p-2 rounded-pill d-flex justify-content-between align-items-center smooth-shadow-lg">
             <span class="d-flex justify-content-start align-items-center">
@@ -104,14 +104,12 @@
         </div>
     </div>
     <div class="card rounded-4 mb-3 shadow-lg" v-on:click="top.$vue.btnAppMenuClick('exam')">
-        <div class="card-body">
+        <div class="card-body text-center">
             <div class="mb-2">
-                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-star-fill text-warning align-baseline" viewBox="0 0 16 16">
-                    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
-                </svg>
-                累计考试<span class="text-primary fw-bold mx-2 fs-4">{{ examTotal }}</span>场
+                <i class="bi bi-journal-medical fs-4 me-2 text-warning"></i>
+                累计考试<span class="text-primary fw-bold mx-2 fs-3">{{ examTotal }}</span>场
             </div>
-            <div>
+            <div class="mt-3">
                 <apexchart type="radialBar" :options="passChartOptions" :series="passSeries"></apexchart>
             </div>
         </div>
@@ -122,12 +120,12 @@
                 <div class="card rounded-4 border-start-0 border-top-0 border-end-0 border-5 border-success card-hover-with-icon shadow-lg" v-on:click="goMoni">
                     <div class="card-body d-flex align-items-center justify-content-between py-3">
                         <div>
-                            <i class="bi bi-layers-fill text-warning"></i>
+                            <i class="bi bi-journals text-primary fs-3"></i>
                         </div>
                         <div class="text-end">
-                            <div class="mb-0 fs-6">模拟<span class="text-primary fw-bold mx-2 fs-4">{{ examMoniTotal }}</span>场</div>
+                            <div class="mb-1 fs-6">模拟<span class="text-primary fw-bold mx-2">{{ examMoniTotal }}</span>场</div>
                             <div class="mb-0 fs-6">
-                                及格率<span class="text-primary fw-bold mx-1 fs-4">{{ examMoniPercent }}</span>%
+                                及格率<span class="text-primary fw-bold mx-1">{{ examMoniPercent }}</span>%
                             </div>
                         </div>
                     </div>
@@ -137,12 +135,12 @@
                 <div class="card rounded-4 border-start-0 border-end-0 border-top-0 border-5 border-success card-hover-with-icon shadow-lg" v-on:click="goShuati">
                     <div class="card-body d-flex align-items-center justify-content-between py-3">
                         <div>
-                            <i class="bi bi-layers text-warning"></i>
+                            <i class="bi bi-journal-check text-primary fs-3"></i>
                         </div>
                         <div class="text-end">
-                            <div class="mb-0 fs-6">刷题<span class="text-primary fw-bold mx-2 fs-4">{{ practiceAnswerTmTotal }}</span>道</div>
+                            <div class="mb-1 fs-6">刷题<span class="text-primary fw-bold mx-2">{{ practiceAnswerTmTotal }}</span>道</div>
                             <div class="mb-0 fs-6">
-                                正确率<span class="text-primary fw-bold mx-1 fs-4">{{ practiceAnswerPercent }}</span>%
+                                正确率<span class="text-primary fw-bold mx-1">{{ practiceAnswerPercent }}</span>%
                             </div>
                         </div>
                     </div>

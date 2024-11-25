@@ -50,7 +50,7 @@
                 <span v-else><el-tag size="mini" type="success" effect="dark">启 用</el-tag></span>
             </template>
         </el-table-column>
-        <el-table-column width="93">
+        <el-table-column width="93" align="right">
             <template slot-scope="scope">
                 <el-dropdown :show-timeout="0" placement="left">
                     <el-button size="mini" v-on:click.stop="return false">
@@ -78,8 +78,8 @@
 </el-card>
 <el-row align="center" style="margin-top:18px;">
     <el-col :span="24" align="center">
-        <el-button type="primary" v-on:click="btnSelectConfirmClick" :size="euiSize">确 定</el-button>
-        <el-button icon="el-icon-close" :size="euiSize" v-on:click="utils.closeLayerSelf">关 闭</el-button>
+        <el-button icon="el-icon-check" type="primary" v-on:click="btnSelectConfirmClick" :size="euiSize">确 定</el-button>
+        <el-button icon="el-icon-close" :size="euiSize" v-on:click="utils.closeLayerSelf">取 消</el-button>
     </el-col>
 </el-row>
 @section Scripts{

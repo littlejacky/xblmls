@@ -46,7 +46,7 @@
         <el-col :span="18">
             <el-card>
             <el-form :inline="true" :size="euiSize">
-                        <el-form-item label="">
+                        <el-form-item label="试卷">
                             <el-input v-model="formInline.keyword" placeholder="关键字" prefix-icon="el-icon-search" clearable></el-input>
                         </el-form-item>
                         <el-form-item>
@@ -88,7 +88,7 @@
                         </span>
                     </template>
                 </el-table-column>
-                <el-table-column width="100">
+                <el-table-column width="100" align="right">
                     <template slot-scope="scope">
                         <el-dropdown :show-timeout="0" placement="left">
                             <el-button icon="el-icon-arrow-left" size="mini" v-on:click.stop="return false">

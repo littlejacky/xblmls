@@ -316,8 +316,8 @@
                 <el-card class="box-card">
                     <div>
                         <el-form :inline="true" :size="euiSize">
-                            <el-form-item label="关键字">
-                                <el-input v-model="formCourse.keyWords" placeholder="课程名称" prefix-icon="el-icon-search" clearable></el-input>
+                            <el-form-item label="课程">
+                                <el-input v-model="formCourse.keyWords" placeholder="关键字" prefix-icon="el-icon-search" clearable></el-input>
                             </el-form-item>
                             <el-form-item>
                                 <el-button :size="euiSize" icon="el-icon-search" type="primary" v-on:click="btnCourseSearchClick">查 询</el-button>
@@ -374,14 +374,14 @@
                                     <span v-else>/</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column width="100">
+                            <el-table-column width="100" align="right">
                                 <template slot-scope="scope">
                                     <el-dropdown :show-timeout="0" placement="left">
                                         <el-button icon="el-icon-arrow-left" :size="euiSize" v-on:click.stop="return false">
                                             操作
                                         </el-button>
                                         <el-dropdown-menu slot="dropdown">
-                                            <el-dropdown-item icon="el-icon-edit" v-on:click.native="btnCourseViewClick(scope.row)">详 细</el-dropdown-item>
+                                            <el-dropdown-item icon="el-icon-view" v-on:click.native="btnCourseViewClick(scope.row)">详 细</el-dropdown-item>
                                         </el-dropdown-menu>
                                     </el-dropdown>
                                 </template>
@@ -453,7 +453,7 @@
                             </el-table-column>
                             <el-table-column prop="score" label="成绩" width="100">
                             </el-table-column>
-                            <el-table-column width="100">
+                            <el-table-column width="100" align="right">
                                 <template slot-scope="scope">
                                     <el-dropdown :show-timeout="0" placement="left">
                                         <el-button icon="el-icon-arrow-left" :size="euiSize" v-on:click.stop="return false">

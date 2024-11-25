@@ -2,14 +2,14 @@
 @{ Layout = "_Layout"; }
 <el-card class="box-card">
     <el-form :inline="true" :size="euiSize">
-        <el-form-item label="">
+        <el-form-item label="组织名称">
             <el-input v-model="search"
                       prefix-icon="el-icon-search" clearable
-                      placeholder="输入关键字进行过滤">
+                      placeholder="关键字">
             </el-input>
         </el-form-item>
         <el-form-item label="">
-            <el-button icon="el-icon-refresh" circle :size="euiSize" v-on:click="btnSearch"></el-button>
+            <el-button type="primary" icon="el-icon-search" :size="euiSize" v-on:click="btnSearch">查 询</el-button>
         </el-form-item>
     </el-form>
     <el-table :data="treeTable" ref="companysTable"

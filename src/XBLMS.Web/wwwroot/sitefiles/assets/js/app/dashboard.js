@@ -50,14 +50,14 @@ var data = utils.init({
             offsetY: -20,
             show: true,
             color: '#ff6a00',
-            fontSize: '16px'
+            fontSize: '18px'
           },
           value: {
             formatter: function (val) {
               return parseInt(val) + '%';
             },
             color: '#000',
-            fontSize: '36px',
+            fontSize: '24px',
             show: true,
           }
         }

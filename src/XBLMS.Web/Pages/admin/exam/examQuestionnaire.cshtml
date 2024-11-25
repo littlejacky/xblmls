@@ -40,7 +40,7 @@
                 <span v-else><el-tag size="mini" type="success" effect="dark">启 用</el-tag></span>
             </template>
         </el-table-column>
-        <el-table-column width="93">
+        <el-table-column width="93" align="right">
             <template slot-scope="scope">
                 <el-dropdown :show-timeout="0" placement="left">
                     <el-button size="mini" v-on:click.stop="return false">
@@ -54,7 +54,7 @@
                         <el-dropdown-item icon="el-icon-delete" style="color:red;" v-on:click.native="btnDeleteClick(scope.row.id)">删除</el-dropdown-item>
                         <el-dropdown-item icon="el-icon-picture-outline" v-on:click.native="btnQrcodeClick(scope.row.id)" v-if="scope.row.published">二维码</el-dropdown-item>
                         <el-dropdown-item icon="el-icon-view" v-on:click.native="btnViewClick(scope.row)">预览统计</el-dropdown-item>
-                        <el-dropdown-item icon="el-icon-view" v-on:click.native="btnViewUserClick(scope.row)" v-if="!scope.row.published">用户列表</el-dropdown-item>
+                        <el-dropdown-item icon="el-icon-user" v-on:click.native="btnViewUserClick(scope.row)" v-if="!scope.row.published">用户列表</el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>
             </template>
