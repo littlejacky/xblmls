@@ -22,10 +22,9 @@ namespace XBLMS.Web.Controllers.Home.Exam
                 {
                     if (tmGroup.OpenUser)
                     {
-                        var (total, tmList) = await _examTmRepository.GetListAsync(user.CompanyId, tmGroup, 0, int.MaxValue);
+                        var (total, tmList) = await _examTmRepository.GetListAsync(user.CompanyId, tmGroup, 1, int.MaxValue);
                         if (total > 0)
                         {
-                            resultTotal++;
                             var zsds = new List<string>();
                             foreach (var tmItem in tmList)
                             {
