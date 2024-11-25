@@ -297,6 +297,19 @@ var methods = {
       }
     });
   },
+  goCer: function () {
+    var $this = this;
+    top.utils.openLayer({
+      title: false,
+      closebtn: 0,
+      url: utils.getExamUrl("examPaperCer"),
+      width: "100%",
+      height: "100%",
+      end: function () {
+        $this.setDocumentTitel();
+      }
+    });
+  },
   btnViewPaperClick: function (row) {
     var $this = this;
     top.utils.openLayer({
