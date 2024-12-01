@@ -6,7 +6,7 @@
 
 ## 介绍
 
-基于 .NET Core 8
+基于 .NET Core 8 + Vue
 
 支持跨平台、国产化部署
 
@@ -57,7 +57,7 @@
 <img width="180" src="https://gitee.com/xblms/xblmls/raw/master/src/XBLMS.Web/wwwroot/sitefiles/assets/images/demo/app/mine.jpg"/>
 
 ## 发布手册
-发布和部署手册：(https://gitee.com/xblms/xblms/tree/master/%E9%83%A8%E7%BD%B2%E6%89%8B%E5%86%8C)
+发布和部署手册：(https://gitee.com/xblms/xblmes/raw/master/src/XBLMS.Web/wwwroot/sitefiles/assets/uploadtemplates/doc)
 
 ## 支持环境
 ### 支持的操作系统
