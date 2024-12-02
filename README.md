@@ -37,7 +37,7 @@
 
 * 扫码前往移动端演示
 
-* <img width="200" src="https://gitee.com/xblms/xblmls/raw/master/src/XBLMS.Web/wwwroot/sitefiles/assets/images/demo/app/qrcode.png"/>
+* <img width="200" src="https://gitee.com/xblms/xblmls/tree/master/src/XBLMS.Web/wwwroot/sitefiles/assets/images/demo/app/qrcode.png"/>
 
 ### 在线考试系统
 
