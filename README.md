@@ -37,7 +37,7 @@
 
 * 扫码前往移动端演示
 
-* <img width="200" src="https://gitee.com/xblms/xblmls/tree/master/src/XBLMS.Web/wwwroot/sitefiles/assets/images/demo/app/qrcode.png"/>
+* <img width="200" src="https://gitee.com/xblms/xblmls/raw/master/src/XBLMS.Web/wwwroot/sitefiles/assets/images/demo/app/qrcode.png"/>
 
 ### 在线考试系统
 
@@ -57,7 +57,7 @@
 <img width="180" src="https://gitee.com/xblms/xblmls/raw/master/src/XBLMS.Web/wwwroot/sitefiles/assets/images/demo/app/mine.jpg"/>
 
 ## 发布手册
-发布和部署手册：(https://gitee.com/xblms/xblmes/raw/master/src/XBLMS.Web/wwwroot/sitefiles/assets/uploadtemplates/doc)
+发布和部署手册：(https://gitee.com/xblms/xblmes/tree/master/src/XBLMS.Web/wwwroot/sitefiles/assets/uploadtemplates/doc)
 
 ## 支持环境
 ### 支持的操作系统
