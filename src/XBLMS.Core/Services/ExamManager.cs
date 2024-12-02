@@ -186,7 +186,7 @@ namespace XBLMS.Core.Services
             {
                 optionsRandom.Add(new KeyValuePair<string, string>(abcList[i], options[i]));
             }
-            if (paper.IsExamingTmOptionRandomView)
+            if (paper.IsExamingTmOptionRandomView && !paperView)
             {
                 optionsRandom = ListUtils.GetRandomList(optionsRandom);
             }
