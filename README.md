@@ -1,6 +1,6 @@
 # XBLMLS 在线培训系统
 
-<img src="https://gitee.com/xblms/xblms/raw/master/src/XBLMS.Web/wwwroot/sitefiles/assets/images/logo.png" height="180" align="center">
+<img src="https://gitee.com/xblms/xblmls/raw/master/src/XBLMS.Web/wwwroot/sitefiles/assets/images/logo.png" height="180" align="center">
 
 <br /><br />
 
