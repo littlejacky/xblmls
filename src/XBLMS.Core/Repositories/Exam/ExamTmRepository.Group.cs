@@ -277,7 +277,7 @@ namespace XBLMS.Core.Repositories
 
         public async Task<(int total, List<ExamTm> list)> Group_ListAsync(AuthorityAuth auth, ExamTmGroup group, List<int> treeIds, int txId, int nandu, string keyword, string order, string orderType, bool? locked, int pageIndex, int pageSize)
         {
-            var query = Q.WhereNullOrFalse(nameof(ExamTm.Locked));
+            var query = Q.NewQuery();
 
             if (auth.AuthType == Enums.AuthorityType.Admin || auth.AuthType == Enums.AuthorityType.AdminCompany)
             {
