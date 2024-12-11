@@ -268,11 +268,11 @@ namespace XBLMS.Web.Controllers.Admin
             plan3 = await _statRepository.SumAsync(StatType.StudyPlanDelete, auth);
             plan2 = plan1 + plan3;
 
-            var (course1, course2, course3, course4, course5) = await _databaseManager.StudyPlanRepository.GetDataCount(auth);
+            var (course1, course2, course3, course4, course5) = await _databaseManager.StudyCourseRepository.GetDataCount(auth);
             course3 = await _statRepository.SumAsync(StatType.StudyCourseDelete, auth);
             course2 = course1 + course3;
 
-            var (file1, file2, file3, file4, file5) = await _databaseManager.StudyPlanRepository.GetDataCount(auth);
+            var (file1, file2, file3, file4, file5) = await _databaseManager.StudyCourseFilesRepository.GetDataCount(auth);
             file3 = await _statRepository.SumAsync(StatType.StudyFileDelete, auth);
             file2 = file1 + file3;
 
