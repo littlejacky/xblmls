@@ -106,7 +106,7 @@ var methods = {
       top.utils.openLayer({
         title: false,
         closebtn: 0,
-        url: utils.getCommonUrl('studyCourseManager', { id: log.objectId }),
+        url: utils.getStudyUrl('studyCourseManager', { id: log.objectId }),
         width: "99%",
         height: "99%"
       });
@@ -156,23 +156,6 @@ var methods = {
         height: "98%"
       });
     }
-    else if (log.isExamAss) {
-      top.utils.openLayer({
-        title: row.title + '-用户列表',
-        url: utils.getExamUrl('examAssessmentUsers', { id: log.objectId }),
-        width: "98%",
-        height: "98%"
-      });
-    }
-    else if (log.isExamPk) {
-      top.utils.openLayer({
-        title: false,
-        closebtn: 0,
-        url: utils.getExamUrl('examPkRooms', { id: log.objectId }),
-        width: "99%",
-        height: "99%"
-      });
-    }
     else if (log.isExamCer) {
       top.utils.openLayer({
         title: false,
@@ -216,7 +199,7 @@ var methods = {
       var layerWidth = "68%";
 
       var url = utils.getStudyUrl('studyCourseFaceEdit', { id: log.objectId, face: log.isFace });
-      if (!course.offLine) {
+      if (!log.isFace) {
         layerWidth = "98%";
         url = utils.getStudyUrl('studyCourseEdit', { id: log.objectId, face: log.isFace });
       }
@@ -254,24 +237,6 @@ var methods = {
         url: utils.getExamUrl('examQuestionnaireEdit', { id: log.objectId }),
         width: "98%",
         height: "98%"
-      });
-    }
-    else if (log.isExamAss) {
-      top.utils.openLayer({
-        title: false,
-        closebtn: 0,
-        url: utils.getExamUrl('examAssessmentEdit', { id: log.objectId }),
-        width: "98%",
-        height: "98%"
-      });
-    }
-    else if (log.isExamPk) {
-      top.utils.openLayer({
-        title: false,
-        closebtn: 0,
-        url: utils.getExamUrl('examPkEdit', { id: log.objectId }),
-        width: "68%",
-        height: "88%"
       });
     }
     else if (log.isExamCer) {
