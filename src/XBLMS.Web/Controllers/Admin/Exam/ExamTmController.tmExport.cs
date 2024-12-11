@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DocumentFormat.OpenXml.EMMA;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using XBLMS.Core.Utils.Office;
@@ -44,6 +45,8 @@ namespace XBLMS.Web.Controllers.Admin.Exam
 
             var downloadUrl = _pathManager.GetRootUrlByPath(filePath);
 
+            await _authManager.AddAdminLogAsync("导出题目");
+            await _authManager.AddStatLogAsync(StatType.Export, "导出题目", 0, string.Empty, new StringResult { Value = downloadUrl });
             return new StringResult
             {
                 Value = downloadUrl

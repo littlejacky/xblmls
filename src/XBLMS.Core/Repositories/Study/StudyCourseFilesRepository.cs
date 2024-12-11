@@ -26,7 +26,10 @@ namespace XBLMS.Core.Repositories
         public string TableName => _repository.TableName;
 
         public List<TableColumn> TableColumns => _repository.TableColumns;
-
+        public async Task<bool> ExistsAsync(int id)
+        {
+            return await _repository.ExistsAsync(id);
+        }
         public async Task<int> InsertAsync(StudyCourseFiles file)
         {
             return await _repository.InsertAsync(file);
@@ -158,6 +161,28 @@ namespace XBLMS.Core.Repositories
             }
 
             return result;
+        }
+
+
+        public async Task<(int allCount, int addCount, int deleteCount, int lockedCount, int unLockedCount)> GetDataCount(AuthorityAuth auth)
+        {
+            var total = 0;
+            var lockedTotal = 0;
+            var unLockedTotal = 0;
+            if (auth.AuthType == Enums.AuthorityType.Admin || auth.AuthType == Enums.AuthorityType.AdminCompany)
+            {
+                total = await _repository.CountAsync(Q.WhereIn(nameof(StudyCourseFiles.CompanyId), auth.CurManageOrganIds));
+            }
+            else if (auth.AuthType == Enums.AuthorityType.AdminDepartment)
+            {
+                total = await _repository.CountAsync(Q.WhereIn(nameof(StudyCourseFiles.DepartmentId), auth.CurManageOrganIds));
+            }
+            else
+            {
+                total = await _repository.CountAsync(Q.Where(nameof(StudyCourseFiles.CreatorId), auth.AdminId));
+            }
+
+            return (total, 0, 0, lockedTotal, unLockedTotal);
         }
 
     }

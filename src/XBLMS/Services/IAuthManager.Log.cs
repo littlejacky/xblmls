@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using XBLMS.Enums;
 
 namespace XBLMS.Services
 {
@@ -12,5 +13,7 @@ namespace XBLMS.Services
         Task AddUserLogAsync(string action, string summary);
 
         Task AddUserLogAsync(string action);
+        Task AddStatCount(StatType statType);
+        Task AddStatLogAsync(StatType statType, string statTypeStr, int objectId = 0, string objectName = "", object entity = null);
     }
 }

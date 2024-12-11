@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using XBLMS.Dto;
 using XBLMS.Models;
 
 namespace XBLMS.Repositories
@@ -22,5 +23,6 @@ namespace XBLMS.Repositories
         Task<string> GetDisplayAsync(int userId);
 
         string GetDisplay(Administrator admin);
+        Task<(int allCount, int addCount, int deleteCount, int lockedCount, int unLockedCount)> GetDataCount(AuthorityAuth auth);
     }
 }

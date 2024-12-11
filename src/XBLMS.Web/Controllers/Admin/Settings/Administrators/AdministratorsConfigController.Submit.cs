@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DocumentFormat.OpenXml.Office2010.Excel;
+using Microsoft.AspNetCore.Mvc;
+using System.Runtime.ConstrainedExecution;
 using System.Threading.Tasks;
 using XBLMS.Dto;
 using XBLMS.Enums;
@@ -37,7 +39,8 @@ namespace XBLMS.Web.Controllers.Admin.Settings.Administrators
 
             await _configRepository.UpdateAsync(config);
 
-            await _authManager.AddAdminLogAsync("修改管理员设置");
+            await _authManager.AddAdminLogAsync("修改管理员配置");
+            await _authManager.AddStatLogAsync(StatType.None, "修改管理员配置");
 
             return new BoolResult
             {

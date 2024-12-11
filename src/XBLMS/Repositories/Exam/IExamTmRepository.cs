@@ -10,6 +10,7 @@ namespace XBLMS.Repositories
 {
     public partial interface IExamTmRepository : IRepository
     {
+        Task<bool> ExistsAsync(int id);
         Task<bool> ExistsAsync(string title, int txId, int companyId);
         Task<bool> ExistsAsync(string title, int txId);
         Task<int> InsertAsync(ExamTm item);
@@ -27,5 +28,6 @@ namespace XBLMS.Repositories
 
         Task<int> GetCountAsync(AuthorityAuth auth, bool hasGroup, bool allTm, List<int> tmIds, int txId, int nandu);
         Task<List<ExamTm>> GetListByRandomAsync(AuthorityAuth auth, bool allTm, bool hasGroup, List<int> tmIds, int txId, int nandu1Count = 0, int nandu2Count = 0, int nandu3Count = 0, int nandu4Count = 0, int nandu5Count = 0);
+        Task<(int allCount, int addCount, int deleteCount, int lockedCount, int unLockedCount)> GetDataCount(AuthorityAuth auth);
     }
 }

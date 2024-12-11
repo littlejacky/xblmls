@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using XBLMS.Dto;
 using XBLMS.Models;
 
 namespace XBLMS.Core.Repositories
@@ -82,6 +83,23 @@ namespace XBLMS.Core.Repositories
                 names.Add(info);
                 await GetPathNamesAsync(names, info.ParentId);
             }
+        }
+
+        public async Task<(int allCount, int addCount, int deleteCount, int lockedCount, int unLockedCount)> GetDataCount(AuthorityAuth auth)
+        {
+            var total = 0;
+            var lockedTotal = 0;
+            var unLockedTotal = 0;
+            if (auth.AuthType == Enums.AuthorityType.Admin || auth.AuthType == Enums.AuthorityType.AdminCompany)
+            {
+                total = await _repository.CountAsync(Q.WhereIn(nameof(OrganCompany.Id), auth.CurManageOrganIds));
+            }
+            else
+            {
+                total = 1;
+            }
+
+            return (total, 0, 0, lockedTotal, unLockedTotal);
         }
     }
 }

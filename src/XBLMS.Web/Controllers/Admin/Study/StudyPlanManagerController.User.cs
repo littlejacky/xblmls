@@ -164,6 +164,8 @@ namespace XBLMS.Web.Controllers.Admin.Study
             ExcelUtils.Write(filePath, head, rows);
 
             var downloadUrl = _pathManager.GetDownloadFilesUrl(fileName);
+            await _authManager.AddAdminLogAsync($"导出学员(计划：{plan.PlanName})");
+            await _authManager.AddStatLogAsync(StatType.Export, $"导出学员(计划：{plan.PlanName})", 0, string.Empty, new StringResult { Value = downloadUrl });
 
             return new StringResult
             {

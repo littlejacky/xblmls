@@ -27,9 +27,10 @@ namespace XBLMS.Web.Controllers.Admin.Study
             var info = await _studyCourseFilesRepository.GetAsync(request.Id);
             if (info == null) return NotFound();
             await _studyCourseFilesRepository.DeleteAsync(info.Id);
-            await _authManager.AddAdminLogAsync("删除文件", info.FileName);
 
-            FileUtils.DeleteFileIfExists(info.Url);
+            await _authManager.AddAdminLogAsync("删除课件", info.FileName);
+            await _authManager.AddStatLogAsync(StatType.StudyFileDelete, "删除课件", info.Id, info.FileName);
+            await _authManager.AddStatCount(StatType.StudyFileDelete);
 
             return new BoolResult
             {

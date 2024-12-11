@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DocumentFormat.OpenXml.Office2010.Excel;
+using Microsoft.AspNetCore.Mvc;
+using OpenXmlPowerTools;
+using System.Runtime.ConstrainedExecution;
 using System.Threading.Tasks;
 using XBLMS.Dto;
 using XBLMS.Enums;
@@ -45,13 +48,14 @@ namespace XBLMS.Web.Controllers.Admin.Exam
 
                     await _examManager.SetQuestionnairTm(request.TmList, paper.Id);
 
-                    await _authManager.AddAdminLogAsync("重新发布调查问卷", $"{paper.Title}");
-
+                    await _authManager.AddAdminLogAsync("重新发布调查问卷",paper.Title);
+                    await _authManager.AddStatLogAsync(StatType.ExamQUpdate, "重新发布调查问卷", paper.Id, paper.Title);
 
                 }
                 else
                 {
-                    await _authManager.AddAdminLogAsync("修改调查问卷", $"{paper.Title}");
+                    await _authManager.AddAdminLogAsync("修改调查问卷", paper.Title);
+                    await _authManager.AddStatLogAsync(StatType.ExamQUpdate, "修改调查问卷", paper.Id, paper.Title);
                 }
 
 
@@ -83,11 +87,15 @@ namespace XBLMS.Web.Controllers.Admin.Exam
                 {
                     await _examManager.ArrangeQuestionnaire(auth, paper);
 
-                    await _authManager.AddAdminLogAsync("发布调查问卷", $"{paper.Title}");
+                    await _authManager.AddAdminLogAsync("发布问卷调查",paper.Title);
+                    await _authManager.AddStatLogAsync(StatType.ExamQAdd, "发布问卷调查", paper.Id, paper.Title);
+                    await _authManager.AddStatCount(StatType.ExamQAdd);
                 }
                 else
                 {
-                    await _authManager.AddAdminLogAsync("保存调查问卷", $"{paper.Title}");
+                    await _authManager.AddAdminLogAsync("新增问卷调查", paper.Title);
+                    await _authManager.AddStatLogAsync(StatType.ExamQAdd, "新增问卷调查", paper.Id, paper.Title);
+                    await _authManager.AddStatCount(StatType.ExamQAdd);
                 }
             }
 

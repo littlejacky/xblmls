@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DocumentFormat.OpenXml.Office2010.Excel;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Runtime.ConstrainedExecution;
 using System.Threading.Tasks;
 using XBLMS.Dto;
 using XBLMS.Enums;
@@ -70,7 +72,7 @@ namespace XBLMS.Web.Controllers.Admin.Study
                     }
                     if (itemIds.Count > 0)
                     {
-                        foreach(var itemId in itemIds)
+                        foreach (var itemId in itemIds)
                         {
                             await _studyCourseEvaluationItemRepository.DeleteAsync(itemId);
                         }
@@ -88,7 +90,8 @@ namespace XBLMS.Web.Controllers.Admin.Study
                     }
                 }
 
-                await _authManager.AddAdminLogAsync("修改课程评价", $"{item.Title}");
+                await _authManager.AddAdminLogAsync("修改课程评价", item.Title);
+                await _authManager.AddStatLogAsync(StatType.StudyEvaluationUpdate, "修改课程评价", item.Id, item.Title);
             }
             else
             {
@@ -109,7 +112,9 @@ namespace XBLMS.Web.Controllers.Admin.Study
                     }
                 }
 
-                await _authManager.AddAdminLogAsync("新增课程评价", $"{item.Title}");
+                await _authManager.AddAdminLogAsync("新增课程评价", item.Title);
+                await _authManager.AddStatLogAsync(StatType.StudyEvaluationAdd, "新增课程评价", itemId, item.Title);
+                await _authManager.AddStatCount(StatType.StudyEvaluationAdd);
             }
 
             return new BoolResult

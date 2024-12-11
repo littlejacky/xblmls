@@ -1,4 +1,6 @@
+using DocumentFormat.OpenXml.Office2010.Excel;
 using Microsoft.AspNetCore.Mvc;
+using System.Runtime.ConstrainedExecution;
 using System.Threading.Tasks;
 using XBLMS.Dto;
 using XBLMS.Enums;
@@ -23,7 +25,11 @@ namespace XBLMS.Web.Controllers.Admin.Exam
             var txTmCount =0;
             if (txTmCount > 0) return this.Error($"有【{txTmCount}】题目用到了该题型，暂时不允许删除");
             await _examTxRepository.DeleteAsync(request.Id);
-            await _authManager.AddAdminLogAsync("删除题型", $"{tx.Name}");
+
+            await _authManager.AddAdminLogAsync("删除题型",tx.Name);
+            await _authManager.AddStatLogAsync(StatType.ExamTxDelete, "删除题型", tx.Id, tx.Name);
+            await _authManager.AddStatCount(StatType.ExamTxDelete);
+
             return new BoolResult
             {
                 Value = true

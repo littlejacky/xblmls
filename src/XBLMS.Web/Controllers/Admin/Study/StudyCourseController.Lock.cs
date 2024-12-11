@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DocumentFormat.OpenXml.Office2010.Excel;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
+using System.Runtime.ConstrainedExecution;
 using System.Threading.Tasks;
 using XBLMS.Dto;
 using XBLMS.Enums;
@@ -22,7 +24,9 @@ namespace XBLMS.Web.Controllers.Admin.Study
 
             await _studyCourseRepository.UpdateAsync(course);
             await _studyCourseUserRepository.UpdateByCourseAsync(course);
-            await _authManager.AddAdminLogAsync("锁定课程", $"{course.Name}");
+
+            await _authManager.AddAdminLogAsync("锁定课程", course.Name);
+            await _authManager.AddStatLogAsync(StatType.StudyCourseUpdate, "禁用课程", course.Id, course.Name);
 
             return new BoolResult
             {

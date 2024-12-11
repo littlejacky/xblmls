@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using DocumentFormat.OpenXml.EMMA;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -246,7 +247,9 @@ namespace XBLMS.Web.Controllers.Admin.Exam
 
                                     if (tmid > 0)
                                     {
-                                        await _statRepository.AddCountAsync(StatType.ExamTmAdd);
+                                        await _authManager.AddAdminLogAsync("新增题目", StringUtils.StripTags(examInfo.Title));
+                                        await _authManager.AddStatLogAsync(StatType.ExamTmAdd, "新增题目", tmid, StringUtils.StripTags(examInfo.Title));
+                                        await _authManager.AddStatCount(StatType.ExamTmAdd);
                                         success++;
 
                                         cacheInfo.TmCurrent++;

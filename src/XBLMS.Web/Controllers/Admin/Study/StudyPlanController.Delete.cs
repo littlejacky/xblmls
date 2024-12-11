@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DocumentFormat.OpenXml.Office2010.Excel;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
+using System.Runtime.ConstrainedExecution;
 using System.Threading.Tasks;
 using XBLMS.Dto;
 using XBLMS.Enums;
@@ -21,7 +23,10 @@ namespace XBLMS.Web.Controllers.Admin.Study
                 await _studyPlanRepository.DeleteAsync(plan.Id);
                 await _studyPlanUserRepository.DeleteByPlanAsync(plan.Id);
                 await _studyPlanCourseRepository.DeleteByPlanAsync(plan.Id);
-                await _authManager.AddAdminLogAsync("删除培训计划", $"{plan.PlanName}");
+
+                await _authManager.AddAdminLogAsync("删除培训计划", plan.PlanName);
+                await _authManager.AddStatLogAsync(StatType.StudyPlanDelete, "删除计划", plan.Id, plan.PlanName);
+                await _authManager.AddStatCount(StatType.StudyPlanDelete);
             }
             return new BoolResult
             {

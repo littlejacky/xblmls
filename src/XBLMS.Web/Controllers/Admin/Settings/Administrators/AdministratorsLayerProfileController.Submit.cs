@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DocumentFormat.OpenXml.Bibliography;
+using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using XBLMS.Configuration;
 using XBLMS.Dto;
+using XBLMS.Enums;
 using XBLMS.Models;
 using XBLMS.Utils;
 
@@ -104,7 +106,9 @@ namespace XBLMS.Web.Controllers.Admin.Settings.Administrators
                     await _administratorRepository.UpdateAsync(administrator);
                 }
 
-                await _authManager.AddAdminLogAsync("添加管理员", $"{administrator.DisplayName}");
+                await _authManager.AddAdminLogAsync("新增管理员账号", $"{administrator.DisplayName}");
+                await _authManager.AddStatLogAsync(StatType.AdminAdd, "新增管理员账号", administrator.Id, administrator.UserName);
+                await _authManager.AddStatCount(StatType.AdminAdd);
             }
             else
             {
@@ -113,7 +117,9 @@ namespace XBLMS.Web.Controllers.Admin.Settings.Administrators
                 {
                     return this.Error($"管理员修改失败：{errorMessage}");
                 }
-                await _authManager.AddAdminLogAsync("修改管理员属性", $"{administrator.DisplayName}");
+                await _authManager.AddAdminLogAsync("修改管理员账号", $"{administrator.DisplayName}");
+                await _authManager.AddStatLogAsync(StatType.AdminUpdate, "修改管理员账号", administrator.Id, administrator.UserName);
+                await _authManager.AddStatCount(StatType.AdminUpdate);
             }
 
             return new BoolResult

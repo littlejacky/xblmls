@@ -194,5 +194,24 @@ namespace XBLMS.Core.Repositories
         {
             await _repository.DeleteAsync();
         }
+
+        public async Task<int> SumAsync(StatType statType,AuthorityAuth auth)
+        {
+            var queyr = Q.Where(nameof(Stat.StatType), statType.GetValue());
+            if (auth.AuthType == Enums.AuthorityType.Admin || auth.AuthType == Enums.AuthorityType.AdminCompany)
+            {
+                queyr.WhereIn(nameof(Stat.CompanyId), auth.CurManageOrganIds);
+            }
+            else if (auth.AuthType == Enums.AuthorityType.AdminDepartment)
+            {
+                queyr.WhereIn(nameof(Stat.DepartmentId), auth.CurManageOrganIds);
+            }
+            else
+            {
+                queyr.Where(nameof(Stat.AdminId), auth.AdminId);
+            }
+
+            return await _repository.SumAsync(nameof(Stat.Count), queyr);
+        }
     }
 }

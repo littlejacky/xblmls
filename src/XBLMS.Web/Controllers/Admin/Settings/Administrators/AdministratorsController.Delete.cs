@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DocumentFormat.OpenXml.Office2010.Excel;
+using Microsoft.AspNetCore.Mvc;
+using System.Runtime.ConstrainedExecution;
 using System.Threading.Tasks;
 using XBLMS.Dto;
 using XBLMS.Enums;
@@ -23,6 +25,8 @@ namespace XBLMS.Web.Controllers.Admin.Settings.Administrators
             await _administratorRepository.DeleteAsync(adminInfo.Id);
 
             await _authManager.AddAdminLogAsync("删除管理员", $"{adminInfo.UserName}");
+            await _authManager.AddStatLogAsync(StatType.AdminDelete, "删除管理员", adminInfo.Id, adminInfo.UserName);
+            await _authManager.AddStatCount(StatType.AdminDelete);
 
             return new BoolResult
             {

@@ -19,7 +19,10 @@ namespace XBLMS.Web.Controllers.Admin.Settings.Users
 
             await _userGroupRepository.DeleteAsync(group.Id);
 
+
             await _authManager.AddAdminLogAsync("删除用户组", $"{group.GroupName}");
+            await _authManager.AddStatLogAsync(StatType.UserGroupDelete, "删除用户组", group.Id, group.GroupName);
+            await _authManager.AddStatCount(StatType.UserGroupDelete);
 
             return new BoolResult
             {

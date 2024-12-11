@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using DocumentFormat.OpenXml.Office2010.Excel;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Runtime.ConstrainedExecution;
 using System.Threading.Tasks;
 using XBLMS.Configuration;
 using XBLMS.Enums;
@@ -81,9 +83,11 @@ namespace XBLMS.Web.Controllers.Admin.Study
                     DepartmentId = auth.DepartmentId,
                     CreatorId = auth.AdminId
                 };
-                await _studyCourseFilesRepository.InsertAsync(courseFile);
+                var fileId = await _studyCourseFilesRepository.InsertAsync(courseFile);
 
-                await _authManager.AddAdminLogAsync("上传课件", realFileName);
+                await _authManager.AddAdminLogAsync("上传课件", courseFile.FileName);
+                await _authManager.AddStatLogAsync(StatType.StudyFileAdd, "上传课件", fileId, courseFile.FileName);
+                await _authManager.AddStatCount(StatType.StudyFileAdd);
 
                 return new GetResult { Success = true };
             }

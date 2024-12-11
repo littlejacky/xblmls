@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DocumentFormat.OpenXml.Office2010.Excel;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
+using System.Runtime.ConstrainedExecution;
 using System.Threading.Tasks;
 using XBLMS.Dto;
 using XBLMS.Enums;
@@ -21,7 +23,10 @@ namespace XBLMS.Web.Controllers.Admin.Exam
             {
                 await _examQuestionnaireRepository.DeleteAsync(paper.Id);
                 await _examManager.ClearQuestionnaire(paper.Id);
-                await _authManager.AddAdminLogAsync("删除问卷调查", $"{paper.Title}");
+
+                await _authManager.AddAdminLogAsync("删除问卷调查", paper.Title);
+                await _authManager.AddStatLogAsync(StatType.ExamQDelete, "删除问卷调查", paper.Id, paper.Title);
+                await _authManager.AddStatCount(StatType.ExamQDelete);
 
             }
             return new BoolResult

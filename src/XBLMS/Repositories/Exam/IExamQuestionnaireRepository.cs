@@ -8,6 +8,7 @@ namespace XBLMS.Repositories
 {
     public partial interface IExamQuestionnaireRepository : IRepository
     {
+        Task<bool> ExistsAsync(int id);
         Task<ExamQuestionnaire> GetAsync(int id);
         Task<ExamQuestionnaire> GetAsync(string guId);
         Task<int> InsertAsync(ExamQuestionnaire item);
@@ -17,5 +18,6 @@ namespace XBLMS.Repositories
         Task<List<int>> GetIdsAsync(List<int> ids, string keyword);
         Task<int> MaxIdAsync();
         Task IncrementAsync(int id);
+        Task<(int allCount, int addCount, int deleteCount, int lockedCount, int unLockedCount)> GetDataCount(AuthorityAuth auth);
     }
 }

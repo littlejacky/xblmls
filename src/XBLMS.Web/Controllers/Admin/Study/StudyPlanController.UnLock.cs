@@ -23,7 +23,8 @@ namespace XBLMS.Web.Controllers.Admin.Study
             await _studyPlanRepository.UpdateAsync(plan);
             await _studyPlanUserRepository.UpdateByPlanAsync(plan);
 
-            await _authManager.AddAdminLogAsync("解锁培训计划", $"{plan.PlanName}");
+            await _authManager.AddAdminLogAsync("解锁培训计划", plan.PlanName);
+            await _authManager.AddStatLogAsync(StatType.StudyPlanUpdate, "启用计划", plan.Id, plan.PlanName);
 
             return new BoolResult
             {

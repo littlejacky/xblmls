@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DocumentFormat.OpenXml.Office2010.Excel;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Runtime.ConstrainedExecution;
 using System.Threading.Tasks;
 using XBLMS.Dto;
 using XBLMS.Enums;
@@ -25,6 +27,7 @@ namespace XBLMS.Web.Controllers.Admin.Settings.Administrators
             });
 
             await _authManager.AddAdminLogAsync("锁定管理员", $"{adminInfo.UserName}");
+            await _authManager.AddStatLogAsync(StatType.AdminUpdate, "禁用管理员账号", adminInfo.Id, adminInfo.UserName);
 
             return new BoolResult
             {

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using XBLMS.Dto;
+using XBLMS.Enums;
 using XBLMS.Models;
 
 namespace XBLMS.Web.Controllers.Admin.Study
@@ -16,7 +17,9 @@ namespace XBLMS.Web.Controllers.Admin.Study
             file.FileName = request.Title;
             file.GroupId = request.GroupId;
             await _studyCourseFilesRepository.UpdateAsync(file);
-            await _authManager.AddAdminLogAsync("修改文件", file.FileName);
+
+            await _authManager.AddAdminLogAsync("修改课件", file.FileName);
+            await _authManager.AddStatLogAsync(StatType.StudyFileUpdate, "修改课件", file.Id, file.FileName);
 
             return new ItemResult<StudyCourseFiles> { Item = file };
         }

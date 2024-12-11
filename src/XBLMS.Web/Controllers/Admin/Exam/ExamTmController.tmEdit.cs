@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DocumentFormat.OpenXml.Office2010.Excel;
+using Microsoft.AspNetCore.Mvc;
+using System.Runtime.ConstrainedExecution;
 using System.Threading.Tasks;
 using XBLMS.Dto;
 using XBLMS.Enums;
@@ -61,7 +63,9 @@ namespace XBLMS.Web.Controllers.Admin.Exam
                     info.Answer = info.Answer.Replace(",", "").Trim();
                 }
                 await _examTmRepository.UpdateAsync(info);
-                await _authManager.AddAdminLogAsync("修改题目", $"{info.Title}");
+
+                await _authManager.AddAdminLogAsync("修改题目", StringUtils.StripTags(info.Title));
+                await _authManager.AddStatLogAsync(StatType.ExamTmUpdate, "修改题目", info.Id, StringUtils.StripTags(info.Title), info);
             }
             else
             {
@@ -81,8 +85,10 @@ namespace XBLMS.Web.Controllers.Admin.Exam
 
                 info.Id = await _examTmRepository.InsertAsync(info);
 
-                await _statRepository.AddCountAsync(StatType.ExamTmAdd);
-                await _authManager.AddAdminLogAsync("添加题目", $"{info.Title}");
+
+                await _authManager.AddAdminLogAsync("新增题目", StringUtils.StripTags(info.Title));
+                await _authManager.AddStatLogAsync(StatType.ExamTmAdd, "新增题目", info.Id, StringUtils.StripTags(info.Title));
+                await _authManager.AddStatCount(StatType.ExamTmAdd);
             }
 
             return new BoolResult

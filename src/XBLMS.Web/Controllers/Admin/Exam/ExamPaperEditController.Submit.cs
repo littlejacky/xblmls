@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DocumentFormat.OpenXml.Office2010.Excel;
+using Microsoft.AspNetCore.Mvc;
+using OpenXmlPowerTools;
 using System.Collections.Generic;
+using System.Runtime.ConstrainedExecution;
 using System.Threading.Tasks;
 using XBLMS.Dto;
 using XBLMS.Enums;
@@ -52,11 +55,14 @@ namespace XBLMS.Web.Controllers.Admin.Exam
 
                     await _examManager.PaperRandomSet(paper, auth);
                     await _examManager.Arrange(paper, auth);
-                    await _authManager.AddAdminLogAsync("重新发布试卷", $"{paper.Title}");
+
+                    await _authManager.AddAdminLogAsync("重新发布试卷", paper.Title);
+                    await _authManager.AddStatLogAsync(StatType.ExamUpdate, "重新发布试卷", paper.Id, paper.Title);
                 }
                 else
                 {
-                    await _authManager.AddAdminLogAsync("修改试卷", $"{paper.Title}");
+                    await _authManager.AddAdminLogAsync("修改试卷", paper.Title);
+                    await _authManager.AddStatLogAsync(StatType.ExamUpdate, "修改试卷", paper.Id, paper.Title);
                 }
 
                 await _examPaperRepository.UpdateAsync(paper);
@@ -96,11 +102,16 @@ namespace XBLMS.Web.Controllers.Admin.Exam
                 {
                     await _examManager.PaperRandomSet(paper, auth);
                     await _examManager.Arrange(paper, auth);
-                    await _authManager.AddAdminLogAsync("发布试卷", $"{paper.Title}");
+
+                    await _authManager.AddAdminLogAsync("发布考试", paper.Title);
+                    await _authManager.AddStatLogAsync(StatType.ExamAdd, "发布考试", paper.Id, paper.Title);
+                    await _authManager.AddStatCount(StatType.ExamAdd);
                 }
                 else
                 {
-                    await _authManager.AddAdminLogAsync("保存试卷", $"{paper.Title}");
+                    await _authManager.AddAdminLogAsync("新增考试", $"{paper.Title}");
+                    await _authManager.AddStatLogAsync(StatType.ExamAdd, "新增考试", paper.Id, paper.Title);
+                    await _authManager.AddStatCount(StatType.ExamAdd);
                 }
                 await _examPaperRepository.UpdateAsync(paper);
             }

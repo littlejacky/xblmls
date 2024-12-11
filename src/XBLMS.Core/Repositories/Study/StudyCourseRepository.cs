@@ -25,7 +25,10 @@ namespace XBLMS.Core.Repositories
         public string TableName => _repository.TableName;
 
         public List<TableColumn> TableColumns => _repository.TableColumns;
-
+        public async Task<bool> ExistsAsync(int id)
+        {
+            return await _repository.ExistsAsync(id);
+        }
         public async Task<int> InsertAsync(StudyCourse item)
         {
             return await _repository.InsertAsync(item);
@@ -160,6 +163,33 @@ namespace XBLMS.Core.Repositories
                 }
             }
             return markList;
+        }
+
+        public async Task<(int allCount, int addCount, int deleteCount, int lockedCount, int unLockedCount)> GetDataCount(AuthorityAuth auth)
+        {
+            var total = 0;
+            var lockedTotal = 0;
+            var unLockedTotal = 0;
+            if (auth.AuthType == Enums.AuthorityType.Admin || auth.AuthType == Enums.AuthorityType.AdminCompany)
+            {
+                total = await _repository.CountAsync(Q.WhereIn(nameof(StudyCourse.CompanyId), auth.CurManageOrganIds));
+                lockedTotal = await _repository.CountAsync(Q.WhereIn(nameof(StudyCourse.CompanyId), auth.CurManageOrganIds).WhereTrue(nameof(StudyCourse.Locked)));
+                unLockedTotal = await _repository.CountAsync(Q.WhereIn(nameof(StudyCourse.CompanyId), auth.CurManageOrganIds).WhereNullOrFalse(nameof(StudyCourse.Locked)));
+            }
+            else if (auth.AuthType == Enums.AuthorityType.AdminDepartment)
+            {
+                total = await _repository.CountAsync(Q.WhereIn(nameof(StudyCourse.DepartmentId), auth.CurManageOrganIds));
+                lockedTotal = await _repository.CountAsync(Q.WhereIn(nameof(StudyCourse.DepartmentId), auth.CurManageOrganIds).WhereTrue(nameof(StudyCourse.Locked)));
+                unLockedTotal = await _repository.CountAsync(Q.WhereIn(nameof(StudyCourse.DepartmentId), auth.CurManageOrganIds).WhereNullOrFalse(nameof(StudyCourse.Locked)));
+            }
+            else
+            {
+                total = await _repository.CountAsync(Q.Where(nameof(StudyCourse.CreatorId), auth.AdminId));
+                lockedTotal = await _repository.CountAsync(Q.Where(nameof(StudyCourse.CreatorId), auth.AdminId).WhereTrue(nameof(StudyCourse.Locked)));
+                unLockedTotal = await _repository.CountAsync(Q.Where(nameof(StudyCourse.CreatorId), auth.AdminId).WhereNullOrFalse(nameof(StudyCourse.Locked)));
+            }
+
+            return (total, 0, 0, lockedTotal, unLockedTotal);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DocumentFormat.OpenXml.EMMA;
+using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using XBLMS.Dto;
 using XBLMS.Enums;
@@ -26,6 +27,7 @@ namespace XBLMS.Web.Controllers.Admin.Study
             if (!FileUtils.IsFileExists(filePath)) return NotFound();
 
             await _authManager.AddAdminLogAsync("下载课件", file.FileName);
+            await _authManager.AddStatLogAsync(StatType.StudyFileDelete, "下载课件", file.Id, file.FileName);
 
             return this.Download(filePath);
         }

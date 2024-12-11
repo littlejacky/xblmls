@@ -36,7 +36,10 @@ namespace XBLMS.Core.Repositories
         public string TableName => _repository.TableName;
 
         public List<TableColumn> TableColumns => _repository.TableColumns;
-
+        public async Task<bool> ExistsAsync(int id)
+        {
+            return await _repository.ExistsAsync(id);
+        }
         public async Task UpdateLastActivityDateAndCountOfFailedLoginAsync(Administrator administrator)
         {
             if (administrator == null) return;
@@ -273,7 +276,7 @@ namespace XBLMS.Core.Repositories
                 query.Where(nameof(Administrator.Auth), role);
             }
             return query;
-        } 
+        }
         public async Task<int> GetCountAsync(AuthorityAuth auth, List<int> organIds, string organType, string role, int lastActivityDate, string keyword)
         {
             var query = GetQuery(auth, organIds, organType, role, lastActivityDate, keyword);
@@ -685,7 +688,7 @@ namespace XBLMS.Core.Repositories
         public async Task DeleteByCompanyIdAsync(int companyId)
         {
             var adminIds = await GetAdministratorIdsAsync(companyId);
-            if(adminIds!=null && adminIds.Count > 0)
+            if (adminIds != null && adminIds.Count > 0)
             {
                 foreach (var adminId in adminIds)
                 {

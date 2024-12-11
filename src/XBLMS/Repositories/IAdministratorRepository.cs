@@ -8,6 +8,7 @@ namespace XBLMS.Repositories
 {
     public partial interface IAdministratorRepository : IRepository
     {
+        Task<bool> ExistsAsync(int id);
         Task UpdateLastActivityDateAndCountOfFailedLoginAsync(Administrator administrator);
 
         Task UpdateLastActivityDateAsync(Administrator administrator);

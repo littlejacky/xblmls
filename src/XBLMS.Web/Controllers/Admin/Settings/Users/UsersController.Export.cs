@@ -49,6 +49,9 @@ namespace XBLMS.Web.Controllers.Admin.Settings.Users
 
             var downloadUrl = _pathManager.GetDownloadFilesUrl(fileName);
 
+            await _authManager.AddAdminLogAsync("导出用户账号");
+            await _authManager.AddStatLogAsync(StatType.Export, "导出用户账号", 0, string.Empty, new StringResult { Value = downloadUrl });
+
             return new StringResult
             {
                 Value = downloadUrl

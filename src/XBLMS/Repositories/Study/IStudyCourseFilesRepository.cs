@@ -8,6 +8,7 @@ namespace XBLMS.Repositories
 {
     public interface IStudyCourseFilesRepository : IRepository
     {
+        Task<bool> ExistsAsync(int id);
         Task<int> InsertAsync(StudyCourseFiles file);
         Task<bool> UpdateAsync(StudyCourseFiles file);
         Task<bool> DeleteAsync(int id);
@@ -20,6 +21,6 @@ namespace XBLMS.Repositories
         Task<bool> IsExistsAsync(string fileName, int companyId, int groupId);
         Task<int> CountAsync();
         Task<long> SumFileSizeAsync(List<int> groupIds);
-
+        Task<(int allCount, int addCount, int deleteCount, int lockedCount, int unLockedCount)> GetDataCount(AuthorityAuth auth);
     }
 }

@@ -1,4 +1,6 @@
+using DocumentFormat.OpenXml.Office2010.Excel;
 using Microsoft.AspNetCore.Mvc;
+using System.Runtime.ConstrainedExecution;
 using System.Threading.Tasks;
 using XBLMS.Dto;
 using XBLMS.Enums;
@@ -27,7 +29,9 @@ namespace XBLMS.Web.Controllers.Admin.Exam
 
             await _examTxRepository.UpdateAsync(tx);
 
-            await _authManager.AddAdminLogAsync("修改题型", $"{tx.Name}");
+            await _authManager.AddAdminLogAsync("修改题型", tx.Name);
+            await _authManager.AddStatLogAsync(StatType.ExamTxUpdate, "修改题型", tx.Id, tx.Name);
+
 
             return new BoolResult
             {

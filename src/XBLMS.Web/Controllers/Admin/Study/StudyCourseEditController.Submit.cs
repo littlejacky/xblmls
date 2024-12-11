@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DocumentFormat.OpenXml.Office2010.Excel;
+using Microsoft.AspNetCore.Mvc;
+using OpenXmlPowerTools;
 using System.Collections.Generic;
+using System.Runtime.ConstrainedExecution;
 using System.Threading.Tasks;
 using XBLMS.Dto;
 using XBLMS.Enums;
@@ -70,7 +73,9 @@ namespace XBLMS.Web.Controllers.Admin.Study
 
                 await _studyCourseWareRepository.DeleteByNotIdsAsync(courseWareIds, course.Id);
                 await _studyCourseUserRepository.UpdateByCourseAsync(course);
-                await _authManager.AddAdminLogAsync("修改课程", $"{course.Name}");
+
+                await _authManager.AddAdminLogAsync("修改课程", course.Name);
+                await _authManager.AddStatLogAsync(StatType.StudyCourseUpdate, "修改课程", course.Id, course.Name);
             }
             else
             {
@@ -102,7 +107,9 @@ namespace XBLMS.Web.Controllers.Admin.Study
                     }
                 }
 
-                await _authManager.AddAdminLogAsync("新增课程", $"{course.Name}");
+                await _authManager.AddAdminLogAsync("新增课程",course.Name);
+                await _authManager.AddStatLogAsync(StatType.StudyCourseAdd, "新增课程", courseId, course.Name);
+                await _authManager.AddStatCount(StatType.StudyCourseAdd);
             }
 
             return new BoolResult

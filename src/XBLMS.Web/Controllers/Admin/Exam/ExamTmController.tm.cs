@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DocumentFormat.OpenXml.Office2010.Excel;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Runtime.ConstrainedExecution;
 using System.Threading.Tasks;
 using XBLMS.Dto;
 using XBLMS.Enums;
@@ -57,7 +59,10 @@ namespace XBLMS.Web.Controllers.Admin.Exam
             var tm = await _examTmRepository.GetAsync(request.Id);
             if (tm == null) return this.NotFound();
             await _examTmRepository.DeleteAsync(request.Id);
-            await _authManager.AddAdminLogAsync("删除题目", $"{tm.Title}");
+
+            await _authManager.AddAdminLogAsync("删除题目", StringUtils.StripTags(tm.Title));
+            await _authManager.AddStatLogAsync(StatType.ExamTmDelete, "删除题目", tm.Id, StringUtils.StripTags(tm.Title), tm);
+            await _authManager.AddStatCount(StatType.ExamTmDelete);
 
             return new BoolResult
             {
@@ -77,7 +82,10 @@ namespace XBLMS.Web.Controllers.Admin.Exam
                 var info = await _examTmRepository.GetAsync(id);
                 if (info == null) continue;
                 await _examTmRepository.DeleteAsync(info.Id);
-                await _authManager.AddAdminLogAsync("删除题目", $"{info.Title}");
+
+                await _authManager.AddAdminLogAsync("删除题目", StringUtils.StripTags(info.Title));
+                await _authManager.AddStatLogAsync(StatType.ExamTmDelete, "删除题目", info.Id, StringUtils.StripTags(info.Title), info);
+                await _authManager.AddStatCount(StatType.ExamTmDelete);
             }
             return new BoolResult
             {

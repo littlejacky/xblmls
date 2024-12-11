@@ -32,6 +32,10 @@ namespace XBLMS.Core.Repositories
 
         public string TableName => _repository.TableName;
         public List<TableColumn> TableColumns => _repository.TableColumns;
+        public async Task<bool> ExistsAsync(int id)
+        {
+            return await _repository.ExistsAsync(id);
+        }
         public async Task<(bool success, string errorMessage)> ValidateAsync(string userName, string email, string mobile, string password)
         {
             var config = await _configRepository.GetAsync();

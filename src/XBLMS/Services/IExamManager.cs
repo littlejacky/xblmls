@@ -7,6 +7,7 @@ namespace XBLMS.Services
 {
     public partial interface IExamManager
     {
+        Task GetTmDeleteInfo(ExamTm tm);
         Task<ExamTm> GetTmInfo(int tmId);
         Task GetTmInfo(ExamTm tm);
         Task GetTmInfoByPaper(ExamTm tm);

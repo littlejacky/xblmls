@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DocumentFormat.OpenXml.Bibliography;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using XBLMS.Dto;
@@ -54,6 +55,7 @@ namespace XBLMS.Web.Controllers.Admin.Settings.Administrators
             _cacheManager.Clear();
 
             await _authManager.AddAdminLogAsync("修改管理员角色", $"{request.RoleName}");
+            await _authManager.AddStatLogAsync(StatType.AdminAuthUpdate, "修改管理员角色", role.Id, role.RoleName);
 
             return new BoolResult
             {

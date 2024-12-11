@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DocumentFormat.OpenXml.Bibliography;
+using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using XBLMS.Configuration;
 using XBLMS.Dto;
@@ -101,7 +102,9 @@ namespace XBLMS.Web.Controllers.Admin.Settings.Users
                     await _userRepository.UpdateAsync(resultUser);
                 }
 
-                await _authManager.AddAdminLogAsync("添加用户", $"{ request.UserName }");
+                await _authManager.AddAdminLogAsync("新增用户账号", $"{request.UserName}");
+                await _authManager.AddStatLogAsync(StatType.UserAdd, "新增用户账号", user.Id, user.DisplayName);
+                await _authManager.AddStatCount(StatType.UserAdd);
             }
             else
             {
@@ -123,7 +126,8 @@ namespace XBLMS.Web.Controllers.Admin.Settings.Users
                     return this.Error($"用户修改失败：{errorMessage}");
                 }
 
-                await _authManager.AddAdminLogAsync("修改用户", $"{ request.UserName }");
+                await _authManager.AddAdminLogAsync("修改用户账号", $"{request.UserName}");
+                await _authManager.AddStatLogAsync(StatType.UserUpdate, "修改用户账号", user.Id, user.DisplayName, user);
             }
 
             return new BoolResult

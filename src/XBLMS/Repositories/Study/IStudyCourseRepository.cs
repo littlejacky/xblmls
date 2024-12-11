@@ -8,6 +8,7 @@ namespace XBLMS.Repositories
 {
     public partial interface IStudyCourseRepository : IRepository
     {
+        Task<bool> ExistsAsync(int id);
         Task<int> InsertAsync(StudyCourse item);
         Task<int> IncrementTotalUserAsync(int id);
         Task<bool> UpdateAsync(StudyCourse item);
@@ -18,5 +19,6 @@ namespace XBLMS.Repositories
         Task<int> MaxAsync();
         Task<(int total, int count)> CountAsync(int treeId);
         Task<List<string>> GetMarkListAsync();
+        Task<(int allCount, int addCount, int deleteCount, int lockedCount, int unLockedCount)> GetDataCount(AuthorityAuth auth);
     }
 }

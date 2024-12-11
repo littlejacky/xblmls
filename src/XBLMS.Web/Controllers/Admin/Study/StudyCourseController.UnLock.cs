@@ -22,7 +22,9 @@ namespace XBLMS.Web.Controllers.Admin.Study
 
             await _studyCourseRepository.UpdateAsync(course);
             await _studyCourseUserRepository.UpdateByCourseAsync(course);
-            await _authManager.AddAdminLogAsync("解锁课程", $"{course.Name}");
+
+            await _authManager.AddAdminLogAsync("解锁课程", course.Name);
+            await _authManager.AddStatLogAsync(StatType.StudyCourseUpdate, "启用课程", course.Id, course.Name);
 
             return new BoolResult
             {

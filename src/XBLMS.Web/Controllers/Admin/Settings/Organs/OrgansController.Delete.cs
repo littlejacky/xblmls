@@ -21,14 +21,30 @@ namespace XBLMS.Web.Controllers.Admin.Settings.Organs
             if (organ.OrganType == "company")
             {
                 await _organManager.DeleteCompany(organ.Id);
-                await _authManager.AddAdminLogAsync("删除单位及单位内所有账号", organ.Name);
+                await _authManager.AddAdminLogAsync("删除单位", organ.Name);
+
+                await _authManager.AddStatLogAsync(StatType.CompanyDelete, "删除单位", organ.Id, organ.Name, organ);
+                await _authManager.AddStatCount(StatType.CompanyDelete);
             }
 
             if (organ.OrganType == "department")
             {
                 await _organDepartmentRepository.DeleteAsync(organ.Id);
                 await _authManager.AddAdminLogAsync("删除部门", organ.Name);
+
+                await _authManager.AddStatLogAsync(StatType.DepartmentDelete, "删除部门", organ.Id, organ.Name, organ);
+                await _authManager.AddStatCount(StatType.DepartmentDelete);
             }
+
+            if (organ.OrganType == "duty")
+            {
+                await _organDutyRepository.DeleteAsync(organ.Id);
+                await _authManager.AddAdminLogAsync("删除岗位", organ.Name);
+
+                await _authManager.AddStatLogAsync(StatType.DutyDelete, "删除岗位", organ.Id, organ.Name, organ);
+                await _authManager.AddStatCount(StatType.DutyDelete);
+            }
+
 
             await DeleteOrgans(organ.Children);
 
@@ -46,13 +62,25 @@ namespace XBLMS.Web.Controllers.Admin.Settings.Organs
                     if (organ.OrganType == "company")
                     {
                         await _organManager.DeleteCompany(organ.Id);
-                        await _authManager.AddAdminLogAsync("删除单位及单位内所有账号", organ.Name);
+                        await _authManager.AddAdminLogAsync("删除单位", organ.Name);
+                        await _authManager.AddStatLogAsync(StatType.CompanyDelete, "删除单位", organ.Id, organ.Name, organ);
+                        await _authManager.AddStatCount(StatType.CompanyDelete);
                     }
 
                     if (organ.OrganType == "department")
                     {
                         await _organDepartmentRepository.DeleteAsync(organ.Id);
                         await _authManager.AddAdminLogAsync("删除部门", organ.Name);
+                        await _authManager.AddStatLogAsync(StatType.DepartmentDelete, "删除部门", organ.Id, organ.Name, organ);
+                        await _authManager.AddStatCount(StatType.DepartmentDelete);
+                    }
+
+                    if (organ.OrganType == "duty")
+                    {
+                        await _organDutyRepository.DeleteAsync(organ.Id);
+                        await _authManager.AddAdminLogAsync("删除岗位", organ.Name);
+                        await _authManager.AddStatLogAsync(StatType.DutyDelete, "删除岗位", organ.Id, organ.Name, organ);
+                        await _authManager.AddStatCount(StatType.DutyDelete);
                     }
                     await DeleteOrgans(organ.Children);
                 }

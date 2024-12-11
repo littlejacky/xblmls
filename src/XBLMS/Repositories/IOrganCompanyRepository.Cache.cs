@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using XBLMS.Dto;
 using XBLMS.Models;
 
 namespace XBLMS.Repositories
@@ -13,5 +14,6 @@ namespace XBLMS.Repositories
         Task<OrganCompany> GetByGuidAsync(string guid);
         Task<List<int>> GetIdsAsync(int id);
         Task<List<string>> GetGuidsAsync(List<int> ids);
+        Task<(int allCount, int addCount, int deleteCount, int lockedCount, int unLockedCount)> GetDataCount(AuthorityAuth auth);
     }
 }

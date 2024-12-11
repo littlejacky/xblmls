@@ -8,6 +8,7 @@ namespace XBLMS.Repositories
 {
     public interface IExamCerRepository : IRepository
     {
+        Task<bool> ExistsAsync(int id);
         Task<bool> IsExistsAsync(string name);
 
         Task<ExamCer> GetAsync(int id);
@@ -19,6 +20,6 @@ namespace XBLMS.Repositories
         Task UpdateAsync(ExamCer item);
 
         Task DeleteAsync(int id);
-
+        Task<(int allCount, int addCount, int deleteCount, int lockedCount, int unLockedCount)> GetDataCount(AuthorityAuth auth);
     }
 }

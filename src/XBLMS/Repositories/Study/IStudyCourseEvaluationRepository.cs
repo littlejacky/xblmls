@@ -14,5 +14,6 @@ namespace XBLMS.Repositories
         Task<StudyCourseEvaluation> GetAsync(int id);
         Task<int> MaxAsync();
         Task<(int total, List<StudyCourseEvaluation> list)> GetListAsync(AuthorityAuth auth, string keyWords, int pageIndex, int pageSize);
+        Task<(int allCount, int addCount, int deleteCount, int lockedCount, int unLockedCount)> GetDataCount(AuthorityAuth auth);
     }
 }

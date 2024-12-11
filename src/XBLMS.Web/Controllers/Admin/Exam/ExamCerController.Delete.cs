@@ -1,3 +1,4 @@
+using DocumentFormat.OpenXml.EMMA;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using XBLMS.Dto;
@@ -25,7 +26,10 @@ namespace XBLMS.Web.Controllers.Admin.Exam
                 FileUtils.DeleteFileIfExists(pre_filePath);
 
                 await _examCerRepository.DeleteAsync(request.Id);
+
                 await _authManager.AddAdminLogAsync("删除证书模板", $"{cerInfo.Name}");
+                await _authManager.AddStatLogAsync(StatType.ExamCerDelete, "删除证书模板", cerInfo.Id, cerInfo.Name);
+                await _authManager.AddStatCount(StatType.ExamCerDelete);
             }
 
             return new BoolResult

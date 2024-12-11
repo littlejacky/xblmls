@@ -85,5 +85,32 @@ namespace XBLMS.Core.Repositories
             }
             return 1;
         }
+
+        public async Task<(int allCount, int addCount, int deleteCount, int lockedCount, int unLockedCount)> GetDataCount(AuthorityAuth auth)
+        {
+            var total = 0;
+            var lockedTotal = 0;
+            var unLockedTotal = 0;
+            if (auth.AuthType == Enums.AuthorityType.Admin || auth.AuthType == Enums.AuthorityType.AdminCompany)
+            {
+                total = await _repository.CountAsync(Q.WhereIn(nameof(StudyCourseEvaluation.CompanyId), auth.CurManageOrganIds));
+                lockedTotal = await _repository.CountAsync(Q.WhereIn(nameof(StudyCourseEvaluation.CompanyId), auth.CurManageOrganIds).WhereTrue(nameof(StudyCourseEvaluation.Locked)));
+                unLockedTotal = await _repository.CountAsync(Q.WhereIn(nameof(StudyCourseEvaluation.CompanyId), auth.CurManageOrganIds).WhereNullOrFalse(nameof(StudyCourseEvaluation.Locked)));
+            }
+            else if (auth.AuthType == Enums.AuthorityType.AdminDepartment)
+            {
+                total = await _repository.CountAsync(Q.WhereIn(nameof(StudyCourseEvaluation.DepartmentId), auth.CurManageOrganIds));
+                lockedTotal = await _repository.CountAsync(Q.WhereIn(nameof(StudyCourseEvaluation.DepartmentId), auth.CurManageOrganIds).WhereTrue(nameof(StudyCourseEvaluation.Locked)));
+                unLockedTotal = await _repository.CountAsync(Q.WhereIn(nameof(StudyCourseEvaluation.DepartmentId), auth.CurManageOrganIds).WhereNullOrFalse(nameof(StudyCourseEvaluation.Locked)));
+            }
+            else
+            {
+                total = await _repository.CountAsync(Q.Where(nameof(StudyCourseEvaluation.CreatorId), auth.AdminId));
+                lockedTotal = await _repository.CountAsync(Q.Where(nameof(StudyCourseEvaluation.CreatorId), auth.AdminId).WhereTrue(nameof(StudyCourseEvaluation.Locked)));
+                unLockedTotal = await _repository.CountAsync(Q.Where(nameof(StudyCourseEvaluation.CreatorId), auth.AdminId).WhereNullOrFalse(nameof(StudyCourseEvaluation.Locked)));
+            }
+
+            return (total, 0, 0, lockedTotal, unLockedTotal);
+        }
     }
 }

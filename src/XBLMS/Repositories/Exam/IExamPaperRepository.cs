@@ -8,6 +8,7 @@ namespace XBLMS.Repositories
 {
     public partial interface IExamPaperRepository : IRepository
     {
+        Task<bool> ExistsAsync(int id);
         Task<int> GetCountAsync(List<int> treeIds);
         Task<ExamPaper> GetAsync(int id);
         Task<int> InsertAsync(ExamPaper item);
@@ -16,5 +17,6 @@ namespace XBLMS.Repositories
         Task<bool> DeleteAsync(int Id);
         Task<int> MaxAsync();
         Task<List<int>> GetIdsAsync(List<int> ids, string keyword);
+        Task<(int allCount, int addCount, int deleteCount, int lockedCount, int unLockedCount)> GetDataCount(AuthorityAuth auth);
     }
 }

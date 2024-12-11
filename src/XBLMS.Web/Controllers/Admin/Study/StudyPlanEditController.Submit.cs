@@ -84,7 +84,9 @@ namespace XBLMS.Web.Controllers.Admin.Study
                 await _studyPlanCourseRepository.DeleteByNotIdsAsync(planCourseIds, plan.Id);
 
                 await _studyPlanUserRepository.UpdateByPlanAsync(plan);
-                await _authManager.AddAdminLogAsync("修改培训计划", $"{oldPlan.PlanName}>{plan.PlanName}");
+
+                await _authManager.AddAdminLogAsync("修改培训计划", plan.PlanName);
+                await _authManager.AddStatLogAsync(StatType.StudyPlanUpdate, "修改计划", plan.Id, plan.PlanName);
             }
             else
             {
@@ -122,7 +124,9 @@ namespace XBLMS.Web.Controllers.Admin.Study
                     }
                 }
 
-                await _authManager.AddAdminLogAsync("新增培训计划", $"{plan.PlanName}");
+                await _authManager.AddAdminLogAsync("新增培训计划", plan.PlanName);
+                await _authManager.AddStatLogAsync(StatType.StudyPlanAdd, "新增计划", plan.Id, plan.PlanName);
+                await _authManager.AddStatCount(StatType.StudyPlanAdd);
             }
             if (plan.SubmitType == SubmitType.Submit)
             {

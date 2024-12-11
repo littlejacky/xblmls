@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using XBLMS.Core.Utils;
+using XBLMS.Dto;
 using XBLMS.Models;
 using XBLMS.Utils;
 
@@ -152,6 +153,33 @@ namespace XBLMS.Core.Repositories
             if (admin == null) return string.Empty;
 
             return string.IsNullOrEmpty(admin.DisplayName) || admin.UserName == admin.DisplayName ? admin.UserName : $"{admin.DisplayName}({admin.UserName})";
+        }
+
+        public async Task<(int allCount, int addCount, int deleteCount, int lockedCount, int unLockedCount)> GetDataCount(AuthorityAuth auth)
+        {
+            var total = 0;
+            var lockedTotal = 0;
+            var unLockedTotal = 0;
+            if (auth.AuthType == Enums.AuthorityType.Admin || auth.AuthType == Enums.AuthorityType.AdminCompany)
+            {
+                total = await _repository.CountAsync(Q.WhereIn(nameof(Administrator.CompanyId), auth.CurManageOrganIds));
+                lockedTotal = await _repository.CountAsync(Q.WhereIn(nameof(Administrator.CompanyId), auth.CurManageOrganIds).WhereTrue(nameof(Administrator.Locked)));
+                unLockedTotal = await _repository.CountAsync(Q.WhereIn(nameof(Administrator.CompanyId), auth.CurManageOrganIds).WhereNullOrFalse(nameof(Administrator.Locked)));
+            }
+            else if (auth.AuthType == Enums.AuthorityType.AdminDepartment)
+            {
+                total = await _repository.CountAsync(Q.WhereIn(nameof(Administrator.DepartmentId), auth.CurManageOrganIds));
+                lockedTotal = await _repository.CountAsync(Q.WhereIn(nameof(Administrator.DepartmentId), auth.CurManageOrganIds).WhereTrue(nameof(Administrator.Locked)));
+                unLockedTotal = await _repository.CountAsync(Q.WhereIn(nameof(Administrator.DepartmentId), auth.CurManageOrganIds).WhereNullOrFalse(nameof(Administrator.Locked)));
+            }
+            else
+            {
+                total = await _repository.CountAsync(Q.Where(nameof(Administrator.CreatorId), auth.AdminId));
+                lockedTotal = await _repository.CountAsync(Q.Where(nameof(Administrator.CreatorId), auth.AdminId).WhereTrue(nameof(Administrator.Locked)));
+                unLockedTotal = await _repository.CountAsync(Q.Where(nameof(Administrator.CreatorId), auth.AdminId).WhereNullOrFalse(nameof(Administrator.Locked)));
+            }
+
+            return (total, 0, 0, lockedTotal, unLockedTotal);
         }
     }
 }

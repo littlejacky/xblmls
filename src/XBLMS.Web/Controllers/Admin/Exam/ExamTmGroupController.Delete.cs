@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DocumentFormat.OpenXml.Office2010.Excel;
+using Microsoft.AspNetCore.Mvc;
+using System.Runtime.ConstrainedExecution;
 using System.Threading.Tasks;
 using XBLMS.Dto;
 using XBLMS.Enums;
@@ -20,7 +22,9 @@ namespace XBLMS.Web.Controllers.Admin.Exam
 
             await _examTmGroupRepository.DeleteAsync(group.Id);
 
-            await _authManager.AddAdminLogAsync("删除题目组", $"{group.GroupName}");
+            await _authManager.AddAdminLogAsync("删除题目组", group.GroupName);
+            await _authManager.AddStatLogAsync(StatType.ExamTmGroupDelete, "删除题目组", group.Id, group.GroupName);
+            await _authManager.AddStatCount(StatType.ExamTmGroupDelete);
 
             return new BoolResult
             {

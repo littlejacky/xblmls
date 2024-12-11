@@ -9,6 +9,7 @@ namespace XBLMS.Repositories
 {
     public partial interface IUserRepository : IRepository
     {
+        Task<bool> ExistsAsync(int id);
         Task<(bool success, string errorMessage)> ValidateAsync(string userName, string email, string mobile, string password);
         Task<(User user, string errorMessage)> InsertAsync(User user, string password, bool isChecked, string ipAddress);
 
