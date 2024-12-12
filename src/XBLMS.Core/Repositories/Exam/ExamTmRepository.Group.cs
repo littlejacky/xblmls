@@ -377,7 +377,7 @@ namespace XBLMS.Core.Repositories
             var count = await _repository.CountAsync(query);
 
 
-            if (!string.IsNullOrWhiteSpace(order))
+            if (!string.IsNullOrEmpty(order))
             {
                 if (order == "nandu")
                 {

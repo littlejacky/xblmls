@@ -11,6 +11,8 @@
     </el-form>
 <el-table
 :data="roles" :size="euiSize" style="width: 100%" :height="($(window).height() - 115)">
+        <el-table-column align="left" label="#" type="index"  width="40">
+        </el-table-column>
   <el-table-column
     prop="roleName"
     label="角色名称">

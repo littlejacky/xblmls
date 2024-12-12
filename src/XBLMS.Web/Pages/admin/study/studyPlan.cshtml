@@ -8,7 +8,7 @@
         </el-form-item>
         <el-form-item>
             <el-button icon="el-icon-search" type="primary" v-on:click="btnSearchClick">查 询</el-button>
-            <el-button plain icon="el-icon-plus" v-on:click="btnEditClick(0)">发布培训计划</el-button>
+            <el-button plain type="primary" icon="el-icon-plus" v-on:click="btnEditClick(0)">发布培训计划</el-button>
         </el-form-item>
     </el-form>
     <el-table ref="table" :data="list" :size="euiSize"
@@ -16,7 +16,7 @@
         <el-table-column label="#"
                          type="index"
                          width="60"
-                         align="center">
+                         align="left">
             <template scope="scope">
                 <span>{{(form.pageIndex - 1) * form.pageSize + scope.$index + 1}}</span>
             </template>
@@ -50,8 +50,8 @@
                         <el-dropdown-item icon="el-icon-document-copy" v-on:click.native="btnCopyClick(scope.row.id)">复制</el-dropdown-item>
                         <el-dropdown-item icon="el-icon-unlock" v-if="scope.row.locked" v-on:click.native="btnUnLockClick(scope.row.id)">启用</el-dropdown-item>
                         <el-dropdown-item icon="el-icon-lock" v-else v-on:click.native="btnLockClick(scope.row.id)">停用</el-dropdown-item>
-                        <el-dropdown-item icon="el-icon-delete" style="color:red;" v-on:click.native="btnDeleteClick(scope.row.id)">删除</el-dropdown-item>
                         <el-dropdown-item icon="el-icon-s-data" v-on:click.native="btnManagerClick(scope.row.id)" divided>培训管理</el-dropdown-item>
+                        <el-dropdown-item icon="el-icon-delete" style="color:red;" v-on:click.native="btnDeleteClick(scope.row.id)" divided>删除</el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>
             </template>

@@ -22,7 +22,7 @@
         <el-table-column label="#"
                          type="index"
                          width="60"
-                         align="center">
+                         align="left">
             <template scope="scope">
                 <span>{{(formInline.pageIndex - 1) * formInline.pageSize + scope.$index + 1}}</span>
             </template>
@@ -50,11 +50,11 @@
                 <span v-else><el-tag size="mini" type="success" effect="dark">启 用</el-tag></span>
             </template>
         </el-table-column>
-        <el-table-column width="93" align="right">
+        <el-table-column width="100" align="right">
             <template slot-scope="scope">
                 <el-dropdown :show-timeout="0" placement="left">
-                    <el-button size="mini" v-on:click.stop="return false">
-                        操作<i class="el-icon-arrow-down el-icon--right"></i>
+                    <el-button icon="el-icon-arrow-left" size="mini" v-on:click.stop="return false">
+                        操作
                     </el-button>
                     <el-dropdown-menu slot="dropdown">
                         <el-dropdown-item icon="el-icon-view" v-on:click.native="btnViewClick(scope.row)">预览</el-dropdown-item>

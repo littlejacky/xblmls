@@ -13,7 +13,7 @@ var data = utils.init({
     keyword: '',
     currentPage: 1,
     offset: 0,
-    limit: 30
+    limit: PER_PAGE
   }
 });
 
@@ -98,7 +98,7 @@ var methods = {
 
     this.formInline.currentPage = 1;
     this.formInline.offset = 0;
-    this.formInline.limit = 30;
+    this.formInline.limit = PER_PAGE;
 
     utils.loading(this, true);
     $api.post($url, this.formInline).then(function (response) {
@@ -116,7 +116,7 @@ var methods = {
   handleCurrentChange: function (val) {
     var $this = this;
 
-    this.formInline.currentValue = val;
+    this.formInline.currentPage = val;
     this.formInline.offset = this.formInline.limit * (val - 1);
 
     utils.loading(this, true);

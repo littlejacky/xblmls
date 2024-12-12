@@ -26,16 +26,16 @@
     </el-form>
     <el-table ref="table" :data="list" :size="euiSize"
               style="width: 100%" :height="$(window).height()-263">
-        <el-table-column type="selection"
-                         width="60">
-        </el-table-column>
         <el-table-column label="#"
                          type="index"
                          width="60"
-                         align="center">
+                         align="left">
             <template scope="scope">
                 <span>{{(formInline.pageIndex - 1) * formInline.pageSize + scope.$index + 1}}</span>
             </template>
+        </el-table-column>
+        <el-table-column type="selection"
+                         width="60">
         </el-table-column>
         <el-table-column label="课程名称" show-overflow-tooltip prop="name">
         </el-table-column>

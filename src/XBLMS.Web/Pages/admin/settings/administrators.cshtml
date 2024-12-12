@@ -106,6 +106,14 @@
                       :height="$(window).height()-216"
                       v-on:selection-change="handleSelectionChange"
                       :data="administrators">
+                <el-table-column label="#"
+                                 type="index"
+                                 width="60"
+                                 align="left">
+                    <template scope="scope">
+                        <span>{{(formInline.currentPage - 1) * formInline.limit + scope.$index + 1}}</span>
+                    </template>
+                </el-table-column>
                 <el-table-column type="selection"
                                  width="55">
                 </el-table-column>
@@ -137,11 +145,11 @@
                 <el-table-column prop="roles"
                                  label="权限">
                 </el-table-column>
-                <el-table-column label="" align="right" width="93">
+                <el-table-column label="" align="right" width="100">
                     <template slot-scope="scope">
-                        <el-dropdown :show-timeout="0" placement="left" v-if="scope.row.id!==1">
-                            <el-button :size="euiSize" v-on:click.stop="return false">
-                                <i class="el-icon-arrow-left el-icon--right"></i>操作
+                        <el-dropdown :show-timeout="0" placement="left">
+                            <el-button icon="el-icon-arrow-left" size="mini" v-on:click.stop="return false">
+                                操作
                             </el-button>
                             <el-dropdown-menu slot="dropdown">
                                 <el-dropdown-item icon="el-icon-edit" v-on:click.native="btnEditClick(scope.row)">编辑</el-dropdown-item>

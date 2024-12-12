@@ -7,7 +7,7 @@
     <el-card>
         <div slot="header" class="clearfix">
             <span>{{ plan.planName }}-管理</span>
-            <el-link style="float: right;padding:3px 0;" icon="el-icon-close" v-on:click="utils.closeLayerSelf">退出管理</el-link>
+            <el-link style="float: right;padding:3px 0;" icon="el-icon-close" v-on:click="utils.closeLayerSelf">返 回</el-link>
         </div>
         <el-tabs tab-position="left">
             <el-tab-pane label="统计分析">
@@ -258,7 +258,7 @@
                             <el-table-column label="#"
                                              type="index"
                                              width="60"
-                                             align="center">
+                                             align="left">
                                 <template scope="scope">
                                     <span>{{(form.pageIndex - 1) * form.pageSize + scope.$index + 1}}</span>
                                 </template>
@@ -333,7 +333,7 @@
                             <el-table-column label="#"
                                              type="index"
                                              width="60"
-                                             align="center">
+                                             align="left">
                                 <template scope="scope">
                                     <span>{{ scope.$index + 1 }}</span>
                                 </template>
@@ -427,7 +427,7 @@
                             <el-table-column label="#"
                                              type="index"
                                              width="60"
-                                             align="center">
+                                             align="left">
                                 <template scope="scope">
                                     <span>{{(formScore.pageIndex - 1) * formScore.pageSize + scope.$index + 1}}</span>
                                 </template>

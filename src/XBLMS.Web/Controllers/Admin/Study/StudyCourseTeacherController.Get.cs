@@ -34,17 +34,20 @@ namespace XBLMS.Web.Controllers.Admin.Study
 
                         var plan = await _studyPlanRepository.GetAsync(item.PlanId);
                         var course = await _studyCourseRepository.GetAsync(item.CourseId);
-                        course.Name = item.CourseName;
-                        course.Credit = item.Credit;
-                        course.StudyHour = item.StudyHour;
+                        if (course != null)
+                        {
+                            course.Name = item.CourseName;
+                            course.Credit = item.Credit;
+                            course.StudyHour = item.StudyHour;
 
-                        course.Set("StudyUser", totalUser);
-                        course.Set("OverUser", overTotalUser);
-                        course.Set("Plan", plan?.PlanName);
-                        course.Set("PlanId", plan?.Id);
-                        course.Set("OfflineBeginDateTimeStr", course.OfflineBeginDateTime.Value.ToString(DateUtils.FormatStringDateTimeCN));
-                        course.Set("OfflineEndDateTimeStr", course.OfflineEndDateTime.Value.ToString(DateUtils.FormatStringDateTimeCN));
-                        resultList.Add(course);
+                            course.Set("StudyUser", totalUser);
+                            course.Set("OverUser", overTotalUser);
+                            course.Set("Plan", plan?.PlanName);
+                            course.Set("PlanId", plan?.Id);
+                            course.Set("OfflineBeginDateTimeStr", course.OfflineBeginDateTime.Value.ToString(DateUtils.FormatStringDateTimeCN));
+                            course.Set("OfflineEndDateTimeStr", course.OfflineEndDateTime.Value.ToString(DateUtils.FormatStringDateTimeCN));
+                            resultList.Add(course);
+                        }
                     }
                 }
             }
@@ -57,15 +60,18 @@ namespace XBLMS.Web.Controllers.Admin.Study
                     resulttotal = total;
                     foreach (var item in list)
                     {
-                        var (totalUser, overTotalUser) = await _studyCourseUserRepository.GetOverCountByAnalysisAsync(0, item.Id);
+                        if (item != null)
+                        {
+                            var (totalUser, overTotalUser) = await _studyCourseUserRepository.GetOverCountByAnalysisAsync(0, item.Id);
 
-                        item.Set("StudyUser", totalUser);
-                        item.Set("OverUser", overTotalUser);
-                        item.Set("Plan", "公共课");
-                        item.Set("PlanId", 0);
-                        item.Set("OfflineBeginDateTimeStr", item.OfflineBeginDateTime.Value.ToString(DateUtils.FormatStringDateTimeCN));
-                        item.Set("OfflineEndDateTimeStr", item.OfflineEndDateTime.Value.ToString(DateUtils.FormatStringDateTimeCN));
-                        resultList.Add(item);
+                            item.Set("StudyUser", totalUser);
+                            item.Set("OverUser", overTotalUser);
+                            item.Set("Plan", "公共课");
+                            item.Set("PlanId", 0);
+                            item.Set("OfflineBeginDateTimeStr", item.OfflineBeginDateTime.Value.ToString(DateUtils.FormatStringDateTimeCN));
+                            item.Set("OfflineEndDateTimeStr", item.OfflineEndDateTime.Value.ToString(DateUtils.FormatStringDateTimeCN));
+                            resultList.Add(item);
+                        }
                     }
                 }
             }
