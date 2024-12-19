@@ -14,20 +14,22 @@
 
 ### 系统升级
 
-* 访问/admin/syncDatabase 进行系统升级，无论是旧版本升级新版本还是考试系统升级培训系统，都适用。发布最新的代码替换到原来的部署包即可，不要替换xblms.json和web.config文件。
-
-* 访问/admin/clearDatabase 进行系统数据清理，请谨慎使用，清理后仅保留一个管理员账号，其他数据库数据会全部删除。
+* 访问/admin/syncDatabase 进行系统数据库升级。发布最新的代码替换到原来的部署包即可升级部署包，不要替换xblms.json。
 
 ## 演示地址
 
 
-### 管理端 [点击前往管理端演示](http://8.131.91.222:5001/admin)：
+### 管理端
 
 * 账号：admin，密码：123123
 
-### 用户端 [点击前往用户端演示](http://8.131.91.222:5001/home)：
+* [点击前往管理端演示](http://8.131.91.222:5001/admin)
+
+### 用户端
 
 * 账号：test1，密码：123123
+
+* [点击前往用户端演示](http://8.131.91.222:5001/home)
 
 ### 移动端
 
@@ -39,10 +41,6 @@
 
 * <img width="200" src="https://gitee.com/xblms/xblmls/raw/master/src/XBLMS.Web/wwwroot/sitefiles/assets/images/demo/app/qrcode.png"/>
 
-### 在线考试系统
-
-* [点击前往在线考试系统源码](https://gitee.com/xblms/xblmes)。
-* 
 ## 系统展示
 
 * 移动端
@@ -56,8 +54,9 @@
 <img width="180" src="https://gitee.com/xblms/xblmls/raw/master/src/XBLMS.Web/wwwroot/sitefiles/assets/images/demo/app/exam1.jpg"/>
 <img width="180" src="https://gitee.com/xblms/xblmls/raw/master/src/XBLMS.Web/wwwroot/sitefiles/assets/images/demo/app/mine.jpg"/>
 
-## 发布手册
-发布和部署手册：(https://gitee.com/xblms/xblmes/tree/master/src/XBLMS.Web/wwwroot/sitefiles/assets/uploadtemplates/doc)
+## 系统手册
+
+[发布和部署手册](https://gitee.com/xblms/xblmes/tree/master/src/XBLMS.Web/wwwroot/sitefiles/assets/uploadtemplates/doc)
 
 ## 支持环境
 ### 支持的操作系统
@@ -233,6 +232,7 @@ npm install
 npm run build-win-x64
 dotnet build ./build-win-x64/build.sln -c Release
 dotnet publish ./build-win-x64/src/XBLMS.Web/XBLMS.Web.csproj -r win-x64 -c Release -o ./publish/xblms-win-x64
+npm run copy-win-x64
 ```
 
 > 进入文件夹 `./publish/xblms-win-x64` 获取部署文件
@@ -241,9 +241,10 @@ dotnet publish ./build-win-x64/src/XBLMS.Web/XBLMS.Web.csproj -r win-x64 -c Rele
 
 ```
 npm install
-npm run build-win-x32
-dotnet build ./build-win-x32/build.sln -c Release
-dotnet publish ./build-win-x32/src/XBLMS.Web/XBLMS.Web.csproj -r win-x32 -c Release -o ./publish/xblms-win-x32
+npm run build-win-x86
+dotnet build ./build-win-x86/build.sln -c Release
+dotnet publish ./build-win-x86/src/XBLMS.Web/XBLMS.Web.csproj -r win-x86 -c Release -o ./publish/xblms-win-x86
+npm run copy-win-x86
 ```
 
 > 进入文件夹 `./publish/xblms-win-x32` 获取部署文件
@@ -255,6 +256,7 @@ npm install
 npm run build-linux-x64
 dotnet build ./build-linux-x64/build.sln -c Release
 dotnet publish ./build-linux-x64/src/XBLMS.Web/XBLMS.Web.csproj -r linux-x64 -c Release -o ./publish/xblms-linux-x64
+npm run copy-linux-x64
 ```
 
 > 进入文件夹 `./publish/xblms-linux-x64` 获取部署文件
@@ -266,6 +268,7 @@ npm install
 npm run build-linux-arm64
 dotnet build ./build-linux-arm64/build.sln -c Release
 dotnet publish ./build-linux-arm64/src/XBLMS.Web/XBLMS.Web.csproj -r linux-arm64 -c Release -o ./publish/xblms-linux-arm64
+npm run copy-linux-arm64
 ```
 
 > 进入文件夹 `./publish/xblms-linux-arm64` 获取部署文件
