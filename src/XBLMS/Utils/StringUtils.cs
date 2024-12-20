@@ -89,7 +89,14 @@ namespace XBLMS.Utils
             }
             return str;
         }
-
+        public static string SubString(string text, int length)
+        {
+            if (!string.IsNullOrEmpty(text) && text.Length > length)
+            {
+                return string.Concat(text.AsSpan(0, length), "...");
+            }
+            return text;
+        }
         public static string Remove(string text, int startIndex)
         {
             if (string.IsNullOrEmpty(text)) return string.Empty;
