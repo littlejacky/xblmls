@@ -9,7 +9,7 @@ namespace XBLMS.Repositories
     {
         Task<List<int>> GetRoleIdsForAdminAsync(int adminId);
 
-        Task<IList<string>> GetUsersInRoleAsync(string roleName);
+        Task<List<int>> GetUserIdsInRoleAsync(int roleId);
 
         Task InsertAsync(AdministratorsInRoles info);
 

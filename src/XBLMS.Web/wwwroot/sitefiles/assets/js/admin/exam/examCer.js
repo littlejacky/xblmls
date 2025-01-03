@@ -28,7 +28,7 @@ var methods = {
     $api.post($url + '/del', { id: id }).then(function (response) {
       var res = response.data;
       if (res.value) {
-        utils.success("删除成功");
+        utils.success("操作成功");
       }
     }).catch(function (error) {
       utils.error(error);
@@ -90,14 +90,18 @@ var methods = {
   },
   btnDeleteClick: function (cer) {
     var $this = this;
-
-    top.utils.alertDelete({
-      title: '删除证书模板',
-      text: '此操作将删除证书模板 ' + cer.name + '，确认删除吗？',
-      callback: function () {
-        $this.apiDelete(cer.id);
-      }
-    });
+    if (cer.paperCount > 0 || cer.userCount > 0) {
+      utils.error("不能删除被使用的证书");
+    }
+    else {
+      top.utils.alertDelete({
+        title: '删除证书模板',
+        text: '此操作将删除证书模板 ' + cer.name + '，确定删除吗？',
+        callback: function () {
+          $this.apiDelete(cer.id);
+        }
+      });
+    }
   },
 
   btnSubmitClick: function () {
@@ -109,30 +113,9 @@ var methods = {
     });
   },
 
-  btnCancelClick: function () {
-    this.panel = false;
-  },
-  formatter: function (row) {
-    for (var i = 0; i < this.typeList.length; i++) {
-      if (this.typeList[i].value === row.txType) {
-        return this.typeList[i].label;
-      }
-    }
-  },
-  showInput: function () {
-    this.inputVisible = true;
-    this.$nextTick(_ => {
-      this.$refs.saveTagInput.$refs.input.focus();
-    });
-  },
+
   btnCountClick: function (row) {
-    var $this = this;
-    top.utils.openLayer({
-      title: row.name + '-获证人员列表',
-      url: utils.getExamUrl('examCerUsers', { id: row.id }),
-      width: "88%",
-      height: "98%"
-    });
+    utils.openTopLeft(row.name + '-获证人员列表', utils.getExamUrl("examCerUsers", { id: row.id }));
   }
 };
 

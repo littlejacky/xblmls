@@ -25,7 +25,7 @@
         </el-form-item>
     </el-form>
     <el-table ref="table" :data="list" :size="euiSize"
-              style="width: 100%" :height="$(window).height()-160">
+              style="width: 100%" :height="$(window).height()-152">
         <el-table-column label="#"
                          type="index"
                          width="60"
@@ -34,7 +34,7 @@
                 <span>{{(form.pageIndex - 1) * form.pageSize + scope.$index + 1}}</span>
             </template>
         </el-table-column>
-        <el-table-column label="课程名称" show-overflow-tooltip prop="name">
+        <el-table-column label="课程" show-overflow-tooltip prop="name">
         </el-table-column>
         <el-table-column label="计划" show-overflow-tooltip prop="plan">
         </el-table-column>
@@ -58,7 +58,11 @@
                         操作
                     </el-button>
                     <el-dropdown-menu slot="dropdown">
-                        <el-dropdown-item icon="el-icon-s-data" v-on:click.native="btnCourseManagerClick(scope.row)">管 理</el-dropdown-item>
+                        <el-dropdown-item icon="el-icon-s-data" v-on:click.native="btnCourseManagerAnalysisClick(scope.row)">综合统计</el-dropdown-item>
+                        <el-dropdown-item icon="el-icon-user" v-on:click.native="btnManagerUserClick(scope.row)">学员管理</el-dropdown-item>
+                        <el-dropdown-item icon="el-icon-s-order" v-on:click.native="btnManagerScoreClick(scope.row)" v-if="scope.row.examId>0">考试成绩</el-dropdown-item>
+                        <el-dropdown-item icon="el-icon-document" v-on:click.native="btnManagerQClick(scope.row)" v-if="scope.row.examQuestionnaireId>0">调查结果</el-dropdown-item>
+                        <el-dropdown-item icon="el-icon-star-off" v-on:click.native="btnManagerEvaluationClick(scope.row)" v-if="scope.row.studyCourseEvaluationId>0">课程评价</el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>
             </template>

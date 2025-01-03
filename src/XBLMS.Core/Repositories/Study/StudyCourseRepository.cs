@@ -164,7 +164,18 @@ namespace XBLMS.Core.Repositories
             }
             return markList;
         }
-
+        public async Task<int> GetPaperUseCount(int paperId)
+        {
+            return await _repository.CountAsync(Q.Where(nameof(StudyCourse.ExamId), paperId));
+        }
+        public async Task<int> GetPaperQUseCount(int paperId)
+        {
+            return await _repository.CountAsync(Q.Where(nameof(StudyCourse.ExamQuestionnaireId), paperId));
+        }
+        public async Task<int> GetEvaluationUseCount(int eId)
+        {
+            return await _repository.CountAsync(Q.Where(nameof(StudyCourse.StudyCourseEvaluationId), eId));
+        }
         public async Task<(int allCount, int addCount, int deleteCount, int lockedCount, int unLockedCount)> GetDataCount(AuthorityAuth auth)
         {
             var total = 0;
@@ -191,5 +202,6 @@ namespace XBLMS.Core.Repositories
 
             return (total, 0, 0, lockedTotal, unLockedTotal);
         }
+
     }
 }

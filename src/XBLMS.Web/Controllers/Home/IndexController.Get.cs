@@ -128,7 +128,8 @@ namespace XBLMS.Web.Controllers.Home
                 QPaperTotal = qPaperTotal,
                 PlanTotal = planTotal,
                 CourseTotal = courseTotal,
-                CourseList = courseList
+                CourseList = courseList,
+                Version = _settingsManager.Version
             };
         }
     }

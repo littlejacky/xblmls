@@ -18,6 +18,9 @@ namespace XBLMS.Web.Controllers.Admin.Exam
                 {
                     item.Set("ExamBeginDateTimeStr", item.ExamBeginDateTime.Value.ToString(DateUtils.FormatStringDateTimeCN));
                     item.Set("ExamEndDateTimeStr", item.ExamEndDateTime.Value.ToString(DateUtils.FormatStringDateTimeCN));
+
+                    var useCount = await _studyCourseRepository.GetPaperUseCount(item.Id) + await _studyPlanCourseRepository.GetPaperUseCount(item.Id);
+                    item.Set("UseCount", useCount);
                 }
             }
             return new GetResult

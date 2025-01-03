@@ -69,15 +69,20 @@ var methods = {
     this.formInline.pageIndex = 1;
     this.apiGet();
   },
-  btnDeleteClick: function (id) {
+  btnDeleteClick: function (row) {
     var $this = this;
-    top.utils.alertDelete({
-      title: '删除试卷',
-      text: '确认删除吗？',
-      callback: function () {
-        $this.apiDelete(id);
-      }
-    });
+    if (row.useCount > 0) {
+      utils.error("不能删除被使用的试卷");
+    }
+    else {
+      top.utils.alertDelete({
+        title: '删除试卷',
+        text: '确认删除吗？',
+        callback: function () {
+          $this.apiDelete(row.id);
+        }
+      });
+    }
   },
   apiDelete: function (id) {
     var $this = this;
@@ -85,7 +90,7 @@ var methods = {
     $api.post($urlDelete, { id: id }).then(function (response) {
       var res = response.data;
       if (res.value) {
-        utils.success("成功删除试卷")
+        utils.success("操作成功")
       }
     }).catch(function (error) {
       utils.error(error);
@@ -120,7 +125,7 @@ var methods = {
     $api.post($urlLock, { id: id }).then(function (response) {
       var res = response.data;
       if (res.value) {
-        utils.success("成功锁定试卷")
+        utils.success("操作成功")
       }
     }).catch(function (error) {
       utils.error(error);
@@ -135,7 +140,7 @@ var methods = {
     $api.post($urlUnLock, { id: id }).then(function (response) {
       var res = response.data;
       if (res.value) {
-        utils.success("成功解锁试卷")
+        utils.success("操作成功")
       }
     }).catch(function (error) {
       utils.error(error);
@@ -150,10 +155,10 @@ var methods = {
     $api.post($urlLock, { id: row.id, locked: row.isStop }).then(function (response) {
       var res = response.data;
       if (row.isStop) {
-        utils.success("已停用");
+        utils.success("操作成功");
       }
       else {
-        utils.success("已启用");
+        utils.success("操作成功");
       }
     }).catch(function (error) {
       utils.error(error);
@@ -161,24 +166,21 @@ var methods = {
       utils.loading($this, false);
     });
   },
-  btnViewClick: function (row) {
-    if (row.tmRandomType === 'RandomExaming') {
-      utils.error("考前随机试卷不是预生成试卷，无法预览")
-    }
-    else if (row.submitType === 'Save') {
-      utils.error("试卷未发布，无法预览")
-    }
-    else {
-      var $this = this;
-      top.utils.openLayer({
-        title: false,
-        closebtn: 0,
-        url: utils.getCommonUrl('examPaperLayerView', { id: row.id }),
-        width: "98%",
-        height: "98%"
-      });
-    }
 
+  btnViewClick: function (row) {
+    utils.openTopLeft(row.title + '-预览', utils.getCommonUrl("examPaperLayerView", { id: row.id }));
+  },
+  btnManagerAnalysisClick: function (row) {
+    utils.openTopLeft(row.title + '-综合统计', utils.getExamUrl("examPaperManagerAnalysis", { id: row.id }));
+  },
+  btnManagerUserClick: function (row) {
+    utils.openTopLeft(row.title + '-考生管理', utils.getExamUrl("examPaperManagerUser", { id: row.id }));
+  },
+  btnManagerMarkClick: function (row) {
+    utils.openTopLeft(row.title + '-阅卷管理', utils.getExamUrl("examPaperManagerMark", { id: row.id }));
+  },
+  btnManagerScoreClick: function (row) {
+    utils.openTopLeft(row.title + '-考试成绩', utils.getExamUrl("examPaperManagerScore", { id: row.id }));
   },
   btnEditClick: function (id) {
 
@@ -212,17 +214,6 @@ var methods = {
         $this.btnSearchClick();
       }
     });
-  },
-  btnManagerClick: function (id) {
-
-    top.utils.openLayer({
-      title: false,
-      closebtn: 0,
-      url: utils.getExamUrl('examPaperManager', { id: id }),
-      width: "98%",
-      height: "98%"
-    });
-
   },
 
 
@@ -264,7 +255,7 @@ var methods = {
   },
   treeBtnDeleteClick: function (node, data) {
     if (data.total > 0 || data.selfTotal > 0) {
-      utils.error("该分类下有题目数据，请勿删除");
+      utils.error("不能删除包含试卷的分类");
     }
     else {
       var $this = this;
@@ -289,7 +280,7 @@ var methods = {
         const children = parent.data.children || parent.data;
         const index = children.findIndex(d => d.id === data.id);
         children.splice(index, 1);
-        utils.success('删除成功');
+        utils.success('操作成功');
       }
     }).catch(function (error) {
       utils.error(error);
@@ -306,7 +297,7 @@ var methods = {
     $api.post($treeUrlAdd, this.treeAddForm).then(function (response) {
       var res = response.data;
       if (res.value) {
-        utils.success("分类添加成功")
+        utils.success("操作成功")
       }
     }).catch(function (error) {
       utils.error(error);
@@ -334,7 +325,7 @@ var methods = {
     $api.post($treeUrlUpdate, { item: this.treeUpdateForm }).then(function (response) {
       var res = response.data;
       if (res.value) {
-        utils.success("分类修改成功")
+        utils.success("操作成功")
       }
     }).catch(function (error) {
       utils.error(error);

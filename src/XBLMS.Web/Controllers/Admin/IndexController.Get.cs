@@ -135,7 +135,8 @@ namespace XBLMS.Web.Controllers.Admin
                     Auth = admin.Auth.GetDisplayName(),
                     CurOrganName = curOrganName,
                     IsOrganAdmin = IsOrganAdmin
-                }
+                },
+                Version = _settingsManager.Version
 
             };
         }

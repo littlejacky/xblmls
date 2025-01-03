@@ -6,6 +6,7 @@ using XBLMS.Dto;
 using XBLMS.Models;
 using XBLMS.Repositories;
 using XBLMS.Services;
+using XBLMS.Utils;
 
 namespace XBLMS.Core.Repositories
 {
@@ -115,6 +116,47 @@ namespace XBLMS.Core.Repositories
                 );
             }
             return await _repository.GetAllAsync<int>(query);
+        }
+        public async Task<int> GetCerCount(int cerId)
+        {
+            return await _repository.CountAsync(Q.Where(nameof(ExamPaper.CerId), cerId));
+        }
+        public async Task<int> GetGroupCount(int groupId)
+        {
+            var total = 0;
+            var allGroupIds = await _repository.GetAllAsync<string>(Q.Select(nameof(ExamPaper.UserGroupIds)));
+            var allGroupIdList = ListUtils.ToList(allGroupIds);
+            if (allGroupIdList != null)
+            {
+                foreach (var groupIds in allGroupIdList)
+                {
+                    if (groupIds != null && groupIds.Contains(groupId.ToString()))
+                    {
+                        total++;
+                    }
+                }
+            }
+            return total;
+        }
+        public async Task<int> GetTmGroupCount(int groupId)
+        {
+            var total = 0;
+
+            var query = Q.Select(nameof(ExamPaper.TmGroupIds));
+
+            var allGroupIds = await _repository.GetAllAsync<string>(query);
+            var allGroupIdList = ListUtils.ToList(allGroupIds);
+            if (allGroupIdList != null)
+            {
+                foreach (var groupIds in allGroupIdList)
+                {
+                    if (groupIds != null && groupIds.Contains(groupId.ToString()))
+                    {
+                        total++;
+                    }
+                }
+            }
+            return total;
         }
 
         public async Task<(int allCount, int addCount, int deleteCount, int lockedCount, int unLockedCount)> GetDataCount(AuthorityAuth auth)

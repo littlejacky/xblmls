@@ -20,6 +20,8 @@ namespace XBLMS.Web.Controllers.Admin.Study
 
             var plan = await _studyPlanRepository.GetAsync(request.Id);
             var (total, list) = await _examPaperStartRepository.GetListByAdminAsync(plan.ExamId, plan.Id, 0, request.DateFrom, request.DateTo, request.KeyWords, request.PageIndex, request.PageSize);
+
+
             if (total > 0)
             {
                 foreach (var item in list)
@@ -41,9 +43,8 @@ namespace XBLMS.Web.Controllers.Admin.Study
         [HttpPost, Route(RouteScoreExport)]
         public async Task<ActionResult<StringResult>> SocreExport([FromBody] GetSocreRequest request)
         {
-            var (total, list) = await _examPaperStartRepository.GetListByAdminAsync(request.Id, request.DateFrom, request.DateTo, request.KeyWords, 1, int.MaxValue);
-
             var plan = await _studyPlanRepository.GetAsync(request.Id);
+            var (total, list) = await _examPaperStartRepository.GetListByAdminAsync(plan.ExamId, plan.Id, 0, request.DateFrom, request.DateTo, request.KeyWords, request.PageIndex, request.PageSize);
 
             var fileName = $"{plan.PlanName}-大考成绩单.xlsx";
             var filePath = _pathManager.GetDownloadFilesPath(fileName);

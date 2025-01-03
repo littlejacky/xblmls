@@ -3,7 +3,7 @@
 <el-card class="box-card">
     <el-form :inline="true" :size="euiSize">
         <el-form-item label="题型">
-            <el-input prefix-icon="el-icon-search" v-model="name" placeholder="名称" clearable></el-input>
+            <el-input prefix-icon="el-icon-search" v-model="name" placeholder="关键字" clearable></el-input>
         </el-form-item>
         <el-form-item>
             <el-button :size="euiSize" type="primary" icon="el-icon-search" v-on:click="btnSearchClick">查 询</el-button>
@@ -13,8 +13,9 @@
         </el-form-item>
     </el-form>
     <el-table :data="list" :size="euiSize" :height="($(window).height() - 115)">
-        <el-table-column align="left" label="#" type="index" :default-sort="{prop: 'createdDate', order: 'descending'}" width="40">
+        <el-table-column label="#" type="index" :default-sort="{prop: 'createdDate', order: 'descending'}" width="60">
         </el-table-column>
+        <el-table-column label="排序号" prop="taxis" width="88" sortable></el-table-column>
         <el-table-column label="名称" prop="name" sortable>
               <template slot-scope="scope">
                   {{ scope.row.name }}
@@ -23,13 +24,7 @@
         <el-table-column label="基本题型" prop="txBaseName" width="150" sortable></el-table-column>
         <el-table-column label="默认分数" prop="score" width="120" sortable></el-table-column>
         <el-table-column label="题目数量" prop="tmCount" width="120" sortable></el-table-column>
-        <el-table-column width="130" label="创建人">
-            <template slot-scope="scope">
-                {{scope.row.creatorDisplayName}}
-            </template>
-        </el-table-column>
         <el-table-column label="创建时间" prop="createdDate" width="150" sortable></el-table-column>
-        <el-table-column label="排序号" prop="taxis" width="120" sortable></el-table-column>
         <el-table-column width="100" align="right">
             <template slot-scope="scope">
                 <el-dropdown :show-timeout="0" placement="left">
@@ -38,7 +33,7 @@
                     </el-button>
                     <el-dropdown-menu slot="dropdown">
                         <el-dropdown-item icon="el-icon-edit" v-on:click.native="handleCommand('edit',scope.row)">修改</el-dropdown-item>
-                        <el-dropdown-item icon="el-icon-delete" v-on:click.native="handleCommand('delete',scope.row)" style="color:red;">删除</el-dropdown-item>
+                        <el-dropdown-item icon="el-icon-delete" v-on:click.native="handleCommand('delete',scope.row)" style="color:red;" divided>删除</el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>
             </template>

@@ -30,7 +30,7 @@ var methods = {
       $this.rightUrl = utils.getExamUrl("examPaper");
     }
     if (common === 'mine') {
-      document.title = '用户中心';
+      document.title = '我的';
       $this.rightUrl = utils.getRootUrl('mine');
     }
 

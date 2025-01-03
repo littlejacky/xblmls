@@ -16,6 +16,7 @@ namespace XBLMS.Web.Controllers.Home
     {
         private const string Route = "index";
 
+        private readonly ISettingsManager _settingsManager;
         private readonly IAuthManager _authManager;
         private readonly IConfigRepository _configRepository;
         private readonly IUserMenuRepository _userMenuRepository;
@@ -31,6 +32,7 @@ namespace XBLMS.Web.Controllers.Home
         private readonly IStudyManager _studyManager;
 
         public IndexController(IAuthManager authManager,
+            ISettingsManager settingsManager,
             IConfigRepository configRepository,
             IUserMenuRepository userMenuRepository,
             IExamPaperRepository examPaperRepository,
@@ -44,6 +46,7 @@ namespace XBLMS.Web.Controllers.Home
             IStudyManager studyManager)
         {
             _authManager = authManager;
+            _settingsManager = settingsManager;
             _configRepository = configRepository;
             _userMenuRepository = userMenuRepository;
             _examPaperRepository = examPaperRepository;
@@ -66,6 +69,7 @@ namespace XBLMS.Web.Controllers.Home
             public int PlanTotal { get; set; }
             public int CourseTotal { get; set; }
             public List<StudyCourse> CourseList { get; set; }
+            public string Version { get; set; }
         }
     }
 }

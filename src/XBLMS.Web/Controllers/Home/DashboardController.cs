@@ -17,6 +17,7 @@ namespace XBLMS.Web.Controllers.Home
         private const string Route = "dashboard";
 
         private readonly IConfigRepository _configRepository;
+        private readonly ISettingsManager _settingsManager;
         private readonly IAuthManager _authManager;
         private readonly IOrganManager _organManager;
         private readonly IExamManager _examManager;
@@ -36,6 +37,7 @@ namespace XBLMS.Web.Controllers.Home
         private readonly IExamCerRepository _examCerRepository;
 
         public DashboardController(IConfigRepository configRepository,
+            ISettingsManager settingsManager,
             IOrganManager organManager,
             IAuthManager authManager,
             IExamManager examManager,
@@ -54,6 +56,7 @@ namespace XBLMS.Web.Controllers.Home
             IExamCerRepository examCerRepository)
         {
             _configRepository = configRepository;
+            _settingsManager = settingsManager;
             _authManager = authManager;
             _organManager = organManager;
             _examManager = examManager;
@@ -115,6 +118,7 @@ namespace XBLMS.Web.Controllers.Home
             public int PlanOverCount { get; set; }
 
             public string DateStr { get; set; }
+            public string Version { get; set; }
 
         }
 

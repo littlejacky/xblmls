@@ -1,56 +1,19 @@
 ﻿@page
 @{ Layout = "_Layout"; }
 
-@section Styles{
-    <style>
-
-        .custom-tree-node {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .el-tree-node {
-            white-space: normal;
-            outline: 0;
-            .el-tree-node__content
-
-        {
-            text-align: left;
-            align-items: start;
-            height: 100%;
-            .el-tree-node
-
-        {
-            white-space: normal;
-            outline: 0;
-            .el-tree-node__content
-
-        {
-            text-align: left;
-            align-items: start;
-            height: 100%;
-        }
-
-        }
-        }
-        }</style>
-}
-
-<el-row :gutter="6">
+<el-row :gutter="0">
     <el-col :span="6">
         @await Html.PartialAsync("_PartialTree")
     </el-col>
     <el-col :span="18">
-        <el-card>
+        <el-card shadow="never" style="border-start-start-radius:0;border-end-start-radius:0;">
             <el-form :inline="true" :size="euiSize">
-                <el-form-item label="">
+                <el-form-item label="课程">
                     <el-input v-model="formInline.keyword" placeholder="名称，标签 关键字" prefix-icon="el-icon-search" clearable></el-input>
                 </el-form-item>
                 <el-form-item label="">
-                    <el-select v-model="formInline.type" placeholder="" v-on:change="btnSearchClick" clearable>
-                        <el-option label="全部课程类型" value=""></el-option>
+                    <el-select v-model="formInline.type" placeholder="" v-on:change="btnSearchClick" clearable style="width:158px;">
+                        <el-option label="类型" value=""></el-option>
                         <el-option label="线上课" value="online"></el-option>
                         <el-option label="线下课" value="offline"></el-option>
                         <el-option label="公共课" value="public"></el-option>
@@ -63,7 +26,7 @@
                 </el-form-item>
             </el-form>
             <el-table ref="table" :data="list" :size="euiSize"
-                      style="width: 100%" :height="$(window).height()-160">
+                      style="width: 100%" :height="$(window).height()-153">
                 <el-table-column label="#"
                                  type="index"
                                  width="60"
@@ -90,6 +53,8 @@
                 <el-table-column prop="createdDate" label="创建时间"
                                  width="150">
                 </el-table-column>
+                <el-table-column prop="useCount" label="被使用" width="80">
+                </el-table-column>
                 <el-table-column label="状态" width="85">
                     <template slot-scope="scope">
                         <span v-if="scope.row.locked"><el-tag size="mini" type="danger" effect="dark">停 用</el-tag></span>
@@ -107,8 +72,12 @@
                                 <el-dropdown-item icon="el-icon-document-copy" v-on:click.native="btnCopyClick(scope.row)">复制</el-dropdown-item>
                                 <el-dropdown-item icon="el-icon-unlock" v-if="scope.row.locked" v-on:click.native="btnUnLockClick(scope.row.id)">启用</el-dropdown-item>
                                 <el-dropdown-item icon="el-icon-lock" v-else v-on:click.native="btnLockClick(scope.row.id)">停用</el-dropdown-item>
-                                <el-dropdown-item icon="el-icon-s-data" v-on:click.native="btnCourseManagerClick(scope.row)" divided>课程管理</el-dropdown-item>
-                                <el-dropdown-item icon="el-icon-delete" style="color:red;" v-on:click.native="btnDeleteClick(scope.row.id)" divided>删除</el-dropdown-item>
+                                <el-dropdown-item icon="el-icon-s-data" v-on:click.native="btnCourseManagerAnalysisClick(scope.row)" divided>综合统计</el-dropdown-item>
+                                <el-dropdown-item icon="el-icon-user" v-on:click.native="btnManagerUserClick(scope.row)">学习情况</el-dropdown-item>
+                                <el-dropdown-item icon="el-icon-s-order" v-on:click.native="btnManagerScoreClick(scope.row)" v-if="scope.row.examId>0">考试成绩</el-dropdown-item>
+                                <el-dropdown-item icon="el-icon-document" v-on:click.native="btnManagerQClick(scope.row)" v-if="scope.row.examQuestionnaireId>0">调查结果</el-dropdown-item>
+                                <el-dropdown-item icon="el-icon-star-off" v-on:click.native="btnManagerEvaluationClick(scope.row)" v-if="scope.row.studyCourseEvaluationId>0">课程评价</el-dropdown-item>
+                                <el-dropdown-item icon="el-icon-delete" style="color:red;" v-on:click.native="btnDeleteClick(scope.row)" divided>删除</el-dropdown-item>
                             </el-dropdown-menu>
                         </el-dropdown>
                     </template>

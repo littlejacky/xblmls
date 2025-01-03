@@ -763,6 +763,15 @@ var utils = {
     var index = parent.layer.getFrameIndex(window.name);
     parent.layer.close(index);
   },
+  openTopLeft: function (title, src, width) {
+    top.$vue.topFrameTitle = title;
+    top.$vue.topFrameSrc = src;
+    top.$vue.topFrameWidth = width || 88;
+    top.$vue.topFrameDrawer = true;
+  },
+  closeTopLeft: function () {
+    top.$vue.topFrameDrawer = false;
+  },
   openLayerPhoto: function (config) {
     layer.photos({
       photos: {
@@ -1149,7 +1158,10 @@ if (window.swal && swal.mixin) {
 var PER_PAGE = 15;
 var DEFAULT_AVATAR_URL = '/sitefiles/assets/images/default_avatar.png';
 var DEFAULT_AVATAR_BG_URL = '/sitefiles/assets/images/default_avatar_bg.jpg';
+var DEFAULT_LOGO_URL = "/sitefiles/assets/images/logo.png";
+
 var DOCUMENTTITLE = 'XBLMS.ELEARNING';
+var DOCUMENTTITLECN = '在线学习平台';
 var DOCUMENTTITLE_ADMIN = DOCUMENTTITLE + '-后台管理';
 var DOCUMENTTITLE_HOME = DOCUMENTTITLE + '-用户中心';
 var DOCUMENTTITLE_DATABASEUPDATE = DOCUMENTTITLE + '-数据库升级';

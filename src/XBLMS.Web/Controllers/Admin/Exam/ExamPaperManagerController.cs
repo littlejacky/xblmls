@@ -106,6 +106,8 @@ namespace XBLMS.Web.Controllers.Admin.Exam
         public class GetSocreRequest
         {
             public int Id { get; set; }
+            public int PlanId { get; set; }
+            public int CourseId { get; set; }
             public string DateFrom { get; set; }
             public string DateTo { get; set; }
             public string Keywords { get; set; }
@@ -116,6 +118,7 @@ namespace XBLMS.Web.Controllers.Admin.Exam
         {
             public int Total { get; set; }
             public List<ExamPaperStart> List { get; set; }
+            public List<GetSelectMarkInfo> MarkerList { get; set; }
         }
 
 

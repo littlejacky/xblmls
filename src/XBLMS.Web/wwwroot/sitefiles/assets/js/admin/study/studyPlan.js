@@ -156,14 +156,24 @@ var methods = {
       }
     });
   },
-  btnManagerClick: function (id) {
+
+  btnManagerAnalysisClick: function (row) {
+    utils.openTopLeft(row.planName + '-综合统计', utils.getStudyUrl("studyPlanManagerAnalysis", { id: row.id }));
+  },
+  btnManagerUserClick: function (row) {
+    utils.openTopLeft(row.planName + '-学习情况', utils.getStudyUrl("studyPlanManagerUser", { id: row.id }));
+  },
+  btnManagerScoreClick: function (row) {
+    utils.openTopLeft(row.planName + '-考试成绩', utils.getExamUrl("examPaperManagerScore", { id: row.examId,planId:row.id }));
+  },
+  btnManagerCourseClick: function (id) {
 
     top.utils.openLayer({
       title: false,
       closebtn: 0,
-      url: utils.getStudyUrl('studyPlanManager', { id: id }),
-      width: "99%",
-      height: "99%"
+      url: utils.getStudyUrl('studyPlanManagerCourse', { id: id }),
+      width: "100%",
+      height: "100%"
     });
 
   },

@@ -14,6 +14,7 @@ var data = utils.init({
   list1: [],
   list2: [],
   list3: [],
+  list4: [],
   total: 0,
   pushTotal:0,
   markTotal: 0,
@@ -38,7 +39,7 @@ var methods = {
       if (res.list && res.list.length > 0) {
         var pushIndex = 1;
         res.list.forEach(item => {
-          if (pushIndex === 4) {
+          if (pushIndex === 5) {
             pushIndex = 1;
           }
           if (pushIndex === 1) {
@@ -49,6 +50,9 @@ var methods = {
           }
           if (pushIndex === 3) {
             $this.list3.push(item);
+          }
+          if (pushIndex ===4) {
+            $this.list4.push(item);
           }
           pushIndex++;
           $this.pushTotal++;
@@ -110,6 +114,14 @@ var methods = {
           if (pIndex >= 0) {
             $this.$set($this.list3, pIndex, res.item);
           }
+          else {
+            pIndex = $this.list4.findIndex(item => {
+              return item.id === id && item.planId === planId;
+            });
+            if (pIndex >= 0) {
+              $this.$set($this.list4, pIndex, res.item);
+            }
+          }
         }
       }
 
@@ -122,6 +134,7 @@ var methods = {
     this.list1 = [];
     this.list2 = [];
     this.list3 = [];
+    this.list4 = [];
     this.apiGet();
   },
   btnLoadMoreClick: function () {

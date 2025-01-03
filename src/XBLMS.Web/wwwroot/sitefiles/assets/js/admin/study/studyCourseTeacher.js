@@ -36,16 +36,21 @@ var methods = {
     this.form.pageIndex = 1;
     this.apiGet();
   },
-  btnCourseManagerClick: function (row) {
-    var $this = this;
-    top.utils.openLayer({
-      title: false,
-      closebtn: 0,
-      url: utils.getStudyUrl('studyCourseManager', { id: row.id,planId:row.planId }),
-      width: "99%",
-      height: "99%"
-    });
-  }
+  btnCourseManagerAnalysisClick: function (row) {
+    utils.openTopLeft(row.name + '-综合统计', utils.getStudyUrl("studyCourseManagerAnalysis", { id: row.id, planId: row.planId }));
+  },
+  btnManagerScoreClick: function (row) {
+    utils.openTopLeft(row.name + '-考试成绩', utils.getExamUrl("examPaperManagerScore", { id: row.examId, courseId: row.id, planId: row.planId }));
+  },
+  btnManagerQClick: function (row) {
+    utils.openTopLeft(row.name + '-调查结果', utils.getExamUrl("examQuestionnaireAnalysis", { id: row.examQuestionnaireId, courseId: row.id, planId: row.planId }));
+  },
+  btnManagerEvaluationClick: function (row) {
+    utils.openTopLeft(row.name + '-课程评价', utils.getStudyUrl("studyCourseManagerEvaluation", { id: row.id, planId: row.planId }));
+  },
+  btnManagerUserClick: function (row) {
+    utils.openTopLeft(row.name + '-学员管理', utils.getStudyUrl("studyCourseManagerUser", { id: row.id, planId: row.planId }));
+  },
 };
 
 var $vue = new Vue({

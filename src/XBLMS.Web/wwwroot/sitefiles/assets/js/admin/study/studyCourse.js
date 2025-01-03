@@ -13,7 +13,7 @@ var data = utils.init({
     treeIsChildren: true,
     treeId: 0,
     keyword: '',
-    type:'',
+    type: '',
     pageIndex: 1,
     pageSize: PER_PAGE
   },
@@ -70,15 +70,20 @@ var methods = {
     this.formInline.pageIndex = 1;
     this.apiGet();
   },
-  btnDeleteClick: function (id) {
+  btnDeleteClick: function (row) {
     var $this = this;
-    top.utils.alertDelete({
-      title: '删除课程',
-      text: '确认删除吗？',
-      callback: function () {
-        $this.apiDelete(id);
-      }
-    });
+    if (row.useCount > 0) {
+      utils.error("不能删除被使用的课程");
+    }
+    else {
+      top.utils.alertDelete({
+        title: '删除课程',
+        text: '确定删除吗？',
+        callback: function () {
+          $this.apiDelete(row.id);
+        }
+      });
+    }
   },
   apiDelete: function (id) {
     var $this = this;
@@ -219,7 +224,7 @@ var methods = {
   },
   btnCopyClick: function (course) {
     var $this = this;
-   
+
     var layerWidth = "68%";
 
     var url = utils.getStudyUrl('studyCourseFaceEdit', { id: course.id, copyId: course.id, face: true });
@@ -248,6 +253,21 @@ var methods = {
       width: "99%",
       height: "99%"
     });
+  },
+  btnCourseManagerAnalysisClick: function (row) {
+    utils.openTopLeft(row.name + '-综合统计', utils.getStudyUrl("studyCourseManagerAnalysis", { id: row.id }));
+  },
+  btnManagerScoreClick: function (row) {
+    utils.openTopLeft(row.name + '-考试成绩', utils.getExamUrl("examPaperManagerScore", { id: row.examId, courseId: row.id }));
+  },
+  btnManagerQClick: function (row) {
+    utils.openTopLeft(row.name + '-调查结果', utils.getExamUrl("examQuestionnaireAnalysis", { id: row.examQuestionnaireId, courseId: row.id }));
+  },
+  btnManagerEvaluationClick: function (row) {
+    utils.openTopLeft(row.name + '-课程评价', utils.getStudyUrl("studyCourseManagerEvaluation", { id: row.id }));
+  },
+  btnManagerUserClick: function (row) {
+    utils.openTopLeft(row.name + '-学习情况', utils.getStudyUrl("studyCourseManagerUser", { id: row.id }));
   },
 
   //tree
@@ -288,7 +308,7 @@ var methods = {
   },
   treeBtnDeleteClick: function (node, data) {
     if (data.total > 0 || data.selfTotal > 0) {
-      utils.error("该分类下有课程数据，请勿删除");
+      utils.error("不能删除包含课程的分类");
     }
     else {
       var $this = this;

@@ -19,5 +19,9 @@ namespace XBLMS.Repositories
         Task<List<StudyPlanCourse>> GetListAsync(int planId);
         Task<int> CountAsync(int planId, bool isSelect);
         Task<decimal> GetTotalCreditAsync(int planId, bool isSelect);
+        Task<int> GetPaperUseCount(int paperId);
+        Task<int> GetPaperQUseCount(int paperId);
+        Task<int> GetEvaluationUseCount(int eId);
+        Task<int> GetCourseUseCount(int courseId);
     }
 }

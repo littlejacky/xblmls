@@ -103,6 +103,7 @@ namespace XBLMS.Web.Controllers.Admin.Study
         }
         public class GetCourseResult
         {
+            public string PlanName { get; set; }
             public List<StudyPlanCourse> List { get; set; }
         }
 

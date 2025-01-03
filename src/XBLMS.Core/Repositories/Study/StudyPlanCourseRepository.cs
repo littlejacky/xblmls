@@ -98,7 +98,22 @@ namespace XBLMS.Core.Repositories
             query.OrderByDesc(nameof(StudyPlanCourse.IsSelectCourse), nameof(StudyPlanCourse.Taxis));
             return await _repository.GetAllAsync(query);
         }
-
+        public async Task<int> GetPaperUseCount(int paperId)
+        {
+            return await _repository.CountAsync(Q.Where(nameof(StudyPlanCourse.ExamId), paperId));
+        }
+        public async Task<int> GetPaperQUseCount(int paperId)
+        {
+            return await _repository.CountAsync(Q.Where(nameof(StudyPlanCourse.ExamQuestionnaireId), paperId));
+        }
+        public async Task<int> GetEvaluationUseCount(int eId)
+        {
+            return await _repository.CountAsync(Q.Where(nameof(StudyPlanCourse.StudyCourseEvaluationId), eId));
+        }
+        public async Task<int> GetCourseUseCount(int courseId)
+        {
+            return await _repository.CountAsync(Q.Where(nameof(StudyPlanCourse.CourseId), courseId));
+        }
         public async Task<int> CountAsync(int planId, bool isSelect)
         {
             var query = Q.Where(nameof(StudyPlanCourse.PlanId), planId);

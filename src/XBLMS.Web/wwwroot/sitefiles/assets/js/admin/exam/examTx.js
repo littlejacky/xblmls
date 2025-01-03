@@ -29,7 +29,7 @@ var methods = {
     utils.loading(this, true);
     $api.post($url+'/del', { id: id }).then(function (response) {
       var res = response.data;
-      utils.success('题型删除成功！');
+      utils.success('操作成功！');
     }).catch(function (error) {
       utils.loading($this, false);
       utils.error(error);

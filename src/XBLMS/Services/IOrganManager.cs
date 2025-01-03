@@ -7,6 +7,7 @@ namespace XBLMS.Services
 {
     public interface IOrganManager
     {
+        Task<int> GetGroupCount(int groupId);
         Task<string> GetAdministratorOrganGuId(Administrator administrator);
         Task<Administrator> GetAdministrator(int adminId);
         Task<User> GetUser(int userId);

@@ -30,11 +30,12 @@ namespace XBLMS.Core.Repositories
                 .Where(nameof(AdministratorsInRoles.AdminId), adminId));
             return roleIds;
         }
-
-        public async Task<IList<string>> GetUsersInRoleAsync(string roleName)
+        public async Task<List<int>> GetUserIdsInRoleAsync(int roleId)
         {
-            var userNames = await _repository.GetAllAsync<string>();
-            return userNames;
+            var userIds = await _repository.GetAllAsync<int>(Q
+                .Select(nameof(AdministratorsInRoles.AdminId))
+                .Where(nameof(AdministratorsInRoles.RoleId), roleId));
+            return userIds;
         }
 
         public async Task DeleteUserAsync(int adminId)

@@ -29,7 +29,13 @@ var data = utils.init({
   contextLeft: 0,
   contextTop: 0,
 
-  isSafeMode:false
+  topFrameDrawer: false,
+  topFrameTitle: null,
+  topFrameSrc: '',
+  topFrameWidth: 88,
+
+  isSafeMode: false,
+  version:null
 });
 
 var methods = {
@@ -52,6 +58,7 @@ var methods = {
           $this.isSafeMode = res.isSafeMode;
           $this.local = res.local;
           $this.menus = res.menus;
+          $this.version = res.version;
           $this.getLevelMenus($this.menus);
 
           var home = $this.menus[0];
@@ -214,7 +221,7 @@ var methods = {
   btnSideMenuClick: function (sideMenuIds) {
 
 
-    if (this.tabs.length > 5) {
+    if (this.tabs.length > 4) {
       var newTbas = [];
       for (var ti = 0; ti < this.tabs.length; ti++) {
         if (ti != 1) {

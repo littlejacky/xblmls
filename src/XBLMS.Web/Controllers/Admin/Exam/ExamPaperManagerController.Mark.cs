@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using XBLMS.Core.Utils;
 using XBLMS.Dto;
@@ -10,6 +11,8 @@ namespace XBLMS.Web.Controllers.Admin.Exam
         [HttpGet, Route(RouteMark)]
         public async Task<ActionResult<GetScoreResult>> GetMarkList([FromQuery] GetSocreRequest request)
         {
+            var auth = await _authManager.GetAuthorityAuth();
+
             var (total, list) = await _examPaperStartRepository.GetListByAdminAsync(request.Id, request.DateFrom, request.DateTo, request.Keywords, request.PageIndex, request.PageSize, false);
             if (total > 0)
             {
@@ -29,8 +32,25 @@ namespace XBLMS.Web.Controllers.Admin.Exam
 
                 }
             }
+
+            var markers = new List<GetSelectMarkInfo>();
+            var adminList = await _administratorRepository.GetListAsync(auth);
+            if (adminList != null && adminList.Count > 0)
+            {
+                foreach (var admin in adminList)
+                {
+                    markers.Add(new GetSelectMarkInfo
+                    {
+                        Id = admin.Id,
+                        DisplayName = admin.DisplayName,
+                        UserName = admin.UserName
+                    });
+                }
+            }
+
             return new GetScoreResult
             {
+                MarkerList = markers,
                 Total = total,
                 List = list
             };

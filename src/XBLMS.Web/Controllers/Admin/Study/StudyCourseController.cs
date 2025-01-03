@@ -24,18 +24,21 @@ namespace XBLMS.Web.Controllers.Admin.Study
         private readonly IStudyCourseRepository _studyCourseRepository;
         private readonly IStudyCourseUserRepository _studyCourseUserRepository;
         private readonly IStudyCourseWareRepository _studyCourseWareRepository;
+        private readonly IStudyPlanCourseRepository _studyPlanCourseRepository;
 
         public StudyCourseController(IAuthManager authManager,
             IStudyManager studyManager,
             IStudyCourseRepository studyCourseRepository,
             IStudyCourseWareRepository studyCourseWareRepository,
-            IStudyCourseUserRepository studyCourseUserRepository)
+            IStudyCourseUserRepository studyCourseUserRepository,
+            IStudyPlanCourseRepository studyPlanCourseRepository)
         {
             _authManager = authManager;
             _studyManager = studyManager;
             _studyCourseRepository = studyCourseRepository;
             _studyCourseWareRepository = studyCourseWareRepository;
             _studyCourseUserRepository = studyCourseUserRepository;
+            _studyPlanCourseRepository = studyPlanCourseRepository;
         }
         public class GetLockedRequest
         {

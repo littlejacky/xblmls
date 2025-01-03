@@ -15,6 +15,7 @@ var data = utils.init({
     captchaValue: null,
   },
   homeTitle: DOCUMENTTITLE_HOME,
+  version:null,
   returnUrl: utils.getQueryString('returnUrl')
 });
 
@@ -33,6 +34,7 @@ var methods = {
     $api.get($url).then(function (response) {
       var res = response.data;
 
+      $this.version = res.version;
       $this.isUserCaptchaDisabled = res.isUserCaptchaDisabled;
       if ($this.isUserCaptchaDisabled) {
         $this.btnTypeClick();

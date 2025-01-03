@@ -94,22 +94,10 @@ var methods = {
       utils.openUserView(log.objectId);
     }
     else if (log.isPlan) {
-      top.utils.openLayer({
-        title: false,
-        closebtn: 0,
-        url: utils.getStudyUrl('studyPlanManager', { id: log.objectId }),
-        width: "99%",
-        height: "99%"
-      });
+      utils.openTopLeft(log.objectName, utils.getStudyUrl("studyPlanManagerAnalysis", { id: log.objectId }));
     }
     else if (log.isCourse) {
-      top.utils.openLayer({
-        title: false,
-        closebtn: 0,
-        url: utils.getStudyUrl('studyCourseManager', { id: log.objectId }),
-        width: "99%",
-        height: "99%"
-      });
+      utils.openTopLeft(log.objectName, utils.getStudyUrl("studyCourseManagerAnalysis", { id: log.objectId }));
     }
     else if (log.isFile) {
       top.utils.openLayer({
@@ -139,22 +127,10 @@ var methods = {
       });
     }
     else if (log.isExam) {
-      top.utils.openLayer({
-        title: false,
-        closebtn: 0,
-        url: utils.getExamUrl('examPaperManager', { id: log.objectId }),
-        width: "98%",
-        height: "98%"
-      });
+      utils.openTopLeft(log.objectName + '-预览', utils.getCommonUrl("examPaperLayerView", { id: log.objectId }));
     }
     else if (log.isExamQ) {
-      top.utils.openLayer({
-        title: false,
-        closebtn: 0,
-        url: utils.getExamUrl('examQuestionnaireAnalysis', { id: log.objectId }),
-        width: "98%",
-        height: "98%"
-      });
+      utils.openTopLeft(log.objectName + '-结果统计', utils.getExamUrl("examQuestionnaireAnalysis", { id: log.objectId }));
     }
     else if (log.isExamCer) {
       top.utils.openLayer({

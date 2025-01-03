@@ -156,7 +156,7 @@ var methods = {
     $api.post($urlDelete, { id: id }).then(function (response) {
       var res = response.data;
       if (res.value) {
-        utils.success('题目删除成功！');
+        utils.success('操作成功！');
       }
     }).catch(function (error) {
       utils.error(error);
@@ -195,7 +195,7 @@ var methods = {
     $api.post($urlDeleteSearch, { ids: ids }).then(function (response) {
       var res = response.data;
       if (res.value) {
-        utils.success('删除成功！');
+        utils.success('操作成功！');
       }
     }).catch(function (error) {
       utils.error(error);
@@ -248,7 +248,7 @@ var methods = {
   },
   treeBtnDeleteClick: function (node, data) {
     if (data.total > 0 || data.selfTotal > 0) {
-      utils.error("该分类下有题目数据，请勿删除");
+      utils.error("不能删除包含题目的分类");
     }
     else {
       var $this = this;
@@ -273,7 +273,7 @@ var methods = {
         const children = parent.data.children || parent.data;
         const index = children.findIndex(d => d.id === data.id);
         children.splice(index, 1);
-        utils.success('删除成功');
+        utils.success('操作成功');
       }
     }).catch(function (error) {
       utils.error(error);
@@ -290,7 +290,7 @@ var methods = {
     $api.post($treeUrlAdd, this.treeAddForm).then(function (response) {
       var res = response.data;
       if (res.value) {
-        utils.success("分类添加成功")
+        utils.success("操作成功")
       }
     }).catch(function (error) {
       utils.error(error);
@@ -318,7 +318,7 @@ var methods = {
     $api.post($treeUrlUpdate, { item: this.treeUpdateForm }).then(function (response) {
       var res = response.data;
       if (res.value) {
-        utils.success("分类修改成功")
+        utils.success("操作成功")
       }
     }).catch(function (error) {
       utils.error(error);

@@ -40,7 +40,7 @@
     </div>
 </div>
 <div class="px-8">
-    <el-card class="rounded-3">
+    <div>
         <el-row :gutter="8">
             <el-col :span="18">
                 <el-card v-if="tm" class="fs-4">
@@ -48,7 +48,7 @@
                         <div>第<span class="px-1">{{ tm.tmIndex }}</span>题（<span>{{ tm.txName }}</span>）</div>
                         <div><span>{{ tm.answerInfo.score }}/<span class="fs-6">{{ tm.score }}分</span></span></div>
                     </div>
-                    <el-scrollbar class="scrollbar" :style="{ height: ($(window).innerHeight()-355) + 'px' }" ref="answerScrollbar">
+                    <el-scrollbar class="scrollbar" :style="{ height: ($(window).innerHeight()-320) + 'px' }" ref="answerScrollbar">
                         <div class="pe-3">
                             <div>
                                 <div class="mb-3 fw-bold">
@@ -117,7 +117,7 @@
                     </div>
                 </el-card>
                 <el-card v-else>
-                    <div :style="{ height: ($(window).innerHeight()-245) + 'px' }">
+                    <div :style="{ height: ($(window).innerHeight()-212) + 'px' }">
                         <el-skeleton :rows="6" animated>
                             <el-skeleton-item variant="h3" style="width: 50%;" />
                             <el-skeleton-item variant="h3" style="width: 50%;" />
@@ -141,7 +141,7 @@
                         </div>
                     </div>
                     <div>
-                        <el-scrollbar class="scrollbar" :style="{ height: ($(window).innerHeight()-300) + 'px' }">
+                        <el-scrollbar class="scrollbar" :style="{ height: ($(window).innerHeight()-265) + 'px' }">
                             <ul class="list-group mb-1" v-for="(tx,txIndex) in list">
                                 <li class="list-group-item border-0 p-1 fw-light">{{tx.txName}}</li>
                                 <li class="list-group-item border-0 p-1">
@@ -160,7 +160,7 @@
                 </el-card>
             </el-col>
         </el-row>
-    </el-card>
+    </div>
 </div>
 <div class="d-flex justify-content-between align-items-center px-8 py-3">
     <div>

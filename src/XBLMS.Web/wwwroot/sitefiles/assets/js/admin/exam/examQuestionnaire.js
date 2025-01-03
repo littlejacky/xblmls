@@ -40,15 +40,21 @@ var methods = {
     this.formInline.pageIndex = 1;
     this.apiGet();
   },
-  btnDeleteClick: function (id) {
+  btnDeleteClick: function (row) {
     var $this = this;
-    top.utils.alertDelete({
-      title: '删除调查问卷',
-      text: '确定删除吗？',
-      callback: function () {
-        $this.apiDelete(id);
-      }
-    });
+    if (row.useCount > 0) {
+      utils.error("不能删除被使用的问卷");
+    }
+    else {
+      top.utils.alertDelete({
+        title: '删除调查问卷',
+        text: '确定删除吗？',
+        callback: function () {
+          $this.apiDelete(row.id);
+        }
+      });
+    }
+
   },
   apiDelete: function (id) {
     var $this = this;
@@ -56,7 +62,7 @@ var methods = {
     $api.post($urlDelete, { id: id }).then(function (response) {
       var res = response.data;
       if (res.value) {
-        utils.success("成功删除调查问卷")
+        utils.success("操作成功")
       }
     }).catch(function (error) {
       utils.error(error);
@@ -91,7 +97,7 @@ var methods = {
     $api.post($urlLock, { id: id }).then(function (response) {
       var res = response.data;
       if (res.value) {
-        utils.success("成功锁定调查问卷")
+        utils.success("操作成功")
       }
     }).catch(function (error) {
       utils.error(error);
@@ -106,7 +112,7 @@ var methods = {
     $api.post($urlUnLock, { id: id }).then(function (response) {
       var res = response.data;
       if (res.value) {
-        utils.success("成功解锁调查问卷")
+        utils.success("操作成功")
       }
     }).catch(function (error) {
       utils.error(error);
@@ -120,12 +126,7 @@ var methods = {
     utils.loading(this, true);
     $api.post($urlLock, { id: row.id, locked: row.isStop }).then(function (response) {
       var res = response.data;
-      if (row.isStop) {
-        utils.success("已停用");
-      }
-      else {
-        utils.success("已启用");
-      }
+      utils.success("操作成功")
     }).catch(function (error) {
       utils.error(error);
     }).then(function () {
@@ -133,26 +134,11 @@ var methods = {
     });
   },
   btnViewClick: function (row) {
-    var $this = this;
-    top.utils.openLayer({
-      title: false,
-      closebtn: 0,
-      url: utils.getExamUrl('examQuestionnaireAnalysis', { id: row.id }),
-      width: "98%",
-      height: "98%"
-    });
-
+    utils.openTopLeft(row.title + '-结果统计', utils.getExamUrl("examQuestionnaireAnalysis", { id: row.id }));
   },
 
   btnViewUserClick: function (row) {
-    var $this = this;
-    top.utils.openLayer({
-      title: row.title + '-用户列表',
-      url: utils.getExamUrl('examQuestionnaireUsers', { id: row.id }),
-      width: "88%",
-      height: "98%"
-    });
-
+    utils.openTopLeft(row.title + '-用户列表', utils.getExamUrl("examQuestionnaireUsers", { id: row.id }));
   },
   btnEditClick: function (id) {
 

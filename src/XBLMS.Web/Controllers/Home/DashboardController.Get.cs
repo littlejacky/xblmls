@@ -208,6 +208,7 @@ namespace XBLMS.Web.Controllers.Home
                 PlanOverCount = planOverCount,
 
                 DateStr = dateStr,
+                Version = _settingsManager.Version,
             };
         }
     }

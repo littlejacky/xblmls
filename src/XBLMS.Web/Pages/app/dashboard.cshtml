@@ -14,14 +14,14 @@
         }
     </style>
 }
-<div class="bg-gradient-mix-shade py-8 px-3 text-white text-center rounded-0">
-    <div class="pb-1"><span class="fs-6"><i class="bi bi-calendar-event me-2"></i>{{ dateStr }}</span></div>
+<div class="bg-cover py-8 text-white text-center rounded-0" :style="{'background-image':'url('+(user.avatarbgUrl || DEFAULT_AVATAR_BG_URL)+')'}">
+    <div class="py-3"><span class="fs-6"><i class="bi bi-calendar-event me-2"></i>{{ dateStr }}</span></div>
 </div>
 <div class="p-3 animate__animated animate__zoomIn">
     <div class="mt-n8">
         <div class="bg-white p-2 rounded-pill d-flex justify-content-between align-items-center smooth-shadow-lg">
             <span class="d-flex justify-content-start align-items-center">
-                <i class="bi bi-person-fill me-2 fs-1 ms-4"></i><span>欢迎：{{ user.displayName }}</span>
+                <i class="bi bi-person-fill me-2 fs-2 ms-4"></i><span>欢迎：{{ user.displayName }}</span>
             </span>
             <img :src="user.avatarUrl || DEFAULT_AVATAR_URL" class="img-fluid avatar-xl rounded-circle bg-light p-1">
         </div>
@@ -92,22 +92,24 @@
             </div>
         </div>
     </div>
-    <div class="card rounded-4 mb-3 shadow-lg" v-on:click="top.$vue.btnAppMenuClick('studyPlan')">
-        <div class="card-body">
-            <h5 class="card-title d-flex justify-content-between align-items-center">
-                <span><img class="me-2" src="/sitefiles//assets/images/ing.gif" />任务进度</span>
-                <span><span class="fs-4 text-success">{{ planOverCount }}</span>/<span class="fs-6">{{ planCount }}</span></span>
-            </h5>
-            <div class="progress w-100" role="progressbar">
-                <div class="progress-bar progress-bar-striped progress-bar-animated bg-success text-end" :style="{width:(utils.formatPercentFloat(planOverCount,planCount))+'%'}">{{ utils.formatPercentFloat(planOverCount,planCount) }}%</div>
-            </div>
+ </div>
+<div class="card rounded-0 mb-3 shadow-lg" v-on:click="top.$vue.btnAppMenuClick('studyPlan')">
+    <div class="card-body">
+        <h5 class="card-title d-flex justify-content-between align-items-center">
+            <span><img class="me-2" src="/sitefiles//assets/images/ing.gif" />任务进度</span>
+            <span><span class="fs-4 text-success">{{ planOverCount }}</span>/<span class="fs-6">{{ planCount }}</span></span>
+        </h5>
+        <div class="progress w-100" role="progressbar">
+            <div class="progress-bar progress-bar-striped progress-bar-animated bg-success text-end" :style="{width:(utils.formatPercentFloat(planOverCount,planCount))+'%'}">{{ utils.formatPercentFloat(planOverCount,planCount) }}%</div>
         </div>
     </div>
-    <div class="card rounded-4 mb-3 shadow-lg" v-on:click="top.$vue.btnAppMenuClick('exam')">
-        <div class="card-body text-center">
+</div>
+ <div class="p-3">
+    <div class="mb-3" v-on:click="top.$vue.btnAppMenuClick('exam')">
+        <div class="text-center">
             <div class="mb-2">
                 <i class="bi bi-journal-medical fs-4 me-2 text-warning"></i>
-                累计考试<span class="text-primary fw-bold mx-2 fs-3">{{ examTotal }}</span>场
+                累计考试<span class="text-primary fw-bold mx-2">{{ examTotal }}</span>场
             </div>
             <div class="mt-3">
                 <apexchart type="radialBar" :options="passChartOptions" :series="passSeries"></apexchart>
@@ -435,8 +437,11 @@
             </div>
         </div>
     </div>
-    <div class="my-8 text-center">
-        <small>没有了</small>
+</div>
+<div class="my-8 text-center">
+    <img :src="DEFAULT_LOGO_URL" height="38" class="mb-3" />
+    <div class="text-center">
+        <small>© {{ DOCUMENTTITLE }} <span class="text-warning">v{{ version }}</span></small>
     </div>
 </div>
 <div class="py-8"></div>
@@ -478,9 +483,9 @@
                         </li>
                     </ul>
                 </div>
-                <div class="pb-5 text-center">
-                    <button type="button" class="btn btn-primary rounded-pill" v-on:click="taskDialogVisible=false"><i class="el-icon-close me-2"></i>取 消</button>
-                </div>
+            </div>
+            <div class="py-5 text-center">
+                <button type="button" class="btn btn-primary" v-on:click="taskDialogVisible=false"><i class="el-icon-close me-2"></i>关 闭</button>
             </div>
         </div>
     </el-drawer>

@@ -15,7 +15,8 @@ var data = utils.init({
     captchaValue: null,
   },
   homeTitle: DOCUMENTTITLE_HOME,
-  returnUrl: utils.getQueryString('returnUrl')
+  returnUrl: utils.getQueryString('returnUrl'),
+  version: null
 });
 
 var methods = {
@@ -33,6 +34,7 @@ var methods = {
     $api.get($url).then(function (response) {
       var res = response.data;
 
+      $this.version = res.version;
       $this.isUserCaptchaDisabled = res.isUserCaptchaDisabled;
       if ($this.isUserCaptchaDisabled) {
         $this.btnTypeClick();
@@ -125,7 +127,7 @@ var $vue = new Vue({
   data: data,
   methods: methods,
   created: function () {
-    document.title = DOCUMENTTITLE_HOME + '-登录';
+    document.title = DOCUMENTTITLECN;
     this.apiGet();
   }
 });

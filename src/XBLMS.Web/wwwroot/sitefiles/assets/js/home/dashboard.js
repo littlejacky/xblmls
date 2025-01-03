@@ -99,7 +99,10 @@ var data = utils.init({
   totalOverCourse: 0,
   totalDuration: 0,
 
-  topCer:null
+  topCer: null,
+
+  version:null,
+  dateStr:null
 });
 
 var methods = {
@@ -145,6 +148,9 @@ var methods = {
       $this.totalDuration = res.totalDuration;
 
       $this.topCer = res.topCer;
+
+      $this.dateStr = res.dateStr;
+      $this.version = res.version;
       setTimeout(function () {
         $this.passSeries = [100];
       }, 1000);

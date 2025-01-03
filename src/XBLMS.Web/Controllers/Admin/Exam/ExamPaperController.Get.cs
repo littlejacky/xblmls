@@ -36,6 +36,9 @@ namespace XBLMS.Web.Controllers.Admin.Exam
                 {
                     var markCount = await _examPaperStartRepository.CountByMarkAsync(item.Id);
                     item.Set("MarkCount", markCount);
+
+                    var useCount = await _studyCourseRepository.GetPaperUseCount(item.Id) + await _studyPlanCourseRepository.GetPaperUseCount(item.Id);
+                    item.Set("UseCount", useCount);
                 }
             }
             return new GetResult

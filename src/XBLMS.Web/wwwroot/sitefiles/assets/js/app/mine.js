@@ -4,7 +4,8 @@ var $url = '/index';
 var data = utils.init({
   user: null,
   appMenuActive: "mine",
-  courseList:null
+  courseList: null,
+  version:null
 });
 
 var methods = {
@@ -13,6 +14,8 @@ var methods = {
 
     $api.get($url).then(function (response) {
       var res = response.data;
+
+      $this.version = res.version;
       $this.courseList = res.courseList;
       if (res.user) {
         $this.user = res.user;
@@ -24,7 +27,7 @@ var methods = {
     });
   },
   setDocumentTitel: function () {
-    top.document.title = "用户中心";
+    top.document.title = "我的";
   },
 
   btnViewCourseClick: function (row) {

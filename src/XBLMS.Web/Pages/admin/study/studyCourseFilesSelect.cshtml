@@ -42,11 +42,11 @@
                     <el-breadcrumb-item v-for="path in paths" :to="{  }" v-on:click.native="breadcrumbPath(path.id)">{{path.name}}</el-breadcrumb-item>
                 </el-breadcrumb>
             </template>
+            <el-table-column type="index" label="#" align="left"
+                             width="60">
+            </el-table-column>
             <el-table-column type="selection" :selectable="fileTableBySelectable"
                              width="40">
-            </el-table-column>
-            <el-table-column type="index" label="#"
-                             width="60">
             </el-table-column>
             <el-table-column label="文件夹/文件" sortable sort-by="title">
                 <template slot-scope="scope">

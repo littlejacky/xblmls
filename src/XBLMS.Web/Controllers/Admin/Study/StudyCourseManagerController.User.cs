@@ -99,6 +99,7 @@ namespace XBLMS.Web.Controllers.Admin.Study
 
             return new GetUserResult
             {
+                Course = course,
                 List = list,
                 Total = total,
             };

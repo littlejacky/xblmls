@@ -17,7 +17,14 @@ namespace XBLMS.Web.Controllers.Admin.Study
             var auth = await _authManager.GetAuthorityAuth();
 
             var (total, list) = await _studyCourseRepository.GetListAsync(auth, request.Keyword, request.Type, request.TreeId, request.TreeIsChildren, request.PageIndex, request.PageSize);
-
+            if (total > 0)
+            {
+                foreach (var item in list)
+                {
+                    var useCount = await _studyPlanCourseRepository.GetCourseUseCount(item.Id);
+                    item.Set("UseCount", useCount);
+                }
+            }
             return new GetResult
             {
                 Total = total,

@@ -39,15 +39,20 @@ var methods = {
     this.formInline.pageIndex = 1;
     this.apiGet();
   },
-  btnDeleteClick: function (id) {
+  btnDeleteClick: function (row) {
     var $this = this;
-    top.utils.alertDelete({
-      title: '删除课程评价',
-      text: '确定删除吗？',
-      callback: function () {
-        $this.apiDelete(id);
-      }
-    });
+    if (row.useCount > 0) {
+      utils.error("不能删除被使用的问卷");
+    }
+    else {
+      top.utils.alertDelete({
+        title: '删除课程评价',
+        text: '确定删除吗？',
+        callback: function () {
+          $this.apiDelete(row.id);
+        }
+      });
+    }
   },
   apiDelete: function (id) {
     var $this = this;

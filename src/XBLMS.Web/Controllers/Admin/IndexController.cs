@@ -62,6 +62,7 @@ namespace XBLMS.Web.Controllers.Admin
             public IList<Menu> Menus { get; set; }
             public Local Local { get; set; }
             public bool IsEnforcePasswordChange { get; set; }
+            public string Version { get; set; }
         }
 
         public class SetLanguageRequest

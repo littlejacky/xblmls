@@ -3,7 +3,7 @@
 
 <el-card>
     <el-form :inline="true" :size="euiSize">
-        <el-form-item label="">
+        <el-form-item label="问卷">
             <el-input v-model="formInline.keyword" placeholder="关键字" prefix-icon="el-icon-search" clearable></el-input>
         </el-form-item>
         <el-form-item>
@@ -14,7 +14,7 @@
         </el-form-item>
     </el-form>
     <el-table ref="paperTable" :data="paperList" :size="euiSize"
-              style="width: 100%" :height="$(window).height()-160">
+              style="width: 100%" :height="$(window).height()-152">
         <el-table-column label="#"
                          type="index"
                          width="60"
@@ -39,6 +39,8 @@
                 <span v-else><el-tag size="mini" type="primary" effect="dark">内 部</el-tag></span>
             </template>
         </el-table-column>
+        <el-table-column prop="useCount" label="被使用" width="80">
+        </el-table-column>
         <el-table-column label="状态" width="85">
             <template slot-scope="scope">
                 <span v-if="scope.row.locked"><el-tag size="mini" type="danger" effect="dark">已停用</el-tag></span>
@@ -62,7 +64,7 @@
                         <el-dropdown-item icon="el-icon-picture-outline" v-on:click.native="btnQrcodeClick(scope.row.id)" v-if="scope.row.published">二维码</el-dropdown-item>
                         <el-dropdown-item icon="el-icon-view" v-on:click.native="btnViewClick(scope.row)" divided>预览统计</el-dropdown-item>
                         <el-dropdown-item icon="el-icon-user" v-on:click.native="btnViewUserClick(scope.row)" v-if="!scope.row.published">用户列表</el-dropdown-item>
-                        <el-dropdown-item icon="el-icon-delete" style="color:red;" v-on:click.native="btnDeleteClick(scope.row.id)" divided>删除</el-dropdown-item>
+                        <el-dropdown-item icon="el-icon-delete" style="color:red;" v-on:click.native="btnDeleteClick(scope.row)" divided>删除</el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>
             </template>

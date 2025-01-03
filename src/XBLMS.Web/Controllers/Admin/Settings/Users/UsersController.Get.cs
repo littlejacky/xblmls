@@ -39,7 +39,12 @@ namespace XBLMS.Web.Controllers.Admin.Settings.Users
 
             var count = await _userRepository.Group_CountAsync(auth, group, organIds, request.OrganType, request.LastActivityDate, request.Keyword);
             var users = await _userRepository.Group_UsersAsync(auth, group, organIds, request.OrganType, request.LastActivityDate, request.Keyword, request.Order, request.Offset, request.Limit);
-
+            if (count > 0)
+            {
+                foreach (var user in users) {
+                    await _organManager.GetUser(user);
+                }
+            }
             return new GetResults
             {
                 Users = users,

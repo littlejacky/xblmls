@@ -17,5 +17,6 @@ namespace XBLMS.Repositories
         Task<int> MaxAsync();
         Task<List<int>> GetYearListAsync();
         Task<(int allCount, int addCount, int deleteCount, int lockedCount, int unLockedCount)> GetDataCount(AuthorityAuth auth);
+        Task<int> GetGroupCount(int groupId);
     }
 }

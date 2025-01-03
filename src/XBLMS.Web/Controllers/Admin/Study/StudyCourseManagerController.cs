@@ -139,6 +139,7 @@ namespace XBLMS.Web.Controllers.Admin.Study
         {
             public int Total { get; set; }
             public List<StudyCourseUser> List { get; set; }
+            public StudyCourse Course { get; set; }
         }
         public class GetExamqRequest
         {

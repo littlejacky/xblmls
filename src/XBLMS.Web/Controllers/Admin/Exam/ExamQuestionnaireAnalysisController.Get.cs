@@ -10,7 +10,7 @@ namespace XBLMS.Web.Controllers.Admin.Exam
     public partial class ExamQuestionnaireAnalysisController
     {
         [HttpGet, Route(Route)]
-        public async Task<ActionResult<GetResult>> Get([FromQuery] IdRequest request)
+        public async Task<ActionResult<GetResult>> Get([FromQuery] GetRequest request)
         {
             var paper = await _questionnaireRepository.GetAsync(request.Id);
             var tmList = await _questionnaireTmRepository.GetListAsync(paper.Id);
@@ -25,7 +25,7 @@ namespace XBLMS.Web.Controllers.Admin.Exam
                     var optionAnswer = new List<string>();
                     if (tm.Tx == ExamQuestionnaireTxType.Jiandati)
                     {
-                        var answerList = await _questionnaireAnswerRepository.GetListAnswer(paper.Id, tm.Id);
+                        var answerList = await _questionnaireAnswerRepository.GetListAnswer(request.PlanId, request.CourseId, paper.Id, tm.Id);
                         if (answerList != null && answerList.Count > 0)
                         {
                             optionAnswer.AddRange(answerList);
@@ -45,7 +45,7 @@ namespace XBLMS.Web.Controllers.Admin.Exam
                                 var abcList = StringUtils.GetABC();
                                 var optionAnswerValue = abcList[i];
                                 optionsValues.Add(optionAnswerValue);
-                                var answerCount = await _questionnaireAnswerRepository.GetCountSubmitUser(paper.Id, tm.Id, optionAnswerValue);
+                                var answerCount = await _questionnaireAnswerRepository.GetCountSubmitUser(request.PlanId, request.CourseId, paper.Id, tm.Id, optionAnswerValue);
                                 optionsAnswers[i] = answerCount;
                                 tmAnswerToTal += answerCount;
                             }

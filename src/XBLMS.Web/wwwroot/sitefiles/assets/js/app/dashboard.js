@@ -111,8 +111,8 @@ var data = utils.init({
   planCount: 0,
   planOverCount:0,
 
-  appMenuActive:"index"
-
+  appMenuActive:"index",
+  version:null
 });
 
 var methods = {
@@ -169,6 +169,8 @@ var methods = {
 
       $this.planCount = 100;
       $this.planOverCount = 100;
+
+      $this.version = res.version;
 
       setTimeout(function () {
         $this.passSeries = [100];

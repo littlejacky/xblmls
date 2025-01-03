@@ -54,6 +54,7 @@ namespace XBLMS.Web.Controllers.Admin.Study
             }
             return new GetCourseResult
             {
+                PlanName = plan.PlanName,
                 List = resultList,
             };
         }
@@ -116,7 +117,7 @@ namespace XBLMS.Web.Controllers.Admin.Study
 
                     item.Set("Star", TranslateUtils.ToAvg(starTotal, starUser));
 
-                    var rowsValues = new List<string>() { 
+                    var rowsValues = new List<string>() {
                             index.ToString(),
                             item.CourseName,
                             type,
@@ -144,7 +145,7 @@ namespace XBLMS.Web.Controllers.Admin.Study
                         index++;
                     }
 
-                    
+
                 }
             }
 

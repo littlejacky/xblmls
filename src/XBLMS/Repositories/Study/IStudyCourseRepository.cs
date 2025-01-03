@@ -19,6 +19,9 @@ namespace XBLMS.Repositories
         Task<int> MaxAsync();
         Task<(int total, int count)> CountAsync(int treeId);
         Task<List<string>> GetMarkListAsync();
+        Task<int> GetPaperUseCount(int paperId);
+        Task<int> GetPaperQUseCount(int paperId);
+        Task<int> GetEvaluationUseCount(int eId);
         Task<(int allCount, int addCount, int deleteCount, int lockedCount, int unLockedCount)> GetDataCount(AuthorityAuth auth);
     }
 }

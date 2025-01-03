@@ -27,7 +27,7 @@
         <div v-if="this.pageLoad" style="display: none" :style="{display: ''}">
             @RenderBody()
         </div>
-        <el-card v-else :style="{height: $(window).height()-25 + 'px'}" v-loading="true" element-loading-text="页面加载中"></el-card>
+        <el-card v-else :style="{height: $(window).height() + 'px'}" v-loading="true" element-loading-text="页面加载中"></el-card>
     </div>
 </body>
 
