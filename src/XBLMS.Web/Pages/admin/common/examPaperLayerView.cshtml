@@ -139,6 +139,12 @@
                 </el-option>
             </el-select>
             <div>
+                <el-button icon="el-icon-download" v-on:click="btnExportWordClick" class="w-100 py-5 mb-3">导出Word</el-button>
+            </div>
+            <div>
+                <el-button icon="el-icon-download" v-on:click="btnExportWordZipClick" class="w-100 py-5 mb-3" v-if="randomIds && randomIds.length>1">Word打包</el-button>
+            </div>
+            <div>
                 <el-button v-on:click="utils.closeTopLeft" icon="el-icon-close" class="w-100 py-5">退出预览</el-button>
             </div>
         </el-col>

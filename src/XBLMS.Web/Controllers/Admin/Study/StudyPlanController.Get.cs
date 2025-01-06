@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
-using Microsoft.IdentityModel.Tokens;
 using System.Threading.Tasks;
 using XBLMS.Core.Utils;
 using XBLMS.Utils;

@@ -1,4 +1,5 @@
 ﻿var $url = 'exam/examQuestionnaireAnalysis';
+var $urlExportWord = $url + '/exportWord';
 
 var data = utils.init({
   id: utils.getQueryInt('id'),
@@ -28,6 +29,23 @@ var methods = {
 
     }).catch(function (error) {
       utils.error(error, { layer:true });
+    }).then(function () {
+      utils.loading($this, false);
+    });
+  },
+  btnExportWordClick: function () {
+    var $this = this;
+    utils.loading(this, true);
+    $api.get($urlExportWord, {
+      params: {
+        id: this.id
+      }
+    }).then(function (response) {
+      var res = response.data;
+
+      window.open(res.value);
+    }).catch(function (error) {
+      utils.error(error, { layer: true });
     }).then(function () {
       utils.loading($this, false);
     });

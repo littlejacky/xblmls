@@ -6,6 +6,9 @@
 <div class="px-3">
     <div class="d-flex justify-content-between  align-items-center mb-3">
         <span>共：{{ paper.tmTotal }}项，调查人次：{{ paper.answerTotal }}</span>
+        <div>
+            <el-button :size="euiSize" icon="el-icon-download" v-on:click="btnExportWordClick" plain>导出 Word</el-button>
+        </div>
     </div>
     <el-row>
         <el-col>
