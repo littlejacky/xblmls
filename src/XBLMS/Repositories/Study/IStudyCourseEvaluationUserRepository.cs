@@ -7,6 +7,7 @@ namespace XBLMS.Repositories
 {
     public interface IStudyCourseEvaluationUserRepository : IRepository
     {
+        Task DeleteByUserId(int userId);
         Task<int> InsertAsync(StudyCourseEvaluationUser item);
         Task<StudyCourseEvaluationUser> GetAsync(int id);
         Task<StudyCourseEvaluationUser> GetAsync(int planId, int courseId, int evaluationId, int userId);

@@ -11,6 +11,7 @@ namespace XBLMS.Repositories
         Task<bool> ExistsAsync(int userID, int examPaperId, int planId, int courseId);
         Task<ExamCerUser> GetAsync(int id);
         Task<bool> DeleteAsync(int id);
+        Task<bool> ClearAsync(int userId);
         Task<ExamCerUser> GetAsync(int userId, int examPaperId);
         Task<List<ExamCerUser>> GetListAsync(int examPaperId);
         Task<List<ExamCerUser>> GetListAsync();

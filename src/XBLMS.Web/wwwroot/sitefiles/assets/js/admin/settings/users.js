@@ -1,6 +1,7 @@
 ﻿var $url = '/settings/users';
 var $urlOtherData = $url + '/actions/otherData';
 var $urlDelete = $url + '/actions/delete';
+var $urlDeletes = $url + '/actions/deletes';
 var $urlExport = $url + '/actions/export';
 var $urlUpload = $apiUrl + '/settings/users/actions/import';
 
@@ -27,7 +28,8 @@ var data = utils.init({
     label: 'name'
   },
   filterText: '',
-  curOrganId: ''
+  curOrganId: '',
+  multipleSelection: []
 });
 
 var methods = {
@@ -132,7 +134,7 @@ var methods = {
       id: item.id
     }).then(function (response) {
       var res = response.data;
-
+      utils.success("操作成功");
       $this.items.splice($this.items.indexOf(item), 1);
     }).catch(function (error) {
       utils.error(error);
@@ -152,7 +154,44 @@ var methods = {
       }
     });
   },
+  btnDeletesClick: function () {
+    var selectedUsers = this.multipleSelection;
+    var ids = [];
+    if (selectedUsers.length > 0) {
+      selectedUsers.forEach(user => {
+        ids.push(user.id);
+      })
 
+      var $this = this;
+
+      top.utils.alertDelete({
+        title: '删除用户',
+        text: '此操作将删除选中的用户及其关联的所有数据，确定吗？',
+        callback: function () {
+
+          utils.loading($this, true);
+          $api.post($urlDeletes, {
+            ids: ids
+          }).then(function (response) {
+            var res = response.data;
+            utils.success("操作成功");
+            $this.apiGet();
+
+          }).catch(function (error) {
+            utils.error(error);
+          }).then(function () {
+            utils.loading($this, false);
+          });
+        }
+      });
+    }
+    else {
+      utils.error("请选择需要删除的用户");
+    }
+  },
+  handleSelectionChange(val) {
+    this.multipleSelection = val;
+  },
   apiLock: function (item) {
     var $this = this;
 
@@ -161,7 +200,7 @@ var methods = {
       id: item.id
     }).then(function (response) {
       var res = response.data;
-
+      utils.success("操作成功");
       item.locked = true;
     }).catch(function (error) {
       utils.error(error);
@@ -191,7 +230,7 @@ var methods = {
       id: item.id
     }).then(function (response) {
       var res = response.data;
-
+      utils.success("操作成功");
       item.locked = false;
     }).catch(function (error) {
       utils.error(error);

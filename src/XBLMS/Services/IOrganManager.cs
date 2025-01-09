@@ -44,5 +44,6 @@ namespace XBLMS.Services
         Task<List<string>> GetDutyGuidsAsync(List<int> ids);
 
         Task DeleteCompany(int id);
+        Task DeleteUser(int userId);
     }
 }

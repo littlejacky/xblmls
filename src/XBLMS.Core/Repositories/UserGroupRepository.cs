@@ -7,6 +7,7 @@ using XBLMS.Enums;
 using XBLMS.Models;
 using XBLMS.Repositories;
 using XBLMS.Services;
+using XBLMS.Utils;
 
 namespace XBLMS.Core.Repositories
 {
@@ -44,7 +45,22 @@ namespace XBLMS.Core.Repositories
         {
             await _repository.DeleteAsync(groupId);
         }
+        public async Task DeleteByUserId(int userId)
+        {
+            var allGroup = await GetListAsync();
+            foreach (var group in allGroup)
+            {
+                if (group.GroupType == UsersGroupType.Fixed)
+                {
+                    if (ListUtils.Contains(group.UserIds, userId))
+                    {
+                        ListUtils.Remove(group.UserIds, userId);
+                        await UpdateAsync(group);
+                    }
+                }
+            }
 
+        }
         public async Task ResetAsync(AuthorityAuth auth)
         {
             await _repository.InsertAsync(new UserGroup

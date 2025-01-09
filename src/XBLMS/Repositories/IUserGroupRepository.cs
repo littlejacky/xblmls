@@ -12,6 +12,7 @@ namespace XBLMS.Repositories
         Task UpdateAsync(UserGroup group);
 
         Task DeleteAsync(int groupId);
+        Task DeleteByUserId(int userId);
 
         Task ResetAsync(AuthorityAuth auth);
     }

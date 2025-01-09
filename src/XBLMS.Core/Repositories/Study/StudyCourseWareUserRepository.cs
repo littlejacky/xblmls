@@ -33,7 +33,10 @@ namespace XBLMS.Core.Repositories
         {
             return await _repository.UpdateAsync(item);
         }
-
+        public async Task DeleteByUserId(int userId)
+        {
+            await _repository.DeleteAsync(Q.Where(nameof(StudyCourseWareUser.UserId), userId));
+        }
         public async Task<bool> DeleteAsync(int id)
         {
             return await _repository.DeleteAsync(id);

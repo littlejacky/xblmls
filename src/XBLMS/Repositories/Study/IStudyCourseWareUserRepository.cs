@@ -10,6 +10,7 @@ namespace XBLMS.Repositories
         Task<int> InsertAsync(StudyCourseWareUser item);
         Task<bool> UpdateAsync(StudyCourseWareUser item);
         Task<bool> DeleteAsync(int id);
+        Task DeleteByUserId(int userId);
         Task<bool> ExistsAsync(int userId, int planId, int courseId, int wareId);
         Task<bool> ClearCureentAsync(int userId, int planId, int courseId);
         Task<StudyCourseWareUser> GetAsync(int id);

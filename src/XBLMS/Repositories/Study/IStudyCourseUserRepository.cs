@@ -12,6 +12,7 @@ namespace XBLMS.Repositories
         Task<bool> UpdateByCourseAsync(StudyCourse courseInfo);
         Task<bool> DeleteAsync(int id);
         Task<bool> DeleteByCourseAsync(int courseId);
+        Task DeleteByUserId(int userId);
         Task<StudyCourseUser> GetAsync(int id);
         Task<bool> ExistsAsync(int userId, int planId, int courseId);
         Task<StudyCourseUser> GetAsync(int userId, int planId, int courseId);

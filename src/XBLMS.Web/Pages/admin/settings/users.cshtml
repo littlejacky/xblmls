@@ -67,16 +67,24 @@
                     <el-button :size="euiSize" plain type="primary" icon="el-icon-plus" v-on:click="btnAddClick">
                         新 增
                     </el-button>
-                    <el-button :size="euiSize" plain type="primary" icon="el-icon-upload" v-on:click="btnImportClick">
-                        导 入
-                    </el-button>
-                    <el-button :size="euiSize" plain type="primary" icon="el-icon-download" v-on:click="btnExportClick">
-                        导 出
-                    </el-button>
+                    <el-dropdown :show-timeout="0" placement="bottom" style="margin-left:10px;">
+                        <el-button :size="euiSize" v-on:click.stop="return false">
+                            更多操作<i class="el-icon-arrow-down el-icon--down"></i>
+                        </el-button>
+                        <el-dropdown-menu slot="dropdown">
+                            <el-dropdown-item icon="el-icon-upload" v-on:click.native="btnImportClick">excel导入</el-dropdown-item>
+                            <el-dropdown-item icon="el-icon-download" v-on:click.native="btnExportClick">excel导出</el-dropdown-item>
+                            <el-dropdown-item icon="el-icon-delete" style="color:red;" v-on:click.native="btnDeletesClick" divided>批量删除</el-dropdown-item>
+                        </el-dropdown-menu>
+                    </el-dropdown>
                 </el-form-item>
             </el-form>
             <el-table :data="items" :size="euiSize"
+                      v-on:selection-change="handleSelectionChange"
                       style="width: 100%" :height="$(window).height()-208">
+                <el-table-column type="selection" align="left"
+                                 width="28">
+                </el-table-column>
                 <el-table-column label="#"
                                  type="index"
                                  width="60"
