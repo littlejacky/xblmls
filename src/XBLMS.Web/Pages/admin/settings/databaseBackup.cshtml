@@ -1,11 +1,11 @@
 @page
 @{ Layout = "_Layout"; }
 @section Styles{
-   <style>
-        .v-modal{
-            background:none !important;
+    <style>
+        .v-modal {
+            background: none !important;
         }
-   </style>
+    </style>
 }
 <el-card class="box-card">
     <el-tabs>
@@ -14,6 +14,11 @@
                 <el-form-item>
                     <el-button plain icon="el-icon-connection" type="primary" v-on:click="btnAsyncClick">
                         手动执行一次备份
+                    </el-button>
+                </el-form-item>
+                <el-form-item>
+                    <el-button plain icon="el-icon-connection" v-on:click="btnUpload">
+                        上传备份
                     </el-button>
                 </el-form-item>
             </el-form>
@@ -47,13 +52,14 @@
                 </el-table-column>
                 <el-table-column width="100" align="right">
                     <template slot-scope="scope">
-                        <el-dropdown :show-timeout="0" placement="left" >
-                            <el-button :size="euiSize" v-on:click.stop="return false">
-                                <i class="el-icon-arrow-left el-icon--right"></i>操作
+                        <el-dropdown :show-timeout="0" placement="left">
+                            <el-button icon="el-icon-arrow-left" size="mini" v-on:click.stop="return false">
+                                操作
                             </el-button>
                             <el-dropdown-menu slot="dropdown">
-                                <el-dropdown-item icon="el-icon-printer" v-on:click.native="handleCommand('recover',scope.row)">还原此备份</el-dropdown-item>
-                                <el-dropdown-item icon="el-icon-delete" v-on:click.native="handleCommand('delete',scope.row)" style="color:red;">删除备份</el-dropdown-item>
+                                <el-dropdown-item icon="el-icon-printer" v-on:click.native="handleCommand('recover',scope.row)">还原备份</el-dropdown-item>
+                                <el-dropdown-item icon="el-icon-download" v-on:click.native="handleCommand('download',scope.row)">下载备份</el-dropdown-item>
+                                <el-dropdown-item icon="el-icon-delete" v-on:click.native="handleCommand('delete',scope.row)" style="color:red;" divided>删除备份</el-dropdown-item>
                             </el-dropdown-menu>
                         </el-dropdown>
                     </template>
@@ -76,7 +82,7 @@
             <el-form :inline="true" :size="euiSize">
                 <el-form-item>
                     <el-button plain icon="el-icon-delete" type="danger" v-on:click="btnClearLogClick">
-                        清理恢复日志
+                        清空恢复日志
                     </el-button>
                 </el-form-item>
             </el-form>
