@@ -174,6 +174,7 @@ namespace XBLMS.Core.Services
         public async Task GetTmInfoByPaper(ExamTm tm)
         {
             await GetBaseTmInfo(tm);
+            tm.Title = tm.Get("TitleHtml").ToString();
 
             var tx = await _examTxRepository.GetAsync(tm.TxId);
 
