@@ -158,7 +158,7 @@
         "id": "questionnaire",
         "order": 8,
         "text": "发布问卷",
-        "link": "/admin/exam/examQuestionnaire",
+        "link": "/admin/exam/examQuestionnaire/",
         "iconClass": "el-icon-question",
         "Permissions": [ "Select", "Add", "Update", "Delete" ],
         "isPermission": true,
