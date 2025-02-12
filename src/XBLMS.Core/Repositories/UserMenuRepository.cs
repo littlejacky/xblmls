@@ -73,7 +73,7 @@ namespace XBLMS.Core.Repositories
             {
                 Name = "studyPlan",
                 Text = "学习任务",
-                Link = "/home/study/studyPlan",
+                Link = "/home/study/studyPlan/",
                 IconClass = "el-icon-star-on",
                 Taxis = 2
             });
@@ -82,7 +82,7 @@ namespace XBLMS.Core.Repositories
             {
                 Name = "studyCourse",
                 Text = "课程中心",
-                Link = "/home/study/studyCourse",
+                Link = "/home/study/studyCourse/",
                 IconClass = "el-icon-s-claim",
                 Taxis = 3
             });
@@ -91,7 +91,7 @@ namespace XBLMS.Core.Repositories
             {
                 Name = "examPaper",
                 Text = "考试中心",
-                Link = "/home/exam/examPaper",
+                Link = "/home/exam/examPaper/",
                 IconClass = "el-icon-platform-eleme",
                 Taxis = 4
             });
@@ -100,7 +100,7 @@ namespace XBLMS.Core.Repositories
             {
                 Name = "examPaperMoni",
                 Text = "模拟自测",
-                Link = "/home/exam/examPaperMoni",
+                Link = "/home/exam/examPaperMoni/",
                 IconClass = "el-icon-eleme",
                 Taxis = 5
             });
@@ -109,7 +109,7 @@ namespace XBLMS.Core.Repositories
             {
                 Name = "examQuestionnaire",
                 Text = "调查问卷",
-                Link = "/home/exam/examQuestionnaire",
+                Link = "/home/exam/examQuestionnaire/",
                 IconClass = "el-icon-question",
                 Taxis = 6
             });
@@ -118,7 +118,7 @@ namespace XBLMS.Core.Repositories
             {
                 Name = "examPractice",
                 Text = "刷题练习",
-                Link = "/home/exam/examPractice",
+                Link = "/home/exam/examPractice/",
                 IconClass = "el-icon-s-order",
                 Taxis = 7
             });
@@ -127,7 +127,7 @@ namespace XBLMS.Core.Repositories
             {
                 Name = "examPaperScore",
                 Text = "考试成绩",
-                Link = "/home/exam/examPaperScore",
+                Link = "/home/exam/examPaperScore/",
                 IconClass = "el-icon-notebook-2",
                 Taxis = 8
             });
@@ -135,7 +135,7 @@ namespace XBLMS.Core.Repositories
             {
                 Name = "examPaperCer",
                 Text = "获得证书",
-                Link = "/home/exam/examPaperCer",
+                Link = "/home/exam/examPaperCer/",
                 IconClass = "el-icon-medal",
                 Taxis = 9
             });
