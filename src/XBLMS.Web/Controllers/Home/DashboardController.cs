@@ -26,6 +26,8 @@ namespace XBLMS.Web.Controllers.Home
         private readonly IExamPaperStartRepository _examPaperStartRepository;
         private readonly IExamQuestionnaireRepository _examQuestionnaireRepository;
         private readonly IExamQuestionnaireUserRepository _examQuestionnaireUserRepository;
+        private readonly IExamAssessmentRepository _examAssessmentRepository;
+        private readonly IExamAssessmentUserRepository _examAssessmentUserRepository;
 
         private readonly IStudyManager _studyManager;
         private readonly IStudyCourseUserRepository _studyCourseUserRepository;
@@ -46,6 +48,8 @@ namespace XBLMS.Web.Controllers.Home
             IExamPaperStartRepository examPaperStartRepository,
             IExamQuestionnaireRepository examQuestionnaireRepository,
             IExamQuestionnaireUserRepository examQuestionnaireUserRepository,
+            IExamAssessmentRepository examAssessmentRepository,
+            IExamAssessmentUserRepository examAssessmentUserRepository,
             IStudyManager studyManager,
             IStudyCourseUserRepository studyCourseUserRepository,
             IStudyCourseRepository studyCourseRepository,
@@ -65,6 +69,8 @@ namespace XBLMS.Web.Controllers.Home
             _examPaperStartRepository = examPaperStartRepository;
             _examQuestionnaireRepository = examQuestionnaireRepository;
             _examQuestionnaireUserRepository = examQuestionnaireUserRepository;
+            _examAssessmentRepository = examAssessmentRepository;
+            _examAssessmentUserRepository = examAssessmentUserRepository;
             _studyManager = studyManager;
             _studyCourseUserRepository = studyCourseUserRepository;
             _studyCourseRepository = studyCourseRepository;
@@ -98,6 +104,7 @@ namespace XBLMS.Web.Controllers.Home
 
             public int TaskPaperTotal { get; set; }
             public int TaskQTotal { get; set; }
+            public int TaskAssTotal { get; set; }
             public int TaskPlanTotal { get; set; }
             public int TaskCourseTotal { get; set; }
 

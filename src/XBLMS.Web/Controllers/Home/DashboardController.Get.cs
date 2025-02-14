@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using XBLMS.Core.Utils;
 using XBLMS.Models;
@@ -78,24 +79,8 @@ namespace XBLMS.Web.Controllers.Home
 
             }
 
-            var qPaperTotal = 0;
-            var qPaperIds = await _examQuestionnaireUserRepository.GetPaperIdsAsync(user.Id);
-            if (qPaperIds != null && qPaperIds.Count > 0)
-            {
-                foreach (var qPaperId in qPaperIds)
-                {
-                    var paper = await _examQuestionnaireRepository.GetAsync(qPaperId);
-                    if (paper != null)
-                    {
-                        if ((paper.ExamBeginDateTime.Value < DateTime.Now && paper.ExamEndDateTime.Value > DateTime.Now))
-                        {
-                            qPaperTotal++;
-                        }
-                    }
-
-                }
-            }
-
+            var taskQCount = await _examQuestionnaireUserRepository.GetCountByTaskAsync(user.Id);
+            var taskAssCount = await _examAssessmentUserRepository.GetCountByTaskAsync(user.Id);
 
             var (courseTotal, courseList) = await _studyCourseRepository.User_GetPublicListAsync(user.CompanyId, "", "", "", 1, 3);
             if (courseTotal > 0)
@@ -188,7 +173,8 @@ namespace XBLMS.Web.Controllers.Home
                 PracticeWrongPercent = wrongPercent,
 
                 TaskPaperTotal = taskPaperTotal,
-                TaskQTotal = qPaperTotal,
+                TaskQTotal = taskQCount,
+                TaskAssTotal = taskAssCount,
                 TaskPlanTotal = planTask,
                 TaskCourseTotal = courseTask,
 

@@ -180,5 +180,18 @@ namespace XBLMS.Core.Repositories
                 Set(nameof(ExamQuestionnaireUser.ExamEndDateTime), endDateTime).
                 Where(nameof(ExamQuestionnaireUser.ExamPaperId), paperId));
         }
+
+        public async Task<int> GetCountByTaskAsync(int userId)
+        {
+            var query = Q.
+                WhereNullOrFalse(nameof(ExamQuestionnaireUser.Locked)).
+                WhereNot(nameof(ExamQuestionnaireUser.SubmitType), SubmitType.Submit.GetValue()).
+                Where(nameof(ExamQuestionnaireUser.ExamBeginDateTime), "<", DateTime.Now).
+                Where(nameof(ExamQuestionnaireUser.ExamEndDateTime), ">", DateTime.Now).
+                Where(nameof(ExamQuestionnaireUser.UserId), userId);
+
+            var total = await _repository.CountAsync(query);
+            return total;
+        }
     }
 }

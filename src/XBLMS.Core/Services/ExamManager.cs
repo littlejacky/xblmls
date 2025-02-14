@@ -40,6 +40,13 @@ namespace XBLMS.Core.Services
         private readonly IExamQuestionnaireTmRepository _examQuestionnaireTmRepository;
         private readonly IExamQuestionnaireUserRepository _examQuestionnaireUserRepository;
 
+        private readonly IExamAssessmentRepository _examAssessmentRepository;
+        private readonly IExamAssessmentUserRepository _examAssessmentUserRepository;
+        private readonly IExamAssessmentTmRepository _examAssessmentTmRepository;
+        private readonly IExamAssessmentAnswerRepository _examAssessmentAnswerRepository;
+        private readonly IExamAssessmentConfigRepository _examAssessmentConfigRepository;
+        private readonly IExamAssessmentConfigSetRepository _examAssessmentConfigSetRepository;
+
         private readonly IOrganManager _organManager;
 
         private readonly IStudyPlanRepository _studyPlanRepository;
@@ -74,6 +81,12 @@ namespace XBLMS.Core.Services
             IExamQuestionnaireAnswerRepository examQuestionnaireAnswerRepository,
             IExamQuestionnaireTmRepository examQuestionnaireTmRepository,
             IExamQuestionnaireUserRepository examQuestionnaireUserRepository,
+            IExamAssessmentRepository examAssessmentRepository,
+            IExamAssessmentUserRepository examAssessmentUserRepository,
+            IExamAssessmentTmRepository examAssessmentTmRepository,
+            IExamAssessmentAnswerRepository examAssessmentAnswerRepository,
+            IExamAssessmentConfigRepository examAssessmentConfigRepository,
+            IExamAssessmentConfigSetRepository examAssessmentConfigSetRepository,
             IStudyPlanCourseRepository studyPlanCourseRepository,
             IStudyPlanRepository studyPlanRepository,
             IStudyCourseRepository studyCourseRepository)
@@ -105,6 +118,12 @@ namespace XBLMS.Core.Services
             _examQuestionnaireAnswerRepository = examQuestionnaireAnswerRepository;
             _examQuestionnaireTmRepository = examQuestionnaireTmRepository;
             _examQuestionnaireUserRepository = examQuestionnaireUserRepository;
+            _examAssessmentRepository = examAssessmentRepository;
+            _examAssessmentUserRepository = examAssessmentUserRepository;
+            _examAssessmentTmRepository = examAssessmentTmRepository;
+            _examAssessmentAnswerRepository = examAssessmentAnswerRepository;
+            _examAssessmentConfigRepository = examAssessmentConfigRepository;
+            _examAssessmentConfigSetRepository = examAssessmentConfigSetRepository;
             _studyCourseRepository = studyCourseRepository;
             _studyPlanRepository = studyPlanRepository;
             _studyPlanCourseRepository = studyPlanCourseRepository;
@@ -550,7 +569,15 @@ namespace XBLMS.Core.Services
             paper.Set("ExamEndDateTimeStr", DateUtils.Format(paper.ExamEndDateTime, DateUtils.FormatStringDateTimeCN));
             paper.Set("SubmitType", paperUser.SubmitType);
             paper.Set("State", DateTime.Now >= paper.ExamBeginDateTime && DateTime.Now <= paper.ExamEndDateTime);
-
+        }
+        public void GetExamAssessmentInfo(ExamAssessment ass, ExamAssessmentUser assUser, User user)
+        {
+            ass.Set("ExamStartDateTimeStr", DateUtils.Format(ass.ExamBeginDateTime, DateUtils.FormatStringDateTimeCN));
+            ass.Set("ExamEndDateTimeStr", DateUtils.Format(ass.ExamEndDateTime, DateUtils.FormatStringDateTimeCN));
+            ass.Set("SubmitType", assUser.SubmitType);
+            ass.Set("State", DateTime.Now >= ass.ExamBeginDateTime.Value && DateTime.Now <= ass.ExamEndDateTime.Value);
+            ass.Set("ConfigId", assUser.ConfigId);
+            ass.Set("ConfigName", assUser.ConfigName);
         }
         public async Task<(bool Success, string msg)> CheckExam(int paperId, int userId)
         {

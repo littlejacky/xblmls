@@ -26,5 +26,7 @@ namespace XBLMS.Repositories
         Task UpdateKeyWordsAsync(int paperId, string keyWords);
         Task UpdateKeyWordsAdminAsync(int id, string keyWords);
         Task UpdateExamDateTimeAsync(int paperId, DateTime beginDateTime, DateTime endDateTime);
+
+        Task<int> GetCountByTaskAsync(int userId);
     }
 }

@@ -93,8 +93,9 @@ var data = utils.init({
   taskTotal: 0,
   taskPaperTotal: 0,
   taskQTotal: 0,
+  taskAssTotal: 0,
   taskPlanTotal: 0,
-  taskCourseTotal:0,
+  taskCourseTotal: 0,
   taskDialogVisible: false,
 
   courseList: null,
@@ -109,10 +110,10 @@ var data = utils.init({
   dateStr: null,
 
   planCount: 0,
-  planOverCount:0,
+  planOverCount: 0,
 
-  appMenuActive:"index",
-  version:null
+  appMenuActive: "index",
+  version: null
 });
 
 var methods = {
@@ -152,7 +153,9 @@ var methods = {
       $this.taskQTotal = res.taskQTotal;
       $this.taskPlanTotal = res.taskPlanTotal;
       $this.taskCourseTotal = res.taskCourseTotal;
-      $this.taskTotal = $this.taskPaperTotal + $this.taskQTotal + $this.taskPlanTotal + $this.taskCourseTotal;
+      $this.taskAssTotal = res.taskAssTotal;
+
+      $this.taskTotal = $this.taskPaperTotal + $this.taskQTotal + $this.taskAssTotal + $this.taskPlanTotal + $this.taskCourseTotal;
 
       $this.courseList = res.courseList;
 
@@ -291,6 +294,20 @@ var methods = {
       title: false,
       closebtn: 0,
       url: utils.getExamUrl("examQuestionnaire"),
+      width: "100%",
+      height: "100%",
+      end: function () {
+        $this.setDocumentTitel();
+        $this.apiGet();
+      }
+    });
+  },
+  goAss: function () {
+    var $this = this;
+    top.utils.openLayer({
+      title: false,
+      closebtn: 0,
+      url: utils.getExamUrl("examAssessment"),
       width: "100%",
       height: "100%",
       end: function () {

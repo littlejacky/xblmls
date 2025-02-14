@@ -63,6 +63,13 @@ namespace XBLMS.Core.Services
         public IExamQuestionnaireTmRepository ExamQuestionnaireTmRepository { get; }
         public IExamQuestionnaireUserRepository ExamQuestionnaireUserRepository { get; }
 
+        public IExamAssessmentAnswerRepository ExamAssessmentAnswerRepository { get; }
+        public IExamAssessmentConfigRepository ExamAssessmentConfigRepository { get; }
+        public IExamAssessmentConfigSetRepository ExamAssessmentConfigSetRepository { get; }
+        public IExamAssessmentRepository ExamAssessmentRepository { get; }
+        public IExamAssessmentTmRepository ExamAssessmentTmRepository { get; }
+        public IExamAssessmentUserRepository ExamAssessmentUserRepository { get; }
+
         public IStudyCourseFilesRepository StudyCourseFilesRepository { get; }
         public IStudyCourseFilesGroupRepository StudyCourseFilesGroupRepository { get; }
 
@@ -124,6 +131,12 @@ namespace XBLMS.Core.Services
             IExamQuestionnaireRepository examQuestionnaireRepository,
             IExamQuestionnaireTmRepository examQuestionnaireTmRepository,
             IExamQuestionnaireUserRepository examQuestionnaireUserRepository,
+            IExamAssessmentAnswerRepository examAssessmentAnswerRepository,
+            IExamAssessmentConfigRepository examAssessmentConfigRepository,
+            IExamAssessmentConfigSetRepository examAssessmentConfigSetRepository,
+            IExamAssessmentRepository examAssessmentRepository,
+            IExamAssessmentTmRepository examAssessmentTmRepository,
+            IExamAssessmentUserRepository examAssessmentUserRepository,
             IStudyCourseFilesRepository studyCourseFilesRepository,
             IStudyCourseFilesGroupRepository studyCourseFilesGroupRepository,
             IStudyCourseTreeRepository studyCourseTreeRepository,
@@ -182,6 +195,12 @@ namespace XBLMS.Core.Services
             ExamQuestionnaireRepository = examQuestionnaireRepository;
             ExamQuestionnaireTmRepository = examQuestionnaireTmRepository;
             ExamQuestionnaireUserRepository = examQuestionnaireUserRepository;
+            ExamAssessmentAnswerRepository = examAssessmentAnswerRepository;
+            ExamAssessmentConfigRepository = examAssessmentConfigRepository;
+            ExamAssessmentConfigSetRepository = examAssessmentConfigSetRepository;
+            ExamAssessmentRepository = examAssessmentRepository;
+            ExamAssessmentTmRepository = examAssessmentTmRepository;
+            ExamAssessmentUserRepository = examAssessmentUserRepository;
             StudyCourseFilesRepository = studyCourseFilesRepository;
             StudyCourseFilesGroupRepository = studyCourseFilesGroupRepository;
             StudyCourseTreeRepository = studyCourseTreeRepository;
@@ -244,6 +263,12 @@ namespace XBLMS.Core.Services
                 ExamQuestionnaireTmRepository,
                 ExamQuestionnaireRepository,
                 ExamQuestionnaireAnswerRepository,
+                ExamAssessmentConfigRepository,
+                ExamAssessmentAnswerRepository,
+                ExamAssessmentConfigSetRepository,
+                ExamAssessmentRepository,
+                ExamAssessmentTmRepository,
+                ExamAssessmentUserRepository,
                 StudyCourseFilesRepository,
                 StudyCourseFilesGroupRepository,
                 StudyCourseTreeRepository,

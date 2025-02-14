@@ -55,6 +55,13 @@ namespace XBLMS.Services
         IExamQuestionnaireTmRepository ExamQuestionnaireTmRepository { get; }
         IExamQuestionnaireUserRepository ExamQuestionnaireUserRepository { get; }
 
+        IExamAssessmentAnswerRepository ExamAssessmentAnswerRepository { get; }
+        IExamAssessmentConfigRepository ExamAssessmentConfigRepository { get; }
+        IExamAssessmentConfigSetRepository ExamAssessmentConfigSetRepository { get; }
+        IExamAssessmentRepository ExamAssessmentRepository { get; }
+        IExamAssessmentTmRepository ExamAssessmentTmRepository { get; }
+        IExamAssessmentUserRepository ExamAssessmentUserRepository { get; }
+
         IStudyCourseFilesRepository StudyCourseFilesRepository { get; }
         IStudyCourseFilesGroupRepository StudyCourseFilesGroupRepository { get; }
         IStudyCourseTreeRepository StudyCourseTreeRepository { get; }

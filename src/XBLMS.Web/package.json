@@ -166,8 +166,18 @@
         ]
       },
       {
-        "id": "account",
+        "id": "examassessment",
         "order": 9,
+        "text": "发布测评",
+        "link": "/admin/exam/examAssessment/",
+        "iconClass": "el-icon-magic-stick",
+        "Permissions": [ "Select", "Add", "Update", "Delete", "Manage" ],
+        "children": [
+        ]
+      },
+      {
+        "id": "account",
+        "order": 10,
         "text": "企业管理",
         "link": "",
         "iconClass": "el-icon-s-custom",
@@ -233,7 +243,7 @@
       },
       {
         "id": "system",
-        "order": 10,
+        "order": 11,
         "text": "系统管理",
         "link": "",
         "iconClass": "el-icon-s-tools",
@@ -372,7 +382,7 @@
       },
       {
         "id": "logs",
-        "order": 11,
+        "order": 12,
         "text": "日志管理",
         "link": "",
         "iconClass": "el-icon-warning",
@@ -425,7 +435,7 @@
       },
       {
         "id": "analysis",
-        "order": 12,
+        "order": 13,
         "text": "统计图表",
         "link": "",
         "iconClass": "el-icon-s-operation",

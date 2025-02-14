@@ -481,6 +481,12 @@
                             </span>
                             <span class="badge bg-primary ">{{ taskQTotal }}</span>
                         </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center" v-if="taskAssTotal>0" v-on:click="goAss">
+                            <span>
+                                <i class="text-warning bi bi-star-half me-2"></i>待填写测评
+                            </span>
+                            <span class="badge bg-primary ">{{ taskAssTotal }}</span>
+                        </li>
                     </ul>
                 </div>
             </div>
