@@ -10,7 +10,7 @@ namespace XBLMS.Web.Controllers.Home.Exam
         public async Task<ActionResult<GetResult>> Get([FromQuery] IdRequest request)
         {
             var user = await _authManager.GetUserAsync();
-            if (user == null) { return Unauthorized(); }
+            if (user == null) return Unauthorized();
 
             var start = await _examPaperStartRepository.GetAsync(request.Id);
             if (start.IsSubmit)
@@ -28,9 +28,14 @@ namespace XBLMS.Web.Controllers.Home.Exam
             }
             else
             {
+                var queue = 0;
                 var taskStarids = _createManager.GetTaskStartIds();
-                var queue = taskStarids.Count - taskStarids.IndexOf(request.Id);
-                if (queue < 0) queue = 0;
+
+                if (taskStarids.Count > 0)
+                {
+                    queue = taskStarids.Count - taskStarids.IndexOf(request.Id);
+                }
+
                 return new GetResult
                 {
                     Queue = queue
