@@ -1,5 +1,6 @@
 @page
 @{ Layout = "_LayoutHome"; }
+
 @section Styles{
     <style>
         body {
@@ -14,7 +15,9 @@
             background-color: #ffffff;
         }
     </style>
+
 }
+
 <el-card class="rounded-0 mb-5">
     <div class="d-flex justify-content-between align-items-center">
         <div class="d-flex flex-row align-items-center">
@@ -22,6 +25,45 @@
             <h2 class="h1 fw-bold m-0 p-0">首 页</h2>
         </div>
         <div>
+            <el-tooltip placement="left-end">
+                <div slot="content">
+                    <div class="p-1">
+                        <ul class="list-group lh-2g bg-white">
+                            <li style="cursor:pointer;" class="list-group-item d-flex justify-content-between align-items-center" v-if="taskPlanTotal>0" v-on:click="top.$vue.btnTopMenuClick('studyPlan')">
+                                <span class="me-5"><i class="text-warning bi bi-star-half me-2"></i>待完成学习任务</span>
+                                <span class="text-warning h4 p-0 m-0">{{ taskPlanTotal }}</span>
+                            </li>
+                            <li style="cursor:pointer;" class="list-group-item d-flex justify-content-between align-items-center" v-if="taskCourseTotal>0" v-on:click="top.$vue.btnTopMenuClick('studyCourse')">
+                                <span class="me-5">
+                                    <i class="text-warning bi bi-star-half me-2"></i>待完成课程
+                                </span>
+                                <span class="text-warning h4 p-0 m-0">{{ taskCourseTotal }}</span>
+                            </li>
+                            <li style="cursor:pointer;" class="list-group-item d-flex justify-content-between align-items-center" v-if="taskPaperTotal>0" v-on:click="top.$vue.btnTopMenuClick('examPaper')">
+                                <span class="me-5">
+                                    <i class="text-warning bi bi-star-half me-2"></i>待参加考试
+                                </span>
+                                <span class="text-warning h4 p-0 m-0">{{ taskPaperTotal }}</span>
+                            </li>
+                            <li style="cursor:pointer;" class="list-group-item d-flex justify-content-between align-items-center" v-if="taskQTotal>0" v-on:click="top.$vue.btnTopMenuClick('examQuestionnaire')">
+                                <span class="me-5">
+                                    <i class="text-warning bi bi-star-half me-2"></i>待填写问卷
+                                </span>
+                                <span class="text-warning h4 p-0 m-0">{{ taskQTotal }}</span>
+                            </li>
+                            <li style="cursor:pointer;" class="list-group-item d-flex justify-content-between align-items-center" v-if="taskAssTotal>0" v-on:click="top.$vue.btnTopMenuClick('examAssessment')">
+                                <span class="me-5">
+                                    <i class="text-warning bi bi-star-half me-2"></i>待填写测评
+                                </span>
+                                <span class="text-warning h4 p-0 m-0">{{ taskAssTotal }}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <el-badge :value="taskTotal" class="item me-5" type="warning">
+                    <el-button> <i class="text-warning bi bi-star-half me-2"></i>待 办</el-button>
+                </el-badge>
+            </el-tooltip>
             <el-dropdown :show-timeout="0" placement="left">
                 <img :src="user.avatarUrl || DEFAULT_AVATAR_URL" class="rounded-circle avatar-lg shadow-lg" />
                 <el-dropdown-menu slot="dropdown">

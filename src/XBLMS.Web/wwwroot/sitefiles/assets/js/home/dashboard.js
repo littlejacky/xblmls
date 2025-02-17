@@ -102,7 +102,14 @@ var data = utils.init({
   topCer: null,
 
   version:null,
-  dateStr:null
+  dateStr: null,
+
+  taskTotal: 0,
+  taskPaperTotal: 0,
+  taskQTotal: 0,
+  taskAssTotal: 0,
+  taskPlanTotal: 0,
+  taskCourseTotal: 0,
 });
 
 var methods = {
@@ -148,6 +155,15 @@ var methods = {
       $this.totalDuration = res.totalDuration;
 
       $this.topCer = res.topCer;
+
+      $this.taskPaperTotal = res.taskPaperTotal;
+      $this.taskQTotal = res.taskQTotal;
+      $this.taskPlanTotal = res.taskPlanTotal;
+      $this.taskCourseTotal = res.taskCourseTotal;
+      $this.taskAssTotal = res.taskAssTotal;
+
+      $this.taskTotal = $this.taskPaperTotal + $this.taskQTotal + $this.taskAssTotal + $this.taskPlanTotal + $this.taskCourseTotal;
+
 
       $this.dateStr = res.dateStr;
       $this.version = res.version;
