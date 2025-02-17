@@ -123,8 +123,9 @@
             <div style="text-align: center; margin-top: 10px;">
                 <el-pagination v-on:current-change="handleCurrentChange" background
                                :current-page="formInline.pageIndex"
-                               :page-size="formInline.pageSize"
-                               layout="total, prev, pager, next, jumper"
+                               v-on:size-change="handleSizeChange"
+                               :page-sizes="pageSizes"
+                               layout="total,sizes, prev, pager, next, jumper"
                                :total="tmTotal">
                 </el-pagination>
             </div>
