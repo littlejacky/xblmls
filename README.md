@@ -42,6 +42,12 @@
 
 * 性能（.net 8 史无前例）
 
+### 版本
+
+* master 为开发版，这里会经常提交优化和更新，为下一个版本做准备。
+
+* [发行版提供较稳定的生成环境部署包和源代码，前往下载](https://gitee.com/xblms/xblmls/releases)
+
 ### 系统升级
 
 * 访问/admin/syncDatabase 进行系统数据库升级。发布最新的代码替换到原来的部署包即可升级部署包，不要替换xblms.json。
