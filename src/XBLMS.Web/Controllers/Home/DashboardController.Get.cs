@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using XBLMS.Core.Utils;
 using XBLMS.Models;
@@ -64,16 +63,9 @@ namespace XBLMS.Web.Controllers.Home
                 {
                     var paper = await _examPaperRepository.GetAsync(paperId);
                     var myExamTimes = await _examPaperStartRepository.CountAsync(paperId, user.Id);
-                    if (myExamTimes <= 0 && (paper.ExamBeginDateTime.Value < DateTime.Now && paper.ExamEndDateTime.Value > DateTime.Now))
+                    if (!paper.Moni && myExamTimes <= 0 && (paper.ExamBeginDateTime.Value < DateTime.Now && paper.ExamEndDateTime.Value > DateTime.Now))
                     {
-                        if (paper.Moni)
-                        {
-
-                        }
-                        else
-                        {
-                            taskPaperTotal++;
-                        }
+                        taskPaperTotal++;
                     }
                 }
 
