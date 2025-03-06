@@ -136,7 +136,7 @@ namespace XBLMS.Web.Controllers.Admin.Settings.Organs
             {
                 if (string.IsNullOrEmpty(item)) continue;
 
-                var count = StringUtils.GetStartCount('－', item) == 0 ? StringUtils.GetStartCount('-', item) : StringUtils.GetStartCount('－', item);
+                var count = StringUtils.GetStartCount("－", item) == 0 ? StringUtils.GetStartCount('-', item) : StringUtils.GetStartCount("－", item);
                 var name = item.Substring(count, item.Length - count);
                 count++;
 
