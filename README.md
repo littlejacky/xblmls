@@ -60,13 +60,13 @@
 
 * 账号：admin，密码：123123
 
-* [点击前往管理端演示](http://8.131.91.222:5001/admin)
+* [点击前往管理端演示](http://182.92.223.118:5001/admin/)
 
 ### 用户端
 
 * 账号：test1，密码：123123
 
-* [点击前往用户端演示](http://8.131.91.222:5001/home)
+* [点击前往用户端演示](http://182.92.223.118:5001/home/)
 
 ### 移动端
 
@@ -76,7 +76,7 @@
 
 * 扫码前往移动端演示
 
-* <img width="200" src="https://gitee.com/xblms/xblmls/raw/master/src/XBLMS.Web/wwwroot/sitefiles/assets/images/demo/app/qrcode.png"/>
+* <img width="200" src="https://gitee.com/xblms/xblmls/raw/master/src/XBLMS.Web/wwwroot/sitefiles/assets/images/demo/app/二维码.png"/>
 
 ## 系统展示
 
