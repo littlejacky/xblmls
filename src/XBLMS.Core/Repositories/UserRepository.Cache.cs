@@ -77,7 +77,7 @@ namespace XBLMS.Core.Repositories
             {
                 return await GetByEmailAsync(account);
             }
-            return null;
+            return await GetByEmployeeIdAsync(account);
         }
         
         private async Task<User> GetAsync(Query query)
@@ -139,6 +139,16 @@ namespace XBLMS.Core.Repositories
             return await GetAsync(Q
                 .Where(nameof(User.Email), email)
                 .CachingGet(GetCacheKeyByEmail(email))
+            );
+        }
+
+        public async Task<User> GetByEmployeeIdAsync(string employeeId)
+        {
+            if (string.IsNullOrWhiteSpace(employeeId)) return null;
+
+            return await GetAsync(Q
+                .Where(nameof(User.EmployeeId), employeeId)
+                .CachingGet(GetCacheKeyByMobile(employeeId))
             );
         }
 

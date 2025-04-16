@@ -45,8 +45,8 @@
         <el-alert v-if="pageAlert" style="margin-bottom: 10px;" :closable="false" :type="pageAlert.type" v-html="pageAlert.title"></el-alert>
 
         <el-form v-on:submit.native.prevent ref="formAccount" :model="form" label-width="0" status-icon>
-            <el-form-item prop="account" :rules="[{ required: true, message: '请输入用户名/手机号/邮箱' }]">
-                <el-input ref="account" v-model="form.account" placeholder="请输入用户名/手机号/邮箱" autocomplete="off" v-on:keyup.enter.native="btnSubmitClick">
+            <el-form-item prop="account" :rules="[{ required: true, message: '请输入用户名/手机号/邮箱/工号' }]">
+                <el-input ref="account" v-model="form.account" placeholder="请输入用户名/手机号/邮箱/工号" autocomplete="off" v-on:keyup.enter.native="btnSubmitClick">
                     <template slot="prepend">
                         <i class="el-icon-user-solid"></i>
                     </template>
@@ -83,7 +83,9 @@
                 <el-button type="primary" plain v-on:click="btnSubmitClick" class="w-100 py-3  rounded-pill">登 录<i class="bi bi-box-arrow-in-right ms-3"></i></el-button>
             </div>
         </div>
-
+        <div class="text-center mt-3">
+            <a href="/home/register" class="text-decoration-none">没有账号？点击注册</a>
+        </div>
     </el-card>
     <div class="text-muted text-center" style="margin-top:18px;">
         <small>{{ DOCUMENTTITLE }}<span class="ms-2 text-warning">v{{ version }}</span></small>

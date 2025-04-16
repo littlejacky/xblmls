@@ -36,7 +36,7 @@ namespace XBLMS.Core.Repositories
         {
             return await _repository.ExistsAsync(id);
         }
-        public async Task<(bool success, string errorMessage)> ValidateAsync(string userName, string email, string mobile, string password)
+        public async Task<(bool success, string errorMessage)> ValidateAsync(string userName, string email, string mobile, string password, string employeeId)
         {
             var config = await _configRepository.GetAsync();
 
@@ -72,11 +72,15 @@ namespace XBLMS.Core.Repositories
             if (!string.IsNullOrEmpty(mobile) && await IsMobileExistsAsync(mobile))
             {
                 return (false, "手机号码已被注册，请更换手机号码");
+            }
+            if (!string.IsNullOrEmpty(employeeId) && await IsEmployeeIdExistsAsync(employeeId))
+            {
+                return (false, "工号已被注册，请更换工号");
             }
 
             return (true, string.Empty);
         }
-        private async Task<(bool success, string errorMessage)> InsertValidateAsync(string userName, string email, string mobile, string password, string ipAddress)
+        private async Task<(bool success, string errorMessage)> InsertValidateAsync(string userName, string email, string mobile, string password, string ipAddress, string employeeId)
         {
             var config = await _configRepository.GetAsync();
             if (string.IsNullOrEmpty(password))
@@ -111,6 +115,10 @@ namespace XBLMS.Core.Repositories
             if (!string.IsNullOrEmpty(mobile) && await IsMobileExistsAsync(mobile))
             {
                 return (false, "手机号码已被注册，请更换手机号码");
+            }
+            if (!string.IsNullOrEmpty(employeeId) && await IsEmployeeIdExistsAsync(employeeId))
+            {
+                return (false, "工号已被注册，请更换工号");
             }
 
             return (true, string.Empty);
@@ -124,7 +132,7 @@ namespace XBLMS.Core.Repositories
                 user.Mobile = user.UserName;
             }
 
-            var (success, errorMessage) = await InsertValidateAsync(user.UserName, user.Email, user.Mobile, password, ipAddress);
+            var (success, errorMessage) = await InsertValidateAsync(user.UserName, user.Email, user.Mobile, password, ipAddress, user.EmployeeId);
             if (!success)
             {
                 return (null, errorMessage);
@@ -160,7 +168,7 @@ namespace XBLMS.Core.Repositories
             var cacheKeys = GetCacheKeysToRemove(entity);
 
 
-            var valid = await UpdateValidateAsync(entity, user.Email, user.Mobile);
+            var valid = await UpdateValidateAsync(entity, user.Email, user.Mobile, user.EmployeeId);
             if (!valid.IsValid) return valid;
 
             await _repository.UpdateAsync(Q
@@ -182,7 +190,7 @@ namespace XBLMS.Core.Repositories
 
             return (true, string.Empty);
         }
-        private async Task<(bool IsValid, string ErrorMessage)> UpdateValidateAsync(User user, string email, string mobile)
+        private async Task<(bool IsValid, string ErrorMessage)> UpdateValidateAsync(User user, string email, string mobile, string employeeId)
         {
             if (user.Mobile != null && user.Mobile != mobile)
             {
@@ -197,6 +205,14 @@ namespace XBLMS.Core.Repositories
                 if (!string.IsNullOrEmpty(user.Email) && await IsEmailExistsAsync(user.Email))
                 {
                     return (false, "电子邮件地址已被注册，请更换邮箱");
+                }
+            }
+
+            if (user.EmployeeId != null && user.EmployeeId != employeeId)
+            {
+                if (!string.IsNullOrEmpty(user.EmployeeId) && await IsEmployeeIdExistsAsync(user.EmployeeId))
+                {
+                    return (false, "工号已被注册，请更换工号");
                 }
             }
 
@@ -424,6 +440,17 @@ namespace XBLMS.Core.Repositories
             if (exists) return true;
 
             return await _repository.ExistsAsync(Q.Where(nameof(User.Email), email));
+        }
+
+        // 添加工号是否存在的检查方法
+        public async Task<bool> IsEmployeeIdExistsAsync(string employeeId)
+        {
+            if (string.IsNullOrEmpty(employeeId)) return false;
+
+            var exists = await IsUserNameExistsAsync(employeeId);
+            if (exists) return true;
+
+            return await _repository.ExistsAsync(Q.Where(nameof(User.EmployeeId), employeeId));
         }
 
         public async Task<(User user, string userName, string errorMessage)> ValidateAsync(string account, string password, bool isPasswordMd5)
