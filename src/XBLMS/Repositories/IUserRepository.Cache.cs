@@ -16,8 +16,6 @@ namespace XBLMS.Repositories
 
         Task<User> GetByEmailAsync(string email);
 
-        Task<User> GetByEmployeeIdAsync(string employeeId);
-
         Task<User> GetByGuidAsync(string guid);
 
         Task<string> GetDisplayAsync(int userId);

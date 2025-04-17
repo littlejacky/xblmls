@@ -106,7 +106,6 @@ namespace XBLMS.Web.Controllers.Admin.Settings.Users
                     var displayName = row[5].ToString().Trim();
                     var mobile = row[6].ToString().Trim();
                     var email = row[7].ToString().Trim();
-                    var employeeId = row[8].ToString().Trim();
 
                     if (userNameList.Contains(userName))
                     {
@@ -127,7 +126,7 @@ namespace XBLMS.Web.Controllers.Admin.Settings.Users
                         continue;
                     }
 
-                    var (validSuccess, validMsg) = await _userRepository.ValidateAsync(userName, email, mobile, password, employeeId);
+                    var (validSuccess, validMsg) = await _userRepository.ValidateAsync(userName, email, mobile, password);
                     if (!validSuccess)
                     {
                         msgList.Add(new KeyValuePair<int, string>(i, validMsg));

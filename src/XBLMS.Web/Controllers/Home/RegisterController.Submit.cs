@@ -39,19 +39,13 @@ namespace XBLMS.Web.Controllers.Home
             {
                 return this.Error("邮箱已被注册，请更换邮箱");
             }
-            // 验证工号是否已存在
-            else if (await _userRepository.IsEmployeeIdExistsAsync(request.EmployeeId))
-            {
-                return this.Error("工号已被注册，请更换工号");
-            }
 
             var user = new User
             {
                 UserName = request.UserName,
                 DisplayName = request.DisplayName,
-                EmployeeId = request.EmployeeId,
                 Mobile = request.Mobile,
-                Email = request.Email
+                Email = request.Email,
             };
 
             var (newUser, errorMessage) = await _userRepository.InsertAsync(user, request.Password, true, ipAddress);

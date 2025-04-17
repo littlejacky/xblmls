@@ -9,7 +9,6 @@ var data = utils.init({
   form: {
     userName: null,
     displayName: null,
-    employeeId: null,
     mobile: null,
     email: null,
     password: null,
@@ -66,7 +65,6 @@ var methods = {
       appRegister: true,
       userName: this.form.userName,
       displayName: this.form.displayName,
-      employeeId: this.form.employeeId,
       mobile: this.form.mobile,
       email: this.form.email,
       password: this.form.password ? md5(this.form.password) : '',

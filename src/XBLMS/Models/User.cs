@@ -49,9 +49,6 @@ namespace XBLMS.Models
         public string Email { get; set; }
 
         [DataColumn]
-        public string EmployeeId { get; set; }  // 添加工号字段
-
-        [DataColumn]
         public string AvatarUrl { get; set; }
         [DataColumn]
         public string AvatarbgUrl { get; set; }

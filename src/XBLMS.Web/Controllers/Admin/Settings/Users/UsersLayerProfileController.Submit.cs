@@ -48,7 +48,6 @@ namespace XBLMS.Web.Controllers.Admin.Settings.Users
             user.Mobile = request.Mobile;
             user.Email = request.Email;
 
-
             var company = await _organManager.GetCompanyByGuidAsync(request.OrganId);
             var department = await _organManager.GetDepartmentByGuidAsync(request.OrganId);
             var duty = await _organManager.GetDutyByGuidAsync(request.OrganId);

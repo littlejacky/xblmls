@@ -9,7 +9,7 @@ namespace XBLMS.Repositories
     public partial interface IUserRepository : IRepository
     {
         Task<bool> ExistsAsync(int id);
-        Task<(bool success, string errorMessage)> ValidateAsync(string userName, string email, string mobile, string password, string employeeId);
+        Task<(bool success, string errorMessage)> ValidateAsync(string userName, string email, string mobile, string password);
         Task<(User user, string errorMessage)> InsertAsync(User user, string password, bool isChecked, string ipAddress);
 
         Task<(bool success, string errorMessage)> UpdateAsync(User user);
@@ -30,9 +30,6 @@ namespace XBLMS.Repositories
         Task<bool> IsEmailExistsAsync(string email);
 
         Task<bool> IsMobileExistsAsync(string mobile);
-
-        // 添加工号相关方法
-        Task<bool> IsEmployeeIdExistsAsync(string employeeId);
 
         Task<(User user, string userName, string errorMessage)> ValidateAsync(string account, string password,
             bool isPasswordMd5);
