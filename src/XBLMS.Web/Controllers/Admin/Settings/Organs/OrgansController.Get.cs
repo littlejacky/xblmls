@@ -47,6 +47,7 @@ namespace XBLMS.Web.Controllers.Admin.Settings.Organs
                 var duty = await _organDutyRepository.GetAsync(request.Id);
                 result.Id = duty.Id;
                 result.Name = duty.Name;
+                result.Level = duty.Level;
             }
             return result;
         }

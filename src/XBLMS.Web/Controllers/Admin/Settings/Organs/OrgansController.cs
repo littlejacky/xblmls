@@ -55,7 +55,7 @@ namespace XBLMS.Web.Controllers.Admin.Settings.Organs
             public int ParentId { get; set; }
             public string Name { get; set; }
             public string Type { get; set; }
-
+            public int Level { get; set; }
         }
         public class GetSubmitRequest : GetInfoResult
         {

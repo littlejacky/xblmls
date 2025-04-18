@@ -12,6 +12,7 @@ namespace XBLMS.Models
         [DataColumn]
         public int ParentId { get; set; }
         public IList<OrganDuty> Children { get; set; }
-
+        [DataColumn]
+        public int Level { get; set; }
     }
 }

@@ -76,6 +76,7 @@ namespace XBLMS.Web.Controllers.Admin.Settings.Organs
                     var duty = await _organDutyRepository.GetAsync(request.Id);
                     var oldName = duty.Name;
                     duty.Name = request.Name;
+                    duty.Level = request.Level;
                     if (!StringUtils.Equals(oldName, request.Name))
                     {
                         await _organDutyRepository.UpdateAsync(duty);
