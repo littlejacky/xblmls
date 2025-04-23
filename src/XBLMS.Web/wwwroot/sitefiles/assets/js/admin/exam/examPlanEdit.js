@@ -8,12 +8,13 @@ var data = utils.init({
   item: null,
   userGroupList: null,
   tmGroupList: null,
-  tmAllGroupList: null,
-  tmFixedGroupList: null,
+  tmAllGroupList:null,
+  tmFixedGroupList:null,
   paperTree: null,
   cerList: null,
   txList: null,
   tmRandomConfig: [],
+  tmGroupProportions: [], // 题目组占比数据
   selectTms: null,
   form: null,
   txTotalScore: 0,
@@ -22,8 +23,7 @@ var data = utils.init({
   submitSubmitIsClear: false,
   tmConfigDialogVisible: false,
   isUpdateDateTime: false,
-  isUpdateExamTimes: false,
-  totalPercentage: 0,
+  isUpdateExamTimes:false,
 });
 
 var methods = {
@@ -55,28 +55,9 @@ var methods = {
           $this.form.title = $this.form.title + "-复制";
           $this.form.submitType = "Save";
         }
-
-        // 确保题目组占比数据正确初始化
-        if (!$this.form.tmGroupPercentages) {
-          $this.form.tmGroupPercentages = {};
-        }
-
-        // 如果有题目组但没有对应的占比数据，则初始化占比
-        if ($this.form.tmGroupIds && $this.form.tmGroupIds.length > 0) {
-          var totalGroups = $this.form.tmGroupIds.length;
-          var defaultPercentage = Math.floor(100 / totalGroups);
-
-          $this.form.tmGroupIds.forEach(function (groupId) {
-            if (!$this.form.tmGroupPercentages[groupId]) {
-              $this.$set($this.form.tmGroupPercentages, groupId, defaultPercentage);
-            }
-          });
-
-          // 计算总占比
-          $this.calculateTotalPercentage();
-        }
       }
-      else {
+      else
+      {
         if ($this.treeId > 0) {
           $this.form.treeId = $this.treeId;
         }
@@ -119,95 +100,58 @@ var methods = {
   btnGetConfigClick: function () {
     if (this.form.tmRandomType !== 'RandomNone') {
       this.apiGetConfig();
+      this.updateTmGroupProportions();
     }
+  },
+  
+  // 更新题目组占比数据
+  updateTmGroupProportions: function() {
+    if (!this.form.tmGroupIds || this.form.tmGroupIds.length <= 1) {
+      this.tmGroupProportions = [];
+      return;
+    }
+    
+    var $this = this;
+    var newProportions = [];
+    var averageProportion = Math.floor(100 / this.form.tmGroupIds.length);
+    var remainder = 100 - (averageProportion * this.form.tmGroupIds.length);
+    
+    // 为每个选中的题目组创建占比数据
+    this.form.tmGroupIds.forEach(function(groupId, index) {
+      var group = _.find($this.tmGroupList, function(g) { return g.id === groupId; });
+      if (group) {
+        // 查找是否已有占比设置
+        var existingProportion = _.find($this.tmGroupProportions, function(p) { return p.groupId === groupId; });
+        
+        var proportion = existingProportion ? existingProportion.proportion : averageProportion;
+        // 将余数加到第一个题目组
+        if (index === 0 && remainder > 0) {
+          proportion += remainder;
+        }
+        
+        newProportions.push({
+          groupId: groupId,
+          groupName: group.groupName,
+          proportion: proportion
+        });
+      }
+    });
+    
+    this.tmGroupProportions = newProportions;
   },
 
   tmRandomTypeChange: function (value) {
     this.tmRandomTypeChange = null;
     this.form.txIds = null;
     this.form.tmGroupIds = null;
-    this.form.tmGroupPercentages = {};
-    this.totalPercentage = 0;
     this.tmGroupList = [];
+    this.tmGroupProportions = [];
     if (value == 'RandomNone') {
       this.tmGroupList = this.tmFixedGroupList;
     }
     else {
       this.tmGroupList = this.tmAllGroupList;
       this.btnGetConfigClick();
-    }
-  },
-
-  tmGroupIdsChange: function () {
-    // 初始化新选择的题目组的占比
-    if (!this.form.tmGroupPercentages) {
-      this.form.tmGroupPercentages = {};
-    }
-
-    // 确保每个选中的题目组都有占比值
-    if (this.form.tmGroupIds && this.form.tmGroupIds.length > 0) {
-      var totalGroups = this.form.tmGroupIds.length;
-      var defaultPercentage = Math.floor(100 / totalGroups);
-
-      // 为新选择的题目组设置默认占比
-      this.form.tmGroupIds.forEach(groupId => {
-        if (!this.form.tmGroupPercentages[groupId]) {
-          this.$set(this.form.tmGroupPercentages, groupId, defaultPercentage);
-        }
-      });
-
-      // 移除未选中的题目组的占比
-      for (var groupId in this.form.tmGroupPercentages) {
-        if (!this.form.tmGroupIds.includes(parseInt(groupId))) {
-          this.$delete(this.form.tmGroupPercentages, groupId);
-        }
-      }
-
-      // 计算总占比
-      this.calculateTotalPercentage();
-    }
-
-    // 调用原有的配置加载函数
-    this.btnGetConfigClick();
-  },
-
-  calculateTotalPercentage: function () {
-    var total = 0;
-    if (this.form.tmGroupPercentages) {
-      for (var groupId in this.form.tmGroupPercentages) {
-        total += this.form.tmGroupPercentages[groupId] || 0;
-      }
-    }
-    this.totalPercentage = total;
-    return total;
-  },
-
-  getTmGroupName: function (groupId) {
-    if (this.tmGroupList) {
-      var group = this.tmGroupList.find(g => g.id === groupId);
-      return group ? group.groupName : '未知题目组';
-    }
-    return '未知题目组';
-  },
-
-  balancePercentages: function () {
-    if (this.form.tmGroupIds && this.form.tmGroupIds.length > 0) {
-      var totalGroups = this.form.tmGroupIds.length;
-      var equalPercentage = Math.floor(100 / totalGroups);
-      var remainder = 100 - (equalPercentage * totalGroups);
-
-      // 为每个题目组设置相等的占比
-      this.form.tmGroupIds.forEach((groupId, index) => {
-        // 将余数分配给前几个题目组
-        var percentage = equalPercentage;
-        if (index < remainder) {
-          percentage += 1;
-        }
-        this.$set(this.form.tmGroupPercentages, groupId, percentage);
-      });
-
-      // 更新总占比显示
-      this.calculateTotalPercentage();
     }
   },
   btnOpenEditClick: function (ref, ptype) {
@@ -263,7 +207,7 @@ var methods = {
     else {
       utils.error('请选择至少一个用户组', { layer: true });
     }
-
+ 
   },
   btnSubmit: function () {
     this.submitSubmitIsClear = false;
@@ -274,14 +218,14 @@ var methods = {
     top.utils.alertWarning({
       title: '重新发布提醒',
       text: '确定清空后发布吗？',
-      confirmButtonText: '重新发布',
-      showCancelButton: true,
+      confirmButtonText:'重新发布',
+      showCancelButton:true,
       callback: function () {
         $this.submitSubmitIsClear = true;
         $this.apiSubmit();
       }
     });
-
+  
   },
   apiSubmit: function () {
 
@@ -292,6 +236,7 @@ var methods = {
       submitType: this.submitSubmitType,
       item: $this.form,
       configList: $this.tmRandomConfig,
+      tmGroupProportions: $this.tmGroupProportions,
       isUpdateDateTime: $this.isUpdateDateTime,
       isUpdateExamTimes: $this.isUpdateExamTimes
     }).then(function (response) {
@@ -318,30 +263,20 @@ var methods = {
         return false;
       }
     }
-
-    // 验证题目组占比
-    if (this.form.tmGroupIds && this.form.tmGroupIds.length > 0) {
-      // 检查是否所有选中的题目组都有占比设置
-      var allHavePercentage = true;
-      this.form.tmGroupIds.forEach(groupId => {
-        if (!this.form.tmGroupPercentages || this.form.tmGroupPercentages[groupId] === undefined) {
-          allHavePercentage = false;
-        }
+    
+    // 验证题目组占比总和是否为100%
+    if (this.form.tmRandomType !== 'RandomNone' && this.tmGroupProportions.length > 1) {
+      var totalProportion = 0;
+      this.tmGroupProportions.forEach(function(item) {
+        totalProportion += item.proportion;
       });
-
-      if (!allHavePercentage) {
-        utils.error('请为所有选中的题目组设置占比', { layer: true });
-        return false;
-      }
-
-      // 检查总占比是否为100%
-      var total = this.calculateTotalPercentage();
-      if (total !== 100) {
-        utils.error('题目组占比总和必须为100%，当前为' + total + '%', { layer: true });
+      
+      if (totalProportion !== 100) {
+        utils.error('题目组占比总和必须为100%，当前总和为' + totalProportion + '%', { layer: true });
         return false;
       }
     }
-
+    
     return true;
   },
   getSummaries(param) {
@@ -378,7 +313,7 @@ var methods = {
           else {
             sums[index] = '题型总分 ' + totalScore + ' 分';
           }
-
+        
 
           this.txTotalScore = totalScore;
 
@@ -391,6 +326,59 @@ var methods = {
       return sums;
     }
 
+  },
+  
+  // 计算题目组占比汇总
+  getProportionSummaries(param) {
+    if (this.tmGroupProportions && this.tmGroupProportions.length > 0) {
+      const { columns, data } = param;
+      const sums = [];
+      columns.forEach((column, index) => {
+        if (index === 0) {
+          sums[index] = '总计';
+          return;
+        }
+        if (index === 1) {
+          let totalProportion = 0;
+          data.forEach(item => {
+            totalProportion += item.proportion;
+          });
+          
+          const status = totalProportion === 100 ? '✓' : '✗';
+          const color = totalProportion === 100 ? 'green' : 'red';
+          sums[index] = totalProportion + '% ' + status;
+          
+          // 设置颜色
+          this.$nextTick(() => {
+            const footerCells = document.querySelectorAll('.el-table__footer-wrapper td');
+            if (footerCells && footerCells.length > 1) {
+              footerCells[1].style.color = color;
+            }
+          });
+        }
+      });
+      return sums;
+    }
+  },
+  
+  // 自动平衡题目组占比
+  balanceProportions() {
+    if (!this.tmGroupProportions || this.tmGroupProportions.length <= 1) {
+      return;
+    }
+    
+    const count = this.tmGroupProportions.length;
+    const averageProportion = Math.floor(100 / count);
+    let remainder = 100 - (averageProportion * count);
+    
+    this.tmGroupProportions.forEach((item, index) => {
+      item.proportion = averageProportion;
+      if (index === 0 && remainder > 0) {
+        item.proportion += remainder;
+      }
+    });
+    
+    utils.success('占比已自动平衡');
   },
   scoreTypeChange: function (value) {
     if (value === 'ScoreTypeTx' && this.form.tmRandomType !== 'RandomNone') {

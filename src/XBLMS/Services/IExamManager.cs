@@ -18,7 +18,7 @@ namespace XBLMS.Services
 
         Task<List<Cascade<int>>> GetExamTmTreeCascadesAsync(AuthorityAuth auth, bool isTotal = false);
         Task<List<Cascade<int>>> GetExamTmTreeCascadesAsync(bool isTotal = false);
-        Task<List<Cascade<int>>> GetExamPaperTreeCascadesAsync(AuthorityAuth auth, bool isTotal = false);
+        Task<List<Cascade<int>>> GetExamPaperTreeCascadesAsync(AuthorityAuth auth, bool isTotal = false, bool isPlan = false);
         Task<List<Cascade<int>>> GetExamPaperTreeCascadesAsync(bool isTotal = false);
         Task GetPaperInfo(ExamPaper paper, User user, bool cjList = false);
         Task GetPaperInfo(ExamPaper paper, User user, int planId, int courseId, bool cjList = false);

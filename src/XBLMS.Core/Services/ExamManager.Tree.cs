@@ -111,7 +111,7 @@ namespace XBLMS.Core.Services
             }
             return list;
         }
-        public async Task<List<Cascade<int>>> GetExamPaperTreeCascadesAsync(AuthorityAuth auth, bool isTotal = false)
+        public async Task<List<Cascade<int>>> GetExamPaperTreeCascadesAsync(AuthorityAuth auth, bool isTotal = false, bool isPlan = false)
         {
             var list = new List<Cascade<int>>();
             var trees = await _examPaperTreeRepository.GetListAsync(auth);
@@ -127,8 +127,8 @@ namespace XBLMS.Core.Services
                     {
                         var treeIds = await _examPaperTreeRepository.GetIdsAsync(item.Id);
 
-                        total = await _examPaperRepository.GetCountAsync(treeIds);
-                        count = await _examPaperRepository.GetCountAsync(new List<int>() { item.Id });
+                        total = isPlan ? await _examPlanRepository.GetCountAsync(treeIds) : await _examPaperRepository.GetCountAsync(treeIds);
+                        count = isPlan ? await _examPlanRepository.GetCountAsync(new List<int>() { item.Id }) : await _examPaperRepository.GetCountAsync(new List<int>() { item.Id });
                     }
 
 
@@ -167,7 +167,6 @@ namespace XBLMS.Core.Services
                         count = await _examPaperRepository.GetCountAsync(new List<int>() { item.Id });
                     }
 
-
                     var cascade = new Cascade<int>
                     {
                         Id = item.Id,
@@ -183,7 +182,7 @@ namespace XBLMS.Core.Services
             }
             return list;
         }
-        private async Task<List<Cascade<int>>> GetExamPaperCascadesAsync(List<ExamPaperTree> all, int parentId, bool isTotal = false)
+        private async Task<List<Cascade<int>>> GetExamPaperCascadesAsync(List<ExamPaperTree> all, int parentId, bool isTotal = false, bool isPlan = false)
         {
             var list = new List<Cascade<int>>();
             var items = all.Where(p => p.ParentId == parentId).ToList();
@@ -197,8 +196,8 @@ namespace XBLMS.Core.Services
                     if (isTotal)
                     {
                         var treeIds = await _examPaperTreeRepository.GetIdsAsync(item.Id);
-                        total = await _examPaperRepository.GetCountAsync(treeIds);
-                        count = await _examPaperRepository.GetCountAsync(new List<int>() { item.Id });
+                        total = isPlan ? await _examPlanRepository.GetCountAsync(treeIds) : await _examPaperRepository.GetCountAsync(treeIds);
+                        count = isPlan ? await _examPlanRepository.GetCountAsync(new List<int>() { item.Id }) : await _examPaperRepository.GetCountAsync(new List<int>() { item.Id });
                     }
                     var cascade = new Cascade<int>
                     {

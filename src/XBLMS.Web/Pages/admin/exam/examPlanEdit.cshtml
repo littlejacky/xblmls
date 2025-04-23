@@ -23,6 +23,7 @@
                             <el-form-item label="试卷名称" prop="title" :rules="{ required: true, message: '请输入试卷名称' }">
                                 <el-input v-model.trim="form.title" placeholder="请输入试卷名称"></el-input>
                             </el-form-item>
+                            
                             <el-form-item label="考试时间" prop="startDate" :rules="{ required: true, message: '请选择计划开始时间' }">
                                 <el-date-picker v-model="form.startDate"
                                                 type="date"
@@ -52,7 +53,6 @@
                                 <el-checkbox v-model="form.requirePass">开启必过</el-checkbox>
                                 <div class="tips">未合格需重新做题</div>
                             </el-form-item>
-
                             @* <el-form-item v-if="id>0">
                                 <el-checkbox v-model="isUpdateDateTime">修改已安排的考生数据</el-checkbox>
                             </el-form-item> *@
@@ -113,7 +113,7 @@
                                             <el-switch v-model="form.openExist" active-color="#13ce66"
                                                        active-text="允许退出">
                                             </el-switch>
-                                            <div class="tips">考试页面是否显示退出按钮，退出后再次进入可以恢复考试。</div>
+                                            <div class="tips">考试页面是否显示退出按钮，退出后再次进入可以恢复考试，适用于布置模拟自测。</div>
                                         </el-form-item>
                                         <el-form-item label="查看权限">
                                             <el-switch v-model="form.secrecyScore" active-color="#13ce66"
@@ -198,11 +198,25 @@
                                 </el-select>
                                 <div class="tips">从题目组包含的题目范围内抽题，多个题目组是并集关系。默认从全部题库抽题</div>
                             </el-form-item>
+                            <el-form-item label="题目组占比" v-if="form.tmRandomType!=='RandomNone' && form.tmGroupIds && form.tmGroupIds.length > 1">
+                                <el-table :data="tmGroupProportions" border size="small" style="width: 100%" :summary-method="getProportionSummaries" show-summary>
+                                    <el-table-column prop="groupName" label="题目组名称" width="180"></el-table-column>
+                                    <el-table-column label="占比(%)" width="120">
+                                        <template slot-scope="scope">
+                                            <el-input-number size="mini" v-model="scope.row.proportion" :min="0" :max="100" :precision="0" :step="5" style="width:90px;"></el-input-number>
+                                        </template>
+                                    </el-table-column>
+                                </el-table>
+                                <div style="margin-top:5px;">
+                                    <el-button size="mini" type="primary" plain icon="el-icon-refresh" v-on:click="balanceProportions">自动平衡占比</el-button>
+                                </div>
+                                <div class="tips">设置各题目组的占比，系统将根据设定比例优先从各题目组中抽取题目，若某组题目不足则自动从其他组或题库补足。所有题目组占比总和应为100%。</div>
+                            </el-form-item>
                             <template v-if="form.tmRandomType!=='RandomNone'">
                                 <el-form-item label="" v-if="1===2">
                                     <el-button :size="euiSize" icon="el-icon-refresh-right" plain type="success" v-on:click="btnGetConfigClick">加载题目配置数据</el-button>
                                 </el-form-item>
-                                    <el-form-item label="题目配置">
+                                <el-form-item label="题目配置">
                                     <el-table ref="tableTmRandomConfig" v-if="tmRandomConfig"
                                               :data="tmRandomConfig" :summary-method="getSummaries"
                                               show-summary

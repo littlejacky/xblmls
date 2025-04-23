@@ -3,7 +3,7 @@ var $urlDelete = $url + '/del';
 var $urlLock = $url + '/lock';
 var $urlUnLock = $url + '/unLock';
 
-var $treeUrl = '/exam/examPaperTree';
+var $treeUrl = '/exam/examPaperTree?isPlan=true';
 var $treeUrlAdd = $treeUrl + '/add';
 var $treeUrlUpdate = $treeUrl + '/update';
 var $treeUrlDelete = $treeUrl + '/del';
