@@ -49,6 +49,7 @@ namespace XBLMS.Web.Controllers.Admin.Exam
                     await _examManager.ClearRandom(paper.Id, request.IsClear);
 
                     await SetRandomConfigs(request.ConfigList, paper);
+                    await SetTmGroupProportions(request.TmGroupProportions, paper);
 
                     await _examManager.PaperRandomSet(paper, auth);
                     await _examManager.Arrange(paper, auth);
@@ -94,7 +95,7 @@ namespace XBLMS.Web.Controllers.Admin.Exam
 
                 paper = await _examPaperRepository.GetAsync(paperId);
                 await SetRandomConfigs(request.ConfigList, paper);
-             
+
                 if (request.SubmitType == SubmitType.Submit)
                 {
                     await _examManager.PaperRandomSet(paper, auth);
@@ -140,6 +141,23 @@ namespace XBLMS.Web.Controllers.Admin.Exam
                     }
                 }
                 paper.TxIds = txIds;
+            }
+        }
+
+        private async Task SetTmGroupProportions(List<ExamTmGroupProportion> tmGroupProportions, ExamPaper paper)
+        {
+            await _examTmGroupProportionRepository.DeleteByPaperAsync(paper.Id);
+
+            if (paper.TmRandomType != ExamPaperTmRandomType.RandomNone)
+            {
+                if (tmGroupProportions != null && tmGroupProportions.Count > 0)
+                {
+                    foreach (var tmGroupProportion in tmGroupProportions)
+                    {
+                        tmGroupProportion.ExamPaperId = paper.Id;
+                        await _examTmGroupProportionRepository.InsertAsync(tmGroupProportion);
+                    }
+                }
             }
         }
     }

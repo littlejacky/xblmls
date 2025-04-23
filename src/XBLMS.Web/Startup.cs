@@ -189,7 +189,7 @@ namespace XBLMS.Web
             }
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ISettingsManager settingsManager, IErrorLogRepository errorLogRepository)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ISettingsManager settingsManager, IErrorLogRepository errorLogRepository, IPlanScheduler planScheduler)
         {
           
 
@@ -291,6 +291,8 @@ namespace XBLMS.Web
 
             app.UseRequestLocalization();
 
+            // 初始化计划调度器
+            planScheduler.Initialize();
 
             if (!settingsManager.IsSafeMode)
             {

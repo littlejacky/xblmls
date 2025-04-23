@@ -135,5 +135,12 @@ namespace XBLMS.Enums
         StudyPlanUpdate,
         [DataEnum(DisplayName = "培训计划删除")]
         StudyPlanDelete,
+
+        [DataEnum(DisplayName = "小测计划新增")]
+        ExamPlanAdd,
+        [DataEnum(DisplayName = "小测计划修改")]
+        ExamPlanUpdate,
+        [DataEnum(DisplayName = "小测计划删除")]
+        ExamPlanDelete,
     }
 }

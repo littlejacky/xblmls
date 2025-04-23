@@ -71,9 +71,9 @@ namespace XBLMS.Models
         [DataColumn(Text = true)]
         public List<int> TmIds { get; set; }//固定题目的时候用
 
-       /// <summary>
-       /// 允许查看成绩
-       /// </summary>
+        /// <summary>
+        /// 允许查看成绩
+        /// </summary>
         [DataColumn]
         public bool SecrecyScore { get; set; } = true;
         /// <summary>
@@ -113,6 +113,9 @@ namespace XBLMS.Models
 
         [DataColumn]
         public bool Locked { get; set; } = false;
+
+        [DataColumn]
+        public int PlanId { get; set; }
 
     }
 }

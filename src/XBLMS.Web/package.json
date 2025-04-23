@@ -78,6 +78,17 @@
         ]
       },
       {
+        "id": "examplan",
+        "order": 5,
+        "text": "计划考试",
+        "link": "/admin/exam/examPlan/",
+        "iconClass": "el-icon-platform-eleme",
+        "permissions": [ "Select", "Add", "Update", "Delete", "Manage" ],
+        "isPermission": true,
+        "children": [
+        ]
+      },
+      {
         "id": "exampaper",
         "order": 5,
         "text": "发布考试",

@@ -14,13 +14,13 @@ namespace XBLMS.Web.Controllers.Admin.Exam
     [OpenApiIgnore]
     [Authorize(Roles = Types.Roles.Administrator)]
     [Route(Constants.ApiAdminPrefix)]
-    public partial class ExamPaperEditController : ControllerBase
+    public partial class ExamPlanEditController : ControllerBase
     {
         private const string Route = "exam/examPaperEdit";
         private const string RouteGetConfig = Route + "/getConfig";
 
         private readonly IAuthManager _authManager;
-        private readonly IExamPaperRepository _examPaperRepository;
+        private readonly IExamPlanRepository _examPlanRepository;
         private readonly IExamPaperTreeRepository _examPaperTreeRepository;
         private readonly IExamTmGroupRepository _examTmGroupRepository;
         private readonly IExamTxRepository _examTxRepository;
@@ -31,10 +31,9 @@ namespace XBLMS.Web.Controllers.Admin.Exam
         private readonly IExamPaperRandomConfigRepository _examPaperRandomConfigRepository;
         private readonly IExamPaperUserRepository _examPaperUserRepository;
         private readonly IExamPaperStartRepository _examPaperStartRepository;
-        private readonly IExamTmGroupProportionRepository _examTmGroupProportionRepository;
 
-        public ExamPaperEditController(IAuthManager authManager,
-            IExamPaperRepository examPaperRepository,
+        public ExamPlanEditController(IAuthManager authManager,
+            IExamPlanRepository examPlanRepository,
             IExamPaperTreeRepository examPaperTreeRepository,
             IExamTmGroupRepository examTmGroupRepository,
             IExamTxRepository examTxRepository,
@@ -47,7 +46,7 @@ namespace XBLMS.Web.Controllers.Admin.Exam
             IExamPaperStartRepository examPaperStartRepository)
         {
             _authManager = authManager;
-            _examPaperRepository = examPaperRepository;
+            _examPlanRepository = examPlanRepository;
             _examPaperTreeRepository = examPaperTreeRepository;
             _examTmGroupRepository = examTmGroupRepository;
             _examTxRepository = examTxRepository;
@@ -70,7 +69,7 @@ namespace XBLMS.Web.Controllers.Admin.Exam
         }
         public class GetResult
         {
-            public ExamPaper Item { get; set; }
+            public ExamPlan Item { get; set; }
             public List<Cascade<int>> PaperTree { get; set; }
             public List<ExamTx> TxList { get; set; }
             public List<ExamTmGroup> TmGroupList { get; set; }
@@ -82,12 +81,11 @@ namespace XBLMS.Web.Controllers.Admin.Exam
         public class GetSubmitRequest
         {
             public SubmitType SubmitType { get; set; }
-            public ExamPaper Item { get; set; }
+            public ExamPlan Item { get; set; }
             public List<ExamPaperRandomConfig> ConfigList { get; set; }
             public bool IsClear { get; set; }
             public bool IsUpdateDateTime { get; set; }
             public bool IsUpdateExamTimes { get; set; }
-            public List<ExamTmGroupProportion> TmGroupProportions { get; set; }
         }
 
     }

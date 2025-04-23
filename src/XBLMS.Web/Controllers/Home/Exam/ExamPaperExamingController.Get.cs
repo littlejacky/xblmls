@@ -56,8 +56,8 @@ namespace XBLMS.Web.Controllers.Home.Exam
 
                     var auth = await _authManager.GetAuthorityAuth(paper.CreatorId);
 
-                    await _examManager.SetExamPaperRantomByRandomNowAndExaming(paper, auth, true);
-                    randomId = await _examPaperRandomRepository.GetOneIdByPaperAsync(paper.Id);
+                    randomId = await _examManager.SetExamPaperRantomByRandomNowAndExaming(paper, auth, user.Id);
+                    // randomId = await _examPaperRandomRepository.GetOneIdByPaperAsync(paper.Id);
                 }
                 else
                 {

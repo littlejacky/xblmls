@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using XBLMS.Dto;
 using XBLMS.Models;
 
@@ -7,7 +8,7 @@ namespace XBLMS.Services
     public partial interface IExamManager
     {
         Task<bool> PaperRandomSet(ExamPaper paper, AuthorityAuth auth);
-        Task SetExamPaperRantomByRandomNowAndExaming(ExamPaper paper, AuthorityAuth auth, bool isExaming = false);
+        Task<int> SetExamPaperRantomByRandomNowAndExaming(ExamPaper paper, AuthorityAuth auth, int? userId = null);
     }
 
 }

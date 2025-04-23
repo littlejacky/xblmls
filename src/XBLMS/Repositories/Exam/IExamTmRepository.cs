@@ -27,7 +27,9 @@ namespace XBLMS.Repositories
         Task<List<int>> GetIdsAsync(List<int> treeIds, List<int> txIds, List<int> nandus, List<string> zhishidianKeywords, DateTime? dateFrom, DateTime? dateTo);
 
         Task<int> GetCountAsync(AuthorityAuth auth, bool hasGroup, bool allTm, List<int> tmIds, int txId, int nandu);
-        Task<List<ExamTm>> GetListByRandomAsync(AuthorityAuth auth, bool allTm, bool hasGroup, List<int> tmIds, int txId, int nandu1Count = 0, int nandu2Count = 0, int nandu3Count = 0, int nandu4Count = 0, int nandu5Count = 0);
+        Task<List<ExamTm>> GetListByRandomAsync(AuthorityAuth auth, bool allTm, bool hasGroup, List<int> tmIds, int txId, int nandu1Count = 0, int nandu2Count = 0, int nandu3Count = 0, int nandu4Count = 0, int nandu5Count = 0, List<int> noTmIds = null);
         Task<(int allCount, int addCount, int deleteCount, int lockedCount, int unLockedCount)> GetDataCount(AuthorityAuth auth);
+
+        Task<List<ExamTm>> GetListByRandomAsync(AuthorityAuth auth, List<TmGroup> tmGroupList, List<ExamPaperRandomConfig> configList);
     }
 }

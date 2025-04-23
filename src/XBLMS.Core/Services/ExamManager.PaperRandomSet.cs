@@ -115,9 +115,10 @@ namespace XBLMS.Core.Services
             }
             return true;
         }
-        public async Task SetExamPaperRantomByRandomNowAndExaming(ExamPaper paper, AuthorityAuth auth, bool isExaming = false)
+        public async Task<int> SetExamPaperRantomByRandomNowAndExaming(ExamPaper paper, AuthorityAuth auth, int? userId = null)
         {
-            if (isExaming)
+            int lastRandomId = 0;
+            if (userId.HasValue)
             {
                 paper.RandomCount = 1;
             }
@@ -125,17 +126,26 @@ namespace XBLMS.Core.Services
             var tmGroupIds = paper.TmGroupIds;
             var hasTmGroup = false;
             var allTm = false;
+            var tmGroupList = new List<TmGroup>();
             if (tmGroupIds != null && tmGroupIds.Count > 0)
             {
+                var tmGroupProportions = await _examTmGroupProportionRepository.GetListAsync(paper.Id);
                 hasTmGroup = true;
                 foreach (var tmGroupId in tmGroupIds)
                 {
                     var tmGroup = await _examTmGroupRepository.GetAsync(tmGroupId);
                     if (tmGroup != null)
                     {
+                        var tmGroupProportion = tmGroupProportions.Find(f => f.TmGroupId == tmGroupId);
                         if (tmGroup.GroupType == TmGroupType.Fixed && tmGroup.TmIds != null && tmGroup.TmIds.Count > 0)
                         {
                             tmIds.AddRange(tmGroup.TmIds);
+                            tmGroupList.Add(new TmGroup
+                            {
+                                Id = tmGroupId,
+                                TmIds = tmGroup.TmIds,
+                                Ratio = tmGroupProportion.GroupRatio
+                            });
                         }
                         if (tmGroup.GroupType == TmGroupType.Range)
                         {
@@ -143,6 +153,12 @@ namespace XBLMS.Core.Services
                             if (tmIdsByGroup != null && tmIdsByGroup.Count > 0)
                             {
                                 tmIds.AddRange(tmIdsByGroup);
+                                tmGroupList.Add(new TmGroup
+                                {
+                                    Id = tmGroupId,
+                                    TmIds = tmIdsByGroup,
+                                    Ratio = tmGroupProportion.GroupRatio
+                                });
                             }
                         }
                         if (tmGroup.GroupType == TmGroupType.All)
@@ -167,41 +183,51 @@ namespace XBLMS.Core.Services
                     if (configList != null && configList.Count > 0)
                     {
                         var tms = new List<ExamTm>();
-                        foreach (var config in configList)
+
+                        if (allTm)
                         {
-                            var tmList = await _examTmRepository.GetListByRandomAsync(auth,allTm, hasTmGroup, tmIds, config.TxId, config.Nandu1TmCount, 0, 0, 0, 0);
-                            if (tmList != null && tmList.Count > 0)
+                            foreach (var config in configList)
                             {
-                                tms.AddRange(tmList);
+                                var tmList = await _examTmRepository.GetListByRandomAsync(auth, allTm, hasTmGroup, tmIds, config.TxId, config.Nandu1TmCount, 0, 0, 0, 0);
+                                if (tmList != null && tmList.Count > 0)
+                                {
+                                    tms.AddRange(tmList);
+                                }
+                                tmList = await _examTmRepository.GetListByRandomAsync(auth, allTm, hasTmGroup, tmIds, config.TxId, 0, config.Nandu2TmCount, 0, 0, 0);
+                                if (tmList != null && tmList.Count > 0)
+                                {
+                                    tms.AddRange(tmList);
+                                }
+                                tmList = await _examTmRepository.GetListByRandomAsync(auth, allTm, hasTmGroup, tmIds, config.TxId, 0, 0, config.Nandu3TmCount, 0, 0);
+                                if (tmList != null && tmList.Count > 0)
+                                {
+                                    tms.AddRange(tmList);
+                                }
+                                tmList = await _examTmRepository.GetListByRandomAsync(auth, allTm, hasTmGroup, tmIds, config.TxId, 0, 0, 0, config.Nandu4TmCount, 0);
+                                if (tmList != null && tmList.Count > 0)
+                                {
+                                    tms.AddRange(tmList);
+                                }
+                                tmList = await _examTmRepository.GetListByRandomAsync(auth, allTm, hasTmGroup, tmIds, config.TxId, 0, 0, 0, 0, config.Nandu5TmCount);
+                                if (tmList != null && tmList.Count > 0)
+                                {
+                                    tms.AddRange(tmList);
+                                }
                             }
-                            tmList = await _examTmRepository.GetListByRandomAsync(auth, allTm, hasTmGroup, tmIds, config.TxId, 0, config.Nandu2TmCount, 0, 0, 0);
-                            if (tmList != null && tmList.Count > 0)
-                            {
-                                tms.AddRange(tmList);
-                            }
-                            tmList = await _examTmRepository.GetListByRandomAsync(auth, allTm, hasTmGroup, tmIds, config.TxId, 0, 0, config.Nandu3TmCount, 0, 0);
-                            if (tmList != null && tmList.Count > 0)
-                            {
-                                tms.AddRange(tmList);
-                            }
-                            tmList = await _examTmRepository.GetListByRandomAsync(auth, allTm, hasTmGroup, tmIds, config.TxId, 0, 0, 0, config.Nandu4TmCount, 0);
-                            if (tmList != null && tmList.Count > 0)
-                            {
-                                tms.AddRange(tmList);
-                            }
-                            tmList = await _examTmRepository.GetListByRandomAsync(auth, allTm, hasTmGroup, tmIds, config.TxId, 0, 0, 0, 0, config.Nandu5TmCount);
-                            if (tmList != null && tmList.Count > 0)
-                            {
-                                tms.AddRange(tmList);
-                            }
+                        }
+                        else
+                        {
+                            tms = await _examTmRepository.GetListByRandomAsync(auth, tmGroupList, configList);
                         }
                         if (tms.Count > 0)
                         {
                             await SetExamPaperRandomTm(tms, paper, randomId);
                         }
                     }
+                    lastRandomId=randomId;
                 }
             }
+            return lastRandomId;
         }
 
         private async Task SetExamPaperRandomTm(List<ExamTm> tmList, ExamPaper paper, int randomId)

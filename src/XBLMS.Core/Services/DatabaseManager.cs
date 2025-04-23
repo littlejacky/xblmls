@@ -87,6 +87,9 @@ namespace XBLMS.Core.Services
         public IStudyCourseUserRepository StudyCourseUserRepository { get; }
         public IStudyCourseWareUserRepository StudyCourseWareUserRepository { get; }
 
+        public IExamPlanRepository ExamPlanRepository { get; }
+        public IExamTmGroupProportionRepository ExamTmGroupProportionRepository { get; }
+
         public DatabaseManager(
             ISettingsManager settingsManager,
             IAdministratorRepository administratorRepository,
@@ -150,7 +153,9 @@ namespace XBLMS.Core.Services
             IStudyPlanCourseRepository studyPlanCourseRepository,
             IStudyPlanUserRepository studyPlanUserRepository,
             IStudyCourseUserRepository studyCourseUserRepository,
-            IStudyCourseWareUserRepository studyCourseWareUserRepository)
+            IStudyCourseWareUserRepository studyCourseWareUserRepository,
+            IExamPlanRepository examPlanRepository,
+            IExamTmGroupProportionRepository examTmGroupProportionRepository)
         {
             _settingsManager = settingsManager;
             AdministratorRepository = administratorRepository;
@@ -215,6 +220,8 @@ namespace XBLMS.Core.Services
             StudyPlanUserRepository = studyPlanUserRepository;
             StudyCourseUserRepository = studyCourseUserRepository;
             StudyCourseWareUserRepository = studyCourseWareUserRepository;
+            ExamPlanRepository = examPlanRepository;
+            ExamTmGroupProportionRepository = examTmGroupProportionRepository;
         }
 
         public List<IRepository> GetAllRepositories()
@@ -282,7 +289,9 @@ namespace XBLMS.Core.Services
                 StudyPlanUserRepository,
                 StudyPlanCourseRepository,
                 StudyCourseUserRepository,
-                StudyCourseWareUserRepository
+                StudyCourseWareUserRepository,
+                ExamPlanRepository,
+                ExamTmGroupProportionRepository
             };
 
             return list;

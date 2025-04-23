@@ -53,6 +53,9 @@ namespace XBLMS.Core.Services
         private readonly IStudyPlanCourseRepository _studyPlanCourseRepository;
         private readonly IStudyCourseRepository _studyCourseRepository;
 
+        private readonly IExamPlanRepository _examPlanRepository;
+        private readonly IExamTmGroupProportionRepository _examTmGroupProportionRepository;
+        private readonly IAuthManager _authManager;
 
         public ExamManager(ISettingsManager settingsManager,
             IOrganManager organManager,
@@ -89,7 +92,10 @@ namespace XBLMS.Core.Services
             IExamAssessmentConfigSetRepository examAssessmentConfigSetRepository,
             IStudyPlanCourseRepository studyPlanCourseRepository,
             IStudyPlanRepository studyPlanRepository,
-            IStudyCourseRepository studyCourseRepository)
+            IStudyCourseRepository studyCourseRepository,
+            IExamPlanRepository examPlanRepository,
+            IExamTmGroupProportionRepository examTmGroupProportionRepository,
+            IAuthManager authManager)
         {
             _settingsManager = settingsManager;
             _organManager = organManager;
@@ -127,6 +133,9 @@ namespace XBLMS.Core.Services
             _studyCourseRepository = studyCourseRepository;
             _studyPlanRepository = studyPlanRepository;
             _studyPlanCourseRepository = studyPlanCourseRepository;
+            _examPlanRepository = examPlanRepository;
+            _examTmGroupProportionRepository = examTmGroupProportionRepository;
+            _authManager = authManager;
         }
 
         public async Task GetTmDeleteInfo(ExamTm tm)

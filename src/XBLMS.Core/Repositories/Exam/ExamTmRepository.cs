@@ -1,4 +1,5 @@
-﻿using Datory;
+using Datory;
+using DocumentFormat.OpenXml.Office2010.CustomUI;
 using SqlKata;
 using System;
 using System.Collections.Generic;
@@ -203,7 +204,174 @@ namespace XBLMS.Core.Repositories
             return await _repository.GetAllAsync<int>(query.Select(nameof(ExamTm.Id)));
         }
 
-        public async Task<List<ExamTm>> GetListByRandomAsync(AuthorityAuth auth, bool allTm, bool hasGroup, List<int> tmIds, int txId, int nandu1Count = 0, int nandu2Count = 0, int nandu3Count = 0, int nandu4Count = 0, int nandu5Count = 0)
+        public async Task<List<ExamTm>> GetListByRandomAsync(AuthorityAuth auth, List<TmGroup> tmGroupList, List<ExamPaperRandomConfig> configList)
+        {
+            if (configList == null || configList.Count == 0)
+            {
+                return null;
+            }
+
+            var resultList = new List<ExamTm>();
+
+            foreach (var config in configList)
+            {
+                var txId = config.TxId;
+                var nandu1Count = config.Nandu1TmCount;
+                var nandu2Count = config.Nandu2TmCount;
+                var nandu3Count = config.Nandu3TmCount;
+                var nandu4Count = config.Nandu4TmCount;
+                var nandu5Count = config.Nandu5TmCount;
+
+                // 如果没有设置任何难度的题目数量，则跳过
+                if (nandu1Count + nandu2Count + nandu3Count + nandu4Count + nandu5Count <= 0)
+                {
+                    continue;
+                }
+
+                // 根据题目组列表和占比计算每个题目组的题目数量
+                if (tmGroupList != null && tmGroupList.Count > 0)
+                {
+                    // 计算每个难度级别的题目总数
+                    var totalNandu1 = 0;
+                    var totalNandu2 = 0;
+                    var totalNandu3 = 0;
+                    var totalNandu4 = 0;
+                    var totalNandu5 = 0;
+
+                    // 根据每个题目组的占比分配题目数量
+                    foreach (var tmGroup in tmGroupList)
+                    {
+                        if (tmGroup.TmIds == null || tmGroup.TmIds.Count == 0)
+                        {
+                            continue;
+                        }
+
+                        // 根据占比计算每个难度级别的题目数量
+                        var groupNandu1Count = (int)Math.Ceiling(nandu1Count * tmGroup.Ratio);
+                        var groupNandu2Count = (int)Math.Ceiling(nandu2Count * tmGroup.Ratio);
+                        var groupNandu3Count = (int)Math.Ceiling(nandu3Count * tmGroup.Ratio);
+                        var groupNandu4Count = (int)Math.Ceiling(nandu4Count * tmGroup.Ratio);
+                        var groupNandu5Count = (int)Math.Ceiling(nandu5Count * tmGroup.Ratio);
+
+                        // 获取该题目组中各难度级别的题目
+                        var nandu1List = await GetListByRandomAsync(auth, false, true, tmGroup.TmIds, txId, groupNandu1Count, 0, 0, 0, 0);
+                        var nandu2List = await GetListByRandomAsync(auth, false, true, tmGroup.TmIds, txId, 0, groupNandu2Count, 0, 0, 0);
+                        var nandu3List = await GetListByRandomAsync(auth, false, true, tmGroup.TmIds, txId, 0, 0, groupNandu3Count, 0, 0);
+                        var nandu4List = await GetListByRandomAsync(auth, false, true, tmGroup.TmIds, txId, 0, 0, 0, groupNandu4Count, 0);
+                        var nandu5List = await GetListByRandomAsync(auth, false, true, tmGroup.TmIds, txId, 0, 0, 0, 0, groupNandu5Count);
+
+                        // 将获取到的题目添加到结果列表中
+                        if (nandu1List != null && nandu1List.Count > 0)
+                        {
+                            resultList.AddRange(nandu1List);
+                            totalNandu1 += nandu1List.Count;
+                        }
+                        if (nandu2List != null && nandu2List.Count > 0)
+                        {
+                            resultList.AddRange(nandu2List);
+                            totalNandu2 += nandu2List.Count;
+                        }
+                        if (nandu3List != null && nandu3List.Count > 0)
+                        {
+                            resultList.AddRange(nandu3List);
+                            totalNandu3 += nandu3List.Count;
+                        }
+                        if (nandu4List != null && nandu4List.Count > 0)
+                        {
+                            resultList.AddRange(nandu4List);
+                            totalNandu4 += nandu4List.Count;
+                        }
+                        if (nandu5List != null && nandu5List.Count > 0)
+                        {
+                            resultList.AddRange(nandu5List);
+                            totalNandu5 += nandu5List.Count;
+                        }
+                    }
+
+                    // 如果题目数量不足，从所有题目中随机抽取补足
+                    if (totalNandu1 < nandu1Count)
+                    {
+                        var remainingCount = nandu1Count - totalNandu1;
+                        var additionalList = await GetListByRandomAsync(auth, true, false, null, txId, remainingCount, 0, 0, 0, 0, resultList.Select(s => s.Id).ToList());
+                        if (additionalList != null && additionalList.Count > 0)
+                        {
+                            resultList.AddRange(additionalList);
+                        }
+                    }
+                    if (totalNandu2 < nandu2Count)
+                    {
+                        var remainingCount = nandu2Count - totalNandu2;
+                        var additionalList = await GetListByRandomAsync(auth, true, false, null, txId, 0, remainingCount, 0, 0, 0, resultList.Select(s => s.Id).ToList());
+                        if (additionalList != null && additionalList.Count > 0)
+                        {
+                            resultList.AddRange(additionalList);
+                        }
+                    }
+                    if (totalNandu3 < nandu3Count)
+                    {
+                        var remainingCount = nandu3Count - totalNandu3;
+                        var additionalList = await GetListByRandomAsync(auth, true, false, null, txId, 0, 0, remainingCount, 0, 0, resultList.Select(s => s.Id).ToList());
+                        if (additionalList != null && additionalList.Count > 0)
+                        {
+                            resultList.AddRange(additionalList);
+                        }
+                    }
+                    if (totalNandu4 < nandu4Count)
+                    {
+                        var remainingCount = nandu4Count - totalNandu4;
+                        var additionalList = await GetListByRandomAsync(auth, true, false, null, txId, 0, 0, 0, remainingCount, 0, resultList.Select(s => s.Id).ToList());
+                        if (additionalList != null && additionalList.Count > 0)
+                        {
+                            resultList.AddRange(additionalList);
+                        }
+                    }
+                    if (totalNandu5 < nandu5Count)
+                    {
+                        var remainingCount = nandu5Count - totalNandu5;
+                        var additionalList = await GetListByRandomAsync(auth, true, false, null, txId, 0, 0, 0, 0, remainingCount, resultList.Select(s => s.Id).ToList());
+                        if (additionalList != null && additionalList.Count > 0)
+                        {
+                            resultList.AddRange(additionalList);
+                        }
+                    }
+                }
+                else
+                {
+                    // 如果没有题目组，则从所有题目中随机抽取
+                    var nandu1List = await GetListByRandomAsync(auth, true, false, null, txId, nandu1Count, 0, 0, 0, 0);
+                    var nandu2List = await GetListByRandomAsync(auth, true, false, null, txId, 0, nandu2Count, 0, 0, 0);
+                    var nandu3List = await GetListByRandomAsync(auth, true, false, null, txId, 0, 0, nandu3Count, 0, 0);
+                    var nandu4List = await GetListByRandomAsync(auth, true, false, null, txId, 0, 0, 0, nandu4Count, 0);
+                    var nandu5List = await GetListByRandomAsync(auth, true, false, null, txId, 0, 0, 0, 0, nandu5Count);
+
+                    if (nandu1List != null && nandu1List.Count > 0)
+                    {
+                        resultList.AddRange(nandu1List);
+                    }
+                    if (nandu2List != null && nandu2List.Count > 0)
+                    {
+                        resultList.AddRange(nandu2List);
+                    }
+                    if (nandu3List != null && nandu3List.Count > 0)
+                    {
+                        resultList.AddRange(nandu3List);
+                    }
+                    if (nandu4List != null && nandu4List.Count > 0)
+                    {
+                        resultList.AddRange(nandu4List);
+                    }
+                    if (nandu5List != null && nandu5List.Count > 0)
+                    {
+                        resultList.AddRange(nandu5List);
+                    }
+                }
+            }
+
+            // 对结果列表进行随机排序
+            return resultList.OrderBy(order => StringUtils.Guid()).ToList();
+        }
+
+        public async Task<List<ExamTm>> GetListByRandomAsync(AuthorityAuth auth, bool allTm, bool hasGroup, List<int> tmIds, int txId, int nandu1Count = 0, int nandu2Count = 0, int nandu3Count = 0, int nandu4Count = 0, int nandu5Count = 0, List<int> noTmIds = null)
         {
             var query = Q.
                    WhereNullOrFalse(nameof(ExamTm.Locked)).
@@ -219,6 +387,10 @@ namespace XBLMS.Core.Repositories
                 {
                     query.WhereIn(nameof(ExamTm.Id), tmIds);
                 }
+            }
+            if(noTmIds!=null && noTmIds.Count > 0)
+            {
+                query.WhereNotIn(nameof(ExamTm.Id), noTmIds);
             }
 
             if (auth.AuthType == Enums.AuthorityType.Admin || auth.AuthType == Enums.AuthorityType.AdminCompany)

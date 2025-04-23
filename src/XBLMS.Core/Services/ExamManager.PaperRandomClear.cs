@@ -16,6 +16,7 @@ namespace XBLMS.Core.Services
                 await _examPaperAnswerRepository.ClearByPaperAsync(examPaperId);
                 await _examCerUserRepository.ClearByPaperAsync(examPaperId);
             
+                await _examTmGroupProportionRepository.DeleteByPaperAsync(examPaperId);
             }
             else
             {

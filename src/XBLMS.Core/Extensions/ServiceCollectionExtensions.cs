@@ -93,6 +93,8 @@ namespace XBLMS.Core.Extensions
         {
             services.AddHostedService<QueuedHostedService>();
             services.AddSingleton<ITaskManager, TaskManager>();
+            // 注册计划调度服务
+            services.AddSingleton<IPlanScheduler, PlanScheduler>();
         }
 
         public static void AddServices(this IServiceCollection services)

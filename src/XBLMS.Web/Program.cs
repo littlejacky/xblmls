@@ -1,5 +1,7 @@
+﻿using FluentScheduler;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using System;
@@ -14,7 +16,16 @@ namespace XBLMS.Web
         {
             InstallUtils.Init(AppDomain.CurrentDomain.BaseDirectory);
 
-            CreateHostBuilder(args).Build().Run();
+            var host = CreateHostBuilder(args).Build();
+
+            // 注册应用程序关闭事件
+            host.Services.GetRequiredService<IHostApplicationLifetime>().ApplicationStopping.Register(() =>
+            {
+                // ֹͣ停止 FluentScheduler
+                JobManager.StopAndBlock();
+            });
+
+            host.Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
