@@ -217,14 +217,20 @@ namespace XBLMS.Core.Services
                         }
                         else
                         {
-                            tms = await _examTmRepository.GetListByRandomAsync(auth, tmGroupList, configList);
+                            ExamPracticeWrong wrong = null;
+                            if (userId.HasValue)
+                            {
+                                wrong = await _examPracticeWrongRepository.GetAsync(userId.Value);
+                            }
+
+                            tms = await _examTmRepository.GetListByRandomAsync(auth, tmGroupList, configList, wrong);
                         }
                         if (tms.Count > 0)
                         {
                             await SetExamPaperRandomTm(tms, paper, randomId);
                         }
                     }
-                    lastRandomId=randomId;
+                    lastRandomId = randomId;
                 }
             }
             return lastRandomId;

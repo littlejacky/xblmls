@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using XBLMS.Enums;
@@ -17,6 +18,26 @@ namespace XBLMS.Core.Services
                 if (StringUtils.Equals(tm.Answer, examPaperAnswer.Answer))
                 {
                     examPaperAnswer.Score = tm.Score;
+                }
+                else
+                {
+                    var wrong = await _examPracticeWrongRepository.GetAsync(examPaperAnswer.UserId);
+                    if (wrong != null)
+                    {
+                        if (!wrong.TmIds.Contains(tm.Id))
+                        {
+                            wrong.TmIds.Add(tm.Id);
+                            await _examPracticeWrongRepository.UpdateAsync(wrong);
+                        }
+                    }
+                    else
+                    {
+                        await _examPracticeWrongRepository.InsertAsync(new ExamPracticeWrong
+                        {
+                            UserId = examPaperAnswer.UserId,
+                            TmIds = new List<int> { tm.Id }
+                        });
+                    }
                 }
             }
             else

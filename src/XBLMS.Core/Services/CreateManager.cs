@@ -1,6 +1,8 @@
-﻿using XBLMS.Dto;
+﻿using XBLMS.Core.Repositories;
+using XBLMS.Dto;
 using XBLMS.Enums;
 using XBLMS.Models;
+using XBLMS.Repositories;
 using XBLMS.Services;
 
 namespace XBLMS.Core.Services
@@ -12,14 +14,16 @@ namespace XBLMS.Core.Services
         private readonly IOrganManager _organManager;
         private readonly ISettingsManager _settingsManager;
         private readonly IDatabaseManager _databaseManager;
+        private readonly IExamPracticeWrongRepository _examPracticeWrongRepository;
 
-        public CreateManager(IPathManager pathManager, ITaskManager taskManager, IDatabaseManager databaseManager, ISettingsManager settingsManager, IOrganManager organManager)
+        public CreateManager(IPathManager pathManager, ITaskManager taskManager, IDatabaseManager databaseManager, ISettingsManager settingsManager, IOrganManager organManager, IExamPracticeWrongRepository examPracticeWrongRepository)
         {
             _pathManager = pathManager;
             _taskManager = taskManager;
             _databaseManager = databaseManager;
             _settingsManager = settingsManager;
             _organManager = organManager;
+            _examPracticeWrongRepository = examPracticeWrongRepository;
         }
 
         public void CreateSubmitAnswerAsync(ExamPaperAnswer answer)

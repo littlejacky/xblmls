@@ -1,4 +1,4 @@
-using Datory;
+﻿using Datory;
 using DocumentFormat.OpenXml.Office2010.CustomUI;
 using SqlKata;
 using System;
@@ -204,12 +204,31 @@ namespace XBLMS.Core.Repositories
             return await _repository.GetAllAsync<int>(query.Select(nameof(ExamTm.Id)));
         }
 
-        public async Task<List<ExamTm>> GetListByRandomAsync(AuthorityAuth auth, List<TmGroup> tmGroupList, List<ExamPaperRandomConfig> configList)
+        public async Task<List<ExamTm>> GetListByRandomAsync(AuthorityAuth auth, List<TmGroup> tmGroupList, List<ExamPaperRandomConfig> configList, ExamPracticeWrong wrong = null)
         {
             if (configList == null || configList.Count == 0)
             {
                 return null;
             }
+
+            // 1. 计算错题类别权重 (TreeId -> Wrong Count)
+            Dictionary<int, int> wrongCategoryWeights = new Dictionary<int, int>();
+            if (wrong != null && wrong.TmIds != null && wrong.TmIds.Count > 0)
+            {
+                // 假设 TreeId 代表题目类别，查询错题对应的 TreeId
+                // 注意：这里需要确保 ExamTm 有 TreeId 属性，并且该查询能正确执行
+                var wrongTmDetails = await _repository.GetAllAsync(
+                    Q.Select(nameof(ExamTm.Id), nameof(ExamTm.TreeId))
+                     .WhereIn(nameof(ExamTm.Id), wrong.TmIds)
+                     .WhereNotNull(nameof(ExamTm.TreeId)) // 确保 TreeId 不为空
+                     .WhereNullOrFalse(nameof(ExamTm.Locked)) // 考虑题目是否锁定
+                );
+
+                wrongCategoryWeights = wrongTmDetails
+                    .GroupBy(tm => tm.TreeId) // 按 TreeId 分组
+                    .ToDictionary(g => g.Key, g => g.Count()); // 统计每个 TreeId 的错题数量
+            }
+
 
             var resultList = new List<ExamTm>();
 
@@ -253,12 +272,12 @@ namespace XBLMS.Core.Repositories
                         var groupNandu4Count = (int)Math.Ceiling(nandu4Count * tmGroup.Ratio);
                         var groupNandu5Count = (int)Math.Ceiling(nandu5Count * tmGroup.Ratio);
 
-                        // 获取该题目组中各难度级别的题目
-                        var nandu1List = await GetListByRandomAsync(auth, false, true, tmGroup.TmIds, txId, groupNandu1Count, 0, 0, 0, 0);
-                        var nandu2List = await GetListByRandomAsync(auth, false, true, tmGroup.TmIds, txId, 0, groupNandu2Count, 0, 0, 0);
-                        var nandu3List = await GetListByRandomAsync(auth, false, true, tmGroup.TmIds, txId, 0, 0, groupNandu3Count, 0, 0);
-                        var nandu4List = await GetListByRandomAsync(auth, false, true, tmGroup.TmIds, txId, 0, 0, 0, groupNandu4Count, 0);
-                        var nandu5List = await GetListByRandomAsync(auth, false, true, tmGroup.TmIds, txId, 0, 0, 0, 0, groupNandu5Count);
+                        // 获取该题目组中各难度级别的题目 - ***需要修改这里的调用***
+                        var nandu1List = await GetWeightedRandomListAsync(auth, false, true, tmGroup.TmIds, txId, 1, groupNandu1Count, wrongCategoryWeights);
+                        var nandu2List = await GetWeightedRandomListAsync(auth, false, true, tmGroup.TmIds, txId, 2, groupNandu2Count, wrongCategoryWeights);
+                        var nandu3List = await GetWeightedRandomListAsync(auth, false, true, tmGroup.TmIds, txId, 3, groupNandu3Count, wrongCategoryWeights);
+                        var nandu4List = await GetWeightedRandomListAsync(auth, false, true, tmGroup.TmIds, txId, 4, groupNandu4Count, wrongCategoryWeights);
+                        var nandu5List = await GetWeightedRandomListAsync(auth, false, true, tmGroup.TmIds, txId, 5, groupNandu5Count, wrongCategoryWeights);
 
                         // 将获取到的题目添加到结果列表中
                         if (nandu1List != null && nandu1List.Count > 0)
@@ -288,61 +307,47 @@ namespace XBLMS.Core.Repositories
                         }
                     }
 
-                    // 如果题目数量不足，从所有题目中随机抽取补足
+                    // 如果题目数量不足，从所有题目中随机抽取补足 - ***需要修改这里的调用***
+                    var excludeIds = resultList.Select(s => s.Id).ToList();
                     if (totalNandu1 < nandu1Count)
                     {
                         var remainingCount = nandu1Count - totalNandu1;
-                        var additionalList = await GetListByRandomAsync(auth, true, false, null, txId, remainingCount, 0, 0, 0, 0, resultList.Select(s => s.Id).ToList());
-                        if (additionalList != null && additionalList.Count > 0)
-                        {
-                            resultList.AddRange(additionalList);
-                        }
+                        var additionalList = await GetWeightedRandomListAsync(auth, true, false, null, txId, 1, remainingCount, wrongCategoryWeights, excludeIds);
+                        if (additionalList != null && additionalList.Count > 0) resultList.AddRange(additionalList);
                     }
                     if (totalNandu2 < nandu2Count)
                     {
                         var remainingCount = nandu2Count - totalNandu2;
-                        var additionalList = await GetListByRandomAsync(auth, true, false, null, txId, 0, remainingCount, 0, 0, 0, resultList.Select(s => s.Id).ToList());
-                        if (additionalList != null && additionalList.Count > 0)
-                        {
-                            resultList.AddRange(additionalList);
-                        }
+                        var additionalList = await GetWeightedRandomListAsync(auth, true, false, null, txId, 2, remainingCount, wrongCategoryWeights, excludeIds);
+                        if (additionalList != null && additionalList.Count > 0) resultList.AddRange(additionalList);
                     }
                     if (totalNandu3 < nandu3Count)
                     {
                         var remainingCount = nandu3Count - totalNandu3;
-                        var additionalList = await GetListByRandomAsync(auth, true, false, null, txId, 0, 0, remainingCount, 0, 0, resultList.Select(s => s.Id).ToList());
-                        if (additionalList != null && additionalList.Count > 0)
-                        {
-                            resultList.AddRange(additionalList);
-                        }
+                        var additionalList = await GetWeightedRandomListAsync(auth, true, false, null, txId, 3, remainingCount, wrongCategoryWeights, excludeIds);
+                        if (additionalList != null && additionalList.Count > 0) resultList.AddRange(additionalList);
                     }
                     if (totalNandu4 < nandu4Count)
                     {
                         var remainingCount = nandu4Count - totalNandu4;
-                        var additionalList = await GetListByRandomAsync(auth, true, false, null, txId, 0, 0, 0, remainingCount, 0, resultList.Select(s => s.Id).ToList());
-                        if (additionalList != null && additionalList.Count > 0)
-                        {
-                            resultList.AddRange(additionalList);
-                        }
+                        var additionalList = await GetWeightedRandomListAsync(auth, true, false, null, txId, 4, remainingCount, wrongCategoryWeights, excludeIds);
+                        if (additionalList != null && additionalList.Count > 0) resultList.AddRange(additionalList);
                     }
                     if (totalNandu5 < nandu5Count)
                     {
                         var remainingCount = nandu5Count - totalNandu5;
-                        var additionalList = await GetListByRandomAsync(auth, true, false, null, txId, 0, 0, 0, 0, remainingCount, resultList.Select(s => s.Id).ToList());
-                        if (additionalList != null && additionalList.Count > 0)
-                        {
-                            resultList.AddRange(additionalList);
-                        }
+                        var additionalList = await GetWeightedRandomListAsync(auth, true, false, null, txId, 5, remainingCount, wrongCategoryWeights, excludeIds);
+                        if (additionalList != null && additionalList.Count > 0) resultList.AddRange(additionalList);
                     }
                 }
                 else
                 {
-                    // 如果没有题目组，则从所有题目中随机抽取
-                    var nandu1List = await GetListByRandomAsync(auth, true, false, null, txId, nandu1Count, 0, 0, 0, 0);
-                    var nandu2List = await GetListByRandomAsync(auth, true, false, null, txId, 0, nandu2Count, 0, 0, 0);
-                    var nandu3List = await GetListByRandomAsync(auth, true, false, null, txId, 0, 0, nandu3Count, 0, 0);
-                    var nandu4List = await GetListByRandomAsync(auth, true, false, null, txId, 0, 0, 0, nandu4Count, 0);
-                    var nandu5List = await GetListByRandomAsync(auth, true, false, null, txId, 0, 0, 0, 0, nandu5Count);
+                    // 如果没有题目组，则从所有题目中随机抽取 - ***需要修改这里的调用***
+                    var nandu1List = await GetWeightedRandomListAsync(auth, true, false, null, txId, 1, nandu1Count, wrongCategoryWeights);
+                    var nandu2List = await GetWeightedRandomListAsync(auth, true, false, null, txId, 2, nandu2Count, wrongCategoryWeights);
+                    var nandu3List = await GetWeightedRandomListAsync(auth, true, false, null, txId, 3, nandu3Count, wrongCategoryWeights);
+                    var nandu4List = await GetWeightedRandomListAsync(auth, true, false, null, txId, 4, nandu4Count, wrongCategoryWeights);
+                    var nandu5List = await GetWeightedRandomListAsync(auth, true, false, null, txId, 5, nandu5Count, wrongCategoryWeights);
 
                     if (nandu1List != null && nandu1List.Count > 0)
                     {
@@ -367,8 +372,147 @@ namespace XBLMS.Core.Repositories
                 }
             }
 
-            // 对结果列表进行随机排序
+            // 对结果列表进行随机排序 (可选，如果前面加权抽取已保证随机性，这里可以只合并)
             return resultList.OrderBy(order => StringUtils.Guid()).ToList();
+        }
+
+        // 新增：加权随机抽样方法
+        private async Task<List<ExamTm>> GetWeightedRandomListAsync(AuthorityAuth auth, bool allTm, bool hasGroup, List<int> tmIds, int txId, int nandu, int count, Dictionary<int, int> categoryWeights, List<int> noTmIds = null)
+        {
+            if (count <= 0) return new List<ExamTm>(); // 如果不需要抽题，直接返回空列表
+
+            var query = Q.
+                   WhereNullOrFalse(nameof(ExamTm.Locked)).
+                   Where(nameof(ExamTm.Nandu), nandu); // 直接查询指定难度
+
+            // 应用 txId 筛选
+            if (txId > 0)
+            {
+                query.Where(nameof(ExamTm.TxId), txId);
+            }
+
+            // 应用题目组筛选 (如果不是 allTm 且有 group)
+            if (!allTm && hasGroup)
+            {
+                if (tmIds == null || tmIds.Count == 0)
+                {
+                    return new List<ExamTm>(); // 如果组内无题目，返回空
+                }
+                else
+                {
+                    // 限制查询范围在给定的 tmIds 内
+                    query.WhereIn(nameof(ExamTm.Id), tmIds);
+                }
+            }
+
+            // 应用排除 ID 筛选
+            if (noTmIds != null && noTmIds.Count > 0)
+            {
+                query.WhereNotIn(nameof(ExamTm.Id), noTmIds);
+            }
+
+            // 应用权限筛选 (根据 auth 类型)
+            // 注意：这里的权限筛选可能需要基于 ExamTm 的 CompanyId, DepartmentId, CreatorId
+            // 请确保 ExamTm 模型有这些字段，或者调整这里的逻辑以匹配你的数据模型
+            if (auth.AuthType == Enums.AuthorityType.Admin || auth.AuthType == Enums.AuthorityType.AdminCompany)
+            {
+                // 假设 ExamTm 有 CompanyId
+                query.Where(nameof(ExamTm.CompanyId), auth.CurManageOrganId);
+            }
+            else if (auth.AuthType == Enums.AuthorityType.AdminDepartment)
+            {
+                // 假设 ExamTm 有 DepartmentId
+                query.Where(nameof(ExamTm.DepartmentId), auth.CurManageOrganId);
+            }
+            else // 假设其他情况基于创建者
+            {
+                // 假设 ExamTm 有 CreatorId
+                query.Where(nameof(ExamTm.CreatorId), auth.AdminId);
+            }
+
+
+            // 获取所有符合条件的候选题目
+            var candidates = await _repository.GetAllAsync(query);
+
+            if (candidates == null || candidates.Count == 0)
+            {
+                return new List<ExamTm>(); // 没有候选题目
+            }
+
+            // 如果候选题目数量不足所需数量，直接返回打乱顺序的候选题目
+            if (candidates.Count <= count)
+            {
+                return candidates.OrderBy(x => StringUtils.Guid()).ToList();
+            }
+
+            // 执行加权随机抽样
+            return SelectWeightedRandom(candidates, count, categoryWeights);
+        }
+
+        // 新增：加权随机抽样辅助方法
+        private List<ExamTm> SelectWeightedRandom(List<ExamTm> candidates, int count, Dictionary<int, int> categoryWeights)
+        {
+            if (candidates == null || candidates.Count == 0 || count <= 0) return new List<ExamTm>();
+            if (count >= candidates.Count) return candidates.OrderBy(x => StringUtils.Guid()).ToList();
+
+            var random = new Random();
+            var selected = new List<ExamTm>();
+
+            // 计算每个候选者的权重
+            var weightedCandidates = candidates.Select(tm =>
+            {
+                int weight = 1; // 基础权重
+                if (categoryWeights.TryGetValue(tm.TreeId, out int wrongCount))
+                {
+                    // 权重增加策略：可以根据需要调整，例如错的越多权重增加越多
+                    // 简单策略：每错一次，权重+5 (可调)
+                    weight += wrongCount * 5;
+                }
+                return new { Item = tm, Weight = weight };
+            }).ToList();
+
+            long totalWeight = weightedCandidates.Sum(wc => (long)wc.Weight);
+
+            for (int i = 0; i < count; i++)
+            {
+                if (totalWeight <= 0 || !weightedCandidates.Any()) break;
+
+                long randomNumber = (long)(random.NextDouble() * totalWeight);
+                long cumulativeWeight = 0;
+                int selectedIndex = -1;
+
+                for (int j = 0; j < weightedCandidates.Count; j++)
+                {
+                    cumulativeWeight += weightedCandidates[j].Weight;
+                    if (randomNumber < cumulativeWeight)
+                    {
+                        selectedIndex = j;
+                        break;
+                    }
+                }
+
+                if (selectedIndex != -1)
+                {
+                    var chosen = weightedCandidates[selectedIndex];
+                    selected.Add(chosen.Item);
+                    totalWeight -= chosen.Weight; // 从总权重中移除
+                    weightedCandidates.RemoveAt(selectedIndex); // 从候选列表中移除
+                }
+                else if (weightedCandidates.Any()) // Fallback 以防万一
+                {
+                    int fallbackIndex = random.Next(weightedCandidates.Count);
+                    var chosen = weightedCandidates[fallbackIndex];
+                    selected.Add(chosen.Item);
+                    totalWeight -= chosen.Weight;
+                    weightedCandidates.RemoveAt(fallbackIndex);
+                }
+                else
+                {
+                    break; // 没有候选者了
+                }
+            }
+
+            return selected;
         }
 
         public async Task<List<ExamTm>> GetListByRandomAsync(AuthorityAuth auth, bool allTm, bool hasGroup, List<int> tmIds, int txId, int nandu1Count = 0, int nandu2Count = 0, int nandu3Count = 0, int nandu4Count = 0, int nandu5Count = 0, List<int> noTmIds = null)
@@ -388,7 +532,7 @@ namespace XBLMS.Core.Repositories
                     query.WhereIn(nameof(ExamTm.Id), tmIds);
                 }
             }
-            if(noTmIds!=null && noTmIds.Count > 0)
+            if (noTmIds != null && noTmIds.Count > 0)
             {
                 query.WhereNotIn(nameof(ExamTm.Id), noTmIds);
             }
