@@ -10,13 +10,13 @@ namespace XBLMS.Models
     public class ExamPlan : ExamPaper
     {
         [DataColumn]
-        public FrequencyType FrequencyType { get; set; } // 频率类型：Daily, Weekly, Monthly, Yearly
+        public FrequencyType FrequencyType { get; set; } = FrequencyType.PerWeekday; // 频率类型：Daily, Weekly, Monthly, Yearly
 
         [DataColumn]
-        public DateTime StartDate { get; set; }
+        public DateTime StartDate { get; set; } = DateTime.Now;
 
         [DataColumn]
-        public DateTime EndDate { get; set; }
+        public DateTime EndDate { get; set; } = DateTime.Now.AddDays(3);
 
         [DataColumn]
         public bool RequirePass { get; set; } // 未通过需重新做题

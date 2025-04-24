@@ -82,7 +82,7 @@
         "order": 5,
         "text": "计划考试",
         "link": "/admin/exam/examPlan/",
-        "iconClass": "el-icon-platform-eleme",
+        "iconClass": "el-icon-time",
         "permissions": [ "Select", "Add", "Update", "Delete", "Manage" ],
         "isPermission": true,
         "children": [

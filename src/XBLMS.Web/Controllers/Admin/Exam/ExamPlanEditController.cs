@@ -16,7 +16,7 @@ namespace XBLMS.Web.Controllers.Admin.Exam
     [Route(Constants.ApiAdminPrefix)]
     public partial class ExamPlanEditController : ControllerBase
     {
-        private const string Route = "exam/examPaperEdit";
+        private const string Route = "exam/examPlanEdit";
         private const string RouteGetConfig = Route + "/getConfig";
 
         private readonly IAuthManager _authManager;

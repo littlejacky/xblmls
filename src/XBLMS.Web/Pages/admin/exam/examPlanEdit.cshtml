@@ -24,7 +24,7 @@
                                 <el-input v-model.trim="form.title" placeholder="请输入试卷名称"></el-input>
                             </el-form-item>
                             
-                            <el-form-item label="考试时间" prop="startDate" :rules="{ required: true, message: '请选择计划开始时间' }">
+                            <el-form-item label="计划周期" prop="startDate" :rules="{ required: true, message: '请选择计划开始时间' }">
                                 <el-date-picker v-model="form.startDate"
                                                 type="date"
                                                 placeholder="开始时间"
@@ -42,16 +42,16 @@
                             <el-form-item label="频率类型" prop="frequencyType">
                                 <el-radio-group v-model="form.frequencyType" v-on:input="frequencyTypeChange">
                                     <el-radio label="Daily">每天</el-radio>
-                                    <el-radio label="PerWeekday">每个工作日</el-radio>
+                                    <el-radio label="PerWeekday">工作日</el-radio>
                                     <el-radio label="Weekly">每周</el-radio>
                                     <el-radio label="Monthly">每月</el-radio>
-                                    <el-radio label="Yearly">每年</el-radio>
+                                    @* <el-radio label="Yearly">每年</el-radio> *@
                                 </el-radio-group>
                             </el-form-item>
 
                             <el-form-item>
-                                <el-checkbox v-model="form.requirePass">开启必过</el-checkbox>
-                                <div class="tips">未合格需重新做题</div>
+                                <el-checkbox v-model="form.requirePass">开启必过模式</el-checkbox>
+                                <div class="tips">不及格需要重考</div>
                             </el-form-item>
                             @* <el-form-item v-if="id>0">
                                 <el-checkbox v-model="isUpdateDateTime">修改已安排的考生数据</el-checkbox>
@@ -200,7 +200,7 @@
                             </el-form-item>
                             <el-form-item label="题目组占比" v-if="form.tmRandomType!=='RandomNone' && form.tmGroupIds && form.tmGroupIds.length > 1">
                                 <el-table :data="tmGroupProportions" border size="small" style="width: 100%" :summary-method="getProportionSummaries" show-summary>
-                                    <el-table-column prop="groupName" label="题目组名称" width="180"></el-table-column>
+                                    <el-table-column prop="groupName" label="题目组名称" width="280"></el-table-column>
                                     <el-table-column label="占比(%)" width="120">
                                         <template slot-scope="scope">
                                             <el-input-number size="mini" v-model="scope.row.proportion" :min="0" :max="100" :precision="0" :step="5" style="width:90px;"></el-input-number>

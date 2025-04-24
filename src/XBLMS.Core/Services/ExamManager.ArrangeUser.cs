@@ -4,11 +4,14 @@ using System.Threading.Tasks;
 using XBLMS.Dto;
 using XBLMS.Enums;
 using XBLMS.Models;
+using XBLMS.Services; // Assuming INotificationService is in this namespace
 
 namespace XBLMS.Core.Services
 {
     public partial class ExamManager
     {
+        // Assuming INotificationService _notificationService; is declared and injected in another partial class file or constructor
+
         public async Task Arrange(ExamPaper paper, AuthorityAuth auth)
         {
             var userIds = new List<int>();
@@ -81,6 +84,11 @@ namespace XBLMS.Core.Services
                             DepartmentId = user.DepartmentId,
                             CreatorId = user.CreatorId
                         });
+
+                        // Send notification after arranging exam for the user
+                        // TODO: Ensure _notificationService is properly injected and available
+                        // await _notificationService.SendExamArrangedNotificationAsync(userId, paper.Id, paper.Title);
+                        await _notificationManager.SendExamArrangedNotificationAsync(user, paper);
                     }
                 }
             }
@@ -107,6 +115,11 @@ namespace XBLMS.Core.Services
                     DepartmentId = user.DepartmentId,
                     CreatorId = user.CreatorId
                 });
+
+                // Send notification after arranging exam for the user
+                // TODO: Ensure _notificationService is properly injected and available
+                // await _notificationService.SendExamArrangedNotificationAsync(userId, paper.Id, paper.Title);
+                await _notificationManager.SendExamArrangedNotificationAsync(user, paper);
             }
         }
     }

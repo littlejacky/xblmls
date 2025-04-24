@@ -130,7 +130,7 @@ namespace XBLMS.Web
 
             services.AddCache(settingsManager.Redis.ConnectionString);
 
-            services.AddTaskServices();
+            services.AddTaskServices(_config);
             services.AddRepositories(assemblies);
             services.AddServices();
       
@@ -291,7 +291,7 @@ namespace XBLMS.Web
 
             app.UseRequestLocalization();
 
-            // ³õÊ¼»¯¼Æ»®µ÷¶ÈÆ÷
+            // ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½Æ»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             planScheduler.Initialize();
 
             if (!settingsManager.IsSafeMode)

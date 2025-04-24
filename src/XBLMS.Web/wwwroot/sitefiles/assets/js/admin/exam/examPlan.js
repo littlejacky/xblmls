@@ -3,7 +3,7 @@ var $urlDelete = $url + '/del';
 var $urlLock = $url + '/lock';
 var $urlUnLock = $url + '/unLock';
 
-var $treeUrl = '/exam/examPaperTree?isPlan=true';
+var $treeUrl = '/exam/examPaperTree';
 var $treeUrlAdd = $treeUrl + '/add';
 var $treeUrlUpdate = $treeUrl + '/update';
 var $treeUrlDelete = $treeUrl + '/del';
@@ -189,7 +189,7 @@ var methods = {
       top.utils.openLayer({
         title: false,
         closebtn: 0,
-        url: utils.getExamUrl('examPaperEdit', { id: id, treeId: this.treeSelectId }),
+        url: utils.getExamUrl('examPlanEdit', { id: id, treeId: this.treeSelectId }),
         width: "98%",
         height: "98%",
         end: function () {
@@ -207,7 +207,7 @@ var methods = {
     top.utils.openLayer({
       title: false,
       closebtn: 0,
-      url: utils.getExamUrl('examPaperEdit', { id: id, copyId: id }),
+      url: utils.getExamUrl('examPlanEdit', { id: id, copyId: id }),
       width: "98%",
       height: "98%",
       end: function () {
@@ -220,7 +220,7 @@ var methods = {
   //tree
   apiGetTree: function () {
     var $this = this;
-    $api.get($treeUrl).then(function (response) {
+    $api.get($treeUrl +"?isPlan=true").then(function (response) {
       var res = response.data;
       $this.treeItems = res.items;
 

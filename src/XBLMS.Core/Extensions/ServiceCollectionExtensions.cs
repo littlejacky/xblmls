@@ -89,12 +89,19 @@ namespace XBLMS.Core.Extensions
             }
         }
 
-        public static void AddTaskServices(this IServiceCollection services)
+        public static void AddTaskServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddHostedService<QueuedHostedService>();
             services.AddSingleton<ITaskManager, TaskManager>();
             // 注册计划调度服务
             services.AddSingleton<IPlanScheduler, PlanScheduler>();
+            services.AddSingleton<INotificationManager>(sp => new NotificationManager(new Utils.UnipushManager.Config
+            {
+                AppId = configuration["Push:AppId"],
+                AppKey = configuration["Push:AppKey"],
+                AppSecret = configuration["Push:AppSecret"],
+                MasterSecret = configuration["Push:MasterSecret"]
+            }));
         }
 
         public static void AddServices(this IServiceCollection services)
