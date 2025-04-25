@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using XBLMS.Dto;
 using XBLMS.Models;
 
@@ -8,6 +9,7 @@ namespace XBLMS.Services
     {
         Task Arrange(ExamPaper paper, AuthorityAuth auth);
         Task Arrange(int paperId, int userId);
+        Task<List<int>> Arrange(ExamPlan paper, AuthorityAuth auth);
     }
 
 }

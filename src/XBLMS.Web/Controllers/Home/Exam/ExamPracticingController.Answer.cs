@@ -50,18 +50,31 @@ namespace XBLMS.Web.Controllers.Home.Exam
                 }
             }
 
-            await _examPracticeAnswerRepository.InsertAsync(new ExamPracticeAnswer
+            var record = await _examPracticeAnswerRepository.GetAsync(user.Id, tm.Id, request.PracticeId);
+            if (record == null)
             {
-                UserId = user.Id,
-                PracticeId = request.PracticeId,
-                TmId = request.Id,
-                IsRight = result.IsRight
-            });
+                await _examPracticeAnswerRepository.InsertAsync(new ExamPracticeAnswer
+                {
+                    UserId = user.Id,
+                    PracticeId = request.PracticeId,
+                    TmId = request.Id,
+                    IsRight = result.IsRight
+                });
 
-            await _examPracticeRepository.IncrementAnswerCountAsync(request.PracticeId);
-            if (result.IsRight)
+                await _examPracticeRepository.IncrementAnswerCountAsync(request.PracticeId);
+                if (result.IsRight)
+                {
+                    await _examPracticeRepository.IncrementRightCountAsync(request.PracticeId);
+                }
+            }
+            else
             {
-                await _examPracticeRepository.IncrementRightCountAsync(request.PracticeId);
+                if (!record.IsRight && result.IsRight)
+                {
+                    record.IsRight = true;
+                    await _examPracticeAnswerRepository.UpdateAsync(record);
+                    await _examPracticeRepository.IncrementRightCountAsync(request.PracticeId);
+                }
             }
 
             return result;

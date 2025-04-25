@@ -90,6 +90,7 @@ var data = utils.init({
 
   examPaper: null,
   examMoni: null,
+  practiceArrangement: null,
 
   courseList: null,
   studyPlan: null,
@@ -110,6 +111,7 @@ var data = utils.init({
   taskAssTotal: 0,
   taskPlanTotal: 0,
   taskCourseTotal: 0,
+  taskPracticeTotal: 0,
 });
 
 var methods = {
@@ -142,6 +144,7 @@ var methods = {
 
       $this.examPaper = res.examPaper;
       $this.examMoni = res.examMoni;
+      $this.examPractice = res.examPractice;
 
       $this.courseList = res.courseList;
 
@@ -161,8 +164,9 @@ var methods = {
       $this.taskPlanTotal = res.taskPlanTotal;
       $this.taskCourseTotal = res.taskCourseTotal;
       $this.taskAssTotal = res.taskAssTotal;
+      $this.taskPracticeTotal = res.taskPracticeTotal;
 
-      $this.taskTotal = $this.taskPaperTotal + $this.taskQTotal + $this.taskAssTotal + $this.taskPlanTotal + $this.taskCourseTotal;
+      $this.taskTotal = $this.taskPaperTotal + $this.taskQTotal + $this.taskAssTotal + $this.taskPlanTotal + $this.taskCourseTotal + $this.taskPracticeTotal;
 
 
       $this.dateStr = res.dateStr;
@@ -297,6 +301,9 @@ var methods = {
       id: row.id,
       src: row.cerImg + '?r=' + Math.random()
     })
+  },
+  btnViewPracticeClick: function (res) {
+    $this.goPractice(res.id);
   }
 };
 Vue.component("apexchart", {

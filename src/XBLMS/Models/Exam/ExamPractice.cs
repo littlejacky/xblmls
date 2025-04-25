@@ -24,5 +24,7 @@ namespace XBLMS.Models
         public int AnswerCount { get; set; }
         [DataColumn]
         public int RightCount { get; set; }
+        [DataColumn]
+        public int PlanId { get; set; }
     }
 }

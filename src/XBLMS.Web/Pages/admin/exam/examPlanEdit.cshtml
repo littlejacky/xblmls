@@ -49,10 +49,17 @@
                                 </el-radio-group>
                             </el-form-item>
 
-                            <el-form-item>
+                            <el-form-item label="计划类型" prop="planType">
+                                <el-radio-group v-model="form.planType" v-on:input="planTypeChange">
+                                    <el-radio label="Paper">考试</el-radio>
+                                    <el-radio label="Practice">练习</el-radio>
+                                </el-radio-group>
+                            </el-form-item>
+
+                           @*  <el-form-item>
                                 <el-checkbox v-model="form.requirePass">开启必过模式</el-checkbox>
                                 <div class="tips">不及格需要重考</div>
-                            </el-form-item>
+                            </el-form-item> *@
                             @* <el-form-item v-if="id>0">
                                 <el-checkbox v-model="isUpdateDateTime">修改已安排的考生数据</el-checkbox>
                             </el-form-item> *@

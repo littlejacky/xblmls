@@ -115,6 +115,7 @@ namespace XBLMS.Core.Services
             }
             return true;
         }
+
         public async Task<int> SetExamPaperRantomByRandomNowAndExaming(ExamPaper paper, AuthorityAuth auth, int? userId = null)
         {
             int lastRandomId = 0;
@@ -342,5 +343,99 @@ namespace XBLMS.Core.Services
                 paper.TotalScore = (int)Math.Ceiling(tmTotalScore);
             }
         }
+
+        public async Task<List<ExamTm>> SetExamPaperRantomByRandomNowAndExaming(ExamPlan plan, AuthorityAuth auth, int userId)
+        {
+            var tmIds = new List<int>();
+            var tmGroupIds = plan.TmGroupIds;
+            var hasTmGroup = false;
+            var allTm = false;
+            var tmGroupList = new List<TmGroup>();
+            if (tmGroupIds != null && tmGroupIds.Count > 0)
+            {
+                var tmGroupProportions = await _examTmGroupProportionRepository.GetListAsync(plan.Id);
+                hasTmGroup = true;
+                foreach (var tmGroupId in tmGroupIds)
+                {
+                    var tmGroup = await _examTmGroupRepository.GetAsync(tmGroupId);
+                    if (tmGroup != null)
+                    {
+                        var tmGroupProportion = tmGroupProportions.Find(f => f.TmGroupId == tmGroupId);
+                        if (tmGroup.GroupType == TmGroupType.Fixed && tmGroup.TmIds != null && tmGroup.TmIds.Count > 0)
+                        {
+                            tmIds.AddRange(tmGroup.TmIds);
+                            tmGroupList.Add(new TmGroup
+                            {
+                                Id = tmGroupId,
+                                TmIds = tmGroup.TmIds,
+                                Ratio = tmGroupProportion.GroupRatio
+                            });
+                        }
+                        if (tmGroup.GroupType == TmGroupType.Range)
+                        {
+                            var tmIdsByGroup = await _examTmRepository.Group_RangeIdsAsync(auth, tmGroup);
+                            if (tmIdsByGroup != null && tmIdsByGroup.Count > 0)
+                            {
+                                tmIds.AddRange(tmIdsByGroup);
+                                tmGroupList.Add(new TmGroup
+                                {
+                                    Id = tmGroupId,
+                                    TmIds = tmIdsByGroup,
+                                    Ratio = tmGroupProportion.GroupRatio
+                                });
+                            }
+                        }
+                        if (tmGroup.GroupType == TmGroupType.All)
+                        {
+                            allTm = true;
+                        }
+                    }
+                }
+
+            }
+
+            var tms = new List<ExamTm>();
+
+            if (allTm)
+            {
+                foreach (var config in plan.ConfigList)
+                {
+                    var tmList = await _examTmRepository.GetListByRandomAsync(auth, allTm, hasTmGroup, tmIds, config.TxId, config.Nandu1TmCount, 0, 0, 0, 0);
+                    if (tmList != null && tmList.Count > 0)
+                    {
+                        tms.AddRange(tmList);
+                    }
+                    tmList = await _examTmRepository.GetListByRandomAsync(auth, allTm, hasTmGroup, tmIds, config.TxId, 0, config.Nandu2TmCount, 0, 0, 0);
+                    if (tmList != null && tmList.Count > 0)
+                    {
+                        tms.AddRange(tmList);
+                    }
+                    tmList = await _examTmRepository.GetListByRandomAsync(auth, allTm, hasTmGroup, tmIds, config.TxId, 0, 0, config.Nandu3TmCount, 0, 0);
+                    if (tmList != null && tmList.Count > 0)
+                    {
+                        tms.AddRange(tmList);
+                    }
+                    tmList = await _examTmRepository.GetListByRandomAsync(auth, allTm, hasTmGroup, tmIds, config.TxId, 0, 0, 0, config.Nandu4TmCount, 0);
+                    if (tmList != null && tmList.Count > 0)
+                    {
+                        tms.AddRange(tmList);
+                    }
+                    tmList = await _examTmRepository.GetListByRandomAsync(auth, allTm, hasTmGroup, tmIds, config.TxId, 0, 0, 0, 0, config.Nandu5TmCount);
+                    if (tmList != null && tmList.Count > 0)
+                    {
+                        tms.AddRange(tmList);
+                    }
+                }
+            }
+            else
+            {
+                ExamPracticeWrong wrong = await _examPracticeWrongRepository.GetAsync(userId);
+
+                tms = await _examTmRepository.GetListByRandomAsync(auth, tmGroupList, plan.ConfigList, wrong);
+            }
+
+            return tms;
+        }
+
     }
 }

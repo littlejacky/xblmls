@@ -89,6 +89,7 @@ var data = utils.init({
 
   examPaper: null,
   examMoni: null,
+  practiceArrangement: null,
 
   taskTotal: 0,
   taskPaperTotal: 0,
@@ -97,6 +98,7 @@ var data = utils.init({
   taskPlanTotal: 0,
   taskCourseTotal: 0,
   taskDialogVisible: false,
+  taskPracticeTotal: 0,
 
   courseList: null,
   studyPlan: null,
@@ -148,6 +150,7 @@ var methods = {
 
       $this.examPaper = res.examPaper;
       $this.examMoni = res.examMoni;
+      $this.examPractice = res.examPractice;
 
       $this.taskPaperTotal = res.taskPaperTotal;
       $this.taskQTotal = res.taskQTotal;
@@ -155,7 +158,7 @@ var methods = {
       $this.taskCourseTotal = res.taskCourseTotal;
       $this.taskAssTotal = res.taskAssTotal;
 
-      $this.taskTotal = $this.taskPaperTotal + $this.taskQTotal + $this.taskAssTotal + $this.taskPlanTotal + $this.taskCourseTotal;
+      $this.taskTotal = $this.taskPaperTotal + $this.taskQTotal + $this.taskAssTotal + $this.taskPlanTotal + $this.taskCourseTotal + $this.taskPracticeTotal;
 
       $this.courseList = res.courseList;
 
@@ -380,6 +383,9 @@ var methods = {
   setDocumentTitel: function () {
     top.document.title = "首页";
   },
+  btnViewPracticeClick: function (res) {
+    $this.goPractice(res.id);
+  }
 };
 Vue.component("apexchart", {
   extends: VueApexCharts

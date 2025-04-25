@@ -88,11 +88,11 @@
                                             <el-input-number v-model="form.timingMinute" :min="1"></el-input-number>
                                             <small class="tips">单位分钟，计时结束自动交卷</small>
                                         </el-form-item>
-                                        <el-form-item label="考试类型" prop="isClientExam">
+                                        @* <el-form-item label="考试类型" prop="isClientExam">
                                             <el-radio v-model="form.isClientExam" :label="false">普通考试</el-radio>
                                             <el-radio v-model="form.isClientExam" :label="true">严肃考试</el-radio>
                                             <div class="tips">严肃考试需要安装考试客户端，仅适用于Windows操作系统</div>
-                                        </el-form-item>
+                                        </el-form-item> *@
                                         <el-form-item label="允许退出">
                                             <el-switch v-model="form.openExist" active-color="#13ce66"
                                                        active-text="允许退出">

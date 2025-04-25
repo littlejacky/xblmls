@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using DocumentFormat.OpenXml.Spreadsheet;
+using System.Threading.Tasks;
 using XBLMS.Core.Utils;
 using XBLMS.Models;
 using XBLMS.Services;
@@ -16,19 +17,37 @@ namespace XBLMS.Core.Services
             _pusher = new UnipushManager(config);
         }
 
-        public async Task SendExamArrangedNotificationAsync(User user, ExamPaper paper)
+        public async Task SendExamPaperArrangedNotificationAsync(User user, ExamPaper paper)
         {
-            // 单独推送给cid为123456的用户一条消息，点击后会调用系统浏览器打开https://www.baidu.com
-            await _pusher.SinglePush(user.Cid,
-                new MessageModel
+            await SendNotificationAsync(user.Cid, new MessageModel
+            {
+                Title = "单独推送标题-来自C#",
+                Content = "这是一条来自C#发送的测试消息，单独推送给123456",
+                ClickType = ClickType.payload,
+                ClickObj = Newtonsoft.Json.JsonConvert.SerializeObject(new
                 {
-                    Title = "单独推送标题-来自C#",
-                    Content = "这是一条来自C#发送的测试消息，单独推送给123456",
-                    ClickType = ClickType.payload,
-                    ClickObj = Newtonsoft.Json.JsonConvert.SerializeObject(new
-                    {
-                    })
-                });
+                })
+            });
+        }
+
+        public async Task SendExamPracticeArrangedNotificationAsync(User user, ExamPractice practice)
+        {
+            await SendNotificationAsync(user.Cid, new MessageModel
+            {
+                Title = "单独推送标题-来自C#",
+                Content = "这是一条来自C#发送的测试消息，单独推送给123456",
+                ClickType = ClickType.payload,
+                ClickObj = Newtonsoft.Json.JsonConvert.SerializeObject(new
+                {
+                })
+            });
+        }
+
+        public async Task SendNotificationAsync(string cid, MessageModel message)
+        {
+
+            // 单独推送给cid为123456的用户一条消息，点击后会调用系统浏览器打开https://www.baidu.com
+            await _pusher.SinglePush(cid, message);
         }
     }
 }

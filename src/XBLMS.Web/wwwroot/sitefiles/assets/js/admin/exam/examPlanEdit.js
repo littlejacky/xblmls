@@ -391,6 +391,9 @@ var methods = {
   frequencyTypeChange: function (value) {
 
   },
+  planTypeChange: function (value) {
+
+  },
 };
 
 var $vue = new Vue({

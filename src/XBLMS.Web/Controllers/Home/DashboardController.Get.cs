@@ -25,9 +25,11 @@ namespace XBLMS.Web.Controllers.Home
 
             var resultPaper = new ExamPaper();
             var resultMoni = new ExamPaper();
+            var resultPractice = new ExamPractice();
 
             var (paperTotal, paperList) = await _examPaperUserRepository.GetListAsync(user.Id, false, "", "", 1, 1);
             var (moniPaperTotal, moniPaperList) = await _examPaperUserRepository.GetListAsync(user.Id, true, "", "", 1, 1);
+            var (practiceTotal, practiceList) = await _examPracticeRepository.GetListAsync(user.Id, "", "", 1, 1, true);
 
             if (paperTotal > 0)
             {
@@ -51,8 +53,16 @@ namespace XBLMS.Web.Controllers.Home
             {
                 resultMoni = null;
             }
+            if (practiceTotal > 0)
+            {
+                resultPractice = practiceList[0]; 
+            }
+            else
+            {
+                resultPractice = null;
+            }
 
-
+            var taskPracticeTotal = practiceList.Count;
 
             var taskPaperTotal = 0;
 
@@ -154,6 +164,7 @@ namespace XBLMS.Web.Controllers.Home
 
                 ExamPaper = resultPaper,
                 ExamMoni = resultMoni,
+                ExamPractice = resultPractice,
 
                 PracticeAnswerTmTotal = answerTmTotal,
                 PracticeAnswerPercent = answerPercent,
@@ -169,6 +180,7 @@ namespace XBLMS.Web.Controllers.Home
                 TaskAssTotal = taskAssCount,
                 TaskPlanTotal = planTask,
                 TaskCourseTotal = courseTask,
+                TaskPracticeTotal = taskPracticeTotal,
 
                 CourseList = courseList,
                 StudyPlan = planUser,

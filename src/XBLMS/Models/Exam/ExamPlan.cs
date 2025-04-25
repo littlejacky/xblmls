@@ -23,5 +23,9 @@ namespace XBLMS.Models
 
         [DataColumn(Text = true)]
         public List<ExamPaperRandomConfig> ConfigList { get; set; }
+
+        [DataColumn]
+        public PlanType PlanType { get; set; } = PlanType.Practice;
+
     }
 }

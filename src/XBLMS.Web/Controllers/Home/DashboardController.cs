@@ -37,6 +37,7 @@ namespace XBLMS.Web.Controllers.Home
         private readonly IStudyPlanCourseRepository _studyPlanCourseRepository;
         private readonly IExamCerUserRepository _examCerUserRepository;
         private readonly IExamCerRepository _examCerRepository;
+        private readonly IExamPracticeRepository _examPracticeRepository;
 
         public DashboardController(IConfigRepository configRepository,
             ISettingsManager settingsManager,
@@ -57,7 +58,8 @@ namespace XBLMS.Web.Controllers.Home
             IStudyPlanUserRepository studyPlanUserRepository,
             IStudyPlanCourseRepository studyPlanCourseRepository,
             IExamCerUserRepository examCerUserRepository,
-            IExamCerRepository examCerRepository)
+            IExamCerRepository examCerRepository,
+            IExamPracticeRepository examPracticeRepository)
         {
             _configRepository = configRepository;
             _settingsManager = settingsManager;
@@ -79,6 +81,7 @@ namespace XBLMS.Web.Controllers.Home
             _studyPlanCourseRepository = studyPlanCourseRepository;
             _examCerUserRepository = examCerUserRepository;
             _examCerRepository = examCerRepository;
+            _examPracticeRepository = examPracticeRepository;
         }
 
         public class GetResult
@@ -92,6 +95,7 @@ namespace XBLMS.Web.Controllers.Home
 
             public ExamPaper ExamPaper { get; set; }
             public ExamPaper ExamMoni { get; set; }
+            public ExamPractice ExamPractice { get; set; }
 
             public int PracticeAnswerTmTotal { get; set; }
             public double PracticeAnswerPercent { get; set; }
@@ -107,6 +111,7 @@ namespace XBLMS.Web.Controllers.Home
             public int TaskAssTotal { get; set; }
             public int TaskPlanTotal { get; set; }
             public int TaskCourseTotal { get; set; }
+            public int TaskPracticeTotal { get; set; }
 
             public List<StudyCourse> CourseList { get; set; }
             public StudyPlanUser StudyPlan { get; set; }

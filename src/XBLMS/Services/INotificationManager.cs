@@ -5,6 +5,7 @@ namespace XBLMS.Services
 {
     public partial interface INotificationManager
     {
-        Task SendExamArrangedNotificationAsync(User user, ExamPaper paper);
+        Task SendExamPaperArrangedNotificationAsync(User user, ExamPaper paper);
+        Task SendExamPracticeArrangedNotificationAsync(User user, ExamPractice practice);
     }
 }

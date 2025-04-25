@@ -28,7 +28,7 @@ namespace XBLMS.Core.Repositories
             return await _repository.GetAsync(id);
         }
 
-        public async Task<(int total, List<ExamPractice> list)> GetListAsync(int userId, string dateFrom, string dateTo, int pageIndex, int pageSize)
+        public async Task<(int total, List<ExamPractice> list)> GetListAsync(int userId, string dateFrom, string dateTo, int pageIndex, int pageSize, bool isPlan = false)
         {
             var query = Q.Where(nameof(ExamPractice.UserId), userId);
 
@@ -40,6 +40,11 @@ namespace XBLMS.Core.Repositories
             if (!string.IsNullOrWhiteSpace(dateTo))
             {
                 query.Where(nameof(ExamPractice.CreatedDate), "<=", TranslateUtils.ToDateTime(dateTo));
+            }
+
+            if (isPlan)
+            {
+                query.Where(nameof(ExamPractice.PracticeType), PracticeType.Random);
             }
 
             var count = await _repository.CountAsync(query);
