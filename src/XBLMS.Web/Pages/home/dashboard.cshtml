@@ -289,7 +289,7 @@
 <!-- 刷题安排区域 -->
 <div class="container mt-4">
     <div class="row">
-        <div class="col-12">
+        <div class="col-7">
             <div class="ps-8" v-if="examPractice && examPractice.id>0">
                 <div class="text-uppercase text-warning fw-semibold p-4 mt-3">
                     <h2 class="h2 fw-bold m-0 p-0 text-warning"><i class="bi bi-flag-fill me-2"></i>最新刷题安排</h2>
@@ -324,11 +324,11 @@
                 </div>
             </div>
         </div>
-        @* <div class="col-5">
+        <div class="col-5">
             <div class="me-5">
-                <apexchart class="pt-3" type="radialBar" :options="practiceChartOptions" :series="practiceSeries" height="399"></apexchart>
+                <apexchart type="radialBar" :options="chartOptions" :series="series" height="399"></apexchart>
             </div>
-        </div> *@
+        </div>
     </div>
 </div>
 

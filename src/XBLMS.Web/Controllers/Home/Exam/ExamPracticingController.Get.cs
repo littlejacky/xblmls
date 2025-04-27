@@ -19,6 +19,10 @@ namespace XBLMS.Web.Controllers.Home.Exam
             var item = await _examPracticeRepository.GetAsync(request.Id);
             if (item != null)
             {
+                item.AnswerCount = 0;
+                item.RightCount = 0;
+                await _examPracticeRepository.UpdateAsync(item);
+
                 item.TmIds = item.TmIds.OrderBy(tm => { return StringUtils.Guid(); }).ToList();
                 return new GetResult
                 {

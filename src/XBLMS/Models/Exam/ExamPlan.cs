@@ -27,5 +27,8 @@ namespace XBLMS.Models
         [DataColumn]
         public PlanType PlanType { get; set; } = PlanType.Practice;
 
+        [DataColumn]
+        public int ExecutedCount { get; set; }
+
     }
 }

@@ -24,5 +24,6 @@ namespace XBLMS.Repositories
         Task<(int allCount, int addCount, int deleteCount, int lockedCount, int unLockedCount)> GetDataCount(AuthorityAuth auth);
 
         Task<List<ExamPlan>> GetActivePlansAsync(DateTime currentDate);
+        Task IncrementExecutedCountAsync(int id);
     }
 }

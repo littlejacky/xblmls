@@ -21,6 +21,8 @@ namespace XBLMS.Core.Services
 
             foreach (var plan in activePlans)
             {
+                if (plan.FrequencyType == FrequencyType.Immediately) continue;
+
                 if (plan.PlanType == PlanType.Practice)
                 {
                     await SetPlanPractice(plan, today);
@@ -29,6 +31,24 @@ namespace XBLMS.Core.Services
                 {
                     await SetPlanPaper(plan, today);
                 }
+            }
+
+            return true;
+        }
+
+        public async Task<bool> CreateImmediatelyTrainingTasks(ExamPlan plan)
+        {
+            var today = DateTime.Today;
+
+            if (plan.FrequencyType != FrequencyType.Immediately) return false;
+
+            if (plan.PlanType == PlanType.Practice)
+            {
+                await SetPlanPractice(plan, today);
+            }
+            else if (plan.PlanType == PlanType.Paper)
+            {
+                await SetPlanPaper(plan, today);
             }
 
             return true;
@@ -44,8 +64,7 @@ namespace XBLMS.Core.Services
                 (plan.FrequencyType == Enums.FrequencyType.Weekly && today.Day == 1) ||
                 (plan.FrequencyType == Enums.FrequencyType.Monthly && today.DayOfWeek != DayOfWeek.Saturday && today.DayOfWeek != DayOfWeek.Sunday) ||
                 (plan.FrequencyType == Enums.FrequencyType.PerWeekday && today.DayOfWeek != DayOfWeek.Saturday && today.DayOfWeek != DayOfWeek.Sunday) ||
-                (plan.FrequencyType == Enums.FrequencyType.Weekly && today.DayOfWeek == DayOfWeek.Monday) ||
-                (plan.FrequencyType == Enums.FrequencyType.Yearly && today.Day == 1 && today.Month == 1)
+                (plan.FrequencyType == Enums.FrequencyType.Weekly && today.DayOfWeek == DayOfWeek.Monday)
                 )
             {
                 practice = new ExamPractice();
@@ -69,6 +88,8 @@ namespace XBLMS.Core.Services
 
                     await _examPracticeRepository.InsertAsync(practice);
                 }
+
+                await _examPlanRepository.IncrementExecutedCountAsync(plan.Id);
             }
         }
 
@@ -124,19 +145,6 @@ namespace XBLMS.Core.Services
                         return;
                     }
                     break;
-
-                case Enums.FrequencyType.Yearly:
-                    if (today.Day == 1 && today.Month == 1) // 每年的第一天
-                    {
-                        paper = new ExamPaper();
-                        paper.ExamBeginDateTime = today.Date;
-                        paper.ExamEndDateTime = today.Date.AddYears(1).AddSeconds(-1);
-                    }
-                    else
-                    {
-                        return;
-                    }
-                    break;
             }
 
             paper.SubmitType = SubmitType.Submit;
@@ -159,6 +167,7 @@ namespace XBLMS.Core.Services
             await _authManager.AddStatCount(StatType.ExamAdd);
 
             await _examPaperRepository.UpdateAsync(paper);
+            await _examPlanRepository.IncrementExecutedCountAsync(plan.Id);
         }
 
         private async Task SetRandomConfigs(List<ExamPaperRandomConfig> randomConfigs, ExamPaper paper)

@@ -330,7 +330,7 @@
     <div class="p-3 pb-2 mt-4">
         <h5 class="border-start border-5 border-primary ps-2 d-flex justify-content-between align-items-center">
             <span>最新刷题安排</span>
-            <el-link :underline="false" v-on:click="goShuati">更多<i class="el-icon-more ms-2"></i></el-link>
+            <el-link :underline="false" v-on:click="goShuatiLog">更多<i class="el-icon-more ms-2"></i></el-link>
         </h5>
     </div>
     <div class="card rounded-4 mb-3 shadow-lg" v-if="examPractice" v-on:click="btnViewPracticeClick(examPractice)">
@@ -342,7 +342,8 @@
                 <div class="col">
                     <div>
                         <div class="fw-light">
-                            <div class="mb-1">共{{examPractice.tmCount}}题</div>
+                            <div class="mb-1">共：{{ examPractice.tmCount }}题</div>
+                            <div class="mb-1">答题：{{examPractice.answerCount}}<span class="me-1"></span>/正确：{{examPractice.rightCount}}</div>
                         </div>
                     </div>
                 </div>

@@ -194,13 +194,13 @@ var methods = {
           var valido = $this.submitValid();
           if (!valido) return;
 
-          if ($this.id > 0 && $this.form.submitType === 'Submit') {
-            $this.submitDialogVisible = true;
-            $this.submitSubmitIsClear = true;
-          }
-          else {
+          //if ($this.id > 0 && $this.form.submitType === 'Submit') {
+          //  $this.submitDialogVisible = true;
+          //  $this.submitSubmitIsClear = true;
+          //}
+          //else {
             $this.apiSubmit();
-          }
+          //}
         }
       });
     }

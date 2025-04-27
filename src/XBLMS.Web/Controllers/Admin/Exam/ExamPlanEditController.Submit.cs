@@ -40,47 +40,12 @@ namespace XBLMS.Web.Controllers.Admin.Exam
 
             if (plan.Id > 0)
             {
-                var oldPlan = await _examPlanRepository.GetAsync(plan.Id);
+                plan.ConfigList = request.ConfigList;
 
-                if (request.SubmitType == SubmitType.Submit)
-                {
-                    plan.SubmitType = request.SubmitType;
-                    plan.ConfigList = request.ConfigList;
-                    //await _examManager.ClearRandom(plan.Id, request.IsClear);
-
-                    //await SetRandomConfigs(request.ConfigList, plan);
-
-                    //await _examManager.PaperRandomSet(plan, auth);
-                    //await _examManager.Arrange(plan, auth);
-
-                    await _authManager.AddAdminLogAsync("重新发布考试计划", plan.Title);
-                    await _authManager.AddStatLogAsync(StatType.ExamPlanUpdate, "重新发布考试计划", plan.Id, plan.Title);
-                }
-                else
-                {
-                    await _authManager.AddAdminLogAsync("修改考试计划", plan.Title);
-                    await _authManager.AddStatLogAsync(StatType.ExamPlanUpdate, "修改考试计划", plan.Id, plan.Title);
-                }
+                await _authManager.AddAdminLogAsync("修改计划", plan.Title);
+                await _authManager.AddStatLogAsync(StatType.ExamPlanUpdate, "修改计划", plan.Id, plan.Title);
 
                 await _examPlanRepository.UpdateAsync(plan);
-
-                //if (request.IsUpdateDateTime)
-                //{
-                //    await _examPaperUserRepository.UpdateExamDateTimeAsync(plan.Id, plan.ExamBeginDateTime.Value, plan.ExamEndDateTime.Value);
-                //}
-                //if (request.IsUpdateExamTimes)
-                //{
-                //    await _examPaperUserRepository.UpdateExamTimesAsync(plan.Id, plan.ExamTimes);
-                //}
-                //if (oldPlan.Title != plan.Title)
-                //{
-                //    await _examPaperUserRepository.UpdateKeyWordsAsync(plan.Id, plan.Title);
-                //    await _examPaperStartRepository.UpdateKeyWordsAsync(plan.Id, plan.Title);
-                //}
-                //if (oldPlan.Moni != plan.Moni)
-                //{
-                //    await _examPaperUserRepository.UpdateMoniAsync(plan.Id, plan.Moni);
-                //}
             }
             else
             {
@@ -94,24 +59,17 @@ namespace XBLMS.Web.Controllers.Admin.Exam
 
                 plan = await _examPlanRepository.GetAsync(paperId);
                 plan.ConfigList = request.ConfigList;
-                //await SetRandomConfigs(request.ConfigList, plan);
 
-                if (request.SubmitType == SubmitType.Submit)
-                {
-                    //await _examManager.PaperRandomSet(plan, auth);
-                    //await _examManager.Arrange(plan, auth);
+                await _authManager.AddAdminLogAsync("新增计划", $"{plan.Title}");
+                await _authManager.AddStatLogAsync(StatType.ExamPlanAdd, "新增计划", plan.Id, plan.Title);
+                await _authManager.AddStatCount(StatType.ExamPlanAdd);
 
-                    await _authManager.AddAdminLogAsync("发布考试计划", plan.Title);
-                    await _authManager.AddStatLogAsync(StatType.ExamPlanAdd, "发布考试计划", plan.Id, plan.Title);
-                    await _authManager.AddStatCount(StatType.ExamPlanAdd);
-                }
-                else
-                {
-                    await _authManager.AddAdminLogAsync("新增考试计划", $"{plan.Title}");
-                    await _authManager.AddStatLogAsync(StatType.ExamPlanAdd, "新增考试计划", plan.Id, plan.Title);
-                    await _authManager.AddStatCount(StatType.ExamPlanAdd);
-                }
                 await _examPlanRepository.UpdateAsync(plan);
+            }
+
+            if (request.SubmitType == SubmitType.Submit)
+            {
+                await _examManager.CreateImmediatelyTrainingTasks(plan);
             }
 
             return new BoolResult

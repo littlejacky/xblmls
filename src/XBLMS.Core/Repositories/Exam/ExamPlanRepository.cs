@@ -1,4 +1,5 @@
 using Datory;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using SqlKata;
 using System;
 using System.Collections.Generic;
@@ -195,6 +196,11 @@ namespace XBLMS.Core.Repositories
                 .Where(nameof(ExamPlan.StartDate), "<=", DateUtils.ToString(currentDate))
                 .Where(nameof(ExamPlan.EndDate), ">=", DateUtils.ToString(currentDate))
                 .OrderBy(nameof(ExamPlan.Id)));
+        }
+
+        public async Task IncrementExecutedCountAsync(int id)
+        {
+            await _repository.IncrementAsync(nameof(ExamPlan.ExecutedCount), Q.Where(nameof(ExamPlan.Id), id));
         }
     }
 }

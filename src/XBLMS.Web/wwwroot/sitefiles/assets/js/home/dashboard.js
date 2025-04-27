@@ -3,6 +3,75 @@ var $url = "/dashboard";
 var $practiceUrl = "/exam/examPractice/submit";
 
 var data = utils.init({
+
+  series: [75],
+  chartOptions: {
+    chart: {
+      type: 'radialBar',
+      toolbar: {
+        show: false
+      }
+    },
+    plotOptions: {
+      radialBar: {
+        startAngle: -135,
+        endAngle: 225,
+        hollow: {
+          margin: 0,
+          size: '70%',
+          background: '#fff',
+          image: undefined,
+          imageOffsetX: 0,
+          imageOffsetY: 0,
+          position: 'front',
+          dropShadow: {
+            enabled: true,
+            top: 3,
+            left: 0,
+            blur: 4,
+            opacity: 0.24
+          }
+        },
+        track: {
+          background: '#fff',
+          strokeWidth: '67%',
+          margin: 0, // margin is in pixels
+          dropShadow: {
+            enabled: true,
+            top: -3,
+            left: 0,
+            blur: 4,
+            opacity: 0.35
+          }
+        },
+
+        dataLabels: {
+          show: true,
+          name: {
+            offsetY: -20,
+            show: true,
+            color: '#ff6a00',
+            fontSize: '17px'
+          },
+          value: {
+            formatter: function (val) {
+              return parseInt(val) + '%';
+            },
+            color: '#000',
+            fontSize: '36px',
+            show: true,
+          }
+        }
+      }
+    },
+    fill: {
+      colors: ['#19cb98']
+    },
+    stroke: {
+      lineCap: 'round'
+    },
+    labels: ['正确率'],
+  },
   user: null,
   passSeries: [0],
   passChartOptions: {
@@ -178,6 +247,10 @@ var methods = {
       setTimeout(function () {
         $this.passSeries = [res.allPercent];
       }, 2000);
+
+      setTimeout(function () {
+        $this.series = [utils.formatPercentFloat($this.examPractice.rightCount, $this.examPractice.answerCount)];
+      }, 3000);
 
     }).catch(function (error) {
       utils.error(error);

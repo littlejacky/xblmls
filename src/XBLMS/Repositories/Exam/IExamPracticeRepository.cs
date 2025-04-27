@@ -13,6 +13,7 @@ namespace XBLMS.Repositories
         Task<int> InsertAsync(ExamPractice item);
         Task IncrementAnswerCountAsync(int id);
         Task IncrementRightCountAsync(int id);
+        Task DecrementRightCountAsync(int id);
 
         Task UpdateAsync(ExamPractice item);
 

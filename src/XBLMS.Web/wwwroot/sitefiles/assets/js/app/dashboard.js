@@ -291,6 +291,20 @@ var methods = {
       }
     });
   },
+  goShuatiLog: function () {
+    var $this = this;
+    top.utils.openLayer({
+      title: false,
+      closebtn: 0,
+      url: utils.getExamUrl("examPracticeLog"),
+      width: "100%",
+      height: "100%",
+      end: function () {
+        $this.setDocumentTitel();
+        $this.apiGet();
+      }
+    });
+  },
   goWenjuan: function () {
     var $this = this;
     top.utils.openLayer({

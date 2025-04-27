@@ -17,7 +17,7 @@ namespace XBLMS.Web.Controllers.Admin.Exam
             var auth = await _authManager.GetAuthorityAuth();
 
             var plan = new ExamPlan();
-            plan.Title = "考试计划-" + StringUtils.PadZeroes(await _examPlanRepository.MaxAsync() + 1, 5);
+            plan.Title = "计划-" + StringUtils.PadZeroes(await _examPlanRepository.MaxAsync() + 1, 5);
             if (request.Id > 0)
             {
                 plan = await _examPlanRepository.GetAsync(request.Id);

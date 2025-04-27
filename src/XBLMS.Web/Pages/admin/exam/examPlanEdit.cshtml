@@ -333,7 +333,7 @@
 </el-form>
 <el-row align="center" style="margin-top:18px;">
     <el-col :span="24" align="center">
-        <el-tooltip placement="top">
+        @* <el-tooltip placement="top">
             <div slot="content">
                 每次发布新的试卷，系统会默认配置好所有参数，理论上直接保存或者发布即可。
                 <br />
@@ -342,25 +342,25 @@
                 发布：保存基本信息并生成试卷内容和安排考生；
             </div>
             <i class="el-icon-info" style="padding:0 3px;color:red;"></i>
-        </el-tooltip>
+        </el-tooltip> *@
         <el-button icon="el-icon-check" :size="euiSize" type="primary" v-on:click="btnSaveClick">保 存</el-button>
         <el-button icon="el-icon-s-promotion" :size="euiSize" plain type="primary" v-on:click="btnSubmitClick">
             <span v-if="form.submitType==='Save'">
-                <span>发 布</span>
+                <span>执 行</span>
             </span>
             <span v-else>
-                <span>重新发布</span>
+                <span>重新执行</span>
             </span>
         </el-button>
         <el-button :size="euiSize" icon="el-icon-close" plain type="info" v-on:click="utils.closeLayerSelf">取消编辑</el-button>
     </el-col>
 </el-row>
 <template>
-    <el-dialog title="重新发布提醒"
+    <el-dialog title="重新执行提醒"
                :visible.sync="submitDialogVisible"
                center width="35%">
         <div>
-            重新发布是否清空历史数据？<br /><br />
+            重新执行是否清空历史数据？<br /><br />
             <el-card>
                 <div slot="header" class="clearfix">
                     <span>历史数据包括</span>
@@ -387,8 +387,8 @@
             </el-card>
         </div>
         <span slot="footer" class="dialog-footer">
-            <el-button icon="el-icon-delete" :size="euiSize" plain type="warning" v-on:click="btnSubmitClear">清空后发布</el-button>
-            <el-button icon="el-icon-s-promotion" :size="euiSize" type="primary" v-on:click="btnSubmit">发 布</el-button>
+            <el-button icon="el-icon-delete" :size="euiSize" plain type="warning" v-on:click="btnSubmitClear">清空后执行</el-button>
+            <el-button icon="el-icon-s-promotion" :size="euiSize" type="primary" v-on:click="btnSubmit">执 行</el-button>
             <el-button icon="el-icon-close" :size="euiSize" plain type="info" v-on:click="submitDialogVisible=!submitDialogVisible">取 消</el-button>
         </span>
     </el-dialog>

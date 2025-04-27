@@ -11,6 +11,6 @@ namespace XBLMS.Enums
         [DataEnum(DisplayName = "每天", Value = "Daily")] Daily,
         [DataEnum(DisplayName = "每周", Value = "Weekly")] Weekly,
         [DataEnum(DisplayName = "每月", Value = "Monthly")] Monthly,
-        [DataEnum(DisplayName = "每年", Value = "Yearly")] Yearly,
+        [DataEnum(DisplayName = "立即", Value = "Immediately")] Immediately,
     }
 }

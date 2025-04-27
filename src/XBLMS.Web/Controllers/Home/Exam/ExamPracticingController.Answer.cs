@@ -71,9 +71,15 @@ namespace XBLMS.Web.Controllers.Home.Exam
             {
                 if (!record.IsRight && result.IsRight)
                 {
-                    record.IsRight = true;
+                    record.IsRight = result.IsRight;
                     await _examPracticeAnswerRepository.UpdateAsync(record);
                     await _examPracticeRepository.IncrementRightCountAsync(request.PracticeId);
+                }
+                else if (record.IsRight && !result.IsRight)
+                {
+                    record.IsRight = result.IsRight;
+                    await _examPracticeAnswerRepository.UpdateAsync(record);
+                    await _examPracticeRepository.DecrementRightCountAsync(request.PracticeId);
                 }
             }
 

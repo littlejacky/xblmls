@@ -70,6 +70,10 @@ namespace XBLMS.Core.Repositories
         {
             await _repository.IncrementAsync(nameof(ExamPractice.RightCount), Q.Where(nameof(ExamPractice.Id), id));
         }
+        public async Task DecrementRightCountAsync(int id)
+        {
+            await _repository.DecrementAsync(nameof(ExamPractice.RightCount), Q.Where(nameof(ExamPractice.Id), id));
+        }
 
         public async Task DeleteAsync(int userId)
         {
