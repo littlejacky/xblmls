@@ -21,14 +21,15 @@ namespace XBLMS.Models
         [DataColumn]
         public bool RequirePass { get; set; } // 未通过需重新做题
 
-        [DataColumn(Text = true)]
+        //[DataColumn(Text = true)]
         public List<ExamPaperRandomConfig> ConfigList { get; set; }
 
         [DataColumn]
         public PlanType PlanType { get; set; } = PlanType.Practice;
 
         [DataColumn]
-        public int ExecutedCount { get; set; }
+        public int ExecutedTotal { get; set; }
 
+        public List<ExamTmGroupProportion> TmGroupProportions { get; set; }
     }
 }

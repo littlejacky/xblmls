@@ -200,7 +200,7 @@ namespace XBLMS.Core.Repositories
 
         public async Task IncrementExecutedCountAsync(int id)
         {
-            await _repository.IncrementAsync(nameof(ExamPlan.ExecutedCount), Q.Where(nameof(ExamPlan.Id), id));
+            await _repository.IncrementAsync(nameof(ExamPlan.ExecutedTotal), Q.Where(nameof(ExamPlan.Id), id));
         }
     }
 }

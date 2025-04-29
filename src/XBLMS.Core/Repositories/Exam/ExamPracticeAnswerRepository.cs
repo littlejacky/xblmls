@@ -22,7 +22,7 @@ namespace XBLMS.Core.Repositories
 
         public List<TableColumn> TableColumns => _repository.TableColumns;
 
-        public async Task<ExamPracticeAnswer> GetAsync(int userId,int tmId,int practiceId)
+        public async Task<ExamPracticeAnswer> GetAsync(int userId, int tmId, int practiceId)
         {
             return await _repository.GetAsync(Q.
                 Where(nameof(ExamPracticeAnswer.TmId), tmId).
@@ -42,6 +42,10 @@ namespace XBLMS.Core.Repositories
         public async Task DeleteByUserId(int userId)
         {
             await _repository.DeleteAsync(Q.Where(nameof(ExamPracticeAnswer.UserId), userId));
+        }
+        public async Task DeleteByPracticeId(int practiceId)
+        {
+            await _repository.DeleteAsync(Q.Where(nameof(ExamPracticeAnswer.PracticeId), practiceId));
         }
     }
 }

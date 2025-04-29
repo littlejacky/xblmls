@@ -368,7 +368,7 @@ namespace XBLMS.Core.Services
                             {
                                 Id = tmGroupId,
                                 TmIds = tmGroup.TmIds,
-                                Ratio = tmGroupProportion.GroupRatio
+                                Ratio = tmGroupProportion == null ? 100 : tmGroupProportion.GroupRatio
                             });
                         }
                         if (tmGroup.GroupType == TmGroupType.Range)
@@ -381,7 +381,7 @@ namespace XBLMS.Core.Services
                                 {
                                     Id = tmGroupId,
                                     TmIds = tmIdsByGroup,
-                                    Ratio = tmGroupProportion.GroupRatio
+                                    Ratio = tmGroupProportion == null ? 100 : tmGroupProportion.GroupRatio
                                 });
                             }
                         }

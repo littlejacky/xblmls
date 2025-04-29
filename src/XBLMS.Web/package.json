@@ -80,7 +80,7 @@
       {
         "id": "examplan",
         "order": 5,
-        "text": "计划考试",
+        "text": "制定计划",
         "link": "/admin/exam/examPlan/",
         "iconClass": "el-icon-time",
         "permissions": [ "Select", "Add", "Update", "Delete", "Manage" ],

@@ -376,7 +376,7 @@ var methods = {
     })
   },
   btnViewPracticeClick: function (res) {
-    $this.goPractice(res.id);
+    this.goPractice(res.id);
   }
 };
 Vue.component("apexchart", {

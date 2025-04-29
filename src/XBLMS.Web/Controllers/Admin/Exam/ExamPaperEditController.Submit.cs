@@ -95,6 +95,7 @@ namespace XBLMS.Web.Controllers.Admin.Exam
 
                 paper = await _examPaperRepository.GetAsync(paperId);
                 await SetRandomConfigs(request.ConfigList, paper);
+                await SetTmGroupProportions(request.TmGroupProportions, paper);
 
                 if (request.SubmitType == SubmitType.Submit)
                 {

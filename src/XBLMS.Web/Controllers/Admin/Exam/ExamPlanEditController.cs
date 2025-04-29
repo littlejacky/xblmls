@@ -31,6 +31,7 @@ namespace XBLMS.Web.Controllers.Admin.Exam
         private readonly IExamPaperRandomConfigRepository _examPaperRandomConfigRepository;
         private readonly IExamPaperUserRepository _examPaperUserRepository;
         private readonly IExamPaperStartRepository _examPaperStartRepository;
+        private readonly IExamTmGroupProportionRepository _examTmGroupProportionRepository;
 
         public ExamPlanEditController(IAuthManager authManager,
             IExamPlanRepository examPlanRepository,
@@ -43,7 +44,8 @@ namespace XBLMS.Web.Controllers.Admin.Exam
             IExamTmRepository examTmRepository,
             IExamPaperRandomConfigRepository examPaperRandomConfigRepository,
             IExamPaperUserRepository examPaperUserRepository,
-            IExamPaperStartRepository examPaperStartRepository)
+            IExamPaperStartRepository examPaperStartRepository,
+            IExamTmGroupProportionRepository examTmGroupProportionRepository)
         {
             _authManager = authManager;
             _examPlanRepository = examPlanRepository;
@@ -57,6 +59,7 @@ namespace XBLMS.Web.Controllers.Admin.Exam
             _examPaperRandomConfigRepository = examPaperRandomConfigRepository;
             _examPaperUserRepository = examPaperUserRepository;
             _examPaperStartRepository = examPaperStartRepository;
+            _examTmGroupProportionRepository = examTmGroupProportionRepository;
         }
         public class GetConfigRequest
         {
@@ -86,6 +89,7 @@ namespace XBLMS.Web.Controllers.Admin.Exam
             public bool IsClear { get; set; }
             public bool IsUpdateDateTime { get; set; }
             public bool IsUpdateExamTimes { get; set; }
+            public List<ExamTmGroupProportion> TmGroupProportions { get; set; }
         }
 
     }

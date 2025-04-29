@@ -22,6 +22,7 @@ namespace XBLMS.Web.Controllers.Home.Exam
                 item.AnswerCount = 0;
                 item.RightCount = 0;
                 await _examPracticeRepository.UpdateAsync(item);
+                await _examPracticeAnswerRepository.DeleteByPracticeId(item.Id);
 
                 item.TmIds = item.TmIds.OrderBy(tm => { return StringUtils.Guid(); }).ToList();
                 return new GetResult
@@ -49,7 +50,7 @@ namespace XBLMS.Web.Controllers.Home.Exam
 
                 bool isCollection = false;
                 var collection = await _examPracticeCollectRepository.GetAsync(user.Id);
-                if(collection!=null && collection.TmIds.Contains(tm.Id))
+                if (collection != null && collection.TmIds.Contains(tm.Id))
                 {
                     isCollection = true;
                 }
@@ -57,8 +58,9 @@ namespace XBLMS.Web.Controllers.Home.Exam
                 tm.Set("IsCollection", isCollection);
 
                 bool isWrong = false;
-                var wrong=await _examPracticeWrongRepository.GetAsync(user.Id);
-                if (wrong != null && wrong.TmIds.Contains(tm.Id)) {
+                var wrong = await _examPracticeWrongRepository.GetAsync(user.Id);
+                if (wrong != null && wrong.TmIds.Contains(tm.Id))
+                {
                     isWrong = true;
                 }
                 tm.Set("IsWrong", isWrong);

@@ -173,35 +173,6 @@ namespace XBLMS.Core.Services
             if (userIds != null && userIds.Count > 0)
             {
                 userIds = userIds.Distinct().ToList();
-                foreach (int userId in userIds)
-                {
-                    var exist = await _examPaperUserRepository.ExistsAsync(paper.Id, userId);
-                    if (!exist)
-                    {
-                        var user = await _userRepository.GetByUserIdAsync(userId);
-
-                        await _examPaperUserRepository.InsertAsync(new ExamPaperUser
-                        {
-                            ExamTimes = paper.ExamTimes,
-                            ExamBeginDateTime = paper.ExamBeginDateTime,
-                            ExamEndDateTime = paper.ExamEndDateTime,
-                            ExamPaperId = paper.Id,
-                            UserId = user.Id,
-                            KeyWordsAdmin = await _organManager.GetUserKeyWords(userId),
-                            KeyWords = paper.Title,
-                            Locked = paper.Locked,
-                            Moni = paper.Moni,
-                            CompanyId = user.CompanyId,
-                            DepartmentId = user.DepartmentId,
-                            CreatorId = user.CreatorId
-                        });
-
-                        // Send notification after arranging exam for the user
-                        // TODO: Ensure _notificationService is properly injected and available
-                        // await _notificationService.SendExamArrangedNotificationAsync(userId, paper.Id, paper.Title);
-                        await _notificationManager.SendExamPaperArrangedNotificationAsync(user, paper);
-                    }
-                }
             }
 
             return userIds;

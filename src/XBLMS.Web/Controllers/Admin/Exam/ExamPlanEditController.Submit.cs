@@ -41,6 +41,7 @@ namespace XBLMS.Web.Controllers.Admin.Exam
             if (plan.Id > 0)
             {
                 plan.ConfigList = request.ConfigList;
+                plan.TmGroupProportions = request.TmGroupProportions;
 
                 await _authManager.AddAdminLogAsync("修改计划", plan.Title);
                 await _authManager.AddStatLogAsync(StatType.ExamPlanUpdate, "修改计划", plan.Id, plan.Title);
@@ -59,6 +60,7 @@ namespace XBLMS.Web.Controllers.Admin.Exam
 
                 plan = await _examPlanRepository.GetAsync(paperId);
                 plan.ConfigList = request.ConfigList;
+                plan.TmGroupProportions = request.TmGroupProportions;
 
                 await _authManager.AddAdminLogAsync("新增计划", $"{plan.Title}");
                 await _authManager.AddStatLogAsync(StatType.ExamPlanAdd, "新增计划", plan.Id, plan.Title);

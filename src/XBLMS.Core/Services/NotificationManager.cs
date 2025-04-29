@@ -10,11 +10,11 @@ namespace XBLMS.Core.Services
 {
     public partial class NotificationManager : INotificationManager
     {
-        private readonly UnipushManager _pusher;
+        private readonly UnipushManager _pusher = null;
 
         public NotificationManager(Config config)
         {
-            _pusher = new UnipushManager(config);
+            //_pusher = new UnipushManager(config);
         }
 
         public async Task SendExamPaperArrangedNotificationAsync(User user, ExamPaper paper)
@@ -45,7 +45,7 @@ namespace XBLMS.Core.Services
 
         public async Task SendNotificationAsync(string cid, MessageModel message)
         {
-
+            if (_pusher == null) return;
             // 单独推送给cid为123456的用户一条消息，点击后会调用系统浏览器打开https://www.baidu.com
             await _pusher.SinglePush(cid, message);
         }

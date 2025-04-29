@@ -44,7 +44,7 @@ namespace XBLMS.Core.Repositories
 
             if (isPlan)
             {
-                query.Where(nameof(ExamPractice.PracticeType), PracticeType.Random);
+                query.Where(nameof(ExamPractice.PracticeType), PracticeType.Random.GetValue());
             }
 
             var count = await _repository.CountAsync(query);

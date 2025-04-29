@@ -6,6 +6,7 @@ namespace XBLMS.Repositories
 {
     public interface IExamPracticeAnswerRepository : IRepository
     {
+        Task DeleteByPracticeId(int practiceId);
         Task DeleteByUserId(int userId);
         Task<ExamPracticeAnswer> GetAsync(int userId,int tmId,int practiceId);
 
