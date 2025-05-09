@@ -231,7 +231,11 @@ gulp.task("copy-css", function () {
 gulp.task("copy-js", function () {
   const f = filter(['**/*-min.js']);
   return gulp
-    .src(["./src/XBLMS.Web/wwwroot/sitefiles/**/*.js"])
+    .src([
+      "./src/XBLMS.Web/wwwroot/sitefiles/**/*.js",
+      "!./src/XBLMS.Web/wwwroot/sitefiles/assets/lib/superset-ui/embedded.js", // ееЁЩ embedded.js
+      "!./src/**/*.min.js" // ееЁЩ .min.js нд╪Ч
+    ])
     .pipe(minify())
     .pipe(f)
     .pipe(rename(function (path) {
