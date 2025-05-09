@@ -473,6 +473,17 @@
             "Permissions": [ "Select" ],
             "children": [
             ]
+          },
+          {
+            "id": "analysisexam",
+            "order": 1,
+            "text": "培训分析",
+            "link": "/admin/analysis/",
+            "iconClass": "el-icon-s-custom",
+            "Permissions": [ "Select" ],
+            "isPermission": true,
+            "children": [
+            ]
           }
         ]
       }

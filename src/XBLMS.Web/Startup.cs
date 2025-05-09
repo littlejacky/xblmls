@@ -136,7 +136,7 @@ namespace XBLMS.Web
       
 
             services.AddLocalization(options => options.ResourcesPath = "Resources");
-            services
+            services.AddHttpClient()
                 .AddControllers()
                 .AddViewLocalization(
                     LanguageViewLocationExpanderFormat.Suffix,
