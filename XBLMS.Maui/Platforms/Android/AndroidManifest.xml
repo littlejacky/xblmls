@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.maxitai.iexam" android:versionCode="1" android:versionName="1.0">
+	<application android:allowBackup="true" android:icon="@mipmap/appicon" xmlns:tools="http://schemas.android.com/tools" android:supportsRtl="true" tools:replace="android:label" android:label="iexam" android:usesCleartextTraffic="true">
+		<service android:name="XBLMS.Maui.MauiIntentService" />
+		<service android:name="XBLMS.Maui.MauiPushService" android:exported="false" android:label="PushService" android:process=":pushservice" />
+		<meta-data android:name="GETUI_APPID" tools:replace="android:value" android:value="mU8DxepL598fTRsyias8c8" />
+		<meta-data android:name="MIPUSH_APPID" tools:replace="android:value" android:value="" />
+		<meta-data android:name="MIPUSH_APPKEY" tools:replace="android:value" android:value="" />
+		<meta-data android:name="com.huawei.hms.client.appid" tools:replace="android:value" android:value="" />
+		<meta-data android:name="com.hihonor.push.app_id" tools:replace="android:value" android:value="" />
+	</application>
+	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+	<uses-permission android:name="android.permission.VIBRATE" />
+	<uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+	<uses-permission android:name="android.permission.BADGE_ICON" />
+	<uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+	<queries>
+		<intent>
+			<action android:name="com.getui.sdk.action" />
+		</intent>
+	</queries>
+</manifest>
