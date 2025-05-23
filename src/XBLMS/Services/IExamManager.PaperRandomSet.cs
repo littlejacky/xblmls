@@ -9,7 +9,7 @@ namespace XBLMS.Services
     {
         Task<bool> PaperRandomSet(ExamPaper paper, AuthorityAuth auth);
         Task<int> SetExamPaperRantomByRandomNowAndExaming(ExamPaper paper, AuthorityAuth auth, int? userId = null);
-        Task<List<ExamTm>> SetExamPaperRantomByRandomNowAndExaming(ExamPlan paper, AuthorityAuth auth, int userId);
+        Task<List<ExamTm>> SetExamPaperRantomByRandomNowAndExaming(ExamPlanRecord paper, AuthorityAuth auth, int userId);
     }
 
 }

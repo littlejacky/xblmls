@@ -123,7 +123,7 @@ namespace XBLMS.Core.Services
             }
         }
 
-        public async Task<List<int>> Arrange(ExamPlan paper, AuthorityAuth auth)
+        public async Task<List<int>> Arrange(ExamPlanRecord paper, AuthorityAuth auth)
         {
             var userIds = new List<int>();
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using XBLMS.Core.Repositories;
 using XBLMS.Core.Utils;
 using XBLMS.Enums;
 using XBLMS.Models;
@@ -34,6 +35,7 @@ namespace XBLMS.Core.Services
         private readonly IExamPracticeCollectRepository _examPracticeCollectRepository;
         private readonly IExamPracticeWrongRepository _examPracticeWrongRepository;
         private readonly IExamPracticeRepository _examPracticeRepository;
+        private readonly IExamPlanTaskRepository _examPlanTaskRepository;
 
         private readonly IExamQuestionnaireRepository _examQuestionnaireRepository;
         private readonly IExamQuestionnaireAnswerRepository _examQuestionnaireAnswerRepository;
@@ -54,6 +56,7 @@ namespace XBLMS.Core.Services
         private readonly IStudyCourseRepository _studyCourseRepository;
 
         private readonly IExamPlanRepository _examPlanRepository;
+        private readonly IExamPlanRecordRepository _examPlanRecordRepository;
         private readonly IExamTmGroupProportionRepository _examTmGroupProportionRepository;
         private readonly IAuthManager _authManager;
         private readonly INotificationManager _notificationManager;
@@ -81,6 +84,7 @@ namespace XBLMS.Core.Services
             IExamPracticeCollectRepository examPracticeCollectRepository,
             IExamPracticeWrongRepository examPracticeWrongRepository,
             IExamPracticeRepository examPracticeRepository,
+            IExamPlanTaskRepository examPlanTaskRepository,
             IExamQuestionnaireRepository examQuestionnaireRepository,
             IExamQuestionnaireAnswerRepository examQuestionnaireAnswerRepository,
             IExamQuestionnaireTmRepository examQuestionnaireTmRepository,
@@ -95,6 +99,7 @@ namespace XBLMS.Core.Services
             IStudyPlanRepository studyPlanRepository,
             IStudyCourseRepository studyCourseRepository,
             IExamPlanRepository examPlanRepository,
+            IExamPlanRecordRepository examPlanRecordRepository,
             IExamTmGroupProportionRepository examTmGroupProportionRepository,
             IAuthManager authManager,
             INotificationManager notificationManager)
@@ -122,6 +127,7 @@ namespace XBLMS.Core.Services
             _examPracticeCollectRepository = examPracticeCollectRepository;
             _examPracticeWrongRepository = examPracticeWrongRepository;
             _examPracticeRepository = examPracticeRepository;
+            _examPlanTaskRepository = examPlanTaskRepository;
             _examQuestionnaireRepository = examQuestionnaireRepository;
             _examQuestionnaireAnswerRepository = examQuestionnaireAnswerRepository;
             _examQuestionnaireTmRepository = examQuestionnaireTmRepository;
@@ -136,6 +142,7 @@ namespace XBLMS.Core.Services
             _studyPlanRepository = studyPlanRepository;
             _studyPlanCourseRepository = studyPlanCourseRepository;
             _examPlanRepository = examPlanRepository;
+            _examPlanRecordRepository = examPlanRecordRepository;
             _examTmGroupProportionRepository = examTmGroupProportionRepository;
             _authManager = authManager;
             _notificationManager = notificationManager;

@@ -344,7 +344,7 @@ namespace XBLMS.Core.Services
             }
         }
 
-        public async Task<List<ExamTm>> SetExamPaperRantomByRandomNowAndExaming(ExamPlan plan, AuthorityAuth auth, int userId)
+        public async Task<List<ExamTm>> SetExamPaperRantomByRandomNowAndExaming(ExamPlanRecord plan, AuthorityAuth auth, int userId)
         {
             var tmIds = new List<int>();
             var tmGroupIds = plan.TmGroupIds;

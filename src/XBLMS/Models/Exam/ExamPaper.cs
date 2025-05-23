@@ -114,8 +114,5 @@ namespace XBLMS.Models
         [DataColumn]
         public bool Locked { get; set; } = false;
 
-        [DataColumn]
-        public int PlanId { get; set; }
-
     }
 }

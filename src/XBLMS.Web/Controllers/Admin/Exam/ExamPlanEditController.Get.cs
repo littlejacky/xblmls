@@ -23,7 +23,7 @@ namespace XBLMS.Web.Controllers.Admin.Exam
                 plan = await _examPlanRepository.GetAsync(request.Id);
             }
 
-            var tree = await _examManager.GetExamPaperTreeCascadesAsync(auth);
+            //var tree = await _examManager.GetExamPaperTreeCascadesAsync(auth);
             var txs = await _examTxRepository.GetListAsync();
             if (txs == null || txs.Count == 0)
             {
@@ -40,22 +40,22 @@ namespace XBLMS.Web.Controllers.Admin.Exam
                 fixedGroups.AddRange(tmGroups.Where(group => group.GroupType == TmGroupType.Fixed).ToList());
             }
 
-            if (tree == null || tree.Count == 0)
-            {
-                var treeId = await _examPaperTreeRepository.InsertAsync(new ExamPaperTree
-                {
-                    Name = "试卷分类",
-                    CompanyId = auth.CompanyId,
-                    DepartmentId = auth.DepartmentId,
-                    CreatorId = auth.AdminId
-                });
-                plan.TreeId = treeId;
-                tree = await _examManager.GetExamPaperTreeCascadesAsync(auth);
-            }
+            //if (tree == null || tree.Count == 0)
+            //{
+            //    var treeId = await _examPaperTreeRepository.InsertAsync(new ExamPaperTree
+            //    {
+            //        Name = "试卷分类",
+            //        CompanyId = auth.CompanyId,
+            //        DepartmentId = auth.DepartmentId,
+            //        CreatorId = auth.AdminId
+            //    });
+            //    plan.TreeId = treeId;
+            //    tree = await _examManager.GetExamPaperTreeCascadesAsync(auth);
+            //}
             return new GetResult
             {
                 Item = plan,
-                PaperTree = tree,
+                //PaperTree = tree,
                 TxList = txs,
                 CerList = cers,
                 TmGroupList = tmGroups,

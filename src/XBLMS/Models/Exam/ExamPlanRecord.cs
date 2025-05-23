@@ -1,26 +1,40 @@
-﻿using Datory;
-using Datory.Annotations;
-using System;
+﻿using Datory.Annotations;
 using System.Collections.Generic;
+using System;
 using XBLMS.Enums;
+using Datory;
 
 namespace XBLMS.Models
 {
-    [DataTable("quiz_Plan")]
+    [DataTable("quiz_PlanRecord")]
 
-    public class ExamPlan : Entity
+    public class ExamPlanRecord : Entity
     {
+        public ExamPlanRecord() { }
+        public ExamPlanRecord(ExamPlan plan)
+        {
+            Title = plan.Title;
+            UserGroupIds = plan.UserGroupIds;
+            TmGroupIds = plan.TmGroupIds;
+            IsTiming = plan.IsTiming;
+            TimingMinute = plan.TimingMinute;
+            TotalScore = plan.TotalScore;
+            PassScore = plan.PassScore;
+            RequirePass = plan.RequirePass;
+            ConfigList = plan.ConfigList;
+            TmScoreType = plan.TmScoreType;
+            TxIds = plan.TxIds;
+            TmGroupProportions = plan.TmGroupProportions;
+            TmCount = plan.TmCount;
+            OpenExist = plan.OpenExist;
+            PlanId = plan.Id;
+        }
+
+        [DataColumn]
+        public int PlanId { get; set; }
+
         [DataColumn]
         public string Title { get; set; }
-
-        [DataColumn]
-        public FrequencyType FrequencyType { get; set; } = FrequencyType.Weekly; // 频率类型：Daily, Weekly, Monthly, Immediately
-
-        [DataColumn]
-        public DateTime StartDate { get; set; } = DateTime.Now;
-
-        [DataColumn]
-        public DateTime EndDate { get; set; } = DateTime.Now.AddYears(1);
 
         [DataColumn(Text = true)]
         public List<int> UserGroupIds { get; set; }
@@ -58,9 +72,6 @@ namespace XBLMS.Models
         [DataColumn(Text = true)]
         public List<int> TxIds { get; set; }
 
-        [DataColumn]
-        public int ExecutedTotal { get; set; }
-
         public List<ExamTmGroupProportion> TmGroupProportions { get; set; }
 
         [DataColumn]
@@ -72,7 +83,5 @@ namespace XBLMS.Models
         [DataColumn]
         public bool OpenExist { get; set; } = true;
 
-        [DataColumn]
-        public bool Locked { get; set; } = false;
     }
 }

@@ -44,7 +44,9 @@ namespace XBLMS.Web.Controllers.Admin.Exam
             IExamTmRepository examTmRepository,
             IExamPaperRandomConfigRepository examPaperRandomConfigRepository,
             IExamPaperUserRepository examPaperUserRepository,
-            IExamPaperStartRepository examPaperStartRepository)
+            IExamPaperStartRepository examPaperStartRepository,
+            IExamTmGroupProportionRepository examTmGroupProportionRepository
+            )
         {
             _authManager = authManager;
             _examPaperRepository = examPaperRepository;
@@ -58,6 +60,7 @@ namespace XBLMS.Web.Controllers.Admin.Exam
             _examPaperRandomConfigRepository = examPaperRandomConfigRepository;
             _examPaperUserRepository = examPaperUserRepository;
             _examPaperStartRepository = examPaperStartRepository;
+            _examTmGroupProportionRepository = examTmGroupProportionRepository;
         }
         public class GetConfigRequest
         {

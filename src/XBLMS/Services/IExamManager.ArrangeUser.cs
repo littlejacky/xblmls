@@ -9,7 +9,7 @@ namespace XBLMS.Services
     {
         Task Arrange(ExamPaper paper, AuthorityAuth auth);
         Task Arrange(int paperId, int userId);
-        Task<List<int>> Arrange(ExamPlan paper, AuthorityAuth auth);
+        Task<List<int>> Arrange(ExamPlanRecord paper, AuthorityAuth auth);
     }
 
 }

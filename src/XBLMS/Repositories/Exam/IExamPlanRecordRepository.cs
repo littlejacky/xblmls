@@ -7,14 +7,13 @@ using XBLMS.Models;
 
 namespace XBLMS.Repositories
 {
-    public partial interface IExamPlanRepository : IRepository
+    public partial interface IExamPlanRecordRepository : IRepository
     {
         Task<bool> ExistsAsync(int id);
-        //Task<int> GetCountAsync(List<int> treeIds);
-        Task<ExamPlan> GetAsync(int id);
-        Task<int> InsertAsync(ExamPlan item);
-        Task<bool> UpdateAsync(ExamPlan item);
-        Task<(int total, List<ExamPlan> list)> GetListAsync(AuthorityAuth auth, List<int> treeIds, string keyword, int pageIndex, int pageSize);
+        Task<ExamPlanRecord> GetAsync(int id);
+        Task<int> InsertAsync(ExamPlanRecord item);
+        Task<bool> UpdateAsync(ExamPlanRecord item);
+        Task<(int total, List<ExamPlanRecord> list)> GetListAsync(AuthorityAuth auth, List<int> treeIds, string keyword, int pageIndex, int pageSize);
         Task<bool> DeleteAsync(int Id);
         Task<int> MaxAsync();
         Task<List<int>> GetIdsAsync(List<int> ids, string keyword);
@@ -22,8 +21,5 @@ namespace XBLMS.Repositories
         Task<int> GetGroupCount(int groupId);
         Task<int> GetTmGroupCount(int groupId);
         Task<(int allCount, int addCount, int deleteCount, int lockedCount, int unLockedCount)> GetDataCount(AuthorityAuth auth);
-
-        Task<List<ExamPlan>> GetActivePlansAsync(DateTime currentDate);
-        Task IncrementExecutedCountAsync(int id);
     }
 }

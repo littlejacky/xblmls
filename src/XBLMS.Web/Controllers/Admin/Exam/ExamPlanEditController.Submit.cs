@@ -33,10 +33,10 @@ namespace XBLMS.Web.Controllers.Admin.Exam
             var auth = await _authManager.GetAuthorityAuth();
             var plan = request.Item;
 
-            if (plan.TmRandomType != ExamPaperTmRandomType.RandomExaming)
-            {
-                plan.Moni = false;
-            }
+            //if (plan.TmRandomType != ExamPaperTmRandomType.RandomExaming)
+            //{
+            //    plan.Moni = false;
+            //}
 
             if (plan.Id > 0)
             {
@@ -50,7 +50,7 @@ namespace XBLMS.Web.Controllers.Admin.Exam
             }
             else
             {
-                plan.SubmitType = request.SubmitType;
+                //plan.SubmitType = request.SubmitType;
                 plan.CompanyId = auth.CompanyId;
                 plan.CreatorId = auth.AdminId;
                 plan.DepartmentId = auth.DepartmentId;
@@ -69,7 +69,7 @@ namespace XBLMS.Web.Controllers.Admin.Exam
                 await _examPlanRepository.UpdateAsync(plan);
             }
 
-            if (request.SubmitType == SubmitType.Submit)
+            if (plan.FrequencyType == FrequencyType.Immediately)
             {
                 await _examManager.CreateImmediatelyTrainingTasks(plan);
             }
