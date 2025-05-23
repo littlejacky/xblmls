@@ -33,7 +33,7 @@ var data = utils.init({
   treePopoverVisibles: [],
   treeDefaultExpandedKeys: [],
   treeDefaultExpandedSetKeys: [],
-  treeName: '题目分类',
+  treeName: '题库分类',
   treeTopAddPopover: false,
   treeAddForm: {
     parentId: 0,

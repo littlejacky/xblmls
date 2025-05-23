@@ -11,98 +11,11 @@
         "children": [
         ]
       },
+      
       {
-        "id": "studyplan",
+        "id": "tm",
         "order": 2,
-        "text": "发布培训",
-        "link": "/admin/study/studyPlan/",
-        "iconClass": "el-icon-star-off",
-        "permissions": [ "Select", "Add", "Update", "Delete", "Manage" ],
-        "isPermission": true,
-        "children": [
-        ]
-      },
-      {
-        "id": "studymanage",
-        "order": 3,
-        "text": "培训管理",
-        "link": "",
-        "iconClass": "el-icon-s-check",
-        "Permissions": [],
-        "isPermission": true,
-        "children": [
-          {
-            "id": "studymanage_files",
-            "order": 1,
-            "text": "课件上传",
-            "link": "/admin/study/studyCourseFiles/",
-            "iconClass": "el-icon-s-custom",
-            "Permissions": [ "Select", "Add", "Update", "Delete", "Download" ],
-            "isPermission": true,
-            "children": [
-            ]
-          },
-          {
-            "id": "studymanage_course",
-            "order": 2,
-            "text": "发布课程",
-            "link": "/admin/study/studyCourse/",
-            "iconClass": "el-icon-s-custom",
-            "Permissions": [ "Select", "Add", "Update", "Delete", "Manage" ],
-            "isPermission": true,
-            "children": [
-            ]
-          },
-          {
-            "id": "studymanage_courseevaluation",
-            "order": 3,
-            "text": "课程评价",
-            "link": "/admin/study/studyCourseEvaluation/",
-            "iconClass": "el-icon-s-custom",
-            "Permissions": [ "Select", "Add", "Update", "Delete" ],
-            "isPermission": true,
-            "children": [
-            ]
-          }
-        ]
-      },
-      {
-        "id": "studyteacher",
-        "order": 4,
-        "text": "上课",
-        "link": "/admin/study/studyCourseTeacher/",
-        "iconClass": "el-icon-user-solid",
-        "permissions": [ "Select", "Manage" ],
-        "isPermission": true,
-        "children": [
-        ]
-      },
-      {
-        "id": "examplan",
-        "order": 5,
-        "text": "制定计划",
-        "link": "/admin/exam/examPlan/",
-        "iconClass": "el-icon-time",
-        "permissions": [ "Select", "Add", "Update", "Delete", "Manage" ],
-        "isPermission": true,
-        "children": [
-        ]
-      },
-      {
-        "id": "exampaper",
-        "order": 5,
-        "text": "发布考试",
-        "link": "/admin/exam/examPaper/",
-        "iconClass": "el-icon-platform-eleme",
-        "permissions": [ "Select", "Add", "Update", "Delete", "Manage" ],
-        "isPermission": true,
-        "children": [
-        ]
-      },
-      {
-        "id": "exam",
-        "order": 6,
-        "text": "考试管理",
+        "text": "题目管理",
         "link": "",
         "iconClass": "el-icon-document-checked",
         "Permissions": [],
@@ -122,7 +35,7 @@
           {
             "id": "examtm",
             "order": 2,
-            "text": "题目管理",
+            "text": "题目库",
             "link": "/admin/exam/examTm/",
             "iconClass": "el-icon-s-custom",
             "Permissions": [ "Select", "Add", "Update", "Delete", "Export", "Import" ],
@@ -131,10 +44,10 @@
             ]
           },
           {
-            "id": "examcer",
+            "id": "examtmgroup",
             "order": 3,
-            "text": "证书管理",
-            "link": "/admin/exam/examCer/",
+            "text": "题目组",
+            "link": "/admin/exam/examTmGroup/",
             "iconClass": "el-icon-s-custom",
             "Permissions": [ "Select", "Add", "Update", "Delete" ],
             "isPermission": true,
@@ -142,10 +55,10 @@
             ]
           },
           {
-            "id": "examtmgroup",
+            "id": "examcer",
             "order": 4,
-            "text": "题目组",
-            "link": "/admin/exam/examTmGroup/",
+            "text": "证书管理",
+            "link": "/admin/exam/examCer/",
             "iconClass": "el-icon-s-custom",
             "Permissions": [ "Select", "Add", "Update", "Delete" ],
             "isPermission": true,
@@ -155,37 +68,50 @@
         ]
       },
       {
-        "id": "exampapermark",
-        "order": 7,
-        "text": "阅卷",
-        "link": "/admin/exam/examPaperMark/",
-        "iconClass": "el-icon-finished",
-        "permissions": [ "Select" ],
+        "id": "examplan",
+        "order": 3,
+        "text": "培训任务",
+        "link": "/admin/exam/examPlan/",
+        "iconClass": "el-icon-time",
+        "permissions": [ "Select", "Add", "Update", "Delete", "Manage" ],
         "isPermission": true,
         "children": [
         ]
       },
       {
-        "id": "questionnaire",
-        "order": 8,
-        "text": "发布问卷",
-        "link": "/admin/exam/examQuestionnaire/",
-        "iconClass": "el-icon-question",
-        "Permissions": [ "Select", "Add", "Update", "Delete" ],
+        "id": "exam",
+        "order": 4,
+        "text": "考试管理",
+        "link": "",
+        "iconClass": "el-icon-s-check",
+        "Permissions": [],
         "isPermission": true,
         "children": [
+          {
+            "id": "exampaper",
+            "order": 5,
+            "text": "发布考试",
+            "link": "/admin/exam/examPaper/",
+            "iconClass": "el-icon-platform-eleme",
+            "permissions": [ "Select", "Add", "Update", "Delete", "Manage" ],
+            "isPermission": true,
+            "children": [
+            ]
+          },
+          {
+            "id": "exampapermark",
+            "order": 7,
+            "text": "阅卷",
+            "link": "/admin/exam/examPaperMark/",
+            "iconClass": "el-icon-finished",
+            "permissions": [ "Select" ],
+            "isPermission": true,
+            "children": [
+            ]
+          }
         ]
       },
-      {
-        "id": "examassessment",
-        "order": 9,
-        "text": "发布测评",
-        "link": "/admin/exam/examAssessment/",
-        "iconClass": "el-icon-magic-stick",
-        "Permissions": [ "Select", "Add", "Update", "Delete", "Manage" ],
-        "children": [
-        ]
-      },
+     
       {
         "id": "account",
         "order": 10,
@@ -482,6 +408,93 @@
             "iconClass": "el-icon-s-custom",
             "Permissions": [ "Select" ],
             "isPermission": true,
+            "children": [
+            ]
+          }
+        ]
+      },
+      {
+        "id": "others",
+        "order": 20,
+        "text": "其他",
+        "link": "",
+        "iconClass": "el-icon-s-check",
+        "Permissions": [],
+        "isPermission": true,
+        "children": [
+          {
+            "id": "studyplan",
+            "order": 2,
+            "text": "发布培训",
+            "link": "/admin/study/studyPlan/",
+            "iconClass": "el-icon-star-off",
+            "permissions": [ "Select", "Add", "Update", "Delete", "Manage" ],
+            "isPermission": true,
+            "children": [
+            ]
+          },
+          {
+            "id": "studymanage_files",
+            "order": 1,
+            "text": "课件上传",
+            "link": "/admin/study/studyCourseFiles/",
+            "iconClass": "el-icon-s-custom",
+            "Permissions": [ "Select", "Add", "Update", "Delete", "Download" ],
+            "isPermission": true,
+            "children": [
+            ]
+          },
+          {
+            "id": "studymanage_course",
+            "order": 2,
+            "text": "发布课程",
+            "link": "/admin/study/studyCourse/",
+            "iconClass": "el-icon-s-custom",
+            "Permissions": [ "Select", "Add", "Update", "Delete", "Manage" ],
+            "isPermission": true,
+            "children": [
+            ]
+          },
+          {
+            "id": "studymanage_courseevaluation",
+            "order": 3,
+            "text": "课程评价",
+            "link": "/admin/study/studyCourseEvaluation/",
+            "iconClass": "el-icon-s-custom",
+            "Permissions": [ "Select", "Add", "Update", "Delete" ],
+            "isPermission": true,
+            "children": [
+            ]
+          },
+          {
+            "id": "studyteacher",
+            "order": 4,
+            "text": "上课",
+            "link": "/admin/study/studyCourseTeacher/",
+            "iconClass": "el-icon-user-solid",
+            "permissions": [ "Select", "Manage" ],
+            "isPermission": true,
+            "children": [
+            ]
+          },
+          {
+            "id": "questionnaire",
+            "order": 8,
+            "text": "发布问卷",
+            "link": "/admin/exam/examQuestionnaire/",
+            "iconClass": "el-icon-question",
+            "Permissions": [ "Select", "Add", "Update", "Delete" ],
+            "isPermission": true,
+            "children": [
+            ]
+          },
+          {
+            "id": "examassessment",
+            "order": 9,
+            "text": "发布测评",
+            "link": "/admin/exam/examAssessment/",
+            "iconClass": "el-icon-magic-stick",
+            "Permissions": [ "Select", "Add", "Update", "Delete", "Manage" ],
             "children": [
             ]
           }

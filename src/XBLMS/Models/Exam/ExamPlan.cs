@@ -16,7 +16,7 @@ namespace XBLMS.Models
         public DateTime StartDate { get; set; } = DateTime.Now;
 
         [DataColumn]
-        public DateTime EndDate { get; set; } = DateTime.Now.AddDays(3);
+        public DateTime EndDate { get; set; } = DateTime.Now.AddMonths(1);
 
         [DataColumn]
         public bool RequirePass { get; set; } // 未通过需重新做题

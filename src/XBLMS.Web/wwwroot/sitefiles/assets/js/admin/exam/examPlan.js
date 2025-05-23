@@ -184,7 +184,7 @@ var methods = {
   },
   btnEditClick: function (id) {
 
-    if (this.treeSelectId > 0 || id>0) {
+    //if (this.treeSelectId > 0 || id>0) {
       var $this = this;
       top.utils.openLayer({
         title: false,
@@ -196,10 +196,10 @@ var methods = {
           $this.btnSearchClick();
         }
       });
-    }
-    else {
-      utils.error("请选择一个试卷分类")
-    }
+    //}
+    //else {
+    //  utils.error("请选择一个试卷分类")
+    //}
 
   },
   btnCopyClick: function (id) {

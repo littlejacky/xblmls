@@ -75,7 +75,8 @@ namespace XBLMS.Core.Repositories
                 Text = "学习任务",
                 Link = "/home/study/studyPlan/",
                 IconClass = "el-icon-star-on",
-                Taxis = 2
+                Taxis = 2,
+                Disabled = true
             });
 
             parentId = await InsertAsync(new UserMenu
@@ -84,7 +85,8 @@ namespace XBLMS.Core.Repositories
                 Text = "课程中心",
                 Link = "/home/study/studyCourse/",
                 IconClass = "el-icon-s-claim",
-                Taxis = 3
+                Taxis = 3,
+                Disabled = true
             });
 
             parentId = await InsertAsync(new UserMenu
@@ -111,7 +113,8 @@ namespace XBLMS.Core.Repositories
                 Text = "调查问卷",
                 Link = "/home/exam/examQuestionnaire/",
                 IconClass = "el-icon-question",
-                Taxis = 6
+                Taxis = 6,
+                Disabled = true
             });
 
             parentId = await InsertAsync(new UserMenu
@@ -120,7 +123,8 @@ namespace XBLMS.Core.Repositories
                 Text = "测评中心",
                 Link = "/home/exam/examAssessment/",
                 IconClass = "el-icon-magic-stick",
-                Taxis = 7
+                Taxis = 7,
+                Disabled = true
             });
 
             parentId = await InsertAsync(new UserMenu

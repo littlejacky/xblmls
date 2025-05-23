@@ -2,18 +2,18 @@
 @{ Layout = "_Layout"; }
 
 <el-row :gutter="0">
-    <el-col :span="6">
-        @await Html.PartialAsync("_PartialTree")
-    </el-col>
-    <el-col :span="18">
+    @* <el-col :span="6"> *@
+    @*     @await Html.PartialAsync("_PartialTree") *@
+    @* </el-col> *@
+    <el-col :span="24">
         <el-card shadow="never" style="border-start-start-radius:0;border-end-start-radius:0;">
             <el-form :inline="true" :size="euiSize">
-                <el-form-item label="试卷">
+                <el-form-item label="培训任务">
                     <el-input clearable v-model="formInline.keyword" placeholder="关键字" prefix-icon="el-icon-search"></el-input>
                 </el-form-item>
                 <el-form-item>
                     <el-button icon="el-icon-search" type="primary" v-on:click="btnSearchClick">查 询</el-button>
-                    <el-button plain icon="el-icon-plus" type="primary" v-on:click="btnEditClick(0)">发布考试计划</el-button>
+                    <el-button plain icon="el-icon-plus" type="primary" v-on:click="btnEditClick(0)">发布培训任务</el-button>
                 </el-form-item>
                 <el-form-item>
                 </el-form-item>
@@ -28,19 +28,19 @@
                         <span>{{(formInline.pageIndex - 1) * formInline.pageSize + scope.$index + 1}}</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="试卷名称" show-overflow-tooltip prop="title">
+                <el-table-column label="培训任务名称" show-overflow-tooltip prop="title">
                     <template slot-scope="scope">
                         <el-link size="mini" type="primary" v-on:click="btnViewClick(scope.row)" v-if="scope.row.tmRandomType!=='RandomExaming' && scope.row.submitType==='Submit'">
-                            <span v-if="scope.row.moni"><el-tag type="warning" size="mini">模拟</el-tag>{{ scope.row.title }}</span>
+                            <span v-if="scope.row.moni"><el-tag type="warning" size="mini">任务模拟</el-tag>{{ scope.row.title }}</span>
                             <span v-else>{{ scope.row.title }}</span>
                         </el-link>
                         <template v-else>
-                            <span v-if="scope.row.moni"><el-tag type="warning" size="mini">模拟</el-tag>{{ scope.row.title }}</span>
+                            <span v-if="scope.row.moni"><el-tag type="warning" size="mini">任务模拟</el-tag>{{ scope.row.title }}</span>
                             <span v-else>{{ scope.row.title }}</span>
                         </template>
                     </template>
                 </el-table-column>
-                <el-table-column prop="examBeginDateTime" label="开考时间" width="150">
+                <el-table-column prop="examBeginDateTime" label="开始时间" width="150">
                 </el-table-column>
                 @* <el-table-column prop="markCount" label="待阅卷" width="80">
                     <template slot-scope="scope">
@@ -53,17 +53,17 @@
                 <el-table-column prop="createdDate" label="创建时间"
                                  width="150">
                 </el-table-column>
-                @* <el-table-column prop="useCount" label="被使用" width="80">
-                </el-table-column> *@
-                <el-table-column label="状态" width="85">
-                    <template slot-scope="scope">
-                        <span v-if="scope.row.locked"><el-tag size="mini" type="danger" effect="dark">已停用</el-tag></span>
-                        <span v-else>
-                            <span v-if="scope.row.submitType==='Save'"><el-tag size="mini" type="warning" effect="dark">已保存</el-tag></span>
-                            <span v-else><el-tag size="mini" type="success" effect="dark">已发布</el-tag></span>
-                        </span>
-                    </template>
+                <el-table-column prop="executedTotal" label="执行次数" width="80">
                 </el-table-column>
+                @* <el-table-column label="状态" width="85"> *@
+                @*     <template slot-scope="scope"> *@
+                @*         <span v-if="scope.row.locked"><el-tag size="mini" type="danger" effect="dark">已停用</el-tag></span> *@
+                @*         <span v-else> *@
+                @*             <span v-if="scope.row.submitType==='Save'"><el-tag size="mini" type="warning" effect="dark">已保存</el-tag></span> *@
+                @*             <span v-else><el-tag size="mini" type="success" effect="dark">已发布</el-tag></span> *@
+                @*         </span> *@
+                @*     </template> *@
+                @* </el-table-column> *@
                 <el-table-column width="100">
                     <template slot-scope="scope">
                         <el-dropdown :show-timeout="0" placement="left">
