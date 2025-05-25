@@ -1,4 +1,5 @@
 using Datory;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using XBLMS.Models;
@@ -19,6 +20,7 @@ namespace XBLMS.Repositories
 
         Task DeleteAsync(int userId);
         Task<(int answerTotal, int rightTotal, int allAnswerTotal, int allRightTotal, int collectAnswerTotal, int collectRightTotal, int wrongAnswerTotal, int wrongRightTotal)> SumAsync(int userId);
-
+        Task IncrementAsync(int id);
+        Task<int> UpdateEndDateTimeAsync(int id, DateTime datetime);
     }
 }

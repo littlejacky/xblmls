@@ -1,5 +1,6 @@
 ﻿using Datory;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using XBLMS.Dto;
@@ -19,21 +20,45 @@ namespace XBLMS.Web.Controllers.Home.Exam
             var item = await _examPlanPracticeRepository.GetAsync(request.Id);
             if (item != null)
             {
-                item.AnswerCount = 0;
-                item.RightCount = 0;
-                await _examPlanPracticeRepository.UpdateAsync(item);
-                await _examPlanAnswerRepository.DeleteByPracticeId(item.Id);
-
-                item.TmIds = item.TmIds.OrderBy(tm => { return StringUtils.Guid(); }).ToList();
-
                 var record = await _examPlanRecordRepository.GetAsync(item.PlanRecordId);
+                int useTimeSecond = item.ExamTimeSeconds;
+                int answeredCount = 0;
+                if (!item.BeginDateTime.HasValue)
+                {
+                    item.BeginDateTime = DateTime.Now;
+                    item.TmIds = item.TmIds.OrderBy(tm => { return StringUtils.Guid(); }).ToList();
+                    await _examPlanPracticeRepository.UpdateAsync(item);
+                }
+                else
+                {
+                    var timeSpan = DateTime.Now - item.BeginDateTime.Value;
+                    var useTotalSecond = timeSpan.TotalSeconds + useTimeSecond;
+                    if (useTotalSecond >= record.TimingMinute * 60)
+                    {
+                        useTotalSecond = record.TimingMinute * 60;
+                        useTimeSecond = -1;
+                    }
+                    else
+                    {
+                        useTimeSecond = (int)useTotalSecond;
+                    }
+                    item.ExamTimeSeconds = useTimeSecond;
+                    await _examPlanPracticeRepository.UpdateAsync(item);
+
+                    answeredCount = await _examPlanAnswerRepository.CountByPracticeId(item.Id);
+                }
+
                 return new GetResult
                 {
                     Title = item.PracticeType.GetDisplayName(),
                     TmIds = item.TmIds,
                     Total = item.TmCount,
                     Watermark = await _authManager.GetWatermark(),
-                    OpenExist = record.OpenExist
+                    OpenExist = record.OpenExist,
+                    IsTiming = record.IsTiming,
+                    TimingMinute = record.TimingMinute,
+                    UseTimeSecond = useTimeSecond,
+                    TmIndex = answeredCount
                 };
 
             }

@@ -1157,7 +1157,7 @@ var DEFAULT_AVATAR_URL = '/sitefiles/assets/images/default_avatar.png';
 var DEFAULT_AVATAR_BG_URL = '/sitefiles/assets/images/default_avatar_bg.jpg';
 var DEFAULT_LOGO_URL = "/sitefiles/assets/images/logo.png";
 
-var DOCUMENTTITLE = 'XBLMS.ELEARNING';
+var DOCUMENTTITLE = 'MAXITAI.ELEARNING';
 var DOCUMENTTITLECN = '在线学习平台';
 var DOCUMENTTITLE_ADMIN = DOCUMENTTITLE + '-后台管理';
 var DOCUMENTTITLE_HOME = DOCUMENTTITLE + '-用户中心';

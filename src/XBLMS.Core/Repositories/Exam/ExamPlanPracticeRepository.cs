@@ -1,4 +1,5 @@
 using Datory;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using XBLMS.Enums;
@@ -97,6 +98,15 @@ namespace XBLMS.Core.Repositories
             var wrongRightTotal = await _repository.SumAsync(nameof(ExamPlanPractice.RightCount), Q.Where(nameof(ExamPlanPractice.PracticeType), PracticeType.Wrong.GetValue()).Where(nameof(ExamPlanPractice.UserId), userId));
 
             return (answerTotal, rightTtoal, allAnswerTotal, allRightTotal, collectAnswerTotal, collectRightTotal, wrongAnswerTotal, wrongRightTotal);
+        }
+
+        public async Task IncrementAsync(int id)
+        {
+            await _repository.IncrementAsync(nameof(ExamPlanPractice.ExamTimeSeconds), Q.Where(nameof(ExamPlanPractice.Id), id), 5);
+        }
+        public async Task<int> UpdateEndDateTimeAsync(int id, DateTime datetime)
+        {
+            return await _repository.UpdateAsync(Q.Set(nameof(ExamPlanPractice.EndDateTime), datetime).Where(nameof(ExamPlanPractice.Id), id));
         }
     }
 }

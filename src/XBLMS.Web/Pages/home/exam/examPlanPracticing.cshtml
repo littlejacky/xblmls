@@ -156,6 +156,14 @@
     </el-card>
 </div>
 <div class="d-flex justify-content-between align-items-center px-3 pt-2">
+    <div>
+        <div v-if="isTiming">
+            <el-statistic :value="surplusSecond"
+                          time-indices v-on:finish="timingFinish"
+                          suffix="后自动交卷">
+            </el-statistic>
+        </div>
+    </div>
     <div style="min-width:60%;">
         <el-progress :text-inside="true" :stroke-width="20" :percentage="utils.formatPercentFloat(answerTotal,total)" status="success"></el-progress>
     </div>

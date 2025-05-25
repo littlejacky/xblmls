@@ -1,4 +1,5 @@
 using Datory;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using XBLMS.Models;
 
@@ -8,8 +9,8 @@ namespace XBLMS.Repositories
     {
         Task DeleteByPracticeId(int practiceId);
         Task DeleteByUserId(int userId);
-        Task<ExamPlanAnswer> GetAsync(int userId,int tmId,int practiceId);
-
+        Task<ExamPlanAnswer> GetAsync(int userId, int tmId, int practiceId);
+        Task<int> CountByPracticeId(int id);
         Task<int> InsertAsync(ExamPlanAnswer item);
 
         Task UpdateAsync(ExamPlanAnswer item);

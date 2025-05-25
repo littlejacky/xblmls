@@ -4,6 +4,8 @@ var $urlAnswer = $url + '/answer';
 var $urlCollection = $url + '/collection';
 var $urlCollectionRemove = $url + '/collectionRemove';
 var $urlWrongRemove = $url + '/wrongRemove';
+var $urlSubmitTiming = $url + "/submitTiming";
+var $urlSubmit = $url + "/submit";
 
 var data = utils.init({
   id: utils.getQueryInt("id"),
@@ -18,7 +20,11 @@ var data = utils.init({
   tmIndex: 0,
   watermark: null,
   answerResult: null,
-  openExist:false
+  openExist: false,
+  isTiming: false,
+  timingMinute: 0,
+  surplusSecond: 0,
+  curTimingSecond:1
 });
 
 var methods = {
@@ -34,7 +40,24 @@ var methods = {
       $this.title = res.title;
 
       $this.watermark = res.watermark;
+      $this.tmIndex = res.tmIndex;
       $this.openExist = res.openExist;
+      $this.isTiming = res.isTiming;
+
+      if (res.isTiming) {
+        if (res.useTimeSecond > -1) {
+          $this.surplusSecond = Date.now() + res.timingMinute * 60 * 1000 - res.useTimeSecond * 1000;
+          if ($this.surplusSecond > 0) {
+            $this.timingChange();
+          }
+          else {
+            $this.goResult();
+          }
+        }
+        else {
+          $this.goResult();
+        }
+      }
 
       $this.apiGetTmInfo($this.tmIds[0])
 
@@ -173,8 +196,28 @@ var methods = {
     this.goResult();
   },
   goResult: function () {
+    apiSubmit();
     utils.loading(this, true,"正在统计练习...");
     location.href = utils.getExamUrl("examPlanPracticeResult", { id: this.id });
+  },
+  apiSubmit: function () {
+    $api.post($urlSubmit, { id: this.startId }).then(function (response) { });
+  },
+  apiSubmitTiming: function () {
+    $api.post($urlSubmitTiming, { id: this.startId }).then(function (response) { });
+  },
+  timingFinish: function () {
+    this.goResult();
+  },
+  timingChange: function () {
+    if (this.curTimingSecond % 5 === 0) {
+      this.apiSubmitTiming();
+    }
+    var $this = this;
+    setTimeout(function () {
+      $this.curTimingSecond++;
+      $this.timingChange();
+    }, 1000)
   }
 };
 var $vue = new Vue({

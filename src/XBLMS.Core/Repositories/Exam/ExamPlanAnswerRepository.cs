@@ -47,5 +47,10 @@ namespace XBLMS.Core.Repositories
         {
             await _repository.DeleteAsync(Q.Where(nameof(ExamPlanAnswer.PracticeId), practiceId));
         }
+
+        public async Task<int> CountByPracticeId(int id)
+        {
+            return await _repository.CountAsync(Q.Where(nameof(ExamPlanAnswer.PracticeId), id));
+        }
     }
 }

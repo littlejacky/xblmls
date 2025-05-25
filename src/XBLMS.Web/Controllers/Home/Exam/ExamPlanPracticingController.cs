@@ -19,6 +19,8 @@ namespace XBLMS.Web.Controllers.Home.Exam
         private const string RouteCollection = Route + "/collection";
         private const string RouteCollectionRemove = Route + "/collectionRemove";
         private const string RouteWrongRemove = Route + "/wrongRemove";
+        private const string RouteSubmitTiming = Route + "/submitTiming";
+        private const string RouteSubmit = Route + "/submit";
 
 
         private const string RoutePricticingTmIds = Route+ "/tmids";
@@ -109,7 +111,11 @@ namespace XBLMS.Web.Controllers.Home.Exam
             public int Total { get; set; }
             public List<int> TmIds { get; set; }
             public string Title { get; set; }
-            public bool OpenExist { get; internal set; }
+            public bool OpenExist { get; set; }
+            public bool IsTiming { get; set; }
+            public int TimingMinute { get; set; }
+            public int UseTimeSecond { get; set; }
+            public int TmIndex { get; set; }
         }
         public class GetCollectionResult
         {

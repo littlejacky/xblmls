@@ -1,4 +1,5 @@
 ﻿using Datory.Annotations;
+using System;
 
 namespace XBLMS.Models
 {
@@ -6,6 +7,15 @@ namespace XBLMS.Models
 
     public class ExamPlanPractice: ExamPractice
     {
+        [DataColumn]
+        public DateTime? BeginDateTime { get; set; }
+        [DataColumn]
+        public DateTime? EndDateTime { get; set; }
+        /// <summary>
+        /// 已用时 秒
+        /// </summary>
+        [DataColumn]
+        public int ExamTimeSeconds { get; set; }
         [DataColumn]
         public int PlanRecordId { get; set; }
     }
