@@ -28,6 +28,9 @@ namespace XBLMS.Models
             TmCount = plan.TmCount;
             OpenExist = plan.OpenExist;
             PlanId = plan.Id;
+            CompanyId = plan.CompanyId;
+            CreatorId = plan.CreatorId;
+            DepartmentId = plan.DepartmentId;
         }
 
         [DataColumn]

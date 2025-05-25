@@ -55,7 +55,7 @@ namespace XBLMS.Core.Services
         {
             ExamPlanPractice practice = new ExamPlanPractice();
             practice.PlanRecordId = plan.Id;
-            practice.Title = $"{plan.Title}({today:YYYYMMdd})";
+            practice.Title = $"{plan.Title}({today:yyyyMMdd})";
 
             practice.PracticeType = PracticeType.Random;
             practice.CompanyId = plan.CompanyId;

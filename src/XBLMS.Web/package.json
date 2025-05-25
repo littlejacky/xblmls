@@ -11,7 +11,7 @@
         "children": [
         ]
       },
-      
+
       {
         "id": "tm",
         "order": 2,
@@ -68,14 +68,36 @@
         ]
       },
       {
-        "id": "examplan",
+        "id": "plan",
         "order": 3,
-        "text": "培训任务",
-        "link": "/admin/exam/examPlan/",
-        "iconClass": "el-icon-time",
-        "permissions": [ "Select", "Add", "Update", "Delete", "Manage" ],
+        "text": "培训管理",
+        "link": "",
+        "iconClass": "el-icon-s-check",
+        "Permissions": [],
         "isPermission": true,
         "children": [
+          {
+            "id": "examplan",
+            "order": 3,
+            "text": "培训任务",
+            "link": "/admin/exam/examPlan/",
+            "iconClass": "el-icon-time",
+            "permissions": [ "Select", "Add", "Update", "Delete", "Manage" ],
+            "isPermission": true,
+            "children": [
+            ]
+          },
+          {
+            "id": "examplanrecord",
+            "order": 4,
+            "text": "任务记录",
+            "link": "/admin/exam/examPlanRecord/",
+            "iconClass": "el-icon-time",
+            "permissions": [ "Select", "Add", "Update", "Delete", "Manage" ],
+            "isPermission": true,
+            "children": [
+            ]
+          }
         ]
       },
       {
@@ -111,7 +133,7 @@
           }
         ]
       },
-     
+
       {
         "id": "account",
         "order": 10,

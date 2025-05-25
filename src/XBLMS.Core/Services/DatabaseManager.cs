@@ -88,6 +88,9 @@ namespace XBLMS.Core.Services
         public IStudyCourseWareUserRepository StudyCourseWareUserRepository { get; }
 
         public IExamPlanRepository ExamPlanRepository { get; }
+        public IExamPlanRecordRepository ExamPlanRecordRepository { get; }
+        public IExamPlanPracticeRepository ExamPlanPracticeRepository { get; }
+        public IExamPlanAnswerRepository ExamPlanAnswerRepository { get; }
         public IExamTmGroupProportionRepository ExamTmGroupProportionRepository { get; }
 
         public DatabaseManager(
@@ -155,6 +158,9 @@ namespace XBLMS.Core.Services
             IStudyCourseUserRepository studyCourseUserRepository,
             IStudyCourseWareUserRepository studyCourseWareUserRepository,
             IExamPlanRepository examPlanRepository,
+            IExamPlanRecordRepository examPlanRecordRepository,
+            IExamPlanPracticeRepository examPlanPracticeRepository,
+            IExamPlanAnswerRepository examPlanAnswerRepository,
             IExamTmGroupProportionRepository examTmGroupProportionRepository)
         {
             _settingsManager = settingsManager;
@@ -221,6 +227,9 @@ namespace XBLMS.Core.Services
             StudyCourseUserRepository = studyCourseUserRepository;
             StudyCourseWareUserRepository = studyCourseWareUserRepository;
             ExamPlanRepository = examPlanRepository;
+            ExamPlanRecordRepository = examPlanRecordRepository;
+            ExamPlanPracticeRepository = examPlanPracticeRepository;
+            ExamPlanAnswerRepository = examPlanAnswerRepository;
             ExamTmGroupProportionRepository = examTmGroupProportionRepository;
         }
 
@@ -291,6 +300,9 @@ namespace XBLMS.Core.Services
                 StudyCourseUserRepository,
                 StudyCourseWareUserRepository,
                 ExamPlanRepository,
+                ExamPlanRecordRepository,
+                ExamPlanPracticeRepository,
+                ExamPlanAnswerRepository,
                 ExamTmGroupProportionRepository
             };
 

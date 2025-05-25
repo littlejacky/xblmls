@@ -81,6 +81,15 @@ namespace XBLMS.Core.Repositories
 
             parentId = await InsertAsync(new UserMenu
             {
+                Name = "examPlanPracticeLog",
+                Text = "培训任务",
+                Link = "/home/exam/examPlanPracticeLog/",
+                IconClass = "el-icon-star-on",
+                Taxis = 2,
+            });
+
+            parentId = await InsertAsync(new UserMenu
+            {
                 Name = "studyCourse",
                 Text = "课程中心",
                 Link = "/home/study/studyCourse/",

@@ -324,6 +324,19 @@ var methods = {
       }
     });
   },
+  goPlanPractice: function (id) {
+    var $this = this;
+    top.utils.openLayer({
+      title: false,
+      closebtn: 0,
+      url: utils.getExamUrl('examPlanPracticing', { id: id }),
+      width: "68%",
+      height: "88%",
+      end: function () {
+        $this.apiGet();
+      }
+    });
+  },
   btnViewPaperClick: function (row) {
     var $this = this;
     top.utils.openLayer({
@@ -376,7 +389,7 @@ var methods = {
     })
   },
   btnViewPracticeClick: function (res) {
-    this.goPractice(res.id);
+    this.goPlanPractice(res.id);
   }
 };
 Vue.component("apexchart", {

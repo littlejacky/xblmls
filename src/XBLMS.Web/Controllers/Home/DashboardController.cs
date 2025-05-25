@@ -37,7 +37,7 @@ namespace XBLMS.Web.Controllers.Home
         private readonly IStudyPlanCourseRepository _studyPlanCourseRepository;
         private readonly IExamCerUserRepository _examCerUserRepository;
         private readonly IExamCerRepository _examCerRepository;
-        private readonly IExamPracticeRepository _examPracticeRepository;
+        private readonly IExamPlanPracticeRepository _examPlanPracticeRepository;
 
         public DashboardController(IConfigRepository configRepository,
             ISettingsManager settingsManager,
@@ -59,7 +59,7 @@ namespace XBLMS.Web.Controllers.Home
             IStudyPlanCourseRepository studyPlanCourseRepository,
             IExamCerUserRepository examCerUserRepository,
             IExamCerRepository examCerRepository,
-            IExamPracticeRepository examPracticeRepository)
+            IExamPlanPracticeRepository examPlanPracticeRepository)
         {
             _configRepository = configRepository;
             _settingsManager = settingsManager;
@@ -81,7 +81,7 @@ namespace XBLMS.Web.Controllers.Home
             _studyPlanCourseRepository = studyPlanCourseRepository;
             _examCerUserRepository = examCerUserRepository;
             _examCerRepository = examCerRepository;
-            _examPracticeRepository = examPracticeRepository;
+            _examPlanPracticeRepository = examPlanPracticeRepository;
         }
 
         public class GetResult
