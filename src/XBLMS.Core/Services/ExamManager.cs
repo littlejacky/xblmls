@@ -35,7 +35,7 @@ namespace XBLMS.Core.Services
         private readonly IExamPracticeCollectRepository _examPracticeCollectRepository;
         private readonly IExamPracticeWrongRepository _examPracticeWrongRepository;
         private readonly IExamPracticeRepository _examPracticeRepository;
-        private readonly IExamPlanTaskRepository _examPlanTaskRepository;
+        private readonly IExamPlanPracticeRepository _examPlanPracticeRepository;
 
         private readonly IExamQuestionnaireRepository _examQuestionnaireRepository;
         private readonly IExamQuestionnaireAnswerRepository _examQuestionnaireAnswerRepository;
@@ -84,7 +84,7 @@ namespace XBLMS.Core.Services
             IExamPracticeCollectRepository examPracticeCollectRepository,
             IExamPracticeWrongRepository examPracticeWrongRepository,
             IExamPracticeRepository examPracticeRepository,
-            IExamPlanTaskRepository examPlanTaskRepository,
+            IExamPlanPracticeRepository examPlanPracticeRepository,
             IExamQuestionnaireRepository examQuestionnaireRepository,
             IExamQuestionnaireAnswerRepository examQuestionnaireAnswerRepository,
             IExamQuestionnaireTmRepository examQuestionnaireTmRepository,
@@ -127,7 +127,7 @@ namespace XBLMS.Core.Services
             _examPracticeCollectRepository = examPracticeCollectRepository;
             _examPracticeWrongRepository = examPracticeWrongRepository;
             _examPracticeRepository = examPracticeRepository;
-            _examPlanTaskRepository = examPlanTaskRepository;
+            _examPlanPracticeRepository = examPlanPracticeRepository;
             _examQuestionnaireRepository = examQuestionnaireRepository;
             _examQuestionnaireAnswerRepository = examQuestionnaireAnswerRepository;
             _examQuestionnaireTmRepository = examQuestionnaireTmRepository;

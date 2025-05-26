@@ -25,11 +25,11 @@ namespace XBLMS.Core.Services
                 s => s.ToRunEvery(1).Days().At(6, 0) // 每天早上6点
             );
 
-            //// 注册每周统计任务
-            //JobManager.AddJob(
-            //    async () => await AdjustUserCategoryWeights(),
-            //    s => s.ToRunEvery(1).Weeks().On(DayOfWeek.Sunday).At(23, 0) // 每周晚上11点
-            //);
+            // 注册每分钟更新计时练习状态
+            JobManager.AddJob(
+                async () => await ScanUnfinishPlanPractices(),
+                s => s.ToRunEvery(1).Minutes()
+            );
         }
 
         private async Task CreateDailyTrainingTasks()
@@ -50,30 +50,22 @@ namespace XBLMS.Core.Services
             }
         }
 
-        //private async Task AdjustUserCategoryWeights()
-        //{
-        //    try
-        //    {
-        //        // 在需要时创建作用域并解析服务
-        //        using (var scope = _serviceProvider.CreateScope())
-        //        {
-        //            var trainingManager = scope.ServiceProvider.GetRequiredService<ITrainingManager>();
-
-        //            // 获取所有活跃用户
-        //            var users = await trainingManager.GetAllActiveUsers();
-
-        //            // 为每个用户调整题目分类权重
-        //            foreach (var user in users)
-        //            {
-        //                await trainingManager.AdjustUserCategoryWeights(user.Id);
-        //            }
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        // 记录错误日志
-        //        Console.WriteLine($"调整用户题目分类权重失败: {ex.Message}");
-        //    }
-        //}
+        private async Task ScanUnfinishPlanPractices()
+        {
+            try
+            {
+                // 在需要时创建作用域并解析服务
+                using (var scope = _serviceProvider.CreateScope())
+                {
+                    var examManager = scope.ServiceProvider.GetRequiredService<IExamManager>();
+                    await examManager.MarkUnfinishPlanPractices();
+                }
+            }
+            catch (Exception ex)
+            {
+                // 记录错误日志
+                Console.WriteLine($"创建每日培训任务失败: {ex.Message}");
+            }
+        }
     }
 }

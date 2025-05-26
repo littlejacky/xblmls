@@ -1,4 +1,6 @@
 using Datory;
+using Dm;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -29,7 +31,7 @@ namespace XBLMS.Core.Repositories
             return await _repository.GetAsync(id);
         }
 
-        public async Task<(int total, List<ExamPlanPractice> list)> GetListAsync(int userId, string dateFrom, string dateTo, int pageIndex, int pageSize, bool isPlan = false)
+        public async Task<(int total, List<ExamPlanPractice> list)> GetListAsync(int userId, string dateFrom, string dateTo, int pageIndex, int pageSize, bool isUnfinished = false)
         {
             var query = Q.Where(nameof(ExamPlanPractice.UserId), userId);
 
@@ -43,9 +45,9 @@ namespace XBLMS.Core.Repositories
                 query.Where(nameof(ExamPlanPractice.CreatedDate), "<=", TranslateUtils.ToDateTime(dateTo));
             }
 
-            if (isPlan)
+            if (isUnfinished)
             {
-                query.Where(nameof(ExamPlanPractice.PracticeType), PracticeType.Random.GetValue());
+                query.WhereNull(nameof(ExamPlanPractice.EndDateTime));
             }
 
             var count = await _repository.CountAsync(query);
@@ -107,6 +109,11 @@ namespace XBLMS.Core.Repositories
         public async Task<int> UpdateEndDateTimeAsync(int id, DateTime datetime)
         {
             return await _repository.UpdateAsync(Q.Set(nameof(ExamPlanPractice.EndDateTime), datetime).Where(nameof(ExamPlanPractice.Id), id));
+        }
+
+        public async Task<List<ExamPlanPractice>> ListUnfinishAsync()
+        {
+            return await _repository.GetAllAsync(Q.WhereNull(nameof(ExamPlanPractice.EndDateTime)));
         }
     }
 }

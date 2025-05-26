@@ -97,7 +97,7 @@ namespace XBLMS.Core.Repositories
             if (maxId.HasValue) return maxId.Value;
             return 0;
         }
-        public async Task<List<int>> GetIdsAsync(List<int> ids, string keyword)
+        public async Task<List<ExamPlanRecord>> GetIdsAsync(List<int> ids, string keyword)
         {
             var query = Q.Select(nameof(ExamPlanRecord.Id));
 
@@ -118,7 +118,7 @@ namespace XBLMS.Core.Repositories
                     //.OrWhereLike(nameof(ExamPlanRecord.Subject), like)
                 );
             }
-            return await _repository.GetAllAsync<int>(query);
+            return await _repository.GetAllAsync(query);
         }
         //public async Task<int> GetCerCount(int cerId)
         //{

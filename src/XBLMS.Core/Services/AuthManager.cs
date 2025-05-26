@@ -24,7 +24,7 @@ namespace XBLMS.Core.Services
         {
             _context = context;
             _antiforgery = antiforgery;
-            _principal = context.HttpContext.User;
+            _principal = context.HttpContext?.User;
             _cacheManager = cacheManager;
             _settingsManager = settingsManager;
             _databaseManager = databaseManager;

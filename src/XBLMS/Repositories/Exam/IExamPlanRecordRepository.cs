@@ -16,7 +16,7 @@ namespace XBLMS.Repositories
         Task<(int total, List<ExamPlanRecord> list)> GetListAsync(AuthorityAuth auth, List<int> treeIds, string keyword, int pageIndex, int pageSize);
         Task<bool> DeleteAsync(int Id);
         Task<int> MaxAsync();
-        Task<List<int>> GetIdsAsync(List<int> ids, string keyword);
+        Task<List<ExamPlanRecord>> GetIdsAsync(List<int> ids, string keyword);
         //Task<int> GetCerCount(int cerId);
         Task<int> GetGroupCount(int groupId);
         Task<int> GetTmGroupCount(int groupId);

@@ -95,7 +95,7 @@ namespace XBLMS.Web.Controllers.Home
 
             public ExamPaper ExamPaper { get; set; }
             public ExamPaper ExamMoni { get; set; }
-            public ExamPractice ExamPractice { get; set; }
+            public ExamPlanPractice ExamPractice { get; set; }
 
             public int PracticeAnswerTmTotal { get; set; }
             public double PracticeAnswerPercent { get; set; }

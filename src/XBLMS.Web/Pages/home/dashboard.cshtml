@@ -245,10 +245,10 @@
 <!-- 刷题安排区域 -->
 <div class="container mt-4">
     <div class="row">
-        <div class="col-7">
+        <div class="col-12">
             <div class="ps-8" v-if="examPractice && examPractice.id>0">
                 <div class="text-uppercase text-warning fw-semibold p-4 mt-3">
-                    <h2 class="h2 fw-bold m-0 p-0 text-warning"><i class="bi bi-flag-fill me-2"></i>最新刷题安排</h2>
+                    <h2 class="h2 fw-bold m-0 p-0 text-warning"><i class="bi bi-flag-fill me-2"></i>最新培训安排</h2>
                 </div>
                 <a class="card bg-success border-success" href="javascript:;" v-on:click="btnViewPracticeClick(examPractice)">
                     <div class="card-body d-flex justify-content-between align-items-center">
@@ -257,8 +257,8 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="d-flex flex-column gap-1">
                                     <h1 class="display-4 text-white mb-0">开始</h1>
-                                    <p class="mb-0 text-white" v-if="examPractice.answerCount<examPractice.tmCount">请及时参加</p>
-                                    <p class="mb-0 text-white" v-else>（已参与）</p>
+                                    <p class="mb-0 text-white" v-if="examPractice.endDateTime">（已参与）</p>
+                                    <p class="mb-0 text-white" v-else>请及时参加</p>
                                 </div>
                             </div>
                         </div>
@@ -280,11 +280,11 @@
                 </div>
             </div>
         </div>
-        <div class="col-5">
-            <div class="me-5">
-                <apexchart type="radialBar" :options="chartOptions" :series="series" height="399"></apexchart>
-            </div>
-        </div>
+        @* <div class="col-5"> *@
+        @*     <div class="me-5"> *@
+        @*         <apexchart type="radialBar" :options="chartOptions" :series="series" height="399"></apexchart> *@
+        @*     </div> *@
+        @* </div> *@
     </div>
 </div>
 

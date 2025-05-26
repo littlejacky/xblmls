@@ -38,6 +38,9 @@ namespace XBLMS.Web.Controllers.Home.Exam
                             {
                                 Id = tmGroup.Id,
                                 TmTotal = total,
+                                GroupName = tmGroup.GroupName,
+                                DateFrom = tmGroup.DateFrom,
+                                DateTo = tmGroup.DateTo,
                                 Zsds = zsds
                             });
                         }

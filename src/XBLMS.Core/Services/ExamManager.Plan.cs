@@ -75,10 +75,33 @@ namespace XBLMS.Core.Services
                 practice.Zsds = tms.Select(s => s.Zhishidian).Distinct().ToList();
                 practice.KeyWords = await _organManager.GetUserKeyWords(userId);
 
-                await _examPlanTaskRepository.InsertAsync(practice);
+                await _examPlanPracticeRepository.InsertAsync(practice);
             }
 
             await _examPlanRepository.IncrementExecutedCountAsync(plan.Id);
+        }
+
+        public async Task MarkUnfinishPlanPractices()
+        {
+            var practices = await _examPlanPracticeRepository.ListUnfinishAsync();
+            var rids = practices.Select(s => s.PlanRecordId).Distinct().ToList();
+            var records = await _examPlanRecordRepository.GetIdsAsync(rids, null);
+            foreach (var practice in practices)
+            {
+                var record = records.Find(f => f.Id == practice.PlanRecordId);
+                if (record == null || !practice.BeginDateTime.HasValue) continue;
+
+                var timeSpan = DateTime.Now - practice.BeginDateTime.Value;
+                var useTotalSecond = timeSpan.TotalSeconds + practice.ExamTimeSeconds;
+                if (useTotalSecond >= record.TimingMinute * 60)
+                {
+                    useTotalSecond = record.TimingMinute * 60;
+                    practice.EndDateTime = practice.BeginDateTime.Value.AddMinutes(record.TimingMinute);
+                    practice.ExamTimeSeconds = (int)useTotalSecond;
+
+                    await _examPlanPracticeRepository.UpdateAsync(practice);
+                }
+            }
         }
     }
 }

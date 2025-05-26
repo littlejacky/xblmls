@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NSwag.Annotations;
+using System;
 using System.Collections.Generic;
 using XBLMS.Configuration;
 using XBLMS.Enums;
@@ -84,6 +85,9 @@ namespace XBLMS.Web.Controllers.Home.Exam
             public int Id { get; set; }
             public int TmTotal { get; set; }
             public List<string> Zsds { get; set; }
+            public string GroupName { get; internal set; }
+            public DateTime? DateFrom { get; internal set; }
+            public DateTime? DateTo { get; internal set; }
         }
     }
 }

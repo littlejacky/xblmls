@@ -25,7 +25,7 @@ namespace XBLMS.Web.Controllers.Home
 
             var resultPaper = new ExamPaper();
             var resultMoni = new ExamPaper();
-            var resultPractice = new ExamPractice();
+            var resultPractice = new ExamPlanPractice();
 
             var (paperTotal, paperList) = await _examPaperUserRepository.GetListAsync(user.Id, false, "", "", 1, 1);
             var (moniPaperTotal, moniPaperList) = await _examPaperUserRepository.GetListAsync(user.Id, true, "", "", 1, 1);

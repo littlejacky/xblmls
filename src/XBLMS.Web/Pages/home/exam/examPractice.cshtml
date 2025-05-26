@@ -54,6 +54,10 @@
                 <div class="row align-items-center g-3 ms-6">
                     <div class="col">
                         <div>
+                            <b>{{item.groupName}}</b>
+                            <span v-if="item.dateFrom && item.dateTo">（{{item.dateFrom}} - {{item.dateTo}}）</span>
+                        </div>
+                        <div>
                             <span class="small">包含知识点</span>
                         </div>
                         <div class="mt-1">
