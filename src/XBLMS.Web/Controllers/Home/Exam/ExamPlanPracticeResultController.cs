@@ -12,7 +12,7 @@ namespace XBLMS.Web.Controllers.Home.Exam
     [Route(Constants.ApiHomePrefix)]
     public partial class ExamPlanPracticeResultController : ControllerBase
     {
-        private const string Route = "exam/examPracticeResult";
+        private const string Route = "exam/examPlanPracticeResult";
 
         private readonly IConfigRepository _configRepository;
         private readonly IAuthManager _authManager;

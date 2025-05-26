@@ -11,6 +11,7 @@ namespace XBLMS.Repositories
         Task DeleteByUserId(int userId);
         Task<ExamPlanAnswer> GetAsync(int userId, int tmId, int practiceId);
         Task<int> CountByPracticeId(int id);
+        Task<List<ExamPlanAnswer>> ListByPracticeId(int id);
         Task<int> InsertAsync(ExamPlanAnswer item);
 
         Task UpdateAsync(ExamPlanAnswer item);

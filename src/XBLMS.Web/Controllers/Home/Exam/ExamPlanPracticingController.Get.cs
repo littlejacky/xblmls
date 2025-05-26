@@ -1,6 +1,7 @@
 ﻿using Datory;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using XBLMS.Dto;
@@ -22,7 +23,7 @@ namespace XBLMS.Web.Controllers.Home.Exam
             {
                 var record = await _examPlanRecordRepository.GetAsync(item.PlanRecordId);
                 int useTimeSecond = item.ExamTimeSeconds;
-                int answeredCount = 0;
+                List<ExamPlanAnswer> answered = new List<ExamPlanAnswer>();
                 if (!item.BeginDateTime.HasValue)
                 {
                     item.BeginDateTime = DateTime.Now;
@@ -45,7 +46,7 @@ namespace XBLMS.Web.Controllers.Home.Exam
                     item.ExamTimeSeconds = useTimeSecond;
                     await _examPlanPracticeRepository.UpdateAsync(item);
 
-                    answeredCount = await _examPlanAnswerRepository.CountByPracticeId(item.Id);
+                    answered = await _examPlanAnswerRepository.ListByPracticeId(item.Id);
                 }
 
                 return new GetResult
@@ -53,12 +54,15 @@ namespace XBLMS.Web.Controllers.Home.Exam
                     Title = item.PracticeType.GetDisplayName(),
                     TmIds = item.TmIds,
                     Total = item.TmCount,
+                    AnswerTotal = answered.Count,
+                    RightTotal = answered.Count(a => a.IsRight),
+                    WrongTotal = answered.Count(a => !a.IsRight),
                     Watermark = await _authManager.GetWatermark(),
                     OpenExist = record.OpenExist,
                     IsTiming = record.IsTiming,
                     TimingMinute = record.TimingMinute,
                     UseTimeSecond = useTimeSecond,
-                    TmIndex = answeredCount
+                    TmIndex = answered.Count
                 };
 
             }

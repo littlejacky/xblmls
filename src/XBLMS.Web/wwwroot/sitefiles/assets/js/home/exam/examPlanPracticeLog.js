@@ -69,6 +69,7 @@ var methods = {
       width: "68%",
       height: "88%",
       end: function () {
+        $this.list = [];
         $this.apiGet();
       }
     });

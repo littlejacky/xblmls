@@ -109,6 +109,9 @@ namespace XBLMS.Web.Controllers.Home.Exam
         {
             public string Watermark { get; set; }
             public int Total { get; set; }
+            public int AnswerTotal { get; set; }
+            public int RightTotal { get; set; }
+            public int WrongTotal { get; set; }
             public List<int> TmIds { get; set; }
             public string Title { get; set; }
             public bool OpenExist { get; set; }

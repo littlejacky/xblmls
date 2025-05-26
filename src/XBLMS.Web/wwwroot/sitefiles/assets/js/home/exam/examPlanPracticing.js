@@ -38,6 +38,9 @@ var methods = {
       $this.tmIds = res.tmIds;
       $this.total = res.total;
       $this.title = res.title;
+      $this.answerTotal = res.answerTotal;
+      $this.rightTotal = res.rightTotal;
+      $this.wrongTotal = res.wrongTotal;
 
       $this.watermark = res.watermark;
       $this.tmIndex = res.tmIndex;
@@ -196,7 +199,7 @@ var methods = {
     this.goResult();
   },
   goResult: function () {
-    apiSubmit();
+    this.apiSubmit();
     utils.loading(this, true,"正在统计练习...");
     location.href = utils.getExamUrl("examPlanPracticeResult", { id: this.id });
   },

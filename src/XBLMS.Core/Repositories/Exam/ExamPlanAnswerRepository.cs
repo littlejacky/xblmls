@@ -52,5 +52,10 @@ namespace XBLMS.Core.Repositories
         {
             return await _repository.CountAsync(Q.Where(nameof(ExamPlanAnswer.PracticeId), id));
         }
+
+        public async Task<List<ExamPlanAnswer>> ListByPracticeId(int id)
+        {
+            return await _repository.GetAllAsync(Q.Where(nameof(ExamPlanAnswer.PracticeId), id));
+        }
     }
 }
