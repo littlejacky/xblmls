@@ -9,7 +9,7 @@ namespace XBLMS.Repositories
     public interface IExamPlanPracticeRepository : IRepository
     {
         Task<ExamPlanPractice> GetAsync(int id);
-        Task<(int total, List<ExamPlanPractice> list)> GetListAsync(int userId, string dateFrom, string dateTo, int pageIndex, int pageSize,bool isUnfinished = false);
+        Task<(int total, List<ExamPlanPractice> list)> GetListAsync(int userId, string keyWords, string dateFrom, string dateTo, int pageIndex, int pageSize,bool isUnfinished = false);
 
         Task<int> InsertAsync(ExamPlanPractice item);
         Task IncrementAnswerCountAsync(int id);

@@ -27,83 +27,119 @@
         </div>
     </div>
 </div>
-<div class="p-3">
-    <div class="mb-3">
-        <div class="row g-3">
-            <div class="col-xl-5 col-lg-5 col-md-5 col-5">
-                <div class="card  border-end-0 border-bottom-0 border-top-0 border-5 rounded-4 card-hover-with-icon shadow-lg border-warning animate__animated animate__fadeInLeft" v-on:click="top.$vue.btnAppMenuClick('studyPlan')">
-                    <div class="card-body text-center py-3">
-                        <div class="icon-shape icon-xxl rounded-circle bg-warning text-white mb-4 card-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-activity" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M6 2a.5.5 0 0 1 .47.33L10 12.036l1.53-4.208A.5.5 0 0 1 12 7.5h3.5a.5.5 0 0 1 0 1h-3.15l-1.88 5.17a.5.5 0 0 1-.94 0L6 3.964 4.47 8.171A.5.5 0 0 1 4 8.5H.5a.5.5 0 0 1 0-1h3.15l1.88-5.17A.5.5 0 0 1 6 2Z"></path>
-                            </svg>
-                        </div>
-                        <div class="text-center">
-                            <p class="mb-2">培训学分</p>
-                            <div class="mb-0">
-                                <span>{{ studyPlanTotalOverCredit }}</span>
-                                <span class="vr mx-1 text-gray-200"></span>
-                                <span class="fs-6">{{ studyPlanTotalCredit }}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-7 col-lg-7 col-md-7 col-7">
-                <div class="row g-3">
-                    <div class="col-xl-12 col-lg-12 col-md-12 col-12">
-                        <div class="card rounded-4 border-start-0 border-bottom-0 border-top-0 border-5 border-success card-hover-with-icon shadow-lg animate__animated animate__fadeInRight" v-on:click="top.$vue.btnAppMenuClick('studyCourse')">
-                            <div class="card-body d-flex align-items-center justify-content-between py-3">
-                                <div class="icon-shape icon rounded-circle bg-success text-white card-icon p-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-palette" viewBox="0 0 16 16">
-                                        <path d="M8 5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm4 3a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM5.5 7a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm.5 6a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"></path>
-                                        <path d="M16 8c0 3.15-1.866 2.585-3.567 2.07C11.42 9.763 10.465 9.473 10 10c-.603.683-.475 1.819-.351 2.92C9.826 14.495 9.996 16 8 16a8 8 0 1 1 8-8zm-8 7c.611 0 .654-.171.655-.176.078-.146.124-.464.07-1.119-.014-.168-.037-.37-.061-.591-.052-.464-.112-1.005-.118-1.462-.01-.707.083-1.61.704-2.314.369-.417.845-.578 1.272-.618.404-.038.812.026 1.16.104.343.077.702.186 1.025.284l.028.008c.346.105.658.199.953.266.653.148.904.083.991.024C14.717 9.38 15 9.161 15 8a7 7 0 1 0-7 7z"></path>
-                                    </svg>
-                                </div>
-                                <div class="text-end">
-                                    <div class="mb-0">完成课程</div>
-                                    <div class="mb-0 ">
-                                        <span class="text-success">{{ totalOverCourse }}</span>
-                                        <span class="vr mx-1 text-gray-200"></span>
-                                        <span class="text-warning fs-6">{{ totalCourse }}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-12 col-lg-12 col-md-12 col-12">
-                        <div class="card rounded-4 border-start-0 border-bottom-0 border-top-0 border-5 border-primary card-hover-with-icon shadow-lg animate__animated animate__fadeInRight" v-on:click="top.$vue.btnAppMenuClick('studyCourse')">
-                            <div class="card-body d-flex align-items-center justify-content-between py-3">
-                                <div class="icon-shape icon rounded-circle bg-primary text-white card-icon p-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-code-slash" viewBox="0 0 16 16">
-                                        <path d="M10.478 1.647a.5.5 0 1 0-.956-.294l-4 13a.5.5 0 0 0 .956.294l4-13zM4.854 4.146a.5.5 0 0 1 0 .708L1.707 8l3.147 3.146a.5.5 0 0 1-.708.708l-3.5-3.5a.5.5 0 0 1 0-.708l3.5-3.5a.5.5 0 0 1 .708 0zm6.292 0a.5.5 0 0 0 0 .708L14.293 8l-3.147 3.146a.5.5 0 0 0 .708.708l3.5-3.5a.5.5 0 0 0 0-.708l-3.5-3.5a.5.5 0 0 0-.708 0z"></path>
-                                    </svg>
-                                </div>
-                                <div class="text-end">
-                                    <div class="mb-0">学习时长</div>
-                                    <div class="mb-0 ">
-                                        <span class="text-success fs-6">{{ utils.formatDurationCN(totalDuration) }}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
- </div>
-<div class="card rounded-0 mb-3 shadow-lg" v-on:click="top.$vue.btnAppMenuClick('studyPlan')">
+<div class="p-3 pb-2 mt-4">
+    <h5 class="border-start border-5 border-primary ps-2 d-flex justify-content-between align-items-center">
+        <span>最新刷题安排</span>
+        <el-link :underline="false" v-on:click="goPlanShuatiLog">更多<i class="el-icon-more ms-2"></i></el-link>
+    </h5>
+</div>
+<div class="card rounded-4 mb-3 shadow-lg" v-if="examPractice" v-on:click="btnViewPracticeClick(examPractice)">
     <div class="card-body">
-        <h5 class="card-title d-flex justify-content-between align-items-center">
-            <span><img class="me-2" src="/sitefiles//assets/images/ing.gif" />任务进度</span>
-            <span><span class="fs-4 text-success">{{ planOverCount }}</span>/<span class="fs-6">{{ planCount }}</span></span>
-        </h5>
-        <div class="progress w-100" role="progressbar">
-            <div class="progress-bar progress-bar-striped progress-bar-animated bg-success text-end" :style="{width:(utils.formatPercentFloat(planOverCount,planCount))+'%'}">{{ utils.formatPercentFloat(planOverCount,planCount) }}%</div>
+        <div class="mb-3">
+            {{ examPractice.title }}
+        </div>
+        <div class="row align-items-center g-3 mb-3">
+            <div class="col">
+                <div>
+                    <div class="fw-light">
+                        <div class="mb-1">共：{{ examPractice.tmCount }}题</div>
+                        <div class="mb-1">答题：{{examPractice.answerCount}}<span class="me-1"></span>/正确：{{examPractice.rightCount}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-auto">
+                <div class="bg-light p-2 rounded-circle">
+                    <el-button type="primary" circle icon="el-icon-s-order" class="p-3"></el-button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+<div class="card rounded-4 mb-3 shadow-lg" v-else>
+    <div class="card-body">
+        <div class="text-center p-5">
+            <small><i class="bi bi-clipboard me-2"></i>暂无安排</small>
+        </div>
+    </div>
+</div>
+
+@* <div class="p-3"> *@
+@*     <div class="mb-3"> *@
+@*         <div class="row g-3"> *@
+@*             <div class="col-xl-5 col-lg-5 col-md-5 col-5"> *@
+@*                 <div class="card  border-end-0 border-bottom-0 border-top-0 border-5 rounded-4 card-hover-with-icon shadow-lg border-warning animate__animated animate__fadeInLeft" v-on:click="top.$vue.btnAppMenuClick('studyPlan')"> *@
+@*                     <div class="card-body text-center py-3"> *@
+@*                         <div class="icon-shape icon-xxl rounded-circle bg-warning text-white mb-4 card-icon"> *@
+@*                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-activity" viewBox="0 0 16 16"> *@
+@*                                 <path fill-rule="evenodd" d="M6 2a.5.5 0 0 1 .47.33L10 12.036l1.53-4.208A.5.5 0 0 1 12 7.5h3.5a.5.5 0 0 1 0 1h-3.15l-1.88 5.17a.5.5 0 0 1-.94 0L6 3.964 4.47 8.171A.5.5 0 0 1 4 8.5H.5a.5.5 0 0 1 0-1h3.15l1.88-5.17A.5.5 0 0 1 6 2Z"></path> *@
+@*                             </svg> *@
+@*                         </div> *@
+@*                         <div class="text-center"> *@
+@*                             <p class="mb-2">培训学分</p> *@
+@*                             <div class="mb-0"> *@
+@*                                 <span>{{ studyPlanTotalOverCredit }}</span> *@
+@*                                 <span class="vr mx-1 text-gray-200"></span> *@
+@*                                 <span class="fs-6">{{ studyPlanTotalCredit }}</span> *@
+@*                             </div> *@
+@*                         </div> *@
+@*                     </div> *@
+@*                 </div> *@
+@*             </div> *@
+@*             <div class="col-xl-7 col-lg-7 col-md-7 col-7"> *@
+@*                 <div class="row g-3"> *@
+@*                     <div class="col-xl-12 col-lg-12 col-md-12 col-12"> *@
+@*                         <div class="card rounded-4 border-start-0 border-bottom-0 border-top-0 border-5 border-success card-hover-with-icon shadow-lg animate__animated animate__fadeInRight" v-on:click="top.$vue.btnAppMenuClick('studyCourse')"> *@
+@*                             <div class="card-body d-flex align-items-center justify-content-between py-3"> *@
+@*                                 <div class="icon-shape icon rounded-circle bg-success text-white card-icon p-2"> *@
+@*                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-palette" viewBox="0 0 16 16"> *@
+@*                                         <path d="M8 5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm4 3a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM5.5 7a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm.5 6a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"></path> *@
+@*                                         <path d="M16 8c0 3.15-1.866 2.585-3.567 2.07C11.42 9.763 10.465 9.473 10 10c-.603.683-.475 1.819-.351 2.92C9.826 14.495 9.996 16 8 16a8 8 0 1 1 8-8zm-8 7c.611 0 .654-.171.655-.176.078-.146.124-.464.07-1.119-.014-.168-.037-.37-.061-.591-.052-.464-.112-1.005-.118-1.462-.01-.707.083-1.61.704-2.314.369-.417.845-.578 1.272-.618.404-.038.812.026 1.16.104.343.077.702.186 1.025.284l.028.008c.346.105.658.199.953.266.653.148.904.083.991.024C14.717 9.38 15 9.161 15 8a7 7 0 1 0-7 7z"></path> *@
+@*                                     </svg> *@
+@*                                 </div> *@
+@*                                 <div class="text-end"> *@
+@*                                     <div class="mb-0">完成课程</div> *@
+@*                                     <div class="mb-0 "> *@
+@*                                         <span class="text-success">{{ totalOverCourse }}</span> *@
+@*                                         <span class="vr mx-1 text-gray-200"></span> *@
+@*                                         <span class="text-warning fs-6">{{ totalCourse }}</span> *@
+@*                                     </div> *@
+@*                                 </div> *@
+@*                             </div> *@
+@*                         </div> *@
+@*                     </div> *@
+@*                     <div class="col-xl-12 col-lg-12 col-md-12 col-12"> *@
+@*                         <div class="card rounded-4 border-start-0 border-bottom-0 border-top-0 border-5 border-primary card-hover-with-icon shadow-lg animate__animated animate__fadeInRight" v-on:click="top.$vue.btnAppMenuClick('studyCourse')"> *@
+@*                             <div class="card-body d-flex align-items-center justify-content-between py-3"> *@
+@*                                 <div class="icon-shape icon rounded-circle bg-primary text-white card-icon p-2"> *@
+@*                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-code-slash" viewBox="0 0 16 16"> *@
+@*                                         <path d="M10.478 1.647a.5.5 0 1 0-.956-.294l-4 13a.5.5 0 0 0 .956.294l4-13zM4.854 4.146a.5.5 0 0 1 0 .708L1.707 8l3.147 3.146a.5.5 0 0 1-.708.708l-3.5-3.5a.5.5 0 0 1 0-.708l3.5-3.5a.5.5 0 0 1 .708 0zm6.292 0a.5.5 0 0 0 0 .708L14.293 8l-3.147 3.146a.5.5 0 0 0 .708.708l3.5-3.5a.5.5 0 0 0 0-.708l-3.5-3.5a.5.5 0 0 0-.708 0z"></path> *@
+@*                                     </svg> *@
+@*                                 </div> *@
+@*                                 <div class="text-end"> *@
+@*                                     <div class="mb-0">学习时长</div> *@
+@*                                     <div class="mb-0 "> *@
+@*                                         <span class="text-success fs-6">{{ utils.formatDurationCN(totalDuration) }}</span> *@
+@*                                     </div> *@
+@*                                 </div> *@
+@*                             </div> *@
+@*                         </div> *@
+@*                     </div> *@
+@*                 </div> *@
+@*             </div> *@
+@*         </div> *@
+@*     </div> *@
+@*  </div> *@
+@* <div class="card rounded-0 mb-3 shadow-lg" v-on:click="top.$vue.btnAppMenuClick('studyPlan')"> *@
+@*     <div class="card-body"> *@
+@*         <h5 class="card-title d-flex justify-content-between align-items-center"> *@
+@*             <span><img class="me-2" src="/sitefiles//assets/images/ing.gif" />任务进度</span> *@
+@*             <span><span class="fs-4 text-success">{{ planOverCount }}</span>/<span class="fs-6">{{ planCount }}</span></span> *@
+@*         </h5> *@
+@*         <div class="progress w-100" role="progressbar"> *@
+@*             <div class="progress-bar progress-bar-striped progress-bar-animated bg-success text-end" :style="{width:(utils.formatPercentFloat(planOverCount,planCount))+'%'}">{{ utils.formatPercentFloat(planOverCount,planCount) }}%</div> *@
+@*         </div> *@
+@*     </div> *@
+@* </div> *@
  <div class="p-3">
     <div class="mb-3" v-on:click="top.$vue.btnAppMenuClick('exam')">
         <div class="text-center">
@@ -150,136 +186,138 @@
             </div>
         </div>
     </div>
-    <div class="p-3 pb-2 mt-4">
-        <h5 class="border-start border-5 border-primary ps-2 d-flex justify-content-between align-items-center">
-            <span>最新学习任务</span>
-            <el-link :underline="false" v-on:click="top.$vue.btnAppMenuClick('studyPlan')">更多<i class="el-icon-more ms-2"></i></el-link>
-        </h5>
-    </div>
-    <div class="card rounded-4 mb-3 shadow-lg" v-if="studyPlan && studyPlan.id>0" v-on:click="studyPlan.isStudy ? btnViewPlanClick(studyPlan.id) : utils.error('计划不在有效期内')">
-        <div class="card-body p-0">
-            <div>
-                <div>
-                    <div class="bg-cover rounded-top-4 p-8" :style="{'background-image':'url('+studyPlan.plan.coverImg+')'}"></div>
-                    <div class="card rounded-0 rounded-bottom-4 card-hover position-relative p-3 px-4">
-                        <div class="position-absolute top-50 end-0 translate-middle-y pe-3">
-                            <img width="88" src="/sitefiles/assets/images/status/weikaishi.png" v-if="studyPlan.state==='Weikaishi'" />
-                            <img width="88" src="/sitefiles/assets/images/status/xuexizhong.png" v-if="studyPlan.state==='Xuexizhong'" />
-                            <img width="88" src="/sitefiles/assets/images/status/yidabiao.png" v-if="studyPlan.state==='Yidabiao'" />
-                            <img width="88" src="/sitefiles/assets/images/status/weidabiao.png" v-if="studyPlan.state==='Weidabiao'" />
-                            <img width="88" src="/sitefiles/assets/images/status/yiwancheng.png" v-if="studyPlan.state==='Yiwancheng'" />
-                        </div>
-                        <div class="row">
-                            <div class="col-12 col-md-12 col-xl-12 col-lg-12">
-                                <div class="mt-1">
-                                    <div class="mb-2 fw-semibold"><a href="javascript:;" class="text-inherit">{{ studyPlan.plan.planName }}</a></div>
-                                    <ul class="mb-2 list-inline">
-                                        <li class="list-inline-item">
-                                            <span class="fw-light fs-5">计划年度：</span><span class="fw-bold text-warning">{{ studyPlan.plan.planYear }}</span>
-                                        </li>
-                                    </ul>
-                                    <ul class="mb-2 list-inline">
-                                        <li class="list-inline-item">
-                                            <span class="fw-light fs-5">计划学分：</span><span class="fw-bold text-success">{{ studyPlan.totalCredit }}</span>/<span class="fw-light fs-5">{{ studyPlan.plan.planCredit }}</span>
-                                        </li>
-                                    </ul>
-                                    <ul class="mb-3 list-inline">
-                                        <li class="list-inline-item">
-                                            <span class="fw-light fs-5">必修课：</span><span class="fw-bold text-success">{{ studyPlan.overCourseTotal }}</span>/<span class="fw-light fs-5">{{ studyPlan.plan.totalCount }}</span>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <span class="fw-light fs-5">选修课：</span><span class="fw-bold text-success">{{ studyPlan.overSelectCourseTotal }}</span>/<span class="fw-light fs-5">{{ studyPlan.plan.selectTotalCount }}</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="row align-items-center g-0">
-                                    <div class="col-auto">
-                                        <i class="bi bi-calendar-range text-warning"></i>
-                                    </div>
-                                    <div class="col ms-2">
-                                        <span>{{ studyPlan.plan.planBeginDateTimeStr }} -  {{ studyPlan.plan.planEndDateTimeStr }}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="card rounded-4 mb-3 shadow-lg" v-else>
-        <div class="card-body">
-            <div class="text-center p-5">
-                <small><i class="bi bi-clipboard me-2"></i>暂无安排</small>
-            </div>
-        </div>
-    </div>
-    <div class="p-3 pb-2 mt-4">
-        <h5 class="border-start border-5 border-primary ps-2 d-flex justify-content-between align-items-center">
-            <span>新上课程</span>
-            <el-link :underline="false" v-on:click="top.$vue.btnAppMenuClick('studyCourse')">更多<i class="el-icon-more ms-2"></i></el-link>
-        </h5>
-    </div>
-    <div class="card rounded-4 mb-3 shadow-lg" v-if="courseList && courseList.length>0">
-        <div class="card-body">
-            <div>
-                <div class="d-flex flex-row overflow-x-auto">
-                    <div class="me-3 mb-3" v-for="course in courseList" style="min-width:200px;">
-                        <div class="card rounded-4 border bg-white p-2" v-on:click="btnViewCourseClick(course)" style="cursor:pointer;">
-                            <div class="position-relative p-8 rounded-4 bg-cover" :style="{'background-image':'url('+course.coverImg+')'}">
-                                <el-tag class="position-absolute bottom-0 end-0 m-2" size="mini" type="primary" effect="plain" v-if="course.offLine">面授课</el-tag>
-                                <el-tag size="mini" class="bg-dark text-white position-absolute bottom-0 end-0 m-2 fs-6" v-else>{{ utils.formatDuration(course.duration) }}</el-tag>
-                                <el-tag size="mini" type="success" effect="dark" class="position-absolute top-0 end-0 m-2" v-if="course.state==='Yiwancheng'">{{ course.stateStr }}</el-tag>
-                                <el-tag size="mini" type="warning" effect="dark" class="position-absolute top-0 end-0 m-2" v-else>{{ course.stateStr }}</el-tag>
-                                <span class="position-absolute bottom-0 start-0 m-2">
-                                    <el-tag size="mini" type="primary" effect="dark" class="me-1">{{ course.courseType}}</el-tag>
-                                </span>
-                            </div>
-                            <div class="mt-3 p-2">
-                                <div class="mb-3 fw-semibold">
-                                    {{ course.name }}
-                                </div>
-                                <div class="mb-3 lh-1">
-                                    <span>
-                                        <i class="bi bi-star-fill text-warning me-1"></i>
-                                        <span>{{ course.evaluationAvg }}</span>
-                                    </span>
-                                    <span class="mx-1">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                             fill="var(--gk-gray-400)" class="bi bi-dot" viewBox="0 0 16 16">
-                                            <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"></path>
-                                        </svg>
-                                    </span>
-                                    <span>
-                                        <i class="bi bi-person-video3 me-1"></i>
-                                        <span>{{ course.totaEvaluationlUser }}</span>
-                                    </span>
-                                </div>
-                                <div class="lh-1">
-                                    <i class="bi bi-credit-card-2-front-fill me-1"></i><span>{{ course.studyHour }}</span> 课时
-                                    <span class="mx-1">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                             fill="var(--gk-gray-400)" class="bi bi-dot" viewBox="0 0 16 16">
-                                            <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"></path>
-                                        </svg>
-                                    </span>
-                                    <span class="text-success" v-if="course.state==='Yiwancheng'">{{ course.credit }}学分</span>
-                                    <span v-else>{{ course.credit }}学分</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="card rounded-4 mb-3 shadow-lg" v-else>
-        <div class="card-body">
-            <div class="text-center p-5">
-                <small><i class="bi bi-clipboard me-2"></i>暂无课程</small>
-            </div>
-        </div>
-    </div>
+    @* <div class="p-3 pb-2 mt-4"> *@
+    @*     <h5 class="border-start border-5 border-primary ps-2 d-flex justify-content-between align-items-center"> *@
+    @*         <span>最新学习任务</span> *@
+    @*         <el-link :underline="false" v-on:click="top.$vue.btnAppMenuClick('studyPlan')">更多<i class="el-icon-more ms-2"></i></el-link> *@
+    @*     </h5> *@
+    @* </div> *@
+    @* <div class="card rounded-4 mb-3 shadow-lg" v-if="studyPlan && studyPlan.id>0" v-on:click="studyPlan.isStudy ? btnViewPlanClick(studyPlan.id) : utils.error('计划不在有效期内')"> *@
+    @*     <div class="card-body p-0"> *@
+    @*         <div> *@
+    @*             <div> *@
+    @*                 <div class="bg-cover rounded-top-4 p-8" :style="{'background-image':'url('+studyPlan.plan.coverImg+')'}"></div> *@
+    @*                 <div class="card rounded-0 rounded-bottom-4 card-hover position-relative p-3 px-4"> *@
+    @*                     <div class="position-absolute top-50 end-0 translate-middle-y pe-3"> *@
+    @*                         <img width="88" src="/sitefiles/assets/images/status/weikaishi.png" v-if="studyPlan.state==='Weikaishi'" /> *@
+    @*                         <img width="88" src="/sitefiles/assets/images/status/xuexizhong.png" v-if="studyPlan.state==='Xuexizhong'" /> *@
+    @*                         <img width="88" src="/sitefiles/assets/images/status/yidabiao.png" v-if="studyPlan.state==='Yidabiao'" /> *@
+    @*                         <img width="88" src="/sitefiles/assets/images/status/weidabiao.png" v-if="studyPlan.state==='Weidabiao'" /> *@
+    @*                         <img width="88" src="/sitefiles/assets/images/status/yiwancheng.png" v-if="studyPlan.state==='Yiwancheng'" /> *@
+    @*                     </div> *@
+    @*                     <div class="row"> *@
+    @*                         <div class="col-12 col-md-12 col-xl-12 col-lg-12"> *@
+    @*                             <div class="mt-1"> *@
+    @*                                 <div class="mb-2 fw-semibold"><a href="javascript:;" class="text-inherit">{{ studyPlan.plan.planName }}</a></div> *@
+    @*                                 <ul class="mb-2 list-inline"> *@
+    @*                                     <li class="list-inline-item"> *@
+    @*                                         <span class="fw-light fs-5">计划年度：</span><span class="fw-bold text-warning">{{ studyPlan.plan.planYear }}</span> *@
+    @*                                     </li> *@
+    @*                                 </ul> *@
+    @*                                 <ul class="mb-2 list-inline"> *@
+    @*                                     <li class="list-inline-item"> *@
+    @*                                         <span class="fw-light fs-5">计划学分：</span><span class="fw-bold text-success">{{ studyPlan.totalCredit }}</span>/<span class="fw-light fs-5">{{ studyPlan.plan.planCredit }}</span> *@
+    @*                                     </li> *@
+    @*                                 </ul> *@
+    @*                                 <ul class="mb-3 list-inline"> *@
+    @*                                     <li class="list-inline-item"> *@
+    @*                                         <span class="fw-light fs-5">必修课：</span><span class="fw-bold text-success">{{ studyPlan.overCourseTotal }}</span>/<span class="fw-light fs-5">{{ studyPlan.plan.totalCount }}</span> *@
+    @*                                     </li> *@
+    @*                                     <li class="list-inline-item"> *@
+    @*                                         <span class="fw-light fs-5">选修课：</span><span class="fw-bold text-success">{{ studyPlan.overSelectCourseTotal }}</span>/<span class="fw-light fs-5">{{ studyPlan.plan.selectTotalCount }}</span> *@
+    @*                                     </li> *@
+    @*                                 </ul> *@
+    @*                             </div> *@
+    @*                             <div class="row align-items-center g-0"> *@
+    @*                                 <div class="col-auto"> *@
+    @*                                     <i class="bi bi-calendar-range text-warning"></i> *@
+    @*                                 </div> *@
+    @*                                 <div class="col ms-2"> *@
+    @*                                     <span>{{ studyPlan.plan.planBeginDateTimeStr }} -  {{ studyPlan.plan.planEndDateTimeStr }}</span> *@
+    @*                                 </div> *@
+    @*                             </div> *@
+    @*                         </div> *@
+    @*                     </div> *@
+    @*                 </div> *@
+    @*             </div> *@
+    @*         </div> *@
+    @*     </div> *@
+    @* </div> *@
+    @* <div class="card rounded-4 mb-3 shadow-lg" v-else> *@
+    @*     <div class="card-body"> *@
+    @*         <div class="text-center p-5"> *@
+    @*             <small><i class="bi bi-clipboard me-2"></i>暂无安排</small> *@
+    @*         </div> *@
+    @*     </div> *@
+    @* </div> *@
+    @* <div class="p-3 pb-2 mt-4"> *@
+    @*     <h5 class="border-start border-5 border-primary ps-2 d-flex justify-content-between align-items-center"> *@
+    @*         <span>新上课程</span> *@
+    @*         <el-link :underline="false" v-on:click="top.$vue.btnAppMenuClick('studyCourse')">更多<i class="el-icon-more ms-2"></i></el-link> *@
+    @*     </h5> *@
+    @* </div> *@
+    @* <div class="card rounded-4 mb-3 shadow-lg" v-if="courseList && courseList.length>0"> *@
+    @*     <div class="card-body"> *@
+    @*         <div> *@
+    @*             <div class="d-flex flex-row overflow-x-auto"> *@
+    @*                 <div class="me-3 mb-3" v-for="course in courseList" style="min-width:200px;"> *@
+    @*                     <div class="card rounded-4 border bg-white p-2" v-on:click="btnViewCourseClick(course)" style="cursor:pointer;"> *@
+    @*                         <div class="position-relative p-8 rounded-4 bg-cover" :style="{'background-image':'url('+course.coverImg+')'}"> *@
+    @*                             <el-tag class="position-absolute bottom-0 end-0 m-2" size="mini" type="primary" effect="plain" v-if="course.offLine">面授课</el-tag> *@
+    @*                             <el-tag size="mini" class="bg-dark text-white position-absolute bottom-0 end-0 m-2 fs-6" v-else>{{ utils.formatDuration(course.duration) }}</el-tag> *@
+    @*                             <el-tag size="mini" type="success" effect="dark" class="position-absolute top-0 end-0 m-2" v-if="course.state==='Yiwancheng'">{{ course.stateStr }}</el-tag> *@
+    @*                             <el-tag size="mini" type="warning" effect="dark" class="position-absolute top-0 end-0 m-2" v-else>{{ course.stateStr }}</el-tag> *@
+    @*                             <span class="position-absolute bottom-0 start-0 m-2"> *@
+    @*                                 <el-tag size="mini" type="primary" effect="dark" class="me-1">{{ course.courseType}}</el-tag> *@
+    @*                             </span> *@
+    @*                         </div> *@
+    @*                         <div class="mt-3 p-2"> *@
+    @*                             <div class="mb-3 fw-semibold"> *@
+    @*                                 {{ course.name }} *@
+    @*                             </div> *@
+    @*                             <div class="mb-3 lh-1"> *@
+    @*                                 <span> *@
+    @*                                     <i class="bi bi-star-fill text-warning me-1"></i> *@
+    @*                                     <span>{{ course.evaluationAvg }}</span> *@
+    @*                                 </span> *@
+    @*                                 <span class="mx-1"> *@
+    @*                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" *@
+    @*                                          fill="var(--gk-gray-400)" class="bi bi-dot" viewBox="0 0 16 16"> *@
+    @*                                         <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"></path> *@
+    @*                                     </svg> *@
+    @*                                 </span> *@
+    @*                                 <span> *@
+    @*                                     <i class="bi bi-person-video3 me-1"></i> *@
+    @*                                     <span>{{ course.totaEvaluationlUser }}</span> *@
+    @*                                 </span> *@
+    @*                             </div> *@
+    @*                             <div class="lh-1"> *@
+    @*                                 <i class="bi bi-credit-card-2-front-fill me-1"></i><span>{{ course.studyHour }}</span> 课时 *@
+    @*                                 <span class="mx-1"> *@
+    @*                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" *@
+    @*                                          fill="var(--gk-gray-400)" class="bi bi-dot" viewBox="0 0 16 16"> *@
+    @*                                         <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"></path> *@
+    @*                                     </svg> *@
+    @*                                 </span> *@
+    @*                                 <span class="text-success" v-if="course.state==='Yiwancheng'">{{ course.credit }}学分</span> *@
+    @*                                 <span v-else>{{ course.credit }}学分</span> *@
+    @*                             </div> *@
+    @*                         </div> *@
+    @*                     </div> *@
+    @*                 </div> *@
+    @*             </div> *@
+    @*         </div> *@
+    @*     </div> *@
+    @* </div> *@
+    @* <div class="card rounded-4 mb-3 shadow-lg" v-else> *@
+    @*     <div class="card-body"> *@
+    @*         <div class="text-center p-5"> *@
+    @*             <small><i class="bi bi-clipboard me-2"></i>暂无课程</small> *@
+    @*         </div> *@
+    @*     </div> *@
+    @* </div> *@
+
+
     <div class="p-3 pb-2 mt-4">
         <h5 class="border-start border-5 border-primary ps-2 d-flex justify-content-between align-items-center">
             <span>最新考试安排</span>
@@ -327,41 +365,6 @@
         </div>
     </div>
     
-    <div class="p-3 pb-2 mt-4">
-        <h5 class="border-start border-5 border-primary ps-2 d-flex justify-content-between align-items-center">
-            <span>最新刷题安排</span>
-            <el-link :underline="false" v-on:click="goShuatiLog">更多<i class="el-icon-more ms-2"></i></el-link>
-        </h5>
-    </div>
-    <div class="card rounded-4 mb-3 shadow-lg" v-if="examPractice" v-on:click="btnViewPracticeClick(examPractice)">
-        <div class="card-body">
-            <div class="mb-3">
-                {{ examPractice.title }}
-            </div>
-            <div class="row align-items-center g-3 mb-3">
-                <div class="col">
-                    <div>
-                        <div class="fw-light">
-                            <div class="mb-1">共：{{ examPractice.tmCount }}题</div>
-                            <div class="mb-1">答题：{{examPractice.answerCount}}<span class="me-1"></span>/正确：{{examPractice.rightCount}}</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-auto">
-                    <div class="bg-light p-2 rounded-circle">
-                        <el-button type="primary" circle icon="el-icon-s-order" class="p-3"></el-button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="card rounded-4 mb-3 shadow-lg" v-else>
-        <div class="card-body">
-            <div class="text-center p-5">
-                <small><i class="bi bi-clipboard me-2"></i>暂无安排</small>
-            </div>
-        </div>
-    </div>
     <div class="p-3 pb-2 mt-4">
         <h5 class="border-start border-5 border-primary ps-2 d-flex justify-content-between align-items-center">
             <span>刷题练习</span>

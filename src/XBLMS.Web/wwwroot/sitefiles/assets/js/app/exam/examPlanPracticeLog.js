@@ -11,6 +11,7 @@ var data = utils.init({
   },
   list: [],
   total: 0,
+  dialogVisible:false,
   loadMoreLoading: false
 });
 
@@ -32,7 +33,7 @@ var methods = {
       $this.total = res.total;
 
     }).catch(function (error) {
-      utils.error(error);
+      utils.error(error, { layer: true });
     }).then(function () {
       utils.loading($this, false);
       $this.loadMoreLoading = false;
@@ -57,22 +58,8 @@ var methods = {
       title: false,
       closebtn: 0,
       url: utils.getExamUrl('examPracticeResult', { id: id }),
-      width: "68%",
-      height: "88%",
-    });
-  },
-  goPlanPractice: function (id) {
-    var $this = this;
-    top.utils.openLayer({
-      title: false,
-      closebtn: 0,
-      url: utils.getExamUrl('examPlanPracticing', { id: id }),
-      width: "68%",
-      height: "88%",
-      end: function () {
-        $this.list = [];
-        $this.apiGet();
-      }
+      width: "100%",
+      height: "100%",
     });
   },
   btnClearClick: function () {
@@ -92,15 +79,20 @@ var methods = {
     $api.post($urlDelete).then(function (response) {
       var res = response.data;
       if (res.value) {
-        utils.success("操作成功");
+        utils.success("已清空", { layer: true });
       }
     }).catch(function (error) {
-      utils.error(error);
+      utils.error(error, { layer: true });
     }).then(function () {
       utils.loading($this, false);
       $this.apiGet();
     });
-  }
+  },
+  btnSearchClick: function () {
+    this.dialogVisible = false;
+    this.list = [];
+    this.apiGet();
+  },
 };
 
 var $vue = new Vue({
@@ -108,6 +100,7 @@ var $vue = new Vue({
   data: data,
   methods: methods,
   created: function () {
+    top.document.title = "任务记录";
     this.apiGet();
   },
 });

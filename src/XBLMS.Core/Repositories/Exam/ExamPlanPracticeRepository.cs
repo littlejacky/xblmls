@@ -31,9 +31,14 @@ namespace XBLMS.Core.Repositories
             return await _repository.GetAsync(id);
         }
 
-        public async Task<(int total, List<ExamPlanPractice> list)> GetListAsync(int userId, string dateFrom, string dateTo, int pageIndex, int pageSize, bool isUnfinished = false)
+        public async Task<(int total, List<ExamPlanPractice> list)> GetListAsync(int userId, string keyWords, string dateFrom, string dateTo, int pageIndex, int pageSize, bool isUnfinished = false)
         {
             var query = Q.Where(nameof(ExamPlanPractice.UserId), userId);
+
+            if(!string.IsNullOrWhiteSpace(keyWords))
+            {
+                query.WhereLike(nameof(ExamPlanPractice.Title), $"%{keyWords}%");
+            }
 
             if (!string.IsNullOrWhiteSpace(dateFrom))
             {

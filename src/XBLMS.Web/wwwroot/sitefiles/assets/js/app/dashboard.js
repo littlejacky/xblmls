@@ -263,6 +263,20 @@ var methods = {
       }
     });
   },
+  goPlanPractice: function (id) {
+    var $this = this;
+    top.utils.openLayer({
+      title: false,
+      closebtn: 0,
+      url: utils.getExamUrl('examPlanPracticing', { id: id }),
+      width: "100%",
+      height: "100%",
+      end: function () {
+        $this.setDocumentTitel();
+        $this.apiGet();
+      }
+    });
+  },
   goMoni: function () {
     var $this = this;
     top.utils.openLayer({
@@ -297,6 +311,20 @@ var methods = {
       title: false,
       closebtn: 0,
       url: utils.getExamUrl("examPracticeLog"),
+      width: "100%",
+      height: "100%",
+      end: function () {
+        $this.setDocumentTitel();
+        $this.apiGet();
+      }
+    });
+  },
+  goPlanShuatiLog: function () {
+    var $this = this;
+    top.utils.openLayer({
+      title: false,
+      closebtn: 0,
+      url: utils.getExamUrl("examPlanPracticeLog"),
       width: "100%",
       height: "100%",
       end: function () {
@@ -398,7 +426,7 @@ var methods = {
     top.document.title = "首页";
   },
   btnViewPracticeClick: function (res) {
-    $this.goPractice(res.id);
+    $this.goPlanPractice(res.id);
   }
 };
 Vue.component("apexchart", {

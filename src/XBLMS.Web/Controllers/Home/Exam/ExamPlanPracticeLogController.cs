@@ -29,6 +29,7 @@ namespace XBLMS.Web.Controllers.Home.Exam
         }
         public class GetRequest
         {
+            public string KeyWords { get; set; }
             public string DateFrom { get; set; }
             public string DateTo { get; set; }
             public int PageIndex { get; set; }

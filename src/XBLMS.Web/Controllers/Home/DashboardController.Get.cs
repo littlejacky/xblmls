@@ -29,7 +29,7 @@ namespace XBLMS.Web.Controllers.Home
 
             var (paperTotal, paperList) = await _examPaperUserRepository.GetListAsync(user.Id, false, "", "", 1, 1);
             var (moniPaperTotal, moniPaperList) = await _examPaperUserRepository.GetListAsync(user.Id, true, "", "", 1, 1);
-            var (practiceTotal, practiceList) = await _examPlanPracticeRepository.GetListAsync(user.Id, "", "", 1, 1, true);
+            var (practiceTotal, practiceList) = await _examPlanPracticeRepository.GetListAsync(user.Id, "", "", "", 1, 1, true);
 
             if (paperTotal > 0)
             {
