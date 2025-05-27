@@ -78,7 +78,7 @@ namespace XBLMS.Core.Services
                 await _examPlanPracticeRepository.InsertAsync(practice);
             }
 
-            await _examPlanRepository.IncrementExecutedCountAsync(plan.Id);
+            await _examPlanRepository.IncrementExecutedCountAsync(plan.PlanId);
         }
 
         public async Task MarkUnfinishPlanPractices()

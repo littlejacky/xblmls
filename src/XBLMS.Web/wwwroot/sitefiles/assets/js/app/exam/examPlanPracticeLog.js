@@ -62,6 +62,16 @@ var methods = {
       height: "100%",
     });
   },
+  goPlanPractice: function (id) {
+    var $this = this;
+    top.utils.openLayer({
+      title: false,
+      closebtn: 0,
+      url: utils.getExamUrl('examPlanPracticing', { id: id }),
+      width: "100%",
+      height: "100%",
+    });
+  },
   btnClearClick: function () {
     var $this = this;
     top.utils.alertWarning({

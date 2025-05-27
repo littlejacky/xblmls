@@ -30,7 +30,7 @@
 <div class="p-3 pb-2 mt-4">
     <h5 class="border-start border-5 border-primary ps-2 d-flex justify-content-between align-items-center">
         <span>最新刷题安排</span>
-        <el-link :underline="false" v-on:click="goPlanShuatiLog">更多<i class="el-icon-more ms-2"></i></el-link>
+        <el-link :underline="false" v-on:click="top.$vue.btnAppMenuClick('planPracticeLog')">更多<i class="el-icon-more ms-2"></i></el-link>
     </h5>
 </div>
 <div class="card rounded-4 mb-3 shadow-lg" v-if="examPractice" v-on:click="btnViewPracticeClick(examPractice)">
@@ -43,7 +43,9 @@
                 <div>
                     <div class="fw-light">
                         <div class="mb-1">共：{{ examPractice.tmCount }}题</div>
-                        <div class="mb-1">答题：{{examPractice.answerCount}}<span class="me-1"></span>/正确：{{examPractice.rightCount}}</div>
+                        @* <div class="mb-1">答题：{{examPractice.answerCount}}<span class="me-1"></span>/正确：{{examPractice.rightCount}}</div> *@
+                        <div class="mb-1" v-if="examPractice.beginDateTime">（已参与）</div>
+                            <div class="mb-1" v-else>请及时参加</div>
                     </div>
                 </div>
             </div>
@@ -140,7 +142,54 @@
 @*         </div> *@
 @*     </div> *@
 @* </div> *@
- <div class="p-3">
+<div class="p-3 pb-2 mt-4">
+    <h5 class="border-start border-5 border-primary ps-2 d-flex justify-content-between align-items-center">
+        <span>最新考试安排</span>
+        <el-link :underline="false" v-on:click="top.$vue.btnAppMenuClick('exam')">更多<i class="el-icon-more ms-2"></i></el-link>
+    </h5>
+</div>
+<div class="card rounded-4 mb-3 shadow-lg" v-if="examPaper" v-on:click="btnViewPaperClick(examPaper)">
+    <div class="card-body">
+        <div class="mb-3">
+            {{ examPaper.title }}
+        </div>
+        <div class="row align-items-center g-3 mb-3">
+            <div class="col">
+                <div>
+                    <div class="fw-light">
+                        <div class="mb-1">总分：{{examPaper.totalScore}}<span class="me-1"></span>及格分：{{examPaper.passScore}}</div>
+                        <div class="mb-1">
+                            考试次数：
+                            <span class="text-success fw-bold" v-if="(examPaper.userExamTimes-examPaper.myExamTimes)>0">
+                                {{examPaper.userExamTimes-examPaper.myExamTimes}}
+                            </span>
+                            <span class="fs-3 text-danger fw-bold" v-else>
+                                0
+                            </span>
+                            /{{examPaper.userExamTimes}}
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-auto">
+                <div class="bg-light p-2 rounded-circle">
+                    <el-button type="primary" circle icon="el-icon-s-order" class="p-3"></el-button>
+                </div>
+            </div>
+        </div>
+        <div><i class="bi bi-calendar2 me-2 text-warning"></i>开考时间：{{ examPaper.examStartDateTimeStr }}</div>
+    </div>
+</div>
+<div class="card rounded-4 mb-3 shadow-lg" v-else>
+    <div class="card-body">
+        <div class="text-center p-5">
+            <small><i class="bi bi-clipboard me-2"></i>暂无考试安排</small>
+        </div>
+    </div>
+</div>
+
+<div class="p-3">
     <div class="mb-3" v-on:click="top.$vue.btnAppMenuClick('exam')">
         <div class="text-center">
             <div class="mb-2">
@@ -318,53 +367,6 @@
     @* </div> *@
 
 
-    <div class="p-3 pb-2 mt-4">
-        <h5 class="border-start border-5 border-primary ps-2 d-flex justify-content-between align-items-center">
-            <span>最新考试安排</span>
-            <el-link :underline="false" v-on:click="top.$vue.btnAppMenuClick('exam')">更多<i class="el-icon-more ms-2"></i></el-link>
-        </h5>
-    </div>
-    <div class="card rounded-4 mb-3 shadow-lg" v-if="examPaper" v-on:click="btnViewPaperClick(examPaper)">
-        <div class="card-body">
-            <div class="mb-3">
-                {{ examPaper.title }}
-            </div>
-            <div class="row align-items-center g-3 mb-3">
-                <div class="col">
-                    <div>
-                        <div class="fw-light">
-                            <div class="mb-1">总分：{{examPaper.totalScore}}<span class="me-1"></span>及格分：{{examPaper.passScore}}</div>
-                            <div class="mb-1">
-                                考试次数：
-                                <span class="text-success fw-bold" v-if="(examPaper.userExamTimes-examPaper.myExamTimes)>0">
-                                    {{examPaper.userExamTimes-examPaper.myExamTimes}}
-                                </span>
-                                <span class="fs-3 text-danger fw-bold" v-else>
-                                    0
-                                </span>
-                                /{{examPaper.userExamTimes}}
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="col-auto">
-                    <div class="bg-light p-2 rounded-circle">
-                        <el-button type="primary" circle icon="el-icon-s-order" class="p-3"></el-button>
-                    </div>
-                </div>
-            </div>
-            <div><i class="bi bi-calendar2 me-2 text-warning"></i>开考时间：{{ examPaper.examStartDateTimeStr }}</div>
-        </div>
-    </div>
-    <div class="card rounded-4 mb-3 shadow-lg" v-else>
-        <div class="card-body">
-            <div class="text-center p-5">
-                <small><i class="bi bi-clipboard me-2"></i>暂无考试安排</small>
-            </div>
-        </div>
-    </div>
-    
     <div class="p-3 pb-2 mt-4">
         <h5 class="border-start border-5 border-primary ps-2 d-flex justify-content-between align-items-center">
             <span>刷题练习</span>

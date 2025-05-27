@@ -159,10 +159,20 @@
     <el-progress type="circle" :percentage="utils.formatPercentFloat(answerTotal,total)" status="success" width="50" define-back-color="#ffffff"></el-progress>
 </div>
 <div class="py-8"></div>
-<div style="position:fixed;left:0;bottom:0;width:100%;" class="text-center mb-5 animate__animated animate__fadeInUp">
+@* <div style="position:fixed;left:0;bottom:0;width:100%;" class="text-center mb-5 animate__animated animate__fadeInUp"> *@
+@*     <div class="btn-group"> *@
+@*         <button type="button" v-on:click="btnResultClick" class="btn btn-warning rounded-start-pill"><i class="el-icon-close me-2"></i>结束本次练习</button> *@
+@*         <button type="button" v-on:click="utils.closeLayerSelf" class="btn btn-outline-primary rounded-end-pill"><i class="el-icon-back me-2"></i>返 回</button> *@
+@*     </div> *@
+@* </div> *@
+<div style="position:fixed;left:0;top:0;width:100%;" class="text-center p-2" v-if="isTiming">
+    <el-statistic :value="surplusSecond"
+                  time-indices v-on:finish="timingFinish">
+    </el-statistic>
+</div>
+<div style="position:fixed;left:0;bottom:0;width:100%;" class="text-center mb-5 animate__animated animate__fadeInUp" v-if="openExist">
     <div class="btn-group">
-        <button type="button" v-on:click="btnResultClick" class="btn btn-warning rounded-start-pill"><i class="el-icon-close me-2"></i>结束本次练习</button>
-        <button type="button" v-on:click="utils.closeLayerSelf" class="btn btn-outline-primary rounded-end-pill"><i class="el-icon-back me-2"></i>返 回</button>
+        <button type="button" class="btn btn-primary rounded-pill" v-on:click="utils.closeLayerSelf"><i class="el-icon-back me-2"></i>返 回</button>
     </div>
 </div>
 @section Scripts{

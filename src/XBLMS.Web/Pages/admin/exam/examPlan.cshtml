@@ -40,8 +40,19 @@
                         </template>
                     </template>
                 </el-table-column>
-               @* <el-table-column prop="examBeginDateTime" label="开始时间" width="150">
-                </el-table-column> *@
+                <el-table-column label="频率" width="85">
+                    <template slot-scope="scope">
+                        <span v-if="scope.row.frequencyType==='Immediately'">立即</span>
+                        <span v-else-if="scope.row.frequencyType==='Daily'">每天</span>
+                        <span v-else-if="scope.row.frequencyType==='PerWeekday'">工作日</span>
+                        <span v-else-if="scope.row.frequencyType==='Weekly'">每周</span>
+                        <span v-else-if="scope.row.frequencyType==='Monthly'">每月</span>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="startDate" label="开始日期" width="150">
+                </el-table-column>
+                <el-table-column prop="endDate" label="结束日期" width="150">
+                </el-table-column>
                 @* <el-table-column prop="markCount" label="待阅卷" width="80">
                     <template slot-scope="scope">
                         <span v-if="scope.row.markCount>0"><el-tag size="mini" type="warning" effect="dark">{{ scope.row.markCount }}</el-tag></span>

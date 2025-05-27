@@ -426,7 +426,7 @@ var methods = {
     top.document.title = "首页";
   },
   btnViewPracticeClick: function (res) {
-    $this.goPlanPractice(res.id);
+    this.goPlanPractice(res.id);
   }
 };
 Vue.component("apexchart", {

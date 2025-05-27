@@ -97,8 +97,11 @@
                             <span class="fs-6 fw-light">正确率</span>
                             <el-progress type="dashboard" :width="88" :stroke-width="6" color="#5cb87a" :percentage="utils.formatPercentFloat(practice.rightCount, practice.answerCount)"></el-progress>
                         </div>
-                        <div v-else>
+                        <div v-else-if="practice.beginDateTime">
                             <b>未完成</b>
+                        </div>
+                        <div v-else>
+                            <b>请及时参加</b>
                         </div>
                     </div>
                 </div>

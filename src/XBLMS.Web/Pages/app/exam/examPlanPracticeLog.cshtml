@@ -12,7 +12,7 @@
     </style>
 }
 <div v-if="total>0">
-    <div class="card-hover-with-icon" v-for="(practice,index) in list" v-on:click="goPracticeResult(practice.id)">
+    <div class="card-hover-with-icon" v-for="(practice,index) in list" v-on:click="goPlanPractice(practice.id)">
         <el-card shadow="hover" class="mb-2 shadow-lg rounded-4">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
@@ -32,8 +32,16 @@
                     </ul>
                 </div>
                 <div class="text-center">
-                    <el-progress width="88" type="dashboard" color="#5cb87a" :percentage="utils.formatPercentFloat(practice.rightCount, practice.answerCount)"></el-progress>
-                    <div class="fs-6 fw-light mt-1">正确率</div>
+                    <div v-if="practice.endDateTime">
+                        <el-progress width="88" type="dashboard" color="#5cb87a" :percentage="utils.formatPercentFloat(practice.rightCount, practice.answerCount)"></el-progress>
+                        <div class="fs-6 fw-light mt-1">正确率</div>
+                    </div>
+                    <div v-else-if="practice.beginDateTime">
+                        <b>未完成</b>
+                    </div>
+                    <div v-else>
+                        <b>请及时参加</b>
+                    </div>
                 </div>
             </div>
         </el-card>
@@ -47,11 +55,11 @@
     <el-empty image="/sitefiles/assets/images/nodata.svg" description="暂无刷题记录"></el-empty>
 </div>
 <div class="py-8"></div>
-<div style="position:fixed;left:0;bottom:0;width:100%;" class="text-center mb-5 animate__animated animate__fadeInUp">
-    <div class="btn-group">
-        <button type="button" class="btn btn-primary rounded-pill" v-on:click="utils.closeLayerSelf"><i class="el-icon-back me-2"></i>返 回</button>
-    </div>
-</div>
+@* <div style="position:fixed;left:0;bottom:0;width:100%;" class="text-center mb-5 animate__animated animate__fadeInUp"> *@
+@*     <div class="btn-group"> *@
+@*         <button type="button" class="btn btn-primary rounded-pill" v-on:click="utils.closeLayerSelf"><i class="el-icon-back me-2"></i>返 回</button> *@
+@*     </div> *@
+@* </div> *@
 <div style="position:fixed;right:0;top:80%;" class="animate__animated animate__fadeInRightBig">
     <button type="button" class="btn btn-dark rounded-start-pill" v-on:click="dialogVisible=true">
         <i class="bi bi-search text-light"></i>

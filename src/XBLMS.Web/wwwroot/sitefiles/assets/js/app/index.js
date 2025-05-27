@@ -17,14 +17,18 @@ var methods = {
       document.title = '首页';
       $this.rightUrl = utils.getRootUrl('dashboard');
     }
-    if (common === 'studyPlan') {
-      document.title = '学习中心';
-      $this.rightUrl = utils.getStudyUrl("studyPlan");
+    if (common === 'planPracticeLog') {
+      document.title = '培训任务';
+      $this.rightUrl = utils.getExamUrl("examPlanPracticeLog");
     }
-    if (common === 'studyCourse') {
-      document.title = '课程中心';
-      $this.rightUrl = utils.getStudyUrl("studyCourse");
-    }
+    //if (common === 'studyPlan') {
+    //  document.title = '学习中心';
+    //  $this.rightUrl = utils.getStudyUrl("studyPlan");
+    //}
+    //if (common === 'studyCourse') {
+    //  document.title = '课程中心';
+    //  $this.rightUrl = utils.getStudyUrl("studyCourse");
+    //}
     if (common === 'exam') {
       document.title = '考试中心';
       $this.rightUrl = utils.getExamUrl("examPaper");
