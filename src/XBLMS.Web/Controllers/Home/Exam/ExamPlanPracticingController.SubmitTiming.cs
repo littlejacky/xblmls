@@ -22,11 +22,12 @@ namespace XBLMS.Web.Controllers.Home.Exam
             var start = await _examPlanPracticeRepository.GetAsync(request.Id);
             var paper = await _databaseManager.ExamPaperRepository.GetAsync(start.PlanRecordId);
 
+            start.IsSubmit = true;
             start.EndDateTime = DateTime.Now;
 
-            var sumScore = await _examPlanAnswerRepository.ScoreSumAsync(startId);
-            var objectiveSocre = await _examPlanAnswerRepository.ObjectiveScoreSumAsync(startId);
-            var subjectiveScore = await _examPlanAnswerRepository.SubjectiveScoreSumAsync(startId);
+            var sumScore = await _examPlanAnswerRepository.ScoreSumAsync(start.Id);
+            var objectiveSocre = await _examPlanAnswerRepository.ObjectiveScoreSumAsync(start.Id);
+            var subjectiveScore = await _examPlanAnswerRepository.SubjectiveScoreSumAsync(start.Id);
 
             start.ObjectiveScore = objectiveSocre;
             start.SubjectiveScore = subjectiveScore;

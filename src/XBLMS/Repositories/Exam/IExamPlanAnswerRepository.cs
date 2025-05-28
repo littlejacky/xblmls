@@ -16,5 +16,8 @@ namespace XBLMS.Repositories
 
         Task UpdateAsync(ExamPlanAnswer item);
 
+        Task<decimal> ScoreSumAsync(int startId);
+        Task<decimal> ObjectiveScoreSumAsync(int startId);
+        Task<decimal> SubjectiveScoreSumAsync(int startId);
     }
 }
