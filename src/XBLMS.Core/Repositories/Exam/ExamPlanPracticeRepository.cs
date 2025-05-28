@@ -3,6 +3,7 @@ using Dm;
 using DocumentFormat.OpenXml.Office2010.Excel;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using XBLMS.Enums;
 using XBLMS.Models;
@@ -88,7 +89,6 @@ namespace XBLMS.Core.Repositories
             await _repository.DeleteAsync(Q.Where(nameof(ExamPlanPractice.UserId), userId));
         }
 
-
         public async Task<(int answerTotal, int rightTotal, int allAnswerTotal, int allRightTotal, int collectAnswerTotal, int collectRightTotal, int wrongAnswerTotal, int wrongRightTotal)> SumAsync(int userId)
         {
             var answerTotal = await _repository.SumAsync(nameof(ExamPlanPractice.AnswerCount), Q.Where(nameof(ExamPlanPractice.UserId), userId));
@@ -119,6 +119,98 @@ namespace XBLMS.Core.Repositories
         public async Task<List<ExamPlanPractice>> ListUnfinishAsync()
         {
             return await _repository.GetAllAsync(Q.WhereNull(nameof(ExamPlanPractice.EndDateTime)));
+        }
+
+        public async Task<int> CountUserAsync(int recordId)
+        {
+            return await _repository.CountAsync(Q.
+                Where(nameof(ExamPlanPractice.PlanRecordId), recordId).
+                GroupBy(nameof(ExamPlanPractice.UserId)));
+        }
+
+        public async Task<decimal> GetMaxScoreAsync(int recordId)
+        {
+            var maxItem = await _repository.GetAsync(Q.
+                WhereNotNull(nameof(ExamPlanPractice.EndDateTime)).
+                Where(nameof(ExamPlanPractice.PlanRecordId), recordId).
+                OrderByDesc(nameof(ExamPlanPractice.Score)).Limit(1));
+            if (maxItem != null)
+            {
+                return maxItem.Score;
+            }
+            return 0;
+        }
+
+        public async Task<decimal> GetMinScoreAsync(int recordId)
+        {
+            var minItem = await _repository.GetAsync(Q.
+                WhereNotNull(nameof(ExamPlanPractice.EndDateTime)).
+                Where(nameof(ExamPlanPractice.PlanRecordId), recordId).
+                OrderBy(nameof(ExamPlanPractice.Score)).Limit(1));
+            if (minItem != null)
+            {
+                return minItem.Score;
+            }
+            return 0;
+        }
+
+        public async Task<decimal> SumScoreAsync(int recordId)
+        {
+            var listScore = await _repository.GetAllAsync<decimal>(Q.
+                Select(nameof(ExamPlanPractice.Score)).
+                WhereNotNull(nameof(ExamPlanPractice.EndDateTime)).
+                Where(nameof(ExamPlanPractice.PlanRecordId), recordId));
+            if (listScore != null && listScore.Count > 0)
+            {
+                return listScore.Sum();
+            }
+            return 0;
+        }
+
+        public async Task<int> CountAsync(int recordId)
+        {
+            return await _repository.CountAsync(Q.
+                WhereNotNull(nameof(ExamPlanPractice.EndDateTime)).
+                Where(nameof(ExamPlanPractice.PlanRecordId), recordId));
+        }
+
+        public async Task<int> CountDistinctAsync(int recordId)
+        {
+            return await _repository.CountAsync(Q.
+                WhereNotNull(nameof(ExamPlanPractice.EndDateTime)).
+                Where(nameof(ExamPlanPractice.PlanRecordId), recordId).
+                GroupBy(nameof(ExamPlanPractice.UserId)));
+        }
+
+        public async Task<decimal> SumScoreDistinctAsync(int recordId)
+        {
+            var listScore = await _repository.GetAllAsync<decimal>(Q.
+                Select(nameof(ExamPlanPractice.Score)).
+                WhereNotNull(nameof(ExamPlanPractice.EndDateTime)).
+                Where(nameof(ExamPlanPractice.PlanRecordId), recordId).
+                GroupBy(nameof(ExamPlanPractice.UserId), nameof(ExamPlanPractice.Score)));
+            if (listScore != null && listScore.Count > 0)
+            {
+                return listScore.Sum();
+            }
+            return 0;
+        }
+
+        public async Task<int> CountByPassAsync(int recordId, int passScore)
+        {
+            return await _repository.CountAsync(Q.
+                Where(nameof(ExamPlanPractice.Score), ">=", passScore).
+                WhereNotNull(nameof(ExamPlanPractice.EndDateTime)).
+                Where(nameof(ExamPlanPractice.PlanRecordId), recordId));
+        }
+
+        public async Task<int> CountByPassDistinctAsync(int recordId, int passScore)
+        {
+            return await _repository.CountAsync(Q.
+                Where(nameof(ExamPlanPractice.Score), ">=", passScore).
+                WhereNotNull(nameof(ExamPlanPractice.EndDateTime)).
+                Where(nameof(ExamPlanPractice.PlanRecordId), recordId).
+                GroupBy(nameof(ExamPlanPractice.UserId)));
         }
     }
 }

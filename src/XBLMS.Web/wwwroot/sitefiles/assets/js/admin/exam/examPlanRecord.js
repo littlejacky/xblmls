@@ -171,7 +171,7 @@ var methods = {
     utils.openTopLeft(row.title + '-预览', utils.getCommonUrl("examPaperLayerView", { id: row.id }));
   },
   btnManagerAnalysisClick: function (row) {
-    utils.openTopLeft(row.title + '-综合统计', utils.getExamUrl("examPaperManagerAnalysis", { id: row.id }));
+    utils.openTopLeft(row.title + '-综合统计', utils.getExamUrl("examPlanRecordManagerAnalysis", { id: row.id }));
   },
   btnManagerUserClick: function (row) {
     utils.openTopLeft(row.title + '-考生管理', utils.getExamUrl("examPaperManagerUser", { id: row.id }));

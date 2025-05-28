@@ -24,5 +24,15 @@ namespace XBLMS.Repositories
         Task<int> UpdateEndDateTimeAsync(int id, DateTime datetime);
 
         Task<List<ExamPlanPractice>> ListUnfinishAsync();
+        Task<int> CountUserAsync(int recordId);
+
+        Task<decimal> GetMaxScoreAsync(int recordId);
+        Task<decimal> GetMinScoreAsync(int recordId);
+        Task<decimal> SumScoreAsync(int recordId);
+        Task<int> CountAsync(int recordId);
+        Task<int> CountDistinctAsync(int recordId);
+        Task<decimal> SumScoreDistinctAsync(int recordId);
+        Task<int> CountByPassAsync(int recordId, int passScore);
+        Task<int> CountByPassDistinctAsync(int recordId, int passScore);
     }
 }

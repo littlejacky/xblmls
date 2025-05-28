@@ -18,5 +18,8 @@ namespace XBLMS.Models
         public int ExamTimeSeconds { get; set; }
         [DataColumn]
         public int PlanRecordId { get; set; }
+
+        [DataColumn]
+        public decimal Score { get; set; }
     }
 }

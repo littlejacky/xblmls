@@ -1,6 +1,8 @@
 using Datory;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using XBLMS.Enums;
 using XBLMS.Models;
 using XBLMS.Repositories;
 using XBLMS.Services;
@@ -56,6 +58,48 @@ namespace XBLMS.Core.Repositories
         public async Task<List<ExamPlanAnswer>> ListByPracticeId(int id)
         {
             return await _repository.GetAllAsync(Q.Where(nameof(ExamPlanAnswer.PracticeId), id));
+        }
+
+        public async Task<decimal> ScoreSumAsync(int startId)
+        {
+            var scoreList = await _repository.GetAllAsync<decimal>(Q.
+                Select(nameof(ExamPlanAnswer.Score)).
+                Where(nameof(ExamPlanAnswer.PracticeId), startId));
+
+            if (scoreList != null && scoreList.Count > 0)
+            {
+                return scoreList.Sum();
+            }
+
+            return 0;
+        }
+        public async Task<decimal> ObjectiveScoreSumAsync(int startId)
+        {
+            var scoreList = await _repository.GetAllAsync<decimal>(Q.
+              Select(nameof(ExamPlanAnswer.Score)).
+              Where(nameof(ExamPlanAnswer.ExamTmType), ExamTmType.Objective.GetValue()).
+              Where(nameof(ExamPlanAnswer.PracticeId), startId));
+
+            if (scoreList != null && scoreList.Count > 0)
+            {
+                return scoreList.Sum();
+            }
+
+            return 0;
+        }
+        public async Task<decimal> SubjectiveScoreSumAsync(int startId)
+        {
+            var scoreList = await _repository.GetAllAsync<decimal>(Q.
+             Select(nameof(ExamPlanAnswer.Score)).
+             Where(nameof(ExamPlanAnswer.ExamTmType), ExamTmType.Subjective.GetValue()).
+             Where(nameof(ExamPlanAnswer.PracticeId), startId));
+
+            if (scoreList != null && scoreList.Count > 0)
+            {
+                return scoreList.Sum(); 
+            }
+
+            return 0;
         }
     }
 }
