@@ -49,6 +49,9 @@ var methods = {
         if (res.configList != null && res.configList.length > 0) {
           $this.tmRandomConfig = res.configList;
         }
+        if (res.tmGroupProportions != null && res.tmGroupProportions.length > 0) {
+          $this.tmGroupProportions = res.tmGroupProportions;
+        }
         if ($this.copyId > 0) {
           $this.id = 0;
           $this.form.id = 0;
@@ -117,22 +120,22 @@ var methods = {
     var remainder = 100 - (averageProportion * this.form.tmGroupIds.length);
     
     // 为每个选中的题目组创建占比数据
-    this.form.tmGroupIds.forEach(function(groupId, index) {
-      var group = _.find($this.tmGroupList, function(g) { return g.id === groupId; });
+    this.form.tmGroupIds.forEach(function(tmGroupId, index) {
+      var group = _.find($this.tmGroupList, function (g) { return g.id === tmGroupId; });
       if (group) {
         // 查找是否已有占比设置
-        var existingProportion = _.find($this.tmGroupProportions, function(p) { return p.groupId === groupId; });
+        var existingProportion = _.find($this.tmGroupProportions, function (p) { return p.tmGroupId === tmGroupId; });
         
-        var proportion = existingProportion ? existingProportion.proportion : averageProportion;
+        var proportion = existingProportion ? existingProportion.groupRatio : averageProportion;
         // 将余数加到第一个题目组
         if (index === 0 && remainder > 0) {
           proportion += remainder;
         }
         
         newProportions.push({
-          groupId: groupId,
-          groupName: group.groupName,
-          proportion: proportion
+          tmGroupId: tmGroupId,
+          tmGroupName: group.groupName,
+          groupRatio: proportion
         });
       }
     });
@@ -268,7 +271,7 @@ var methods = {
     if (this.form.tmRandomType !== 'RandomNone' && this.tmGroupProportions.length > 1) {
       var totalProportion = 0;
       this.tmGroupProportions.forEach(function(item) {
-        totalProportion += item.proportion;
+        totalProportion += item.groupRatio;
       });
       
       if (totalProportion !== 100) {
@@ -325,7 +328,7 @@ var methods = {
       });
       return sums;
     }
-
+    return [];
   },
   
   // 计算题目组占比汇总
@@ -341,7 +344,7 @@ var methods = {
         if (index === 1) {
           let totalProportion = 0;
           data.forEach(item => {
-            totalProportion += item.proportion;
+            totalProportion += item.groupRatio;
           });
           
           const status = totalProportion === 100 ? '✓' : '✗';
@@ -372,9 +375,9 @@ var methods = {
     let remainder = 100 - (averageProportion * count);
     
     this.tmGroupProportions.forEach((item, index) => {
-      item.proportion = averageProportion;
+      item.groupRatio = averageProportion;
       if (index === 0 && remainder > 0) {
-        item.proportion += remainder;
+        item.groupRatio += remainder;
       }
     });
     

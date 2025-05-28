@@ -194,10 +194,10 @@
                             </el-form-item>
                             <el-form-item label="题目组占比" v-if="form.tmRandomType!=='RandomNone' && form.tmGroupIds && form.tmGroupIds.length > 1">
                                 <el-table :data="tmGroupProportions" border size="small" style="width: 100%" :summary-method="getProportionSummaries" show-summary>
-                                    <el-table-column prop="groupName" label="题目组名称" width="280"></el-table-column>
+                                    <el-table-column prop="tmGroupName" label="题目组名称" width="280"></el-table-column>
                                     <el-table-column label="占比(%)" width="120">
                                         <template slot-scope="scope">
-                                            <el-input-number size="mini" v-model="scope.row.proportion" :min="0" :max="100" :precision="0" :step="5" style="width:90px;"></el-input-number>
+                                            <el-input-number size="mini" v-model="scope.row.groupRatio" :min="0" :max="100" :precision="0" :step="5" style="width:90px;"></el-input-number>
                                         </template>
                                     </el-table-column>
                                 </el-table>

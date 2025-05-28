@@ -79,6 +79,23 @@ namespace Datory
             LoadExtend(ExtendValues);
         }
 
+        public T LoadExtend<T>(string name)
+        {
+            if (string.IsNullOrEmpty(ExtendValues)) return default;
+            
+            var dict = Utilities.ToDictionary(ExtendValues);
+            if (dict == null) return default;
+
+            foreach (var o in dict)
+            {
+                if (StringComparer.OrdinalIgnoreCase.Equals(o.Key, name))
+                {
+                    return Utilities.JsonDeserialize<T>(o.Value.ToString());
+                }
+            }
+            return default;
+        }
+
         public void LoadExtend(string extendValue)
         {
             if (string.IsNullOrEmpty(extendValue)) return;

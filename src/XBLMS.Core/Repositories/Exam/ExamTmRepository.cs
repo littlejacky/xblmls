@@ -266,11 +266,11 @@ namespace XBLMS.Core.Repositories
                         }
 
                         // 根据占比计算每个难度级别的题目数量
-                        var groupNandu1Count = (int)Math.Ceiling(nandu1Count * tmGroup.Ratio);
-                        var groupNandu2Count = (int)Math.Ceiling(nandu2Count * tmGroup.Ratio);
-                        var groupNandu3Count = (int)Math.Ceiling(nandu3Count * tmGroup.Ratio);
-                        var groupNandu4Count = (int)Math.Ceiling(nandu4Count * tmGroup.Ratio);
-                        var groupNandu5Count = (int)Math.Ceiling(nandu5Count * tmGroup.Ratio);
+                        var groupNandu1Count = (int)Math.Ceiling(nandu1Count * tmGroup.Ratio * 0.01);
+                        var groupNandu2Count = (int)Math.Ceiling(nandu2Count * tmGroup.Ratio * 0.01);
+                        var groupNandu3Count = (int)Math.Ceiling(nandu3Count * tmGroup.Ratio * 0.01);
+                        var groupNandu4Count = (int)Math.Ceiling(nandu4Count * tmGroup.Ratio * 0.01);
+                        var groupNandu5Count = (int)Math.Ceiling(nandu5Count * tmGroup.Ratio * 0.01);
 
                         // 获取该题目组中各难度级别的题目 - ***需要修改这里的调用***
                         var nandu1List = await GetWeightedRandomListAsync(auth, false, true, tmGroup.TmIds, txId, 1, groupNandu1Count, wrongCategoryWeights);
@@ -280,27 +280,27 @@ namespace XBLMS.Core.Repositories
                         var nandu5List = await GetWeightedRandomListAsync(auth, false, true, tmGroup.TmIds, txId, 5, groupNandu5Count, wrongCategoryWeights);
 
                         // 将获取到的题目添加到结果列表中
-                        if (nandu1List != null && nandu1List.Count > 0)
+                        if (nandu1Count > totalNandu1 && nandu1List != null && nandu1List.Count > 0)
                         {
                             resultList.AddRange(nandu1List);
                             totalNandu1 += nandu1List.Count;
                         }
-                        if (nandu2List != null && nandu2List.Count > 0)
+                        if (nandu2Count > totalNandu2 && nandu2List != null && nandu2List.Count > 0)
                         {
                             resultList.AddRange(nandu2List);
                             totalNandu2 += nandu2List.Count;
                         }
-                        if (nandu3List != null && nandu3List.Count > 0)
+                        if (nandu3Count > totalNandu3 && nandu3List != null && nandu3List.Count > 0)
                         {
                             resultList.AddRange(nandu3List);
                             totalNandu3 += nandu3List.Count;
                         }
-                        if (nandu4List != null && nandu4List.Count > 0)
+                        if (nandu4Count > totalNandu4 && nandu4List != null && nandu4List.Count > 0)
                         {
                             resultList.AddRange(nandu4List);
                             totalNandu4 += nandu4List.Count;
                         }
-                        if (nandu5List != null && nandu5List.Count > 0)
+                        if (nandu5Count > totalNandu5 && nandu5List != null && nandu5List.Count > 0)
                         {
                             resultList.AddRange(nandu5List);
                             totalNandu5 += nandu5List.Count;

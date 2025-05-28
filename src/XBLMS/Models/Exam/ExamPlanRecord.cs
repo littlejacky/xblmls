@@ -13,7 +13,7 @@ namespace XBLMS.Models
         public ExamPlanRecord() { }
         public ExamPlanRecord(ExamPlan plan)
         {
-            Title = plan.Title;
+            Title = $"{plan.Title}-{plan.ExecutedTotal + 1:D3}";
             UserGroupIds = plan.UserGroupIds;
             TmGroupIds = plan.TmGroupIds;
             IsTiming = plan.IsTiming;
@@ -21,10 +21,10 @@ namespace XBLMS.Models
             TotalScore = plan.TotalScore;
             PassScore = plan.PassScore;
             RequirePass = plan.RequirePass;
-            ConfigList = plan.ConfigList;
+            ConfigList = plan.ConfigList == null ? plan.LoadExtend<List<ExamPaperRandomConfig>>(nameof(ExamPlan.ConfigList)) : plan.ConfigList;
             TmScoreType = plan.TmScoreType;
             TxIds = plan.TxIds;
-            TmGroupProportions = plan.TmGroupProportions;
+            TmGroupProportions = plan.TmGroupProportions == null ? plan.LoadExtend<List<ExamTmGroupProportion>>(nameof(ExamPlan.TmGroupProportions)) : plan.TmGroupProportions;
             TmCount = plan.TmCount;
             OpenExist = plan.OpenExist;
             PlanId = plan.Id;

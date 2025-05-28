@@ -81,6 +81,7 @@ namespace XBLMS.Web.Controllers.Admin.Exam
             public List<UserGroup> UserGroupList { get; set; }
             public List<ExamCer> CerList { get; set; }
             public List<ExamPaperRandomConfig> ConfigList { get; set; }
+            public List<ExamTmGroupProportion> TmGroupProportions { get; set; }
         }
         public class GetSubmitRequest
         {

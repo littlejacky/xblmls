@@ -353,7 +353,7 @@ namespace XBLMS.Core.Services
             var tmGroupList = new List<TmGroup>();
             if (tmGroupIds != null && tmGroupIds.Count > 0)
             {
-                var tmGroupProportions = await _examTmGroupProportionRepository.GetListAsync(plan.Id);
+                var tmGroupProportions = plan.TmGroupProportions;
                 hasTmGroup = true;
                 foreach (var tmGroupId in tmGroupIds)
                 {

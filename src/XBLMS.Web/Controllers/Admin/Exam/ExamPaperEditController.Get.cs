@@ -34,6 +34,7 @@ namespace XBLMS.Web.Controllers.Admin.Exam
             var tmGroups = await _examTmGroupRepository.GetListWithoutLockedAsync(auth);
             var userGroups = await _userGroupRepository.GetListWithoutLockedAsync(auth);
             var configList = await _examPaperRandomConfigRepository.GetListAsync(request.Id);
+            var tmGroupProportions = await _examTmGroupProportionRepository.GetListAsync(request.Id);
             var fixedGroups = new List<ExamTmGroup>();
             if (tmGroups != null && tmGroups.Count > 0)
             {
@@ -61,7 +62,8 @@ namespace XBLMS.Web.Controllers.Admin.Exam
                 TmGroupList = tmGroups,
                 TmFixedGroupList = fixedGroups,
                 UserGroupList = userGroups,
-                ConfigList = configList
+                ConfigList = configList,
+                TmGroupProportions = tmGroupProportions,
             };
 
         }
