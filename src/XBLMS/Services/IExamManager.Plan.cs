@@ -7,7 +7,7 @@ namespace XBLMS.Services
     {
         Task<bool> CreateDailyTrainingTasks();
         Task<bool> CreateImmediatelyTrainingTasks(ExamPlan plan);
-
+        Task RecreateImmediatelyTrainingTasks(ExamPlanRecord plan, int userId);
         Task MarkUnfinishPlanPractices();
     }
 

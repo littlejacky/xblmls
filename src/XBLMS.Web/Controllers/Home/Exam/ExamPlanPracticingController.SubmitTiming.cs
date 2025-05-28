@@ -35,6 +35,11 @@ namespace XBLMS.Web.Controllers.Home.Exam
 
             await _examPlanPracticeRepository.UpdateAsync(start);
 
+            var record = await _examPlanRecordRepository.GetAsync(start.PlanRecordId);
+            if(record.RequirePass && sumScore < record.PassScore)
+            {
+                await _examManager.RecreateImmediatelyTrainingTasks(record, start.UserId);
+            }
         }
     }
 }

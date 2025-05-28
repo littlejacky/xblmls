@@ -3,6 +3,7 @@ using NPOI.SS.Formula.Functions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using XBLMS.Enums;
@@ -39,9 +40,36 @@ namespace XBLMS.Core.Services
         {
             var today = DateTime.Today;
 
-            await SetPlanPractice(await NewPlanRecord(plan), today, true);
+            await SetPlanPractice(await NewPlanRecord(plan), today);
 
             return true;
+        }
+
+        public async Task RecreateImmediatelyTrainingTasks(ExamPlanRecord plan, int userId)
+        {
+            var today = DateTime.Today;
+
+            ExamPlanPractice practice = new ExamPlanPractice();
+            practice.PlanRecordId = plan.Id;
+            practice.Title = $"{plan.Title}({today:yyyyMMdd})";
+
+            practice.PracticeType = PracticeType.Random;
+            practice.CompanyId = plan.CompanyId;
+            practice.CreatorId = plan.CreatorId;
+            practice.DepartmentId = plan.DepartmentId;
+
+            var auth = await _authManager.GetAuthorityAuth();
+
+            var tms = await SetExamPaperRantomByRandomNowAndExaming(plan, auth, userId);
+
+            practice.UserId = userId;
+            practice.TmIds = tms.Select(s => s.Id).ToList();
+            practice.TmCount = tms.Count;
+            practice.Zsds = tms.Select(s => s.Zhishidian).Distinct().ToList();
+            practice.KeyWords = await _organManager.GetUserKeyWords(userId);
+
+            await _examPlanPracticeRepository.InsertAsync(practice);
+
         }
 
         public async Task<ExamPlanRecord> NewPlanRecord(ExamPlan plan)
@@ -51,7 +79,7 @@ namespace XBLMS.Core.Services
             return record;
         }
 
-        private async Task SetPlanPractice(ExamPlanRecord plan, DateTime today, bool isImmediately = false)
+        private async Task SetPlanPractice(ExamPlanRecord plan, DateTime today, int times = 1)
         {
             ExamPlanPractice practice = new ExamPlanPractice();
             practice.PlanRecordId = plan.Id;
