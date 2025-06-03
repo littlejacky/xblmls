@@ -2,9 +2,6 @@
 @{ Layout = "_Layout"; }
 
 <el-row :gutter="0">
-    @* <el-col :span="6">
-        @await Html.PartialAsync("_PartialTree")
-    </el-col> *@
     <el-col :span="24">
         <el-card shadow="never" style="border-start-start-radius:0;border-end-start-radius:0;">
             <el-form :inline="true" :size="euiSize">
@@ -53,28 +50,11 @@
                 </el-table-column>
                 <el-table-column prop="endDate" label="结束日期" width="150">
                 </el-table-column>
-                @* <el-table-column prop="markCount" label="待阅卷" width="80">
-                    <template slot-scope="scope">
-                        <span v-if="scope.row.markCount>0"><el-tag size="mini" type="warning" effect="dark">{{ scope.row.markCount }}</el-tag></span>
-                        <span v-else>
-                            0
-                        </span>
-                    </template>
-                </el-table-column> *@
                 <el-table-column prop="createdDate" label="创建时间"
                                  width="150">
                 </el-table-column>
                 <el-table-column prop="executedTotal" label="执行次数" width="80">
                 </el-table-column>
-                @* <el-table-column label="状态" width="85">
-                    <template slot-scope="scope">
-                        <span v-if="scope.row.locked"><el-tag size="mini" type="danger" effect="dark">已停用</el-tag></span>
-                        <span v-else> 
-                            <span v-if="scope.row.submitType==='Save'"><el-tag size="mini" type="warning" effect="dark">已保存</el-tag></span>
-                            <span v-else><el-tag size="mini" type="success" effect="dark">已发布</el-tag></span>
-                        </span>
-                    </template>
-                </el-table-column> *@
                 <el-table-column width="100">
                     <template slot-scope="scope">
                         <el-dropdown :show-timeout="0" placement="left">
@@ -86,10 +66,7 @@
                                 <el-dropdown-item icon="el-icon-document-copy" v-on:click.native="btnCopyClick(scope.row.id)">复制</el-dropdown-item>
                                 <el-dropdown-item icon="el-icon-unlock" v-if="scope.row.locked" v-on:click.native="btnUnLockClick(scope.row.id)">启用</el-dropdown-item>
                                 <el-dropdown-item icon="el-icon-lock" v-else v-on:click.native="btnLockClick(scope.row.id)">停用</el-dropdown-item>
-                                @* <el-dropdown-item icon="el-icon-user" v-on:click.native="btnManagerUserClick(scope.row)" divided>考生管理</el-dropdown-item>
-                                <el-dropdown-item icon="el-icon-finished" v-on:click.native="btnManagerMarkClick(scope.row)">阅卷管理</el-dropdown-item>
-                                <el-dropdown-item icon="el-icon-document-checked" v-on:click.native="btnManagerScoreClick(scope.row)">考试成绩</el-dropdown-item>
-                                <el-dropdown-item icon="el-icon-s-data" v-on:click.native="btnManagerAnalysisClick(scope.row)">综合统计</el-dropdown-item> *@
+                                
                                 <el-dropdown-item icon="el-icon-delete" style="color:red;" v-on:click.native="btnDeleteClick(scope.row)" divided>删除</el-dropdown-item>
                             </el-dropdown-menu>
                         </el-dropdown>
