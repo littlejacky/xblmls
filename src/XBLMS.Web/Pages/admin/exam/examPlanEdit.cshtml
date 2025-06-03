@@ -11,15 +11,15 @@
                 <div>
                     <el-scrollbar class="scrollbar" :style="{ height: ($(window).innerHeight()-180) + 'px' }">
                         <div style="margin-right:18px;">
-                            @* <el-form-item label="试卷分类" prop="treeId" :rules="{ required: true, message: '请选择试卷分类' }"> *@
-                            @*     <el-cascader ref="tree" style="width:100%" *@
-                            @*                  v-model="form.treeId" *@
-                            @*                  :options="paperTree" *@
-                            @*                  :props="{ emitPath:false,checkStrictly: true,expandTrigger:'hover' }" *@
-                            @*                  placeholder="请选择试卷分类" *@
-                            @*                  :show-all-levels="false"> *@
-                            @*     </el-cascader> *@
-                            @* </el-form-item> *@
+                            @* <el-form-item label="试卷分类" prop="treeId" :rules="{ required: true, message: '请选择试卷分类' }">
+                                <el-cascader ref="tree" style="width:100%"
+                                             v-model="form.treeId"
+                                             :options="paperTree"
+                                             :props="{ emitPath:false,checkStrictly: true,expandTrigger:'hover' }"
+                                             placeholder="请选择试卷分类"
+                                             :show-all-levels="false">
+                                </el-cascader>
+                            </el-form-item> *@
                             <el-form-item label="培训任务" prop="title" :rules="{ required: true, message: '请输入培训任务名称' }">
                                 <el-input v-model.trim="form.title" placeholder="请输入培训任务名称"></el-input>
                             </el-form-item>
@@ -49,18 +49,18 @@
                                 </el-radio-group>
                             </el-form-item>
 
-                            @* <el-form-item label="任务类型" prop="planType"> *@
-                            @*     <el-radio-group v-model="form.planType" v-on:input="planTypeChange"> *@
-                            @*         <el-radio label="Paper">考试</el-radio> *@
-                            @*         <el-radio label="Practice">练习</el-radio> *@
-                            @*     </el-radio-group> *@
-                            @* </el-form-item> *@
+                            @* <el-form-item label="任务类型" prop="planType">
+                                <el-radio-group v-model="form.planType" v-on:input="planTypeChange">
+                                    <el-radio label="Paper">考试</el-radio>
+                                    <el-radio label="Practice">练习</el-radio>
+                                </el-radio-group>
+                            </el-form-item>
 
-                           @*  <el-form-item>
+                            <el-form-item>
                                 <el-checkbox v-model="form.requirePass">开启必过模式</el-checkbox>
                                 <div class="tips">不及格需要重考</div>
-                            </el-form-item> *@
-                            @* <el-form-item v-if="id>0">
+                            </el-form-item>
+                            <el-form-item v-if="id>0">
                                 <el-checkbox v-model="isUpdateDateTime">修改已安排的考生数据</el-checkbox>
                             </el-form-item> *@
                             <el-form-item label="培训对象" prop="userGroupIds">
@@ -73,13 +73,13 @@
                                 </el-select>
                                 <div class="tips">根据选择的用户组匹配需要参加培训的人员，多个组为并集。默认不安排培训人员。</div>
                             </el-form-item>
-                            @* <el-form-item label="考试次数" prop="examTimes"> *@
-                            @*     <el-input-number v-model="form.examTimes" :min="1"></el-input-number> *@
-                            @* </el-form-item> *@
-                            @* <el-form-item v-if="id>0">
+                            @* <el-form-item label="考试次数" prop="examTimes">
+                                <el-input-number v-model="form.examTimes" :min="1"></el-input-number>
+                            </el-form-item>
+                            <el-form-item v-if="id>0">
                                 <el-checkbox v-model="isUpdateExamTimes">修改已安排的考生数据</el-checkbox>
-                            </el-form-item> *@
-                            @* <el-form-item>
+                            </el-form-item>
+                            <el-form-item>
                                 <el-checkbox v-model="form.isCourseUse">开启关联</el-checkbox>
                                 <div class="tips">用于关联课程，开启后才能关联到课后考试</div>
                             </el-form-item> *@
@@ -109,33 +109,33 @@
                                             </el-switch>
                                             <div class="tips">不合格将会再次收到任务</div>
                                         </el-form-item>
-                                        @* <el-form-item label="查看权限"> *@
-                                        @*     <el-switch v-model="form.secrecyScore" active-color="#13ce66" *@
-                                        @*                active-text="允许查看成绩"> *@
-                                        @*     </el-switch> *@
-                                        @*     <br /> *@
-                                        @*     <el-switch v-model="form.secrecyPaperContent" active-color="#13ce66" *@
-                                        @*                active-text="允许查看答卷"> *@
-                                        @*     </el-switch> *@
-                                        @*     <br /> *@
-                                        @*     <el-switch v-model="form.secrecyPaperAnswer" active-color="#13ce66" *@
-                                        @*                active-text="允许查看题目正确答案"> *@
-                                        @*     </el-switch> *@
-                                        @* </el-form-item> *@
-                                        @* <el-form-item label="考试难度"> *@
-                                        @*     <el-switch v-model="form.isExamingTmRandomView" active-color="#13ce66" *@
-                                        @*                active-text="题目顺序随机"> *@
-                                        @*     </el-switch> *@
-                                        @*     <br /> *@
-                                        @*     <el-switch v-model="form.isExamingTmOptionRandomView" active-color="#13ce66" *@
-                                        @*                active-text="候选项顺序随机"> *@
-                                        @*     </el-switch> *@
-                                        @* </el-form-item> *@
-                                        @* <el-form-item> *@
-                                        @*     <el-switch v-model="form.isAutoScore" active-color="#13ce66" *@
-                                        @*                active-text="主观题自动判分"> *@
-                                        @*     </el-switch> *@
-                                        @* </el-form-item> *@
+                                        @* <el-form-item label="查看权限">
+                                            <el-switch v-model="form.secrecyScore" active-color="#13ce66"
+                                                       active-text="允许查看成绩">
+                                            </el-switch>
+                                            <br />
+                                            <el-switch v-model="form.secrecyPaperContent" active-color="#13ce66"
+                                                       active-text="允许查看答卷">
+                                            </el-switch>
+                                            <br />
+                                            <el-switch v-model="form.secrecyPaperAnswer" active-color="#13ce66"
+                                                       active-text="允许查看题目正确答案">
+                                            </el-switch>
+                                        </el-form-item>
+                                        <el-form-item label="考试难度">
+                                            <el-switch v-model="form.isExamingTmRandomView" active-color="#13ce66"
+                                                       active-text="题目顺序随机">
+                                            </el-switch>
+                                            <br />
+                                            <el-switch v-model="form.isExamingTmOptionRandomView" active-color="#13ce66"
+                                                       active-text="候选项顺序随机">
+                                            </el-switch>
+                                        </el-form-item>
+                                        <el-form-item>
+                                            <el-switch v-model="form.isAutoScore" active-color="#13ce66"
+                                                       active-text="主观题自动判分">
+                                            </el-switch>
+                                        </el-form-item> *@
                                     </div>
                                 </el-collapse-item>
                             </el-collapse>
@@ -320,7 +320,7 @@
 </el-form>
 <el-row align="center" style="margin-top:18px;">
     <el-col :span="24" align="center">
-        @* <el-tooltip placement="top">
+        @*<el-tooltip placement="top">
             <div slot="content">
                 每次发布新的试卷，系统会默认配置好所有参数，理论上直接保存或者发布即可。
                 <br />
@@ -331,14 +331,14 @@
             <i class="el-icon-info" style="padding:0 3px;color:red;"></i>
         </el-tooltip> *@
         <el-button icon="el-icon-check" :size="euiSize" type="primary" v-on:click="btnSaveClick">保 存</el-button>
-        @* <el-button icon="el-icon-s-promotion" :size="euiSize" plain type="primary" v-on:click="btnSubmitClick"> *@
-        @*     <span v-if="form.submitType==='Save'"> *@
-        @*         <span>执 行</span> *@
-        @*     </span> *@
-        @*     <span v-else> *@
-        @*         <span>重新执行</span> *@
-        @*     </span> *@
-        @* </el-button> *@
+        @* <el-button icon="el-icon-s-promotion" :size="euiSize" plain type="primary" v-on:click="btnSubmitClick">
+            <span v-if="form.submitType==='Save'">
+                <span>执 行</span>
+            </span>
+            <span v-else>
+                <span>重新执行</span>
+            </span>
+        </el-button> *@
         <el-button :size="euiSize" icon="el-icon-close" plain type="info" v-on:click="utils.closeLayerSelf">取消</el-button>
     </el-col>
 </el-row>
