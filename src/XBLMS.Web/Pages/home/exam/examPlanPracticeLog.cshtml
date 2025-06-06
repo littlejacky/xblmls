@@ -26,12 +26,6 @@
 <el-card class="rounded-0">
     <div class="d-flex justify-content-between align-items-center">
         <div>
-            @* <el-page-header v-on:back="goBack" title="">
-                <div slot="content">
-                    <h2 class="h1 fw-bold">任务记录</h2>
-                    <small>共 {{total}} 条</small>
-                </div>
-            </el-page-header> *@
             <h2 class="h1 fw-bold">任务记录</h2>
             <small>共 {{total}} 条</small>
         </div>
@@ -56,7 +50,6 @@
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" plain icon="el-icon-search" v-on:click="btnSearchClick">查询</el-button>
-                    @* <el-button type="warning" plain icon="el-icon-delete" v-on:click="btnClearClick">清空练习记录</el-button> *@
                 </el-form-item>
             </el-form>
         </div>
